@@ -1,4 +1,4 @@
-# Mi Portafolio Profesional
+# alancisneros.design
 
 Este repositorio contiene mi portafolio personal como Product / UX Designer.
 El proyecto está personalizado para mostrar mi experiencia, casos de estudio
@@ -21,10 +21,11 @@ Respecto a la plantilla original, este proyecto incluye:
 - Ajustes visuales y de layout
 - Integración de contenido propio (copy, proyectos y narrativa)
 
-El objetivo no es redistribuir la plantilla original, sino utilizarla como
-base técnica para un sitio con contenido y propósito propios.
+El objetivo es tener una version personalizada para uso personal y profesional
+del diseñador mexicano Alan Cisneros.
 
 ## Licencia
 
 Este proyecto mantiene la licencia original del repositorio base.
 Consulta el archivo `LICENSE` para más información.
+
