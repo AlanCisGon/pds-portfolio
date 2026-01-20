@@ -37,28 +37,28 @@ const protectedRoutes: ProtectedRoutesConfig = {
 };
 
 // Import and set font for each variant
-import { Jost } from "next/font/google";
-import { Geist_Mono } from "next/font/google";
+import { Figtree } from "next/font/google";
+import { Azeret_Mono } from "next/font/google";
 
-const heading = Jost({
+const heading = Figtree({
   variable: "--font-heading",
   subsets: ["latin"],
   display: "swap",
 });
 
-const body = Jost({
+const body = Figtree({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
 });
 
-const label = Jost({
+const label = Figtree({
   variable: "--font-label",
   subsets: ["latin"],
   display: "swap",
 });
 
-const code = Geist_Mono({
+const code = Azeret_Mono({
   variable: "--font-code",
   subsets: ["latin"],
   display: "swap",
