@@ -54,7 +54,7 @@ const social: Social = [
 
 const home: Home = {
   path: "/",
-  image: "/images/og/home.jpg",
+  image: "/images/og/home.webp",
   label: "Home",
   title: `${person.name} | Product Designer & Strategist`,
   description: `Portfolio website showcasing my work as a ${person.role}`,
@@ -63,7 +63,7 @@ const home: Home = {
     display: true,
     title: (
       <Row gap="12" vertical="center">
-        <strong className="ml-4">Coppel Helix</strong>{" "}
+        <strong className="ml-4">Cart & Checkout Optimization </strong>{" "}
         <Line background="brand-alpha-strong" vert height="20" />
         <Text marginRight="4" onBackground="brand-medium">
           Featured work
