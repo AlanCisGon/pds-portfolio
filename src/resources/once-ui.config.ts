@@ -75,7 +75,7 @@ const fonts: FontsConfig = {
 const style: StyleConfig = {
   theme: "dark",
   brand: "violet",
-  accent: "white",
+  accent: "indigo",
   neutral: "slate",
   border: "rounded",
   solid: "color",
