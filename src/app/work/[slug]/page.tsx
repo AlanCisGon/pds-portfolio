@@ -148,13 +148,14 @@ export default async function Project({
         </Flex>
       )}
       {post.metadata.images?.[0] && (
-        <Media
-          priority
-          aspectRatio="16 / 9"
-          radius="m"
-          alt={"image"}
-          src={post.metadata.images[0]}
-        />
+        <div style={{ width: "100%", aspectRatio: "16 / 9" }}>
+          <Media
+            priority
+            radius="m"
+            alt={"image"}
+            src={post.metadata.images[0]}
+          />
+        </div>
       )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
         <CustomMDX source={post.content} />

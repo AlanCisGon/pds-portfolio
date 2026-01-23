@@ -112,7 +112,8 @@ export default async function RootLayout({
         >
           <SpeedInsights />
           <Analytics />
-          <RevealFx fill position="absolute">
+
+          <div className="bg-fade-in">
             <Background
               mask={{
                 x: effects.mask.x,
@@ -153,7 +154,7 @@ export default async function RootLayout({
                 color: effects.lines.color,
               }}
             />
-          </RevealFx>
+          </div>
           <Flex fillWidth minHeight="16" s={{ hide: true }} />
           <Header />
           <Flex zIndex={0} fillWidth padding="l" horizontal="center" flex={1}>

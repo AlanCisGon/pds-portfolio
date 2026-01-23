@@ -56,25 +56,69 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
   );
 }
 
-function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
+type AspectRatio = `${number} / ${number}`;
+
+function isAspectRatio(value: unknown): value is AspectRatio {
+  return (
+    typeof value === "string" && /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(value)
+  );
+}
+
+function SafeMedia({
+  alt,
+  src,
+  aspectRatio,
+  sizes = "(max-width: 960px) 100vw, 960px",
+  ...props
+}: MediaProps & { src: string; aspectRatio?: string; sizes?: string }) {
   if (!src) {
     console.error("Media requires a valid 'src' property.");
     return null;
   }
 
+  const ratio =
+    typeof aspectRatio === "string" &&
+    /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(aspectRatio)
+      ? aspectRatio
+      : "16 / 9";
+
   return (
-    <Media
-      marginTop="8"
-      marginBottom="16"
-      enlarge
-      radius="m"
-      border="neutral-alpha-medium"
-      sizes="(max-width: 960px) 100vw, 960px"
-      alt={alt}
-      src={src}
-      {...props}
-    />
+    <figure style={{ margin: "16px 0" }}>
+      <div
+        style={{
+          width: "100%",
+          aspectRatio: ratio,
+          overflow: "hidden",
+          borderRadius: "12px",
+          background: "rgba(0,0,0,0.04)",
+        }}
+      >
+        <Media
+          enlarge
+          radius="m"
+          sizes={sizes}
+          alt={alt}
+          src={src}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+          {...props}
+        />
+      </div>
+    </figure>
   );
+}
+
+function createImage({
+  alt,
+  src,
+  aspectRatio,
+  ...props
+}: MediaProps & { src: string }) {
+  return <SafeMedia alt={alt} src={src} aspectRatio={aspectRatio} {...props} />;
 }
 
 function slugify(str: string): string {
@@ -210,7 +254,7 @@ const components = {
   Row,
   Column,
   Icon,
-  Media,
+  Media: SafeMedia as any,
   SmartLink,
 };
 
