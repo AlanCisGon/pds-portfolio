@@ -56,22 +56,32 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
   );
 }
 
-function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
+type AspectRatio =
+  | `${number} / ${number}`
+  | "16 / 9"
+  | "4 / 3"
+  | "1 / 1"
+  | "3 / 2"
+  | "21 / 9";
+
+function SafeMedia({
+  alt,
+  src,
+  aspectRatio = "16 / 9",
+  sizes = "(max-width: 960px) 100vw, 960px",
+  ...props
+}: MediaProps & { src: string; aspectRatio?: AspectRatio; sizes?: string }) {
   if (!src) {
     console.error("Media requires a valid 'src' property.");
     return null;
   }
-
-  // Regla CLS-safe:
-  // Toda imagen MDX vive dentro de una caja con aspect-ratio fijo
-  const ratio = (props as any)?.aspectRatio ?? "16 / 9";
 
   return (
     <figure style={{ margin: "16px 0" }}>
       <div
         style={{
           width: "100%",
-          aspectRatio: ratio,
+          aspectRatio,
           position: "relative",
           overflow: "hidden",
           borderRadius: "12px",
@@ -80,14 +90,20 @@ function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
       >
         <Media
           fill
-          sizes="(max-width: 960px) 100vw, 960px"
           alt={alt}
           src={src}
+          sizes={sizes}
+          radius="m"
+          border="neutral-alpha-medium"
           {...props}
         />
       </div>
     </figure>
   );
+}
+
+function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
+  return <SafeMedia alt={alt} src={src} {...props} />;
 }
 
 function slugify(str: string): string {
@@ -223,7 +239,7 @@ const components = {
   Row,
   Column,
   Icon,
-  Media,
+  Media: SafeMedia as any,
   SmartLink,
 };
 
