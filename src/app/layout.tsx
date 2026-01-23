@@ -112,21 +112,6 @@ export default async function RootLayout({
         >
           <SpeedInsights />
           <Analytics />
-          <style jsx global>{`
-            @keyframes bgFadeIn {
-              from {
-                opacity: 0;
-              }
-              to {
-                opacity: 1;
-              }
-            }
-
-            .bg-fade-in {
-              animation: bgFadeIn 800ms ease-out both;
-              will-change: opacity;
-            }
-          `}</style>
 
           <Background
             className="bg-fade-in"
