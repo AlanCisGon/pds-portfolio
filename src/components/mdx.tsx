@@ -56,45 +56,55 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
   );
 }
 
-type AspectRatio =
-  | `${number} / ${number}`
-  | "16 / 9"
-  | "4 / 3"
-  | "1 / 1"
-  | "3 / 2"
-  | "21 / 9";
+type AspectRatio = `${number} / ${number}`;
+
+function isAspectRatio(value: unknown): value is AspectRatio {
+  return (
+    typeof value === "string" && /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(value)
+  );
+}
 
 function SafeMedia({
   alt,
   src,
-  aspectRatio = "16 / 9",
+  aspectRatio,
   sizes = "(max-width: 960px) 100vw, 960px",
   ...props
-}: MediaProps & { src: string; aspectRatio?: AspectRatio; sizes?: string }) {
+}: MediaProps & { src: string; aspectRatio?: string; sizes?: string }) {
   if (!src) {
     console.error("Media requires a valid 'src' property.");
     return null;
   }
+
+  const ratio =
+    typeof aspectRatio === "string" &&
+    /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(aspectRatio)
+      ? aspectRatio
+      : "16 / 9";
 
   return (
     <figure style={{ margin: "16px 0" }}>
       <div
         style={{
           width: "100%",
-          aspectRatio,
-          position: "relative",
+          aspectRatio: ratio,
           overflow: "hidden",
           borderRadius: "12px",
           background: "rgba(0,0,0,0.04)",
         }}
       >
         <Media
-          fill
+          enlarge
+          radius="m"
+          sizes={sizes}
           alt={alt}
           src={src}
-          sizes={sizes}
-          radius="m"
-          border="neutral-alpha-medium"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
           {...props}
         />
       </div>
@@ -102,8 +112,13 @@ function SafeMedia({
   );
 }
 
-function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
-  return <SafeMedia alt={alt} src={src} {...props} />;
+function createImage({
+  alt,
+  src,
+  aspectRatio,
+  ...props
+}: MediaProps & { src: string }) {
+  return <SafeMedia alt={alt} src={src} aspectRatio={aspectRatio} {...props} />;
 }
 
 function slugify(str: string): string {

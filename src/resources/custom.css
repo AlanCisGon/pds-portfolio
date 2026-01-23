@@ -8,6 +8,11 @@
 }
 
 .bg-fade-in {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+
   animation: bgFadeIn 800ms ease-out both;
   will-change: opacity;
 }
