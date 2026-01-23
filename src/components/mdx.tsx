@@ -62,18 +62,31 @@ function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
     return null;
   }
 
+  // Regla CLS-safe:
+  // Toda imagen MDX vive dentro de una caja con aspect-ratio fijo
+  const ratio = (props as any)?.aspectRatio ?? "16 / 9";
+
   return (
-    <Media
-      marginTop="8"
-      marginBottom="16"
-      enlarge
-      radius="m"
-      border="neutral-alpha-medium"
-      sizes="(max-width: 960px) 100vw, 960px"
-      alt={alt}
-      src={src}
-      {...props}
-    />
+    <figure style={{ margin: "16px 0" }}>
+      <div
+        style={{
+          width: "100%",
+          aspectRatio: ratio,
+          position: "relative",
+          overflow: "hidden",
+          borderRadius: "12px",
+          background: "rgba(0,0,0,0.04)",
+        }}
+      >
+        <Media
+          fill
+          sizes="(max-width: 960px) 100vw, 960px"
+          alt={alt}
+          src={src}
+          {...props}
+        />
+      </div>
+    </figure>
   );
 }
 
