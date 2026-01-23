@@ -153,14 +153,7 @@ const about: About = {
           "Designed and institutionalized Heuristic Evaluation and Contribution Process frameworks across the UX team.",
           "Conducted UX Research for the Digital Credit Application (100% online acquisition).",
         ],
-        images: [
-          {
-            src: "/images/onikom-website.webp",
-            alt: "Coppel, Checkout Flow Redesign",
-            width: 16,
-            height: 9,
-          },
-        ],
+        images: [],
       },
       {
         company: "Onikom Systems",
@@ -171,7 +164,14 @@ const about: About = {
           "Designed and taught Lean UX internal course.",
           "Delivered UX design for major clients: Movistar MX, CFE Contigo, Nadro.",
         ],
-        images: [],
+        images: [
+          {
+            src: "/images/onikom-website.webp",
+            alt: "Coppel, Checkout Flow Redesign",
+            width: 16,
+            height: 9,
+          },
+        ],
       },
     ],
   },
