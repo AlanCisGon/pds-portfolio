@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>UX Strategy — Grafo Rizomático | Alan Cisneros</title>
+<meta name="description" content="Grafo interactivo de UX Strategy: 40 nodos, 70+ conexiones, 10 categorías. Frameworks, psicología, datos, organización y tendencias emergentes."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0C0F1A;overflow:hidden;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useRef,useEffect,useCallback}=React;
+
+const NODES=[
+{id:"ux-strategy",label:"UX Strategy",group:"core",x:500,y:400,desc:"Plan de acción a largo plazo que conecta necesidades del negocio con la experiencia del usuario."},
+{id:"nng",label:"NNG\n3 Componentes",group:"framework",x:280,y:220,desc:"Nielsen Norman Group: Visión + Metas/Métricas + Plan de Acción."},
+{id:"levy",label:"Jaime Levy\n4 Pilares",group:"framework",x:380,y:140,desc:"Business Strategy + Value Innovation + Validated User Research + Frictionless UX."},
+{id:"garrett",label:"J.J. Garrett\n5 Planos",group:"framework",x:620,y:140,desc:"Estrategia → Alcance → Estructura → Esqueleto → Superficie."},
+{id:"smashing",label:"Smashing Mag\nDiag→Acción",group:"framework",x:720,y:220,desc:"Diagnóstico → Políticas guía → Plan de acción concreto."},
+{id:"behavioral",label:"Behavioral\nEconomics",group:"discipline",x:150,y:400,desc:"Cómo las personas toman decisiones reales (no racionales). Sesgos cognitivos aplicados al diseño."},
+{id:"nudge",label:"Nudge\nTheory",group:"discipline",x:100,y:280,desc:"Thaler & Sunstein: arquitectura de decisiones para guiar comportamiento sin prohibir opciones."},
+{id:"service-design",label:"Service\nDesign",group:"discipline",x:150,y:540,desc:"Orquesta personas, procesos y tecnología detrás de cada interacción visible."},
+{id:"design-thinking",label:"Design\nThinking",group:"discipline",x:300,y:620,desc:"Empatizar → Definir → Idear → Prototipar → Testear."},
+{id:"kahneman",label:"Kahneman\nSistema 1 & 2",group:"behavior",x:100,y:160,desc:"Sistema 1 (rápido, automático) vs Sistema 2 (lento, deliberado)."},
+{id:"hook",label:"Hook Model\nNir Eyal",group:"behavior",x:280,y:500,desc:"Trigger → Action → Variable Reward → Investment."},
+{id:"fogg",label:"Fogg Model\nB=M×A×P",group:"behavior",x:420,y:580,desc:"Behavior = Motivation × Ability × Prompt."},
+{id:"jtbd",label:"Jobs to\nBe Done",group:"behavior",x:700,y:540,desc:"Christensen: las personas contratan soluciones para un 'trabajo' en sus vidas."},
+{id:"blue-ocean",label:"Blue Ocean\nStrategy",group:"strategy",x:850,y:400,desc:"Crear espacios de mercado nuevos donde la competencia es irrelevante."},
+{id:"gamification",label:"Gamification\nOctalysis",group:"strategy",x:780,y:580,desc:"Mecánicas de juego como fundamento del producto, no como adorno."},
+{id:"apple",label:"Apple",group:"case",x:900,y:160,desc:"Simplicidad como filosofía. Consistencia entre dispositivos. Onboarding sin fricción."},
+{id:"airbnb",label:"Airbnb",group:"case",x:850,y:280,desc:"Confianza como principio de diseño. Reviews bidireccionales, precios transparentes."},
+{id:"spotify",label:"Spotify",group:"case",x:700,y:80,desc:"Personalización como engagement. Discover Weekly, continuidad cross-device."},
+{id:"tesla",label:"Tesla",group:"case",x:920,y:500,desc:"Actualización continua como UX. OTA updates, app como llave."},
+{id:"duolingo",label:"Duolingo",group:"case",x:600,y:650,desc:"Gamificación como motor de crecimiento. 500M+ usuarios, 80% orgánicos."},
+{id:"netflix",label:"Netflix",group:"case",x:500,y:80,desc:"Personalización algorítmica masiva. El algoritmo ES el producto."},
+{id:"ge-health",label:"GE\nHealthcare",group:"case",x:380,y:680,desc:"MRI pediátrico: niños pasaron de sedación a pedir repetir el estudio."},
+{id:"monzo",label:"Monzo",group:"case",x:200,y:680,desc:"Transparencia radical en banca. La comunidad co-diseña el producto."},
+{id:"hick",label:"Ley de\nHick",group:"psychology",x:60,y:350,desc:"Más opciones = más tiempo para decidir. Netflix, Apple, Amazon lo aplican."},
+{id:"fitts",label:"Ley de\nFitts",group:"psychology",x:60,y:450,desc:"Tiempo para alcanzar target depende de tamaño y distancia. Fundamental en mobile."},
+{id:"miller",label:"Ley de\nMiller",group:"psychology",x:60,y:550,desc:"Memoria de trabajo: 7±2 elementos. Chunking y progressive disclosure."},
+{id:"cognitive-load",label:"Cognitive\nLoad",group:"psychology",x:170,y:320,desc:"Sweller: intrínseca (tarea), extrínseca (mal diseño), germane (aprendizaje)."},
+{id:"emotional-design",label:"Emotional\nDesign",group:"psychology",x:180,y:470,desc:"Don Norman: visceral (estética), conductual (usabilidad), reflexivo (identidad)."},
+{id:"cialdini",label:"Cialdini\n6 Principios",group:"psychology",x:100,y:620,desc:"Reciprocidad, compromiso, prueba social, autoridad, escasez, afinidad."},
+{id:"dark-patterns",label:"Dark Patterns\nvs Ethics",group:"psychology",x:250,y:750,desc:"El espectro ético. ¿Cancel flow > signup flow? = Dark pattern."},
+{id:"lean-ux",label:"Lean UX",group:"data",x:400,y:480,desc:"Hipótesis → Experimento mínimo → Aprendizaje validado → Iteración."},
+{id:"heart",label:"HEART\nFramework",group:"data",x:500,y:530,desc:"Google: Happiness, Engagement, Adoption, Retention, Task Success."},
+{id:"ab-testing",label:"A/B\nTesting",group:"data",x:600,y:480,desc:"Formular hipótesis, diseñar experimentos, decidir con datos."},
+{id:"research-ops",label:"Research\nOps",group:"data",x:500,y:610,desc:"Infraestructura para investigación de usuarios escalable y sistemática."},
+{id:"designops",label:"DesignOps",group:"org",x:350,y:350,desc:"Libera diseñadores de admin. Sin DesignOps, el diseño no escala. Solo 22% lo hacen bien."},
+{id:"design-systems",label:"Design\nSystems",group:"org",x:450,y:300,desc:"Componentes reutilizables. McKinsey: 20-30% ahorro anual. PayPal: 8X más rápido."},
+{id:"ux-maturity",label:"UX Maturity\nModel",group:"org",x:550,y:350,desc:"NNG: 6 niveles de Ausente a User-driven. Mayoría en nivel 2-3."},
+{id:"ai-ux",label:"AI + UX\nDelegative UI",group:"emerging",x:750,y:350,desc:"Nielsen 2026: de Conversational UI a Delegative UI. Bottleneck = juicio."},
+{id:"conversational-ux",label:"Conversational\nUX",group:"emerging",x:850,y:450,desc:"149M+ usan asistentes de voz. Diseño pasa de dibujar a escribir conversaciones."},
+{id:"spatial",label:"Spatial\nComputing",group:"emerging",x:900,y:350,desc:"AR/VR maduro: servicio técnico, retail, navegación. Diseñar en 3D."},
+{id:"ethical-design",label:"Ethical &\nInclusive",group:"emerging",x:800,y:500,desc:"WCAG 3.0: de checklist a usabilidad real. Transparencia algorítmica obligatoria."},
+];
+
+const EDGES=[
+{from:"ux-strategy",to:"nng",type:"defines"},{from:"ux-strategy",to:"levy",type:"defines"},{from:"ux-strategy",to:"garrett",type:"defines"},{from:"ux-strategy",to:"smashing",type:"defines"},
+{from:"ux-strategy",to:"behavioral",type:"feeds"},{from:"ux-strategy",to:"service-design",type:"feeds"},{from:"ux-strategy",to:"design-thinking",type:"feeds"},{from:"ux-strategy",to:"blue-ocean",type:"feeds"},
+{from:"behavioral",to:"nudge",type:"derives"},{from:"behavioral",to:"kahneman",type:"derives"},{from:"nudge",to:"kahneman",type:"informs"},{from:"behavioral",to:"hook",type:"derives"},{from:"behavioral",to:"fogg",type:"derives"},
+{from:"hook",to:"fogg",type:"informs"},{from:"hook",to:"gamification",type:"informs"},{from:"fogg",to:"jtbd",type:"informs"},{from:"jtbd",to:"blue-ocean",type:"informs"},{from:"jtbd",to:"levy",type:"informs"},
+{from:"blue-ocean",to:"levy",type:"informs"},{from:"gamification",to:"fogg",type:"informs"},{from:"design-thinking",to:"service-design",type:"informs"},{from:"design-thinking",to:"fogg",type:"informs"},
+{from:"apple",to:"garrett",type:"exemplifies"},{from:"apple",to:"blue-ocean",type:"exemplifies"},{from:"airbnb",to:"nudge",type:"exemplifies"},{from:"airbnb",to:"jtbd",type:"exemplifies"},{from:"airbnb",to:"blue-ocean",type:"exemplifies"},
+{from:"spotify",to:"behavioral",type:"exemplifies"},{from:"spotify",to:"nng",type:"exemplifies"},{from:"spotify",to:"netflix",type:"relates"},{from:"tesla",to:"blue-ocean",type:"exemplifies"},{from:"tesla",to:"jtbd",type:"exemplifies"},
+{from:"duolingo",to:"gamification",type:"exemplifies"},{from:"duolingo",to:"hook",type:"exemplifies"},{from:"duolingo",to:"fogg",type:"exemplifies"},{from:"netflix",to:"behavioral",type:"exemplifies"},
+{from:"ge-health",to:"design-thinking",type:"exemplifies"},{from:"ge-health",to:"service-design",type:"exemplifies"},{from:"monzo",to:"nudge",type:"exemplifies"},{from:"monzo",to:"service-design",type:"exemplifies"},
+{from:"nng",to:"levy",type:"relates"},{from:"garrett",to:"smashing",type:"relates"},{from:"nudge",to:"hook",type:"informs"},{from:"service-design",to:"jtbd",type:"informs"},
+{from:"behavioral",to:"cognitive-load",type:"derives"},{from:"cognitive-load",to:"hick",type:"derives"},{from:"cognitive-load",to:"fitts",type:"derives"},{from:"cognitive-load",to:"miller",type:"derives"},
+{from:"behavioral",to:"emotional-design",type:"derives"},{from:"behavioral",to:"cialdini",type:"derives"},{from:"nudge",to:"dark-patterns",type:"informs"},{from:"cialdini",to:"nudge",type:"informs"},
+{from:"kahneman",to:"cognitive-load",type:"informs"},{from:"emotional-design",to:"apple",type:"exemplifies"},{from:"dark-patterns",to:"ethical-design",type:"informs"},
+{from:"ux-strategy",to:"lean-ux",type:"feeds"},{from:"lean-ux",to:"ab-testing",type:"informs"},{from:"lean-ux",to:"heart",type:"informs"},{from:"heart",to:"research-ops",type:"informs"},
+{from:"ab-testing",to:"nudge",type:"informs"},{from:"ab-testing",to:"spotify",type:"exemplifies"},{from:"fogg",to:"lean-ux",type:"informs"},
+{from:"ux-strategy",to:"designops",type:"feeds"},{from:"designops",to:"design-systems",type:"informs"},{from:"design-systems",to:"ux-maturity",type:"informs"},
+{from:"designops",to:"lean-ux",type:"informs"},{from:"cognitive-load",to:"design-systems",type:"informs"},{from:"ux-maturity",to:"service-design",type:"informs"},
+{from:"ux-strategy",to:"ai-ux",type:"feeds"},{from:"ai-ux",to:"conversational-ux",type:"informs"},{from:"ai-ux",to:"spatial",type:"informs"},{from:"ai-ux",to:"ethical-design",type:"informs"},
+{from:"ethical-design",to:"dark-patterns",type:"informs"},{from:"conversational-ux",to:"fitts",type:"informs"},{from:"spatial",to:"fitts",type:"informs"},{from:"ethical-design",to:"monzo",type:"exemplifies"},
+];
+
+const GC={
+core:{color:"#F59E0B",label:"Núcleo",glow:"rgba(245,158,11,0.4)"},
+framework:{color:"#3B82F6",label:"Frameworks UX",glow:"rgba(59,130,246,0.35)"},
+discipline:{color:"#8B5CF6",label:"Disciplinas Hermanas",glow:"rgba(139,92,246,0.35)"},
+behavior:{color:"#10B981",label:"Modelos de Comportamiento",glow:"rgba(16,185,129,0.35)"},
+strategy:{color:"#F43F5E",label:"Estrategia de Mercado",glow:"rgba(244,63,94,0.35)"},
+case:{color:"#64748B",label:"Casos de Éxito",glow:"rgba(100,116,139,0.3)"},
+psychology:{color:"#EC4899",label:"Capa Psicológica",glow:"rgba(236,72,153,0.35)"},
+data:{color:"#06B6D4",label:"Capa de Datos",glow:"rgba(6,182,212,0.35)"},
+org:{color:"#F97316",label:"Capa Organizacional",glow:"rgba(249,115,22,0.35)"},
+emerging:{color:"#A855F7",label:"Capa Emergente",glow:"rgba(168,85,247,0.35)"},
+};
+
+const ES={
+defines:{color:"#3B82F6",dash:"",label:"define"},
+feeds:{color:"#8B5CF6",dash:"8,4",label:"alimenta"},
+derives:{color:"#10B981",dash:"",label:"deriva"},
+informs:{color:"#94A3B8",dash:"4,4",label:"informa"},
+exemplifies:{color:"#F59E0B",dash:"6,3",label:"ejemplifica"},
+relates:{color:"#CBD5E1",dash:"2,4",label:"se relaciona"},
+};
+
+function App(){
+const svgRef=useRef(null);
+const[sel,setSel]=useState(null);
+const[hov,setHov]=useState(null);
+const[drag,setDrag]=useState(null);
+const[nodes,setNodes]=useState(NODES);
+const[off,setOff]=useState({x:0,y:0});
+const[filt,setFilt]=useState(null);
+
+const gn=useCallback(id=>nodes.find(n=>n.id===id),[nodes]);
+const conn=useCallback(nid=>{const s=new Set();EDGES.forEach(e=>{if(e.from===nid)s.add(e.to);if(e.to===nid)s.add(e.from)});return s},[]);
+
+const act=sel||hov;
+const ac=act?conn(act):new Set();
+
+const hmd=(e,nid)=>{e.stopPropagation();const n=gn(nid);const svg=svgRef.current;const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const sp=pt.matrixTransform(svg.getScreenCTM().inverse());setDrag(nid);setOff({x:sp.x-n.x,y:sp.y-n.y})};
+const hmm=useCallback(e=>{if(!drag)return;const svg=svgRef.current;const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const sp=pt.matrixTransform(svg.getScreenCTM().inverse());setNodes(p=>p.map(n=>n.id===drag?{...n,x:sp.x-off.x,y:sp.y-off.y}:n))},[drag,off]);
+const hmu=useCallback(()=>setDrag(null),[]);
+
+useEffect(()=>{window.addEventListener("mousemove",hmm);window.addEventListener("mouseup",hmu);return()=>{window.removeEventListener("mousemove",hmm);window.removeEventListener("mouseup",hmu)}},[hmm,hmu]);
+
+const eo=(edge)=>{if(!act&&!filt)return 0.35;if(act){if(edge.from===act||edge.to===act)return 0.85;return 0.06}if(filt){const f=gn(edge.from),t=gn(edge.to);if(f?.group===filt||t?.group===filt)return 0.5;return 0.04}return 0.35};
+const no=(node)=>{if(!act&&!filt)return 1;if(act){if(node.id===act||ac.has(node.id))return 1;return 0.15}if(filt){if(node.group===filt)return 1;return 0.18}return 1};
+
+const sn=sel?gn(sel):null;
+
+return React.createElement("div",{style:{width:"100%",height:"100vh",background:"#0C0F1A",fontFamily:"'IBM Plex Sans',system-ui,sans-serif",display:"flex",flexDirection:"column",overflow:"hidden",position:"relative"}},
+React.createElement("div",{style:{padding:"16px 24px 12px",borderBottom:"1px solid rgba(255,255,255,0.06)",background:"linear-gradient(180deg,rgba(12,15,26,1) 0%,rgba(12,15,26,0.95) 100%)",zIndex:10}},
+React.createElement("div",{style:{display:"flex",alignItems:"center",gap:12,marginBottom:12}},
+React.createElement("div",{style:{width:36,height:36,borderRadius:10,background:"linear-gradient(135deg,#F59E0B,#F97316)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}},"\uD83E\uDDED"),
+React.createElement("div",null,
+React.createElement("h1",{style:{margin:0,fontSize:18,fontWeight:700,color:"#F8FAFC",letterSpacing:"-0.02em"}},"UX Strategy \u2014 Grafo Rizom\u00E1tico"),
+React.createElement("p",{style:{margin:0,fontSize:11,color:"#64748B"}},"Toca un nodo para explorar \u00B7 Arrastra para reorganizar \u00B7 Filtra por categor\u00EDa"))),
+React.createElement("div",{style:{display:"flex",gap:6,flexWrap:"wrap"}},
+React.createElement("button",{onClick:()=>setFilt(null),style:{padding:"4px 10px",borderRadius:6,border:"1px solid",borderColor:!filt?"rgba(248,250,252,0.3)":"rgba(255,255,255,0.08)",background:!filt?"rgba(248,250,252,0.1)":"transparent",color:!filt?"#F8FAFC":"#64748B",fontSize:11,fontWeight:500,cursor:"pointer",fontFamily:"inherit"}},"Todos"),
+...Object.entries(GC).map(([k,c])=>React.createElement("button",{key:k,onClick:()=>setFilt(filt===k?null:k),style:{padding:"4px 10px",borderRadius:6,border:"1px solid",borderColor:filt===k?c.color+"66":"rgba(255,255,255,0.08)",background:filt===k?c.color+"20":"transparent",color:filt===k?c.color:"#64748B",fontSize:11,fontWeight:500,cursor:"pointer",fontFamily:"inherit"}},React.createElement("span",{style:{display:"inline-block",width:7,height:7,borderRadius:"50%",background:c.color,marginRight:5,verticalAlign:"middle"}}),c.label)))),
+React.createElement("div",{style:{flex:1,position:"relative"}},
+React.createElement("svg",{ref:svgRef,viewBox:"0 0 1020 820",style:{width:"100%",height:"100%",cursor:drag?"grabbing":"default"},onClick:()=>setSel(null)},
+React.createElement("defs",null,
+...Object.entries(GC).map(([k,c])=>React.createElement("filter",{key:k,id:`glow-${k}`,x:"-50%",y:"-50%",width:"200%",height:"200%"},
+React.createElement("feGaussianBlur",{stdDeviation:"8",result:"blur"}),
+React.createElement("feFlood",{floodColor:c.glow,floodOpacity:"1"}),
+React.createElement("feComposite",{in2:"blur",operator:"in"}),
+React.createElement("feMerge",null,React.createElement("feMergeNode"),React.createElement("feMergeNode",{in:"SourceGraphic"})))),
+React.createElement("marker",{id:"arrow",viewBox:"0 0 10 10",refX:"9",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto-start-reverse"},
+React.createElement("path",{d:"M 0 0 L 10 5 L 0 10 z",fill:"#475569",fillOpacity:"0.5"}))),
+EDGES.map((edge,i)=>{const from=gn(edge.from),to=gn(edge.to);if(!from||!to)return null;const s=ES[edge.type]||ES.informs;const op=eo(edge);const hl=act&&(edge.from===act||edge.to===act);const dx=to.x-from.x,dy=to.y-from.y,dist=Math.sqrt(dx*dx+dy*dy),nx=dx/dist,ny=dy/dist,r=38;const x1=from.x+nx*r,y1=from.y+ny*r,x2=to.x-nx*r,y2=to.y-ny*r;const mx=(x1+x2)/2,my=(y1+y2)/2,cx=mx+ny*(dist*0.12),cy=my-nx*(dist*0.12);
+return React.createElement("g",{key:i,style:{transition:"opacity 0.3s"},opacity:op},React.createElement("path",{d:`M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`,fill:"none",stroke:hl?s.color:"#334155",strokeWidth:hl?2:1,strokeDasharray:s.dash,markerEnd:"url(#arrow)",style:{transition:"stroke 0.3s,stroke-width 0.3s"}}))}),
+nodes.map(node=>{const c=GC[node.group];const op=no(node);const ia=node.id===act;const isC=node.group==="core";const r=isC?48:36;const lines=node.label.split("\n");
+return React.createElement("g",{key:node.id,style:{cursor:"grab",transition:"opacity 0.3s"},opacity:op,onMouseDown:e=>hmd(e,node.id),onMouseEnter:()=>setHov(node.id),onMouseLeave:()=>setHov(null),onClick:e=>{e.stopPropagation();setSel(sel===node.id?null:node.id)}},
+(ia||isC)&&React.createElement("circle",{cx:node.x,cy:node.y,r:r+8,fill:"none",stroke:c.color,strokeWidth:ia?2:1,strokeOpacity:ia?0.5:0.15,strokeDasharray:ia?"":"3,3"}),
+React.createElement("circle",{cx:node.x,cy:node.y,r:r,fill:ia?c.color+"25":"#0F1629",stroke:ia?c.color:c.color+"60",strokeWidth:ia?2.5:1.5,filter:ia?`url(#glow-${node.group})`:undefined,style:{transition:"all 0.2s"}}),
+React.createElement("circle",{cx:node.x,cy:node.y-r+10,r:3,fill:c.color,opacity:0.8}),
+...lines.map((line,li)=>React.createElement("text",{key:li,x:node.x,y:node.y+(li-(lines.length-1)/2)*13+2,textAnchor:"middle",dominantBaseline:"central",fill:ia?"#F8FAFC":"#CBD5E1",fontSize:isC?12:10.5,fontWeight:isC?700:500,fontFamily:"'IBM Plex Sans',system-ui,sans-serif",style:{pointerEvents:"none",userSelect:"none"}},line)))})),
+sn&&React.createElement("div",{style:{position:"absolute",bottom:16,left:16,right:16,background:"rgba(15,22,41,0.95)",backdropFilter:"blur(20px)",border:`1px solid ${GC[sn.group].color}33`,borderRadius:14,padding:"16px 20px",zIndex:20}},
+React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:8}},
+React.createElement("span",{style:{display:"inline-block",width:10,height:10,borderRadius:"50%",background:GC[sn.group].color}}),
+React.createElement("span",{style:{fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:"0.06em",color:GC[sn.group].color}},GC[sn.group].label),
+React.createElement("button",{onClick:e=>{e.stopPropagation();setSel(null)},style:{marginLeft:"auto",background:"rgba(255,255,255,0.06)",border:"none",color:"#94A3B8",borderRadius:6,width:24,height:24,cursor:"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit"}},"\u00D7")),
+React.createElement("h3",{style:{margin:"0 0 6px",fontSize:16,fontWeight:700,color:"#F8FAFC",letterSpacing:"-0.01em"}},sn.label.replace("\n"," ")),
+React.createElement("p",{style:{margin:0,fontSize:13,color:"#94A3B8",lineHeight:1.55}},sn.desc),
+React.createElement("div",{style:{marginTop:10,display:"flex",gap:6,flexWrap:"wrap"}},...[...ac].map(id=>{const n=gn(id);if(!n)return null;const cc=GC[n.group];return React.createElement("span",{key:id,onClick:e=>{e.stopPropagation();setSel(id)},style:{padding:"3px 8px",borderRadius:5,background:cc.color+"15",border:`1px solid ${cc.color}30`,color:cc.color,fontSize:10,fontWeight:500,cursor:"pointer"}},n.label.replace("\n"," "))})))
+));
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>
