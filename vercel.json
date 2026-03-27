@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/ux-strategy",
+      "destination": "/ux-strategy.html"
+    }
+  ]
+}
