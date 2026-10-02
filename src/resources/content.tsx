@@ -294,8 +294,14 @@ const about: About = {
       },
       {
         title: "Generative AI & Design Innovation",
-        description:
-          "Integrating **Generative AI** into UX strategy, research, and design operations to boost creativity, speed, and decision-making across product teams, without losing a human-centered approach.",
+        description: (
+          <>
+            Integrating <strong>Generative AI</strong> into UX strategy,
+            research, and design operations to boost creativity, speed, and
+            decision-making across product teams, without losing a
+            human-centered approach.
+          </>
+        ),
         tags: [
           {
             name: "Claude",
