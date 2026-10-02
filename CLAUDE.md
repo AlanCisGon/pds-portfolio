@@ -308,6 +308,7 @@ Edit `src/resources/content.tsx`. All page text originates there.
 - **Development branch:** `dev` — long-lived, low-controlled environment for validating changes on a Vercel preview before production. Do not delete it.
 - Feature branches: `feat/…`, `fix/…`, `docs/…`, or `claude/<description>-<id>` (for AI-assisted work). Branch from `main`, delete after merge.
 - Flow: feature branch → PR (Vercel preview) → optionally merge into `dev` to test in the shared preview → PR to `main` → production.
+- **Merge with squash only** (`gh pr merge <n> --squash --delete-branch`). The `Claude Protection` ruleset requires linear history on `main`, so merge commits (`--merge`) are rejected. It also requires a successful `Preview` deployment, which every PR gets from Vercel before merging.
 - Keep `dev` in sync with `main` after releases (`git push origin main:dev` when `dev` has no unmerged work).
 - Commits are GPG-signed via SSH; the CI environment handles signing
 - Follow conventional commit format: `type(scope): description`
