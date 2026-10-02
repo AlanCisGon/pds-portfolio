@@ -35,8 +35,7 @@ import {
   SiVercel,
   SiGooglegemini,
   SiGoogleanalytics,
-  SiOpenai,
-  SiPerplexity,
+  SiClaude,
 } from "react-icons/si";
 
 import { CgMaze } from "react-icons/cg";
@@ -112,8 +111,7 @@ export const iconLibrary: Record<string, IconType> = {
   confluence: FaConfluence,
   notion: SiNotion,
   gemini: SiGooglegemini,
-  chatgpt: SiOpenai,
-  perplexity: SiPerplexity,
+  claude: SiClaude,
 };
 
 export type IconLibrary = typeof iconLibrary;
