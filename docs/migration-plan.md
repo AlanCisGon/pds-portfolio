@@ -100,9 +100,108 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - Actualizar el README y revisar la licencia: la plantilla está bajo **CC BY-NC 4.0**. Mientras quede código suyo, aplica esa licencia y su atribución. Cuando ya no quede, puedes elegir una licencia propia para tu código; conviene confirmarlo antes de cambiarla.
 - **Listo cuando:** `grep -r "@once-ui-system" src` no devuelve nada.
 
+## Primera prueba: T0 · `Tag` (antes de I0 completo)
+
+Antes de diseñar todas las foundations, probamos el ciclo completo **Figma → handoff → código → preview** con el componente más chico del sitio: el `Tag` de las habilidades de About (ícono + texto, sin interacción, se usa en un solo archivo).
+
+- **Hipótesis:** si el ciclo funciona con un componente chico (nombres de variables 1:1 con el código, lectura del frame vía MCP, implementación fiel), podemos escalarlo al resto sin retrabajo.
+- **Lo validaremos cuando:**
+  - el `Tag` del preview coincida con el frame de Figma en claro y en oscuro;
+  - los tokens del código tengan exactamente los nombres de Figma;
+  - el ciclo completo tome una sesión o menos.
+
+**Lo que diseñas tú en Figma**
+1. **Variables mínimas.** Van en las colecciones definitivas, así que nada se tira. En cada una define *Code syntax → Web*.
+   - `Primitives`: los colores que necesite el tag; `space/4` y `space/8`; `radius/full` o `radius/s`, según tu decisión de diseño.
+   - `Semantic` (modos `Light` y `Dark`): `color/bg/surface-subtle`, `color/text/secondary`, `color/border/subtle`.
+2. **Text style** `Label/S`, por ejemplo Figtree Medium 12/16.
+3. **Componente `Tag`** en `02 Components`, con:
+   - la propiedad `size` (`s`, `m`);
+   - el booleano `showIcon` y un *instance swap* `icon`;
+   - el texto `label`.
+4. **Handoff:** en `05 Handoff`, una sección **"T0 · Tag"** con instancias en ambos modos y en ambos tamaños, marcada **Ready for dev**. Me mandas su link.
+
+**Lo que hago yo**
+- Leer el frame y las variables con el MCP.
+- Crear `src/styles/tokens.css`, solo con esos tokens, y `src/ui/Tag/`.
+- Reemplazar el `Tag` de Once UI en About.
+- Abrir un PR con su preview y comparar con Figma.
+- Hacer una retro corta: qué fricción hubo y qué ajustamos a las convenciones.
+
+## Qué necesito que diseñes, por incremento
+
+Marca cada componente en `05 Handoff` como **Ready for dev** cuando esté listo. Para cada uno incluye sus estados: hover, focus visible, pressed y disabled cuando aplique, en **Light y Dark**, y en mobile (390) además de desktop (1440) cuando sea un bloque de página.
+
+### I0 · Foundations (`01 Foundations`)
+- [ ] **Color · Primitives:** rampa neutral (50–950), rampa de marca, rampa de acento y colores de estado (success, warning, danger, info).
+- [ ] **Color · Semantic** (modos `Light` y `Dark`):
+  - fondos: `bg/page`, `bg/surface`, `bg/surface-subtle`, `bg/elevated`;
+  - texto: `text/primary`, `text/secondary`, `text/muted`, `text/inverse`;
+  - bordes: `border/subtle`, `border/strong`;
+  - acento: `accent/fg`, `accent/bg`;
+  - `focus/ring`.
+- [ ] **Espaciado:** escala sobre 4 px (0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96).
+- [ ] **Radios:** `none`, `s`, `m`, `l`, `xl`, `full`.
+- [ ] **Tipografía** (text styles): `Display`, `Heading/XL·L·M·S`, `Body/L·M·S`, `Label/M·S` y `Code`, en Figtree y Azeret Mono.
+- [ ] **Grid y breakpoints:** mobile 390, tablet 768 y desktop 1440, con columnas, márgenes y gutters.
+- [ ] **Elevación** (sombras), si la usas, y **motion** (duraciones y easing), opcional.
+
+### I1 · Poda
+- Nada que diseñar.
+
+### I2 · Primitivas
+- [ ] `Divider` (horizontal y vertical, `subtle` y `strong`).
+- `Stack`, `Grid`, `Text` y `Heading` salen de los tokens y text styles de I0; no necesitan componente propio.
+
+### I3 · Tema
+- [ ] `ThemeToggle`: claro y oscuro, con sus estados.
+- [ ] `Toast`: el aviso de "Link copiado", opcional; si no lo quieres, basta un mensaje accesible.
+
+### I4 · El marco del sitio
+- [ ] `Button`:
+  - `variant`: primary, secondary, tertiary, ghost;
+  - `size`: s, m, l;
+  - ícono opcional al inicio y al final;
+  - todos los estados.
+- [ ] `IconButton`: los mismos tamaños y variantes, con tooltip.
+- [ ] `ToggleButton`: los ítems de navegación, seleccionado y no seleccionado.
+- [ ] `Link`: inline y suelto, con sus estados.
+- [ ] `Avatar` (s, m, l) y `AvatarGroup`.
+- [ ] `Badge` y `Tag`, retomando el de T0.
+- [ ] `Header`: desktop y mobile, con el ítem activo, el ThemeToggle y la hora y ubicación.
+- [ ] `Footer`.
+
+### I5 · Casos de estudio
+- [ ] `ProjectCard`: con y sin media, hover y foco.
+- [ ] **Plantilla de caso de estudio:**
+  - hero con título, rol, fechas y equipo;
+  - secciones contexto → problema → rol → proceso → resultados → aprendizajes;
+  - bloque de métricas.
+- [ ] **Bloques MDX:**
+  - `Table`, `CodeBlock`, `Accordion` y `List`;
+  - `Callout` (info, success, warning, danger);
+  - `Media`, imagen o video con pie, en ratios 16:9, 4:3 y 1:1;
+  - `Carousel`, el índice de encabezados y `HeadingLink`.
+
+### I6 · Home y About
+- [ ] **Home:**
+  - hero con la propuesta de valor;
+  - casos destacados;
+  - CTA a contacto y CV.
+- [ ] **About:**
+  - intro;
+  - experiencia en línea de tiempo;
+  - estudios;
+  - habilidades con tags;
+  - contacto y redes.
+- [ ] Página **404**.
+
+### I7 · Cierre
+- [ ] Plantilla de **imagen OG** (1200×630) para compartir en redes.
+
 ## Setup de Figma
 
-Archivo sugerido: **"PDS · Portfolio Design System"**, en tu equipo Pro.
+Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnVdxcqR7ON3zyzbBL)**, en tu equipo Pro. Ya tiene creadas las páginas de abajo.
 
 | Página | Contenido |
 |---|---|
