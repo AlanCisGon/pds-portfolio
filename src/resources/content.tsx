@@ -294,20 +294,22 @@ const about: About = {
       },
       {
         title: "Generative AI & Design Innovation",
-        description:
-          "Actively integrating **Generative AI** tools and methodologies into UX strategy, research, and design operations, focused on augmenting creativity, speed, and decision-making across product teams while maintaining human-centered integrity.",
+        description: (
+          <>
+            Integrating <strong>Generative AI</strong> into UX strategy,
+            research, and design operations to boost creativity, speed, and
+            decision-making across product teams, without losing a
+            human-centered approach.
+          </>
+        ),
         tags: [
+          {
+            name: "Claude",
+            icon: "claude",
+          },
           {
             name: "Gemini AI",
             icon: "gemini",
-          },
-          {
-            name: "ChatGPT",
-            icon: "chatgpt",
-          },
-          {
-            name: "Perplexity",
-            icon: "perplexity",
           },
         ],
         // optional: leave the array empty if you don't want to display images
