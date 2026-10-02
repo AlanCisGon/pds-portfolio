@@ -286,7 +286,11 @@ Edit `src/resources/content.tsx`. All page text originates there.
 
 ## Deployment
 
-- Deployed on **Vercel** (inferred from `@vercel/analytics` and `@vercel/speed-insights` dependencies)
+- Deployed on **Vercel**, project `pds-portfolio-kf16`, connected to GitHub (`AlanCisGon/pds-portfolio`)
+- `main` → **production** (`alancisneros.design`, `www.alancisneros.design`)
+- `dev` → **preview / low-controlled environment** (`dev-alancisneros.vercel.app`, also `pds-portfolio-kf16-git-dev-alan-cisneros-projects.vercel.app`)
+- Every other pushed branch / PR gets its own Vercel preview URL
+- Vercel blocks deploys with known-vulnerable dependencies (e.g. CVE checks on `next-mdx-remote`); check build logs when a deploy ends in `ERROR` even though `next build` passed
 - `next export` is available for static hosting
 - Remote image domains allowed: `google.com` (configured in `next.config.mjs`)
 - No external API keys required for core functionality
@@ -300,9 +304,11 @@ Edit `src/resources/content.tsx`. All page text originates there.
 
 ## Git Workflow
 
-- **Main branch:** `master`
-- **Development branch:** `dev`
-- Feature branches: `claude/<description>-<id>` (for AI-assisted work)
+- **Main branch:** `main` — production. Every merge deploys to `alancisneros.design`; only merge via PR.
+- **Development branch:** `dev` — long-lived, low-controlled environment for validating changes on a Vercel preview before production. Do not delete it.
+- Feature branches: `feat/…`, `fix/…`, `docs/…`, or `claude/<description>-<id>` (for AI-assisted work). Branch from `main`, delete after merge.
+- Flow: feature branch → PR (Vercel preview) → optionally merge into `dev` to test in the shared preview → PR to `main` → production.
+- Keep `dev` in sync with `main` after releases (`git push origin main:dev` when `dev` has no unmerged work).
 - Commits are GPG-signed via SSH; the CI environment handles signing
 - Follow conventional commit format: `type(scope): description`
   - Examples: `fix(content): update project summary`, `feat(blog): add new post`
