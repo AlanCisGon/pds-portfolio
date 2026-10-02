@@ -266,6 +266,9 @@ export function CustomMDX(props: CustomMDXProps) {
   return (
     <MDXRemote
       {...props}
+      // MDX is first-party repo content: allow JSX expression props (data={{...}}),
+      // still blocking dangerous globals (eval, process, ...).
+      options={{ blockJS: false, blockDangerousJS: true, ...props.options }}
       components={{ ...components, ...(props.components || {}) }}
     />
   );
