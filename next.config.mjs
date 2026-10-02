@@ -7,13 +7,18 @@ const withMDX = mdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: "/ux-strategy",
-        destination: "/ux-strategy.html",
+        destination: "/lab/ux-strategy",
+        permanent: false,
       },
     ];
+  },
+  // Private lab artifacts live outside public/; ship them with the route.
+  outputFileTracingIncludes: {
+    "/lab/[slug]": ["./private/lab/**/*"],
   },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   transpilePackages: ["next-mdx-remote"],

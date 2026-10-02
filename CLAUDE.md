@@ -203,6 +203,20 @@ routes: {
 - Set password-protected paths in `once-ui.config.ts` under `protectedRoutes`
 - `RouteGuard` component (in `src/components/`) checks `/api/check-auth` on navigation
 - Auth cookie is `httpOnly`, `secure`, `sameSite=strict`
+- This guard is client-side and the cookie value is static, so treat it as a soft gate, not real access control
+
+### Private lab (`/lab`)
+
+Private, non-indexed space for standalone HTML artifacts (e.g. Claude artifacts), protected with HTTP Basic Auth on the server.
+
+- Artifacts: `private/lab/<slug>.html` (outside `public/`, so they are never served statically)
+- Manifest: `private/lab/lab.json` — `{ slug, title, description, createdAt }`; only listed slugs are served
+- `src/proxy.ts` (matcher `/lab`, `/lab/:path*`) and both route handlers call `checkLabAuth` from `src/utils/labAuth.ts`
+- `src/app/lab/route.ts` renders the index; `src/app/lab/[slug]/route.ts` serves one artifact
+- Credentials: `LAB_USER` / `LAB_PASSWORD`. If either is missing, `/lab` fails closed with 503
+- Every response sends `X-Robots-Tag: noindex, nofollow, noarchive` and `Cache-Control: private, no-store`; `/lab` is not in the sitemap, nav, or `robots.txt`
+- `next.config.mjs` ships `private/lab/**` with the route via `outputFileTracingIncludes`, and redirects `/ux-strategy` → `/lab/ux-strategy`
+- Add an artifact: drop the single-file HTML in `private/lab/`, add its entry to `lab.json`, open a PR
 
 ---
 
@@ -299,6 +313,7 @@ Edit `src/resources/content.tsx`. All page text originates there.
 | Variable | Description | Required |
 |---|---|---|
 | `PAGE_ACCESS_PASSWORD` | Password for protected routes | Only if using password protection |
+| `LAB_USER` / `LAB_PASSWORD` | Basic Auth credentials for `/lab` | For `/lab` (closed with 503 if unset) |
 
 ---
 
