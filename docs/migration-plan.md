@@ -10,6 +10,10 @@ Dejar de depender del fork de **Magic Portfolio** y de **Once UI**, y quedarse c
 3. Va en su propia rama, con un PR y su preview de Vercel. Opcionalmente se prueba en `dev`, luego se hace squash a `main`.
 4. Se mide después de salir a producción: Core Web Vitals, peso de JS, páginas vistas.
 
+**Fuentes de verdad**
+- **Marca:** `alan-brand-guidelines.md` §14 (v1.1), que define color, tipografía, composición y movimiento.
+- **Design system del portafolio:** `docs/design-system.md` (v0.1), con los tokens, las reglas de uso y las convenciones de CSS Modules. No es un producto aparte; vive aquí y crece con la migración.
+
 **Reglas durante la migración**
 - El código nuevo va en `src/ui/` y usa los tokens de `src/styles/tokens.css`.
 - No se agregan nuevos usos de Once UI.
@@ -40,11 +44,12 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
 ### I0 · Bases y medición (S, sin cambios visuales)
 - **Hipótesis:** si tenemos tokens compartidos y una línea base, cada incremento posterior se podrá comparar y validar.
 - **Pasos:**
-  - Crear el archivo de Figma (ver [Setup de Figma](#setup-de-figma)).
-  - Crear `src/styles/tokens.css` con los tokens propios. Al inicio son alias de los valores actuales de Once UI, así que no cambia nada visible.
-  - Crear la carpeta `src/ui/`.
-  - Registrar la línea base: CWV de Speed Insights, Lighthouse móvil de `/`, `/about` y `/work/project-helix`, y el peso de JS por ruta que reporta `next build`.
-- **Listo cuando:** existen los tokens en código y en Figma con los mismos nombres, y la línea base está anotada al final de este documento.
+  - [x] Crear el archivo de Figma (ver [Setup de Figma](#setup-de-figma)).
+  - [x] Crear `src/styles/tokens.css` con los tokens **de la marca**. Se importa en `layout.tsx`, pero nada los usa todavía, así que no cambia nada visible.
+  - [x] Crear las variables y estilos de texto en Figma con los mismos nombres: colecciones `Primitives`, `Semantic` (modo `Dark`), `Spacing`, `Radius` y `Motion`, más 12 estilos de texto.
+  - [ ] Crear la carpeta `src/ui/`. Se crea con el piloto T0.
+  - [ ] Registrar la línea base: CWV de Speed Insights, Lighthouse móvil de `/`, `/about` y `/work/project-helix`, y el peso de JS por ruta que reporta `next build`.
+- **Listo cuando:** la línea base está anotada al final de este documento.
 
 ### I1 · Poda (S)
 - **Hipótesis:** quitar el código que no se usa reduce lo que hay que migrar en más o menos un tercio, sin impacto para los visitantes.
@@ -64,12 +69,14 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - Migrar todos los usos.
 - **Listo cuando:** no queda ningún import de esos componentes y no hay regresiones visuales en el preview (comparar capturas).
 
-### I3 · Tema y providers (M)
-- **Hipótesis:** un tema propio, con `data-theme` en `<html>` y un script que evita el destello al cargar, nos da control total de los modos claro y oscuro.
+### I3 · Identidad base: solo oscuro y fuentes de marca (M)
+- **Hipótesis:** aplicar ya la paleta y las fuentes de la marca a todo el sitio, aunque los componentes sigan siendo de Once UI, hace que el portafolio se reconozca como pieza de autor desde temprano. Lo validaremos cuando el sitio pase el filtro de sello (§15 de la marca) en una revisión con capturas.
 - **Pasos:**
-  - Crear `ThemeProvider` y `ThemeToggle` propios.
+  - Sitio **solo oscuro**: quitar `ThemeToggle` y fijar el tema. Los visitantes ya no podrán elegir el modo claro.
+  - Mapear las variables de color de Once UI (`--page-background`, `--neutral-*`, `--brand-*`, `--accent-*`) a los tokens de marca en un solo archivo de puente, que se borra en I7.
+  - Conectar Geist Sans, Newsreader y Geist Mono con `next/font/google` en lugar de Figtree y Azeret Mono.
   - Usar los íconos de `react-icons` directamente.
-  - Quitar `DataThemeProvider`, `LayoutProvider`, `IconProvider` y `ToastProvider`. Para el aviso de "copiado" de `HeadingLink` basta un toast mínimo propio o un `aria-live`.
+  - Quitar `DataThemeProvider`, `LayoutProvider`, `IconProvider` y `ToastProvider`. Para el aviso de "copiado" de `HeadingLink` basta un mensaje con `aria-live`.
   - Dejar los tipos de configuración propios en `src/types`.
 
 ### I4 · El marco del sitio: primer handoff real desde Figma (M)
@@ -106,45 +113,37 @@ Antes de diseñar todas las foundations, probamos el ciclo completo **Figma → 
 
 - **Hipótesis:** si el ciclo funciona con un componente chico (nombres de variables 1:1 con el código, lectura del frame vía MCP, implementación fiel), podemos escalarlo al resto sin retrabajo.
 - **Lo validaremos cuando:**
-  - el `Tag` del preview coincida con el frame de Figma en claro y en oscuro;
-  - los tokens del código tengan exactamente los nombres de Figma;
+  - el `Tag` del preview coincida con el frame de Figma;
+  - todos los valores salgan de variables existentes, sin valores sueltos;
   - el ciclo completo tome una sesión o menos.
 
-**Lo que diseñas tú en Figma**
-1. **Variables mínimas.** Van en las colecciones definitivas, así que nada se tira. En cada una define *Code syntax → Web*.
-   - `Primitives`: los colores que necesite el tag; `space/4` y `space/8`; `radius/full` o `radius/s`, según tu decisión de diseño.
-   - `Semantic` (modos `Light` y `Dark`): `color/bg/surface-subtle`, `color/text/secondary`, `color/border/subtle`.
-2. **Text style** `Label/S`, por ejemplo Figtree Medium 12/16.
-3. **Componente `Tag`** en `02 Components`, con:
+**Lo que diseñas tú en Figma.** Las variables y los estilos de texto ya existen en `01 Foundations`; solo usa esos.
+1. **Componente `Tag`** en `02 Components`, con:
    - la propiedad `size` (`s`, `m`);
    - el booleano `showIcon` y un *instance swap* `icon`;
    - el texto `label`.
-4. **Handoff:** en `05 Handoff`, una sección **"T0 · Tag"** con instancias en ambos modos y en ambos tamaños, marcada **Ready for dev**. Me mandas su link.
+   - Úsalo con `System/Label S` o `Label M`, fondo `color/bg/elevated` o `surface`, texto `color/text/secondary` o `primary`, `radius/control` y padding `space/4` + `space/8`, según tu criterio. **Sin Cerezo**, porque el tag no es interactivo.
+2. **Handoff:** en `05 Handoff`, en la sección **"T0 · Tag"**, pon instancias en ambos tamaños, con y sin ícono, y márcala **Ready for dev**. Me mandas su link.
 
 **Lo que hago yo**
 - Leer el frame y las variables con el MCP.
-- Crear `src/styles/tokens.css`, solo con esos tokens, y `src/ui/Tag/`.
+- Crear `src/ui/Tag/` con CSS Modules y los tokens que ya existen.
+- Conectar con `next/font` las fuentes que use el tag.
 - Reemplazar el `Tag` de Once UI en About.
 - Abrir un PR con su preview y comparar con Figma.
 - Hacer una retro corta: qué fricción hubo y qué ajustamos a las convenciones.
 
 ## Qué necesito que diseñes, por incremento
 
-Marca cada componente en `05 Handoff` como **Ready for dev** cuando esté listo. Para cada uno incluye sus estados: hover, focus visible, pressed y disabled cuando aplique, en **Light y Dark**, y en mobile (390) además de desktop (1440) cuando sea un bloque de página.
+Marca cada componente en `05 Handoff` como **Ready for dev** cuando esté listo. Para cada uno incluye sus estados (hover, focus visible, pressed y disabled cuando aplique) y, si es un bloque de página, su versión mobile (390) además de desktop (1280). **Solo modo oscuro.**
 
 ### I0 · Foundations (`01 Foundations`)
-- [ ] **Color · Primitives:** rampa neutral (50–950), rampa de marca, rampa de acento y colores de estado (success, warning, danger, info).
-- [ ] **Color · Semantic** (modos `Light` y `Dark`):
-  - fondos: `bg/page`, `bg/surface`, `bg/surface-subtle`, `bg/elevated`;
-  - texto: `text/primary`, `text/secondary`, `text/muted`, `text/inverse`;
-  - bordes: `border/subtle`, `border/strong`;
-  - acento: `accent/fg`, `accent/bg`;
-  - `focus/ring`.
-- [ ] **Espaciado:** escala sobre 4 px (0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96).
-- [ ] **Radios:** `none`, `s`, `m`, `l`, `xl`, `full`.
-- [ ] **Tipografía** (text styles): `Display`, `Heading/XL·L·M·S`, `Body/L·M·S`, `Label/M·S` y `Code`, en Figtree y Azeret Mono.
-- [ ] **Grid y breakpoints:** mobile 390, tablet 768 y desktop 1440, con columnas, márgenes y gutters.
-- [ ] **Elevación** (sombras), si la usas, y **motion** (duraciones y easing), opcional.
+Ya salen de la marca y están creadas en Figma y en código; ver `docs/design-system.md`.
+- [x] Color: `Primitives` (paleta de marca) y `Semantic` (modo `Dark`).
+- [x] Espaciado (4, 8, 16, 24, 32, 48, 64), radios (`control`, `card`, `pill`) y motion.
+- [x] Estilos de texto v0.1: `Voice/*` en Newsreader, `System/*` en Geist y `Measure/Meta` en Geist Mono.
+- [ ] **Validar la escala tipográfica v0.1**: ajústala en Figma si algo no te convence y me avisas para pasar el cambio a código.
+- [ ] **Grid bento:** columnas y comportamiento en 390, 768 y 1280, con colapso a una columna en mobile.
 
 ### I1 · Poda
 - Nada que diseñar.
@@ -153,9 +152,8 @@ Marca cada componente en `05 Handoff` como **Ready for dev** cuando esté listo.
 - [ ] `Divider` (horizontal y vertical, `subtle` y `strong`).
 - `Stack`, `Grid`, `Text` y `Heading` salen de los tokens y text styles de I0; no necesitan componente propio.
 
-### I3 · Tema
-- [ ] `ThemeToggle`: claro y oscuro, con sus estados.
-- [ ] `Toast`: el aviso de "Link copiado", opcional; si no lo quieres, basta un mensaje accesible.
+### I3 · Identidad base
+- Nada que diseñar: es aplicar los tokens y las fuentes de la marca. Solo revisas capturas del preview contra el filtro de sello.
 
 ### I4 · El marco del sitio
 - [ ] `Button`:
@@ -168,7 +166,7 @@ Marca cada componente en `05 Handoff` como **Ready for dev** cuando esté listo.
 - [ ] `Link`: inline y suelto, con sus estados.
 - [ ] `Avatar` (s, m, l) y `AvatarGroup`.
 - [ ] `Badge` y `Tag`, retomando el de T0.
-- [ ] `Header`: desktop y mobile, con el ítem activo, el ThemeToggle y la hora y ubicación.
+- [ ] `Header`: desktop y mobile, con el ítem activo y la hora y ubicación (sin ThemeToggle: el sitio es solo oscuro).
 - [ ] `Footer`.
 
 ### I5 · Casos de estudio
@@ -209,17 +207,17 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 | `01 Foundations` | Variables y estilos de texto |
 | `02 Components` | Componentes con variantes |
 | `03 Patterns` | Bloques de caso de estudio, hero, listas de proyectos |
-| `04 Pages` | Pantallas completas (desktop 1440 y mobile 390) |
+| `04 Pages` | Pantallas completas (desktop 1280 y mobile 390) |
 | `05 Handoff` | Secciones marcadas **Ready for dev** |
 
 **Variables**
 - La colección `Primitives` guarda las escalas de color, espacio, radios y tamaños tipográficos.
-- La colección `Semantic` tiene los modos `Light` y `Dark`: `color/bg/page`, `color/bg/surface`, `color/text/primary`, `color/border/subtle`, etc.
+- La colección `Semantic` tiene un solo modo, `Dark`: `color/bg/page`, `color/bg/surface`, `color/text/primary`, `color/accent/default`, etc. Las colecciones `Spacing`, `Radius` y `Motion` completan los tokens.
 - En cada variable define **Code syntax → Web** con el nombre CSS (`--color-bg-surface`). Así `get_variable_defs` devuelve exactamente lo que va en `tokens.css`.
 
-**Tipografía:** Figtree para títulos y cuerpo, Azeret Mono para código y etiquetas, igual que hoy en el sitio.
+**Tipografía:** la de la marca, con Geist Sans para el sistema, Newsreader para la voz y Geist Mono para la medida. El sitio todavía usa Figtree y Azeret Mono hasta I3.
 
-**Arranque opcional:** puedo crear las variables en Figma a partir de los tokens actuales del código (skills `figma-generate-library` + `figma-use`), o capturar las páginas actuales como punto de partida (`figma-generate-design`). Así no empiezas de cero.
+**Estado (2026-10-02):** las variables y los estilos de texto ya están creados a partir de la marca. En `01 Foundations` hay muestras de color y tipografía conectadas a ellos.
 
 **Handoff:** el flujo está en `CLAUDE.md` → *Figma → Code Handoff*. En corto: marcas *Ready for dev*, me pasas el link del frame con `node-id` y lo implemento en una rama con PR.
 
