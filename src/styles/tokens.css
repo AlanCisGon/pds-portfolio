@@ -1,0 +1,188 @@
+/*
+ * Portfolio design system · foundations + context layer (v0.1)
+ * Source of truth: alan-brand-guidelines.md §14 (v1.1) — documented in docs/design-system.md.
+ * Names map 1:1 to Figma variables (Web code syntax) in "PDS · Portfolio Design System".
+ * Dark mode only: the brand reserves light mode for documents and print.
+ */
+
+:root {
+  /* ── Primitives · brand palette (do not use directly in components) ── */
+  --palette-titanio: #0e1114;
+  --palette-grafito: #171b20;
+  --palette-acero: #20262d;
+  --palette-aluminio: #8c96a3;
+  --palette-niebla: #e8ecf1;
+  --palette-cerezo: #d2734e;
+  --palette-cerezo-profundo: #8e3b22;
+
+  /* ── Semantic · color ── */
+  --color-bg-page: var(--palette-titanio);
+  --color-bg-surface: var(--palette-grafito);
+  --color-bg-elevated: var(--palette-acero);
+
+  --color-text-primary: var(--palette-niebla); /* 15.96:1 on page */
+  --color-text-secondary: var(--palette-aluminio); /* 6.32:1 on page, 5.09:1 on elevated */
+
+  /* Borders only when indispensable: surfaces separate by tone, not lines. */
+  --color-border-subtle: color-mix(in srgb, var(--palette-aluminio) 12%, transparent);
+
+  /* The only warm color, and only where the hand goes: buttons, links, focus, active states. */
+  --color-accent: var(--palette-cerezo); /* 5.68:1 on page · avoid on elevated (4.58:1) */
+  --color-accent-hover: color-mix(in oklab, var(--palette-cerezo) 85%, var(--palette-niebla)); /* ≈ #D78667 */
+  --color-accent-pressed: color-mix(in oklab, var(--palette-cerezo) 92%, var(--palette-titanio)); /* ≈ #C06B4A */
+  --color-accent-strong: var(--palette-cerezo-profundo);
+  --color-on-accent: var(--palette-titanio); /* text on accent / hover / pressed: 5.68 / 6.76 / 4.90 */
+  --color-on-accent-strong: var(--palette-niebla); /* 6.32:1 */
+  --color-focus-ring: var(--palette-cerezo);
+
+  /* ── States · interaction (≠ status). Disabled = "metal without the handle": the warmth leaves ──
+   * WCAG exempts inactive controls from contrast, but they stay perceivable (~3:1 on page)
+   * and clearly dimmer than secondary text (2×). No hover, press or motion while disabled.
+   */
+  --state-disabled-fg: color-mix(in oklab, var(--palette-aluminio) 65%, var(--palette-titanio)); /* ≈ #5C636C · 3.11 page / 2.84 surface / 2.51 elevated */
+  --state-disabled-bg: var(--palette-acero);
+  --state-disabled-border: var(--color-border-subtle);
+
+  /* ── Spacing · 8-pt scale; 4 only inside small components ── */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+
+  /* ── Radius · concentric: inner = outer − padding ── */
+  --radius-control: 12px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
+
+  /* ── Typography · families (next/font variables, with fallbacks) ── */
+  --font-sans: var(--font-geist-sans, "Geist"), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-newsreader, "Newsreader"), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-geist-mono, "Geist Mono"), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* ── Typography · scale (proposal v0.1, line heights on a 4-pt grid) ── */
+  /* Voice — Newsreader: editorial headlines, quotes, principles. Never in buttons, forms or navigation. */
+  --text-display-size: clamp(40px, 5vw + 16px, 56px);
+  --text-display-line: 1.14;
+  --text-title-size: clamp(32px, 2.5vw + 20px, 40px);
+  --text-title-line: 1.2;
+  --text-quote-size: 24px;
+  --text-quote-line: 32px;
+
+  /* System — Geist Sans: interface, body, navigation, data. */
+  --text-heading-l-size: 32px;
+  --text-heading-l-line: 40px;
+  --text-heading-m-size: 24px;
+  --text-heading-m-line: 32px;
+  --text-heading-s-size: 20px;
+  --text-heading-s-line: 28px;
+  --text-body-l-size: 18px;
+  --text-body-l-line: 28px;
+  --text-body-m-size: 16px;
+  --text-body-m-line: 24px;
+  --text-body-s-size: 14px;
+  --text-body-s-line: 20px;
+  --text-label-m-size: 14px;
+  --text-label-m-line: 20px;
+  --text-label-s-size: 12px;
+  --text-label-s-line: 16px;
+
+  /* Measure — Geist Mono: labels, metadata, numbers, the lab. */
+  --text-meta-size: 12px;
+  --text-meta-line: 16px;
+  --text-meta-tracking: 0.04em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* ── Motion · "cierre suave": decisive start, settles without bounce ── */
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1); /* entrances and expansions */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1); /* elements leaving */
+  --duration-fast: 150ms; /* hover, press, toggles */
+  --duration-base: 250ms; /* cards, menus, state changes */
+  --duration-wide: 400ms; /* screen transitions — never longer */
+  --stagger-step: 40ms; /* groups enter in sequence (30–50 ms) */
+
+  /* ── Context layer · sits above the brand foundations ──
+   * Status and categorical color. An explicit, bounded exception to "one warm color":
+   * never interactive (the hand still means Cerezo), small doses only, never color alone
+   * (always icon + text), max 6 categories at once. Values verified in docs/design-system.md.
+   */
+
+  /* Status ("estatus": outcome or condition, ≠ interaction state) · tuned lightness per state so they stay distinct with color-vision deficiencies */
+  --status-success-fg: #77e3b7; /* oklch(0.84 0.120 165) */
+  --status-success-bg: #0d2d21;
+  --status-success-border: #135b42;
+  --status-warning-fg: #f8ca65; /* oklch(0.86 0.130 85) */
+  --status-warning-bg: #302409;
+  --status-warning-border: #61490c;
+  --status-danger-fg: #f275a0; /* oklch(0.72 0.160 0) */
+  --status-danger-bg: #381d25;
+  --status-danger-border: #70394b;
+  --status-info-fg: #72b8f2; /* oklch(0.76 0.110 245) */
+  --status-info-bg: #12283b;
+  --status-info-border: #225176;
+  --status-neutral-fg: var(--palette-aluminio);
+  --status-neutral-bg: var(--palette-acero);
+
+  /* Categorical · 12 hues at equal OKLCH lightness (0.80) and chroma (≈0.12): one family */
+  --ctx-red-fg: #ffa098; /* h 25 */
+  --ctx-red-bg: #3a1d1b;
+  --ctx-red-border: #733a36;
+  --ctx-orange-fg: #f9a870; /* h 55 */
+  --ctx-orange-bg: #372010;
+  --ctx-orange-border: #6e401e;
+  --ctx-amber-fg: #e6b55d; /* h 80 */
+  --ctx-amber-bg: #32240a;
+  --ctx-amber-border: #64470e;
+  --ctx-yellow-fg: #d0bf5e; /* h 100 */
+  --ctx-yellow-bg: #2c270a;
+  --ctx-yellow-border: #574e0e;
+  --ctx-lime-fg: #a4cd79; /* h 130 */
+  --ctx-lime-bg: #1f2b12;
+  --ctx-lime-border: #3e5624;
+  --ctx-green-fg: #83d494; /* h 150 */
+  --ctx-green-bg: #152d1a;
+  --ctx-green-border: #295935;
+  --ctx-teal-fg: #52d7c1; /* h 180 */
+  --ctx-teal-bg: #052d27;
+  --ctx-teal-border: #015a4f;
+  --ctx-cyan-fg: #47d2e8; /* h 210 */
+  --ctx-cyan-bg: #022c33;
+  --ctx-cyan-border: #025763;
+  --ctx-blue-fg: #89c3fe; /* h 250 */
+  --ctx-blue-bg: #14283c;
+  --ctx-blue-border: #285077;
+  --ctx-indigo-fg: #abb9fe; /* h 275 */
+  --ctx-indigo-bg: #20243c;
+  --ctx-indigo-border: #414978;
+  --ctx-violet-fg: #c9acff; /* h 300 */
+  --ctx-violet-bg: #2a2139;
+  --ctx-violet-border: #544272;
+  --ctx-magenta-fg: #f19fd6; /* h 340 */
+  --ctx-magenta-bg: #351d2d;
+  --ctx-magenta-border: #6a3b5b;
+
+  /* ── Layout ── */
+  --page-padding: var(--space-16); /* mobile */
+  --bento-gap: var(--space-16);
+  --breakpoint-tablet: 768px; /* reference only: CSS vars can't be used in media queries */
+  --breakpoint-desktop: 1280px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-padding: var(--space-24);
+    --bento-gap: var(--space-24);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    /* Only opacity changes should animate; components keep transforms static under this query. */
+    --stagger-step: 0ms;
+  }
+}
