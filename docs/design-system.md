@@ -227,7 +227,8 @@ Solo lo que el portafolio usa. El orden y el incremento vienen de `docs/migratio
 
 | Componente | Incremento | Notas de marca |
 |---|---|---|
-| `Tag` | T0 (piloto) | Geist Sans `label-s`, superficie tonal, sin acento (no es interactivo) |
+| `Tag` | T0 (piloto) · **en código** | Informativo: Medium 32 px (ícono 22, `label-m`) y Small 28 px (ícono 20, `label-s`); `bg-elevated` + `text-secondary`; sin estados, sin X, sin Cerezo. `src/ui/Tag` |
+| `Chip` | Cuando haya filtros | Interactivo: Cerezo con `on-accent/default` en Default y Hover, Cerezo profundo en Active, *disabled* "metal sin mango", X como `<button>` ≥ 24 × 24. Solo en Figma |
 | `Divider` | I2 | `--color-border-subtle`; usar poco |
 | `Button`, `IconButton`, `Link` | I4 | Acento Cerezo; texto Titanio sobre él; foco Cerezo |
 | `Avatar`, `Badge` | I4 | — |

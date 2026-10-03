@@ -1,0 +1,45 @@
+/*
+ * Tag · informative (skills, tools, industries). Not interactive: no states, no Cerezo.
+ * Figma: PDS · Portfolio Design System → 02 Components → Tag (19:29).
+ */
+.tag {
+  /* Component dimensions from Figma (no global token for these sizes). */
+  --tag-height: 32px;
+  --tag-icon-size: 22px;
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-8);
+  height: var(--tag-height);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  white-space: nowrap;
+}
+
+.tag[data-size="small"] {
+  --tag-height: 28px;
+  --tag-icon-size: 20px;
+
+  font-size: var(--text-label-s-size);
+  line-height: var(--text-label-s-line);
+}
+
+/* Icons inherit the text color (currentColor): the icon follows the text. */
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--tag-icon-size);
+  height: var(--tag-icon-size);
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
