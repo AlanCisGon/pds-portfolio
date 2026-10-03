@@ -47,7 +47,7 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - [x] Crear el archivo de Figma (ver [Setup de Figma](#setup-de-figma)).
   - [x] Crear `src/styles/tokens.css` con los tokens **de la marca**. Se importa en `layout.tsx`, pero nada los usa todavía, así que no cambia nada visible.
   - [x] Crear las variables y estilos de texto en Figma con los mismos nombres: colecciones `Primitives`, `Semantic` (modo `Dark`), `Spacing`, `Radius` y `Motion`, más 12 estilos de texto.
-  - [ ] Crear la carpeta `src/ui/`. Se crea con el piloto T0.
+  - [x] Crear la carpeta `src/ui/` (piloto T0).
   - [ ] Registrar la línea base: CWV de Speed Insights, Lighthouse móvil de `/`, `/about` y `/work/project-helix`, y el peso de JS por ruta que reporta `next build`.
 - **Listo cuando:** la línea base está anotada al final de este documento.
 
@@ -116,6 +116,17 @@ Antes de diseñar todas las foundations, probamos el ciclo completo **Figma → 
   - el `Tag` del preview coincida con el frame de Figma;
   - todos los valores salgan de variables existentes, sin valores sueltos;
   - el ciclo completo tome una sesión o menos.
+
+**Resultado (2026-10-02) · implementado en `src/ui/Tag`**
+- **Lectura vía MCP:** `get_design_context` + `get_variable_defs` sobre el set `Tag` (19:29) devolvieron los nombres de variables idénticos a `tokens.css` (`--color-bg-elevated`, `--color-text-secondary`, `--space-4`, `--space-8`, `--radius-pill`). No hubo traducción.
+- **Fidelidad:** medida en el navegador sobre la build, alto 32/28, padding 4/8, gap 8, radio 999, Geist Medium 14/20 y 12/16, ícono 22 y 20 y colores `#20262D` / `#8C96A3`. Todo coincide con Figma.
+- **Valores fuera de tokens:** solo las dimensiones propias del componente (alto 32/28 e ícono 22/20), declaradas como variables locales (`--tag-height`, `--tag-icon-size`).
+- **Fricción encontrada:**
+  1. Las variables de texto tenían alcance solo `TEXT_FILL`, así que no se podían usar en íconos. Ya incluyen trazo y relleno de formas.
+  2. Al cambiar el color de una instancia por script, Figma guardó un valor de respaldo negro; hay que escribir el valor resuelto como respaldo.
+  3. Los logos de Simple Icons traen un `<title>` que duplica el texto y muestra un tooltip; en el Tag se pasa `title=""`.
+  4. El diseño original era interactivo; se separó en `Tag` (informativo) y `Chip` (interactivo).
+- **Pendiente de la retro:** tu comparación visual del preview contra el frame.
 
 **Lo que diseñas tú en Figma.** Las variables y los estilos de texto ya existen en `01 Foundations`; solo usa esos.
 1. **Componente `Tag`** en `02 Components`, con:
@@ -227,6 +238,9 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 
 | Componente en Figma | Código | Reemplaza a | Incremento | Estado |
 |---|---|---|---|---|
+| `Tag` (19:29) | `src/ui/Tag` | `Tag` | T0 | **hecho** |
+| `Chip` (11:12) | `src/ui/Chip` | — | Cuando haya filtros | solo Figma |
+| `Icon/*` · `Logo/*` | `iconoir-react` · `@icons-pack/react-simple-icons` (mapa en `src/resources/tagIcons.tsx`) | `react-icons` | T0 (skills) · I3 (resto) | en curso |
 | `Stack` | `src/ui/Stack` | `Column`, `Row`, `Flex` | I2 | pendiente |
 | `Text` / `Heading` | `src/ui/Text`, `src/ui/Heading` | `Text`, `Heading` | I2 | pendiente |
 | `Button` | `src/ui/Button` | `Button`, `IconButton` | I4 | pendiente |

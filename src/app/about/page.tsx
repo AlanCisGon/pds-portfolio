@@ -6,13 +6,14 @@ import {
   Icon,
   IconButton,
   Media,
-  Tag,
   Text,
   Meta,
   Schema,
   Row,
 } from "@once-ui-system/core";
 import { baseURL, about, person, social } from "@/resources";
+import { tagIcons } from "@/resources/tagIcons";
+import { Tag } from "@/ui";
 import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 import React from "react";
@@ -101,9 +102,7 @@ export default function About() {
             {person.languages && person.languages.length > 0 && (
               <Row wrap gap="8">
                 {person.languages.map((language, index) => (
-                  <Tag key={index} size="l">
-                    {language}
-                  </Tag>
+                  <Tag key={index}>{language}</Tag>
                 ))}
               </Row>
             )}
@@ -303,7 +302,10 @@ export default function About() {
                     {skill.tags && skill.tags.length > 0 && (
                       <Row wrap gap="8" paddingTop="8">
                         {skill.tags.map((tag, tagIndex) => (
-                          <Tag key={`${skill.title}-${tagIndex}`} size="l" prefixIcon={tag.icon}>
+                          <Tag
+                            key={`${skill.title}-${tagIndex}`}
+                            leadingIcon={tag.icon ? tagIcons[tag.icon] : undefined}
+                          >
                             {tag.name}
                           </Tag>
                         ))}
