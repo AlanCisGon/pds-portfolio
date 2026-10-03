@@ -1,18 +1,9 @@
-@keyframes bgFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.bg-fade-in {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-
-  animation: bgFadeIn 800ms ease-out both;
-  will-change: opacity;
+/* Bridge from Once UI to the portfolio foundations, for the pages not yet migrated to src/ui.
+   Deleted with the Once UI dependency in step D. `:root:root` beats Once UI's own :root rules. */
+:root:root {
+  --font-heading: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-label: var(--font-sans);
+  --font-code: var(--font-mono);
+  --page-background: var(--color-bg-page);
 }

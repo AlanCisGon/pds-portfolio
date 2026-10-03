@@ -1,60 +1,31 @@
-import { Row, IconButton, SmartLink, Text } from "@once-ui-system/core";
-import { person, social } from "@/resources";
-import styles from "./Footer.module.scss";
+import { Github, Linkedin, Mail } from "iconoir-react";
 
-export const Footer = () => {
-  const currentYear = new Date().getFullYear();
+import { Footer as SiteFooter, Link } from "@/ui";
+import { person, social } from "@/resources";
+
+const socialIcons = { github: <Github />, linkedin: <Linkedin />, email: <Mail /> } as const;
+
+export function Footer() {
+  const year = new Date().getFullYear();
 
   return (
-    <Row
-      as="footer"
-      fillWidth
-      padding="8"
-      horizontal="center"
-      s={{ direction: "column" }}
-    >
-      <Row
-        className={styles.mobile}
-        maxWidth="m"
-        paddingY="8"
-        paddingX="16"
-        gap="16"
-        horizontal="between"
-        vertical="center"
-        s={{
-          direction: "column",
-          horizontal: "center",
-          align: "center",
-        }}
-      >
-        <Text variant="body-default-s" onBackground="neutral-strong">
-          <Text onBackground="neutral-weak">© {currentYear} /</Text>
-          <Text paddingX="4"> From 🇲🇽 by {person.name}</Text>
-          <Text onBackground="neutral-weak">
-            {/* Usage of this template requires attribution. Please don't remove the link to Once UI unless you have a Pro license. */}
-            / Created using{" "}
-            <SmartLink href="https://once-ui.com/products/magic-portfolio">
-              Once UI & Magic Portfolio
-            </SmartLink>{" "}
-          </Text>
-        </Text>
-        <Row gap="16">
-          {social.map(
-            (item) =>
-              item.link && (
-                <IconButton
-                  key={item.name}
-                  href={item.link}
-                  icon={item.icon}
-                  tooltip={item.name}
-                  size="s"
-                  variant="ghost"
-                />
-              ),
-          )}
-        </Row>
-      </Row>
-      <Row height="80" hide s={{ hide: false }} />
-    </Row>
+    <SiteFooter
+      signature={
+        <>
+          © {year} · From 🇲🇽 by {person.name} · Built with{" "}
+          {/* The Magic Portfolio template (CC BY-NC 4.0) requires attribution until it is fully replaced (step D). */}
+          <Link href="https://once-ui.com/products/magic-portfolio" external>
+            Once UI & Magic Portfolio
+          </Link>
+        </>
+      }
+      social={social
+        .filter((item) => item.link)
+        .map((item) => ({
+          href: item.link,
+          label: item.name,
+          icon: socialIcons[item.icon as keyof typeof socialIcons],
+        }))}
+    />
   );
-};
+}
