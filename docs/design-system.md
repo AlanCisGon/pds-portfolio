@@ -199,7 +199,12 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | `label-s` | Geist Sans | 12 / 16 | 500 |
 | `meta` | Geist Mono | 12 / 16, tracking 0.04em | 400 |
 
-Las fuentes se cargan con `next/font/google`, que expone `--font-geist-sans`, `--font-newsreader` y `--font-geist-mono`. Se conectan en `layout.tsx` junto con el primer componente que las use (piloto T0). Hasta entonces el sitio sigue con Figtree y Azeret Mono.
+**Carga de fuentes:**
+
+- **Geist Sans y Geist Mono**, desde I3, con el paquete oficial `geist` (archivos locales). Exponen `--font-geist-sans` y `--font-geist-mono`. Hoy (T0) Geist Sans se carga con `next/font/google`.
+- **Newsreader** con `next/font/google`, que expone `--font-newsreader`.
+- **Por qué locales:** en T0, un deploy de producción falló al resolver una fuente de Google Fonts con la caché de build de Vercel, y se resolvió con un redeploy. Las fuentes locales evitan esa dependencia del build. Ver `docs/migration-plan.md` → I3.
+- Fuera de los tags de About, el sitio sigue con Figtree y Azeret Mono hasta I3.
 
 ## Movimiento
 
