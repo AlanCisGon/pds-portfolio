@@ -1,0 +1,54 @@
+/* Badge · Figma 02b Content (30:35). */
+.badge {
+  --badge-fg: var(--status-neutral-fg);
+  --badge-bg: var(--status-neutral-bg);
+  --badge-border: transparent;
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-4);
+  height: 24px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--badge-border);
+  border-radius: var(--radius-pill);
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-s-size);
+  line-height: var(--text-label-s-line);
+  white-space: nowrap;
+}
+
+.badge[data-tone="info"] {
+  --badge-fg: var(--status-info-fg);
+  --badge-bg: var(--status-info-bg);
+  --badge-border: var(--status-info-border);
+}
+.badge[data-tone="success"] {
+  --badge-fg: var(--status-success-fg);
+  --badge-bg: var(--status-success-bg);
+  --badge-border: var(--status-success-border);
+}
+.badge[data-tone="warning"] {
+  --badge-fg: var(--status-warning-fg);
+  --badge-bg: var(--status-warning-bg);
+  --badge-border: var(--status-warning-border);
+}
+.badge[data-tone="danger"] {
+  --badge-fg: var(--status-danger-fg);
+  --badge-bg: var(--status-danger-bg);
+  --badge-border: var(--status-danger-border);
+}
+
+.icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}

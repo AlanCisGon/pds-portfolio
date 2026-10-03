@@ -1,0 +1,36 @@
+/* Avatar · Figma 02b Content (29:13). No border: separated by tone. */
+.avatar {
+  --avatar-size: 32px;
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-s-size);
+  line-height: var(--text-label-s-line);
+}
+
+.avatar[data-size="s"] {
+  --avatar-size: 24px;
+}
+
+.avatar[data-size="l"] {
+  --avatar-size: 48px;
+
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

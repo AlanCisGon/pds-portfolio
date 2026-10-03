@@ -1,0 +1,69 @@
+/* NavItem · Figma 02a Actions (28:140). */
+.navItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: 40px;
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--ease-settle),
+    color var(--duration-fast) var(--ease-settle);
+}
+
+.icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.navItem:hover,
+.navItem:focus-visible {
+  color: var(--color-text-primary);
+}
+
+.navItem:hover:not([data-selected]) {
+  background: var(--state-hover-surface);
+}
+
+.navItem:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* current page: tonal surface + Cerezo icon (active state = where the hand goes) */
+.navItem[data-selected] {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+.navItem[data-selected] .icon {
+  color: var(--color-accent);
+}
+
+@media (max-width: 767px) {
+  .navItem:has(.label[data-compact]) {
+    padding: 0 var(--space-16);
+  }
+
+  .label[data-compact] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}

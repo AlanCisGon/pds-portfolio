@@ -87,7 +87,7 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - Sitio **solo oscuro**: quitar `ThemeToggle` y fijar el tema. Los visitantes ya no podrán elegir el modo claro.
   - Mapear las variables de color de Once UI (`--page-background`, `--neutral-*`, `--brand-*`, `--accent-*`) a los tokens de marca en un solo archivo de puente, que se borra en I7.
   - Cargar las fuentes de la marca en lugar de Figtree y Azeret Mono:
-    - **Geist Sans y Geist Mono con el paquete oficial `geist`** (`geist/font/sans` y `geist/font/mono`), que las carga como archivo local: el build ya no las descarga de Google Fonts ni depende de la caché de Vercel. Reemplaza el `next/font/google` que agregó T0 en `src/styles/fonts.ts`, manteniendo las variables `--font-geist-sans` y `--font-geist-mono`.
+    - [x] **Geist Sans y Geist Mono con el paquete oficial `geist`** (adelantado el 2026-10-03 junto con los componentes; hoy solo los usan `src/ui`) (`geist/font/sans` y `geist/font/mono`), que las carga como archivo local: el build ya no las descarga de Google Fonts ni depende de la caché de Vercel. Reemplaza el `next/font/google` que agregó T0 en `src/styles/fonts.ts`, manteniendo las variables `--font-geist-sans` y `--font-geist-mono`.
     - **Newsreader** sigue con `next/font/google` (`--font-newsreader`), porque `geist` no la incluye.
     - **Aprendizaje de T0 (2026-10-02):** el primer deploy de producción con Geist vía `next/font/google` falló con `next/font/google queries have exactly one entry`. Vercel restauró una caché de build anterior que no tenía la fuente nueva, y Turbopack no pudo resolverla. El mismo commit compiló bien en el preview y en `dev`, y un redeploy lo resolvió. Si se repite con Newsreader u otra fuente de Google, **se vuelve a desplegar el mismo commit**, sin cambiar código.
   - Reemplazar `react-icons` por **Iconoir** en la interfaz y **Simple Icons** en los logos (ver `docs/design-system.md` → *Iconografía*), y desinstalar `react-icons`.
@@ -254,13 +254,15 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 | Componente en Figma | Código | Reemplaza a | Incremento | Estado |
 |---|---|---|---|---|
 | `Tag` (19:29) | `src/ui/Tag` | `Tag` | T0 | **hecho** |
-| `Chip` (11:12) | `src/ui/Chip` | — | Cuando haya filtros | solo Figma |
+| `Chip` (41:197) | `src/ui/Chip` | — | Cuando haya filtros | en código · sin integrar |
 | `Icon/*` · `Logo/*` | `iconoir-react` · `@icons-pack/react-simple-icons` (mapa en `src/resources/tagIcons.tsx`) | `react-icons` | T0 (skills) · I3 (resto) | en curso |
 | `Stack` | `src/ui/Stack` | `Column`, `Row`, `Flex` | I2 | pendiente |
 | `Text` / `Heading` | `src/ui/Text`, `src/ui/Heading` | `Text`, `Heading` | I2 | pendiente |
-| `Button` | `src/ui/Button` | `Button`, `IconButton` | I4 | pendiente |
-| `Header` / `Footer` | `src/components/Header`, `Footer` | `Header`, `Footer` actuales | I4 | pendiente |
-| `ProjectCard` | `src/ui/ProjectCard` | `ProjectCard` actual | I5 | pendiente |
+| `Button` · `IconButton` · `Link` · `NavItem` | `src/ui/*` | `Button`, `IconButton`, `SmartLink`, `ToggleButton` | I4 | en código · sin integrar |
+| `Header` / `Footer` | `src/ui/Header`, `src/ui/Footer` | `Header`, `Footer` actuales | I4 | en código · sin integrar |
+| `ProjectCard` · `Card` | `src/ui/ProjectCard`, `src/ui/Card` | `ProjectCard` actual | I5 · I6 | en código · sin integrar |
+| Bloques MDX: `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel`, `Callout`, `List`, `TableOfContents`, `HeadingLink` | `src/ui/*` | componentes MDX de Once UI | I5 | en código · sin integrar |
+| `Divider` · `Avatar` · `AvatarGroup` · `Badge` | `src/ui/*` | `Line`, `Avatar`, `AvatarGroup`, `Badge` | I2 · I4 · I5 | en código · sin integrar |
 
 ## Línea base y resultados
 

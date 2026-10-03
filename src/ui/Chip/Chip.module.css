@@ -1,0 +1,105 @@
+/* Chip · Figma 02a Actions (41:197). Selected × State × Size, aligned to Button / NavItem. */
+.chip {
+  --chip-height: 40px;
+  --chip-icon-size: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: var(--chip-height);
+  padding: 0 var(--space-16);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--ease-settle),
+    color var(--duration-fast) var(--ease-settle);
+}
+
+.chip[data-size="s"] {
+  --chip-height: 32px;
+  --chip-icon-size: 16px;
+
+  font-size: var(--text-label-s-size);
+  line-height: var(--text-label-s-line);
+}
+
+.icon {
+  display: inline-flex;
+  width: var(--chip-icon-size);
+  height: var(--chip-icon-size);
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* toggle chip */
+button.chip {
+  cursor: pointer;
+}
+button.chip:hover:not(:disabled) {
+  background: var(--state-hover-surface);
+}
+button.chip:active:not(:disabled) {
+  background: var(--state-pressed-surface);
+}
+button.chip:focus-visible,
+.remove:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* selected = active state: Cerezo */
+.chip[data-selected] {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+.chip[data-selected]:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+.chip[data-selected]:active:not(:disabled) {
+  background: var(--color-accent-pressed);
+}
+
+/* removable token: the X is the only control */
+.chip[data-removable] {
+  padding-right: var(--space-8);
+}
+
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px; /* WCAG 2.5.8 target */
+  min-height: 24px;
+  margin-left: calc(-1 * var(--space-4));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.remove:hover:not(:disabled) {
+  background: var(--state-hover-surface);
+}
+
+/* disabled · "metal without the handle": loses Cerezo even if selected */
+.chip:disabled,
+.chip[aria-disabled="true"] {
+  background: var(--state-disabled-bg);
+  color: var(--state-disabled-fg);
+  cursor: not-allowed;
+  transition: none;
+}
+.remove:disabled {
+  cursor: not-allowed;
+}

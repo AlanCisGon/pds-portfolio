@@ -21,7 +21,7 @@ const nextConfig = {
     "/lab/[slug]": ["./private/lab/**/*"],
   },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
-  transpilePackages: ["next-mdx-remote"],
+  transpilePackages: ["next-mdx-remote", "geist"],
   images: {
     remotePatterns: [
       {

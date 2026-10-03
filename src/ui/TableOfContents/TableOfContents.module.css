@@ -1,0 +1,82 @@
+/* TocItem + TableOfContents · Figma 02d Navigation (34:21 / 34:22). */
+.toc {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-4) 0;
+  border-radius: 8px; /* focus ring corner (Figma r8) */
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-settle);
+}
+
+.indicator {
+  flex-shrink: 0;
+  width: 2px;
+  height: 20px;
+  background: var(--color-border-subtle);
+  opacity: 0.24;
+}
+
+.number {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+}
+
+.item:hover,
+.item:focus-visible {
+  color: var(--color-text-primary);
+}
+
+.item:hover .indicator {
+  opacity: 1;
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.item[data-active] {
+  color: var(--color-text-primary);
+}
+
+.item[data-active] .indicator {
+  background: var(--color-accent);
+  opacity: 1;
+}
+
+.item[data-active] .number {
+  color: var(--color-accent);
+}
