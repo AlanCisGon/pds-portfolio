@@ -94,9 +94,9 @@
   --text-meta-line: 16px;
   --text-meta-tracking: 0.04em;
 
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
 
   /* ── Motion · "cierre suave": decisive start, settles without bounce ── */
   --ease-settle: cubic-bezier(0.22, 1, 0.36, 1); /* entrances and expansions */
