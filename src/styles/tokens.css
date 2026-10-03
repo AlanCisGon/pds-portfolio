@@ -35,6 +35,14 @@
   --color-on-accent-strong: var(--palette-niebla); /* 6.32:1 */
   --color-focus-ring: var(--palette-cerezo);
 
+  /* ── States · interaction (≠ status). Disabled = "metal without the handle": the warmth leaves ──
+   * WCAG exempts inactive controls from contrast, but they stay perceivable (~3:1 on page)
+   * and clearly dimmer than secondary text (2×). No hover, press or motion while disabled.
+   */
+  --state-disabled-fg: color-mix(in oklab, var(--palette-aluminio) 65%, var(--palette-titanio)); /* ≈ #5C636C · 3.11 page / 2.84 surface / 2.51 elevated */
+  --state-disabled-bg: var(--palette-acero);
+  --state-disabled-border: var(--color-border-subtle);
+
   /* ── Spacing · 8-pt scale; 4 only inside small components ── */
   --space-4: 4px;
   --space-8: 8px;
@@ -104,7 +112,7 @@
    * (always icon + text), max 6 categories at once. Values verified in docs/design-system.md.
    */
 
-  /* Status · tuned lightness per state so they stay distinct with color-vision deficiencies */
+  /* Status ("estatus": outcome or condition, ≠ interaction state) · tuned lightness per state so they stay distinct with color-vision deficiencies */
   --status-success-fg: #77e3b7; /* oklch(0.84 0.120 165) */
   --status-success-bg: #0d2d21;
   --status-success-border: #135b42;

@@ -15,7 +15,8 @@ Sistema de diseño **solo para alancisneros.design**. No es un producto aparte: 
 | Hover / pressed del acento | Mezclas del mismo Cerezo (`color-mix`) | No agrega colores a la marca ("un solo color de acento"). |
 | Espaciado | Escala de 8, con **4 px solo dentro de componentes pequeños** | La marca pide densidad laxa en escala de 8; el 4 resuelve piezas como tags e ícono + texto. |
 | Escala tipográfica | Propuesta v0.1, abajo | La marca define familias, no tamaños. Pendiente de validar en Figma. |
-| Color contextual | **Capa aparte, arriba de las foundations**: estados (`--status-*`) y 12 tonos categóricos (`--ctx-*`) | Excepción explícita y acotada a "un solo color cálido": nunca interactiva, en dosis pequeñas, nunca solo color. Ver [Capa contextual](#capa-contextual). |
+| Color contextual | **Capa aparte, arriba de las foundations**: estatus (`--status-*`) y 12 tonos categóricos (`--ctx-*`) | Excepción explícita y acotada a "un solo color cálido": nunca interactiva, en dosis pequeñas, nunca solo color. Ver [Capa contextual](#capa-contextual). |
+| Deshabilitado | **"Metal sin mango"**: fondo Acero y texto Aluminio al 65 % hacia Titanio, sin Cerezo | El Cerezo marca donde va la mano; un control deshabilitado pierde la madera. Sin colores nuevos. Ver [Estados de interacción](#estados-de-interacción). |
 | Íconos | **Iconoir** para interfaz + **Simple Icons** para logos | Iconoir obtuvo la mejor puntuación contra los criterios de marca y se mantiene activo. Los logos identifican herramientas, así que no cuentan como íconos genéricos. Ver [Iconografía](#iconografía). |
 
 ## Reglas de uso (de la marca)
@@ -64,9 +65,40 @@ Los componentes usan **solo tokens semánticos** (`--color-*`), nunca `--palette
 | Niebla | Cerezo profundo | 6.32 | AA |
 | Niebla | Cerezo | 2.81 | **Falla**: el texto sobre Cerezo va siempre en Titanio |
 
+## Estados de interacción
+
+Los **estados** (`--state-*`) describen cómo está un control interactivo. No deben confundirse con el **estatus** (`--status-*`), que comunica un resultado.
+
+| Estado | Tokens | Notas |
+|---|---|---|
+| Default | `--color-accent`, `--color-on-accent` | Cerezo solo donde va la mano |
+| Hover | `--color-accent-hover` | `--duration-fast`, `--ease-settle` |
+| Pressed | `--color-accent-pressed` | — |
+| Focus visible | `--color-focus-ring` | `outline: 2px`, `outline-offset: 2px` |
+| **Disabled** | `--state-disabled-fg`, `--state-disabled-bg`, `--state-disabled-border` | Ver abajo |
+
+### Disabled · "metal sin mango"
+
+El Cerezo es el mango de madera de una herramienta de metal. Cuando la mano ya no puede ir, **la madera se va** y queda solo la estructura fría.
+
+| Token | Valor | Contraste |
+|---|---|---|
+| `--state-disabled-fg` | Aluminio 65 % + Titanio (oklab) ≈ `#5C636C` | 3.11 sobre page · 2.84 sobre surface · 2.51 sobre elevated |
+| `--state-disabled-bg` | Acero `#20262D` | Fondo de un control relleno deshabilitado |
+| `--state-disabled-border` | = `--color-border-subtle` | Solo si el control normal tiene borde |
+
+- **Contraste:** WCAG exime a los componentes inactivos (1.4.3 y 1.4.11), pero se mantienen perceptibles: unos 3:1 sobre page, y **la mitad de luminosos que el texto secundario**, para que no se lean como texto normal.
+- **Por qué no opacidad:** un botón Cerezo al 40 % queda en `#5C382B`, que sigue siendo cálido y dice "aquí va la mano". Además, la opacidad cambia según el fondo.
+- **Comportamiento:**
+  - sin hover, sin pressed y sin transiciones (nada se mueve sin causa);
+  - `cursor: not-allowed`;
+  - el control mantiene su tamaño.
+- **Honestidad:** si el motivo no es obvio, el control usa `aria-disabled="true"`, sigue siendo enfocable y explica **por qué** junto al control. El `disabled` nativo se usa solo cuando el motivo es evidente.
+- Los íconos dentro del control toman `--state-disabled-fg`.
+
 ## Capa contextual
 
-Color de **estado** y de **contexto** que vive **arriba de las foundations**. Aquí sí se usan todos los tonos del arcoíris: es una excepción explícita a la regla de marca "un solo color cálido", con límites claros.
+Color de **estatus** y de **contexto** que vive **arriba de las foundations**. Aquí sí se usan todos los tonos del arcoíris: es una excepción explícita a la regla de marca "un solo color cálido", con límites claros.
 
 ### Reglas
 
@@ -76,9 +108,9 @@ Color de **estado** y de **contexto** que vive **arriba de las foundations**. Aq
 4. **Máximo 6 categorías a la vez.** A cada categoría se le asigna un tono fijo (por ejemplo `finanzas → blue`), siempre el mismo en todo el sitio.
 5. **Roles por tono:** `-fg` para texto e íconos, `-bg` para un contenedor tenue y `-border` para el borde opcional de ese contenedor.
 
-### Estados (`--status-*`)
+### Estatus (`--status-*`)
 
-Tienen valores propios, no alias del arcoíris. La luminosidad cambia por estado para que se distingan también con daltonismo.
+Indican el resultado o la condición de algo: éxito, alerta, error o información. No son lo mismo que los [estados de interacción](#estados-de-interacción). Tienen valores propios, no alias del arcoíris. La luminosidad cambia por estado para que se distingan también con daltonismo.
 
 | Estado | fg | bg | border | Contraste sobre page · elevated · su bg | ΔE vs Cerezo |
 |---|---|---|---|---|---|
