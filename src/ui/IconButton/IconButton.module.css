@@ -1,0 +1,73 @@
+/* IconButton · Figma 02a Actions (28:86). */
+.iconButton {
+  --icon-button-size: 40px;
+  --icon-size: 20px;
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-button-size);
+  height: var(--icon-button-size);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-fast) var(--ease-settle),
+    color var(--duration-fast) var(--ease-settle);
+}
+
+.iconButton[data-size="s"] {
+  --icon-button-size: 32px;
+  --icon-size: 16px;
+}
+
+.icon {
+  display: inline-flex;
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.iconButton[data-variant="secondary"] {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+/* ghost rests in secondary text (6.32:1) and lifts to primary when touched */
+.iconButton[data-variant="ghost"] {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.iconButton:hover:not(:disabled),
+.iconButton:focus-visible {
+  color: var(--color-text-primary);
+}
+.iconButton:hover:not(:disabled) {
+  background: var(--state-hover-surface);
+}
+.iconButton:active:not(:disabled) {
+  background: var(--state-pressed-surface);
+}
+
+.iconButton:disabled {
+  background: var(--state-disabled-bg);
+  color: var(--state-disabled-fg);
+  cursor: not-allowed;
+  transition: none;
+}
+.iconButton[data-variant="ghost"]:disabled {
+  background: transparent;
+}

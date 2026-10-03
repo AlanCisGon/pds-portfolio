@@ -1,0 +1,18 @@
+/* Divider · Figma 02b Content (29:6). */
+.divider {
+  margin: 0;
+  border: 0;
+  background: var(--color-border-subtle);
+}
+
+.divider[data-orientation="horizontal"] {
+  width: 100%;
+  height: 1px;
+}
+
+.divider[data-orientation="vertical"] {
+  display: inline-block;
+  align-self: stretch;
+  width: 1px;
+  min-height: var(--space-24);
+}

@@ -1,0 +1,46 @@
+/* Header · Figma 02e Cards & Site (36:110). Height is fixed so it never causes layout shift. */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 80px;
+  padding: var(--space-16) var(--page-padding);
+}
+
+.location,
+.time {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+.time {
+  justify-self: end;
+  min-width: 5ch; /* reserves the clock width before hydration */
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-4);
+  list-style: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+}
+
+@media (max-width: 767px) {
+  .header {
+    grid-template-columns: auto 1fr;
+  }
+
+  .location {
+    display: none;
+  }
+}

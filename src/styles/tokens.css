@@ -42,6 +42,10 @@
   --state-disabled-fg: color-mix(in oklab, var(--palette-aluminio) 65%, var(--palette-titanio)); /* ≈ #5C636C · 3.11 page / 2.84 surface / 2.51 elevated */
   --state-disabled-bg: var(--palette-acero);
   --state-disabled-border: var(--color-border-subtle);
+  /* Hover / pressed of non-accent controls (secondary, ghost, NavItem, IconButton, Chip).
+   * Text on them is always --color-text-primary: --color-text-secondary fails AA on hover (4.23:1). */
+  --state-hover-surface: color-mix(in oklab, var(--palette-acero) 92%, var(--palette-niebla)); /* ≈ #2D333A · niebla 10.69:1 */
+  --state-pressed-surface: color-mix(in oklab, var(--palette-acero) 85%, var(--palette-titanio)); /* ≈ #1D2329 · niebla 13.39:1 */
 
   /* ── Spacing · 8-pt scale; 4 only inside small components ── */
   --space-4: 4px;
@@ -93,6 +97,8 @@
   --text-meta-size: 12px;
   --text-meta-line: 16px;
   --text-meta-tracking: 0.04em;
+  --text-code-size: 14px; /* Measure/Code — code blocks */
+  --text-code-line: 20px;
 
   --weight-regular: 400;
   --weight-medium: 500;

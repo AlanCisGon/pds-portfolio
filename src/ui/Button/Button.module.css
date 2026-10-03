@@ -1,0 +1,94 @@
+/* Button · Figma 02a Actions (27:365). */
+.button {
+  --button-height: 40px;
+  --button-icon-size: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  height: var(--button-height);
+  padding: 0 var(--space-16);
+  border: 0;
+  border-radius: var(--radius-control);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-settle),
+    color var(--duration-fast) var(--ease-settle);
+}
+
+.button[data-size="s"] {
+  --button-height: 32px;
+  --button-icon-size: 16px;
+
+  font-size: var(--text-label-s-size);
+  line-height: var(--text-label-s-line);
+}
+
+.icon {
+  display: inline-flex;
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* primary · Cerezo: where the hand goes */
+.button[data-variant="primary"] {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+.button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]) {
+  background: var(--color-accent-hover);
+}
+.button[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"]) {
+  background: var(--color-accent-pressed);
+}
+
+/* secondary · tonal surface */
+.button[data-variant="secondary"] {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+/* ghost · no surface until touched */
+.button[data-variant="ghost"] {
+  background: transparent;
+  color: var(--color-text-primary);
+}
+
+.button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]),
+.button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
+  background: var(--state-hover-surface);
+}
+.button[data-variant="secondary"]:active:not(:disabled, [aria-disabled="true"]),
+.button[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"]) {
+  background: var(--state-pressed-surface);
+}
+
+/* disabled · "metal without the handle": no Cerezo, no hover, no motion */
+.button:disabled,
+.button[aria-disabled="true"] {
+  background: var(--state-disabled-bg);
+  color: var(--state-disabled-fg);
+  cursor: not-allowed;
+  transition: none;
+}
+.button[data-variant="ghost"]:disabled,
+.button[data-variant="ghost"][aria-disabled="true"] {
+  background: transparent;
+}

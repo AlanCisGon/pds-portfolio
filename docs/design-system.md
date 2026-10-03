@@ -228,19 +228,32 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 
 ## Componentes del portafolio
 
-Solo lo que el portafolio usa. El orden y el incremento vienen de `docs/migration-plan.md`.
+Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`). Todavía **no se usan en las páginas públicas**, salvo `Tag`: entran al sitio en cada incremento de `docs/migration-plan.md`.
 
-| Componente | Incremento | Notas de marca |
+- **Catálogo privado:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. Muestra cada componente con sus variantes, para compararlo con Figma.
+- **Página de Figma:** cada grupo vive en su propia página del archivo *PDS · Portfolio Design System*.
+
+| Grupo (Figma) | Componentes | Entra al sitio en |
 |---|---|---|
-| `Tag` | T0 (piloto) · **en código** | Informativo: Medium 32 px (ícono 22, `label-m`) y Small 28 px (ícono 20, `label-s`); `bg-elevated` + `text-secondary`; sin estados, sin X, sin Cerezo. `src/ui/Tag` |
-| `Chip` | Cuando haya filtros | Interactivo: Cerezo con `on-accent/default` en Default y Hover, Cerezo profundo en Active, *disabled* "metal sin mango", X como `<button>` ≥ 24 × 24. Solo en Figma |
-| `Divider` | I2 | `--color-border-subtle`; usar poco |
-| `Button`, `IconButton`, `Link` | I4 | Acento Cerezo; texto Titanio sobre él; foco Cerezo |
-| `Avatar`, `Badge` | I4 | — |
-| `Header`, `Footer` | I4 | Sin ThemeToggle (solo oscuro) |
-| `ProjectCard`, bloques MDX | I5 | Tarjetas bento con radio 20 y superficies por tono |
-| Home, About, 404 | I6 | Newsreader para los titulares editoriales |
-| Colofón | I6 | Firma de marca: materiales, decisiones, versiones y equipo |
+| 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip` | I4 (`Chip` cuando haya filtros) |
+| 02b Content | `Tag` (en uso desde T0), `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem` | I2 · I4 · I5 |
+| 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | I5 (bloques MDX) |
+| 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | I5 |
+| 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer` | I4 (Header/Footer) · I5 · I6 |
+
+### Notas de implementación
+
+- **Solo es cliente lo que tiene estado** (`"use client"`): `CodeBlock`, `Carousel`, `TableOfContents`, `HeadingLink`, `Header` y el video de `Media`. Lo demás es server component. Los íconos de `iconoir-react` son client components.
+- **Foco:** `outline: 2px solid var(--color-focus-ring); outline-offset: 2px` en todo lo interactivo. Es la capa `FocusRing` de Figma.
+- **Sin layout shift:** `Media`, `ProjectCard` y `Carousel` reservan el *aspect-ratio*. `Header` tiene alto fijo y reserva el ancho del reloj antes de hidratar.
+- **Accesibilidad:**
+  - `Accordion` usa `<details>/<summary>` nativo;
+  - `Chip` filtro es `<button aria-pressed>`, y el `Chip` removible deja la X como único botón;
+  - `IconButton` requiere `label`;
+  - los `Link` externos anuncian "abre en otra pestaña";
+  - `CodeBlock` y `HeadingLink` confirman con `aria-live`, sin Toast.
+- **Decisión de auditoría · hover de tarjetas:** `Card` y `ProjectCard` se funden con sus superficies internas en hover, a propósito.
+- **⚠️ Decisión de auditoría · `Link` sin subrayado:** dentro de un párrafo, el Cerezo contra el texto Niebla da unos 2.8:1, por debajo de los 3:1 que pide WCAG 1.4.1 cuando el enlace se distingue solo por color. Reconsiderarlo antes de I5, cuando los enlaces lleguen a los textos largos de los casos de estudio.
 
 ## Pendientes
 

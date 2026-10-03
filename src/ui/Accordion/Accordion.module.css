@@ -1,0 +1,78 @@
+/* Accordion · Figma 02c Data & Media (32:113). */
+.accordion {
+  border-radius: var(--radius-control);
+  background: var(--color-bg-surface);
+  transition: background-color var(--duration-fast) var(--ease-settle);
+}
+
+.accordion:hover {
+  background: var(--state-hover-surface);
+}
+
+.accordion:has(.trigger:focus-visible) {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-16);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  list-style: none;
+  cursor: pointer;
+}
+
+.trigger::-webkit-details-marker {
+  display: none;
+}
+
+.trigger:focus-visible {
+  outline: none; /* the ring is drawn on the whole accordion */
+}
+
+.chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-secondary);
+  transition: transform var(--duration-base) var(--ease-settle);
+}
+
+.chevron > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.accordion[open] .chevron {
+  transform: rotate(180deg);
+}
+
+.panel {
+  padding: 0 var(--space-16) var(--space-16);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.panel > :first-child {
+  margin-top: 0;
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron {
+    transition: none;
+  }
+}

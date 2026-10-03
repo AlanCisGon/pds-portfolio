@@ -1,0 +1,33 @@
+/* ListItem · Figma 02b Content (30:81). */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: pds-list;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: var(--space-16) 1fr;
+  column-gap: var(--space-8);
+  counter-increment: pds-list;
+}
+
+.item::before {
+  color: var(--color-text-secondary);
+}
+
+ul.list > .item::before {
+  content: "—";
+}
+
+ol.list > .item::before {
+  content: counter(pds-list) ".";
+}

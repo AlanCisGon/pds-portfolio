@@ -1,0 +1,72 @@
+/* Callout · Figma 02b Content (30:74). Tonal surface, no border (borders fuse). */
+.callout {
+  --callout-fg: var(--status-neutral-fg);
+  --callout-bg: var(--status-neutral-bg);
+
+  display: flex;
+  gap: var(--space-8);
+  padding: var(--space-16);
+  border-radius: var(--radius-control);
+  background: var(--callout-bg);
+}
+
+.callout[data-tone="info"] {
+  --callout-fg: var(--status-info-fg);
+  --callout-bg: var(--status-info-bg);
+}
+.callout[data-tone="success"] {
+  --callout-fg: var(--status-success-fg);
+  --callout-bg: var(--status-success-bg);
+}
+.callout[data-tone="warning"] {
+  --callout-fg: var(--status-warning-fg);
+  --callout-bg: var(--status-warning-bg);
+}
+.callout[data-tone="danger"] {
+  --callout-fg: var(--status-danger-fg);
+  --callout-bg: var(--status-danger-bg);
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--callout-fg);
+}
+
+.icon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.title {
+  margin: 0;
+  color: var(--callout-fg);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+}
+
+.body {
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.body > :first-child {
+  margin-top: 0;
+}
+
+.body > :last-child {
+  margin-bottom: 0;
+}
