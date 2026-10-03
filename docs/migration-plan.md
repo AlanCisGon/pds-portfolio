@@ -75,7 +75,7 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - Sitio **solo oscuro**: quitar `ThemeToggle` y fijar el tema. Los visitantes ya no podrán elegir el modo claro.
   - Mapear las variables de color de Once UI (`--page-background`, `--neutral-*`, `--brand-*`, `--accent-*`) a los tokens de marca en un solo archivo de puente, que se borra en I7.
   - Conectar Geist Sans, Newsreader y Geist Mono con `next/font/google` en lugar de Figtree y Azeret Mono.
-  - Usar los íconos de `react-icons` directamente.
+  - Reemplazar `react-icons` por **Iconoir** en la interfaz y **Simple Icons** en los logos (ver `docs/design-system.md` → *Iconografía*), y desinstalar `react-icons`.
   - Quitar `DataThemeProvider`, `LayoutProvider`, `IconProvider` y `ToastProvider`. Para el aviso de "copiado" de `HeadingLink` basta un mensaje con `aria-live`.
   - Dejar los tipos de configuración propios en `src/types`.
 

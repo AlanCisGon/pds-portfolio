@@ -1,5 +1,5 @@
 /*
- * Portfolio design system · foundations (v0.1)
+ * Portfolio design system · foundations + context layer (v0.1)
  * Source of truth: alan-brand-guidelines.md §14 (v1.1) — documented in docs/design-system.md.
  * Names map 1:1 to Figma variables (Web code syntax) in "PDS · Portfolio Design System".
  * Dark mode only: the brand reserves light mode for documents and print.
@@ -97,6 +97,66 @@
   --duration-base: 250ms; /* cards, menus, state changes */
   --duration-wide: 400ms; /* screen transitions — never longer */
   --stagger-step: 40ms; /* groups enter in sequence (30–50 ms) */
+
+  /* ── Context layer · sits above the brand foundations ──
+   * Status and categorical color. An explicit, bounded exception to "one warm color":
+   * never interactive (the hand still means Cerezo), small doses only, never color alone
+   * (always icon + text), max 6 categories at once. Values verified in docs/design-system.md.
+   */
+
+  /* Status · tuned lightness per state so they stay distinct with color-vision deficiencies */
+  --status-success-fg: #77e3b7; /* oklch(0.84 0.120 165) */
+  --status-success-bg: #0d2d21;
+  --status-success-border: #135b42;
+  --status-warning-fg: #f8ca65; /* oklch(0.86 0.130 85) */
+  --status-warning-bg: #302409;
+  --status-warning-border: #61490c;
+  --status-danger-fg: #f275a0; /* oklch(0.72 0.160 0) */
+  --status-danger-bg: #381d25;
+  --status-danger-border: #70394b;
+  --status-info-fg: #72b8f2; /* oklch(0.76 0.110 245) */
+  --status-info-bg: #12283b;
+  --status-info-border: #225176;
+  --status-neutral-fg: var(--palette-aluminio);
+  --status-neutral-bg: var(--palette-acero);
+
+  /* Categorical · 12 hues at equal OKLCH lightness (0.80) and chroma (≈0.12): one family */
+  --ctx-red-fg: #ffa098; /* h 25 */
+  --ctx-red-bg: #3a1d1b;
+  --ctx-red-border: #733a36;
+  --ctx-orange-fg: #f9a870; /* h 55 */
+  --ctx-orange-bg: #372010;
+  --ctx-orange-border: #6e401e;
+  --ctx-amber-fg: #e6b55d; /* h 80 */
+  --ctx-amber-bg: #32240a;
+  --ctx-amber-border: #64470e;
+  --ctx-yellow-fg: #d0bf5e; /* h 100 */
+  --ctx-yellow-bg: #2c270a;
+  --ctx-yellow-border: #574e0e;
+  --ctx-lime-fg: #a4cd79; /* h 130 */
+  --ctx-lime-bg: #1f2b12;
+  --ctx-lime-border: #3e5624;
+  --ctx-green-fg: #83d494; /* h 150 */
+  --ctx-green-bg: #152d1a;
+  --ctx-green-border: #295935;
+  --ctx-teal-fg: #52d7c1; /* h 180 */
+  --ctx-teal-bg: #052d27;
+  --ctx-teal-border: #015a4f;
+  --ctx-cyan-fg: #47d2e8; /* h 210 */
+  --ctx-cyan-bg: #022c33;
+  --ctx-cyan-border: #025763;
+  --ctx-blue-fg: #89c3fe; /* h 250 */
+  --ctx-blue-bg: #14283c;
+  --ctx-blue-border: #285077;
+  --ctx-indigo-fg: #abb9fe; /* h 275 */
+  --ctx-indigo-bg: #20243c;
+  --ctx-indigo-border: #414978;
+  --ctx-violet-fg: #c9acff; /* h 300 */
+  --ctx-violet-bg: #2a2139;
+  --ctx-violet-border: #544272;
+  --ctx-magenta-fg: #f19fd6; /* h 340 */
+  --ctx-magenta-bg: #351d2d;
+  --ctx-magenta-border: #6a3b5b;
 
   /* ── Layout ── */
   --page-padding: var(--space-16); /* mobile */

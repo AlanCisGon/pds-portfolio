@@ -15,11 +15,12 @@ Sistema de diseño **solo para alancisneros.design**. No es un producto aparte: 
 | Hover / pressed del acento | Mezclas del mismo Cerezo (`color-mix`) | No agrega colores a la marca ("un solo color de acento"). |
 | Espaciado | Escala de 8, con **4 px solo dentro de componentes pequeños** | La marca pide densidad laxa en escala de 8; el 4 resuelve piezas como tags e ícono + texto. |
 | Escala tipográfica | Propuesta v0.1, abajo | La marca define familias, no tamaños. Pendiente de validar en Figma. |
-| Colores de estado | **Ninguno por ahora** | La marca prohíbe más de un color cálido, y sin formularios no hacen falta. Se decide cuando haya un caso real. |
+| Color contextual | **Capa aparte, arriba de las foundations**: estados (`--status-*`) y 12 tonos categóricos (`--ctx-*`) | Excepción explícita y acotada a "un solo color cálido": nunca interactiva, en dosis pequeñas, nunca solo color. Ver [Capa contextual](#capa-contextual). |
+| Íconos | **Iconoir** para interfaz + **Simple Icons** para logos | Iconoir obtuvo la mejor puntuación contra los criterios de marca y se mantiene activo. Los logos identifican herramientas, así que no cuentan como íconos genéricos. Ver [Iconografía](#iconografía). |
 
 ## Reglas de uso (de la marca)
 
-1. **Frío por estructura, cálido por contacto.** Los fríos construyen la estructura. El Cerezo es el único color cálido y aparece **solo donde va la mano**: botones, enlaces, foco y estados activos. Nunca como decoración.
+1. **Frío por estructura, cálido por contacto.** Los fríos construyen la estructura. El Cerezo es el único color cálido y aparece **solo donde va la mano**: botones, enlaces, foco y estados activos. Nunca como decoración. La única excepción son los colores de la [capa contextual](#capa-contextual), que nunca son interactivos.
 2. **La serif es la voz.** Newsreader solo en titulares editoriales, citas y principios. **Nunca** en botones, formularios ni navegación.
 3. **Bordes que se funden.** Las tarjetas se distinguen por el tono de la superficie, no por líneas. Si un borde es indispensable: 1 px de `--color-border-subtle`. La estructura se muestra con alineación, numeración y metadata.
 4. **Radios concéntricos:** radio interior = radio exterior − padding. Tarjetas a 20 px, controles a 12 px.
@@ -62,6 +63,68 @@ Los componentes usan **solo tokens semánticos** (`--color-*`), nunca `--palette
 | Titanio | Cerezo / hover / pressed | 5.68 / 6.76 / 4.90 | AA |
 | Niebla | Cerezo profundo | 6.32 | AA |
 | Niebla | Cerezo | 2.81 | **Falla**: el texto sobre Cerezo va siempre en Titanio |
+
+## Capa contextual
+
+Color de **estado** y de **contexto** que vive **arriba de las foundations**. Aquí sí se usan todos los tonos del arcoíris: es una excepción explícita a la regla de marca "un solo color cálido", con límites claros.
+
+### Reglas
+
+1. **Nunca donde va la mano.** Botones, enlaces, foco y estados activos siguen siendo exclusivos del Cerezo. Un color contextual nunca es interactivo.
+2. **Dosis pequeñas.** Va en badges, tags, puntos de estado, marcas de gráficas y fondos tenues de avisos (`-bg`), nunca en superficies grandes.
+3. **Nunca solo color.** Siempre va con un ícono de Iconoir y con texto (WCAG 1.4.1).
+4. **Máximo 6 categorías a la vez.** A cada categoría se le asigna un tono fijo (por ejemplo `finanzas → blue`), siempre el mismo en todo el sitio.
+5. **Roles por tono:** `-fg` para texto e íconos, `-bg` para un contenedor tenue y `-border` para el borde opcional de ese contenedor.
+
+### Estados (`--status-*`)
+
+Tienen valores propios, no alias del arcoíris. La luminosidad cambia por estado para que se distingan también con daltonismo.
+
+| Estado | fg | bg | border | Contraste sobre page · elevated · su bg | ΔE vs Cerezo |
+|---|---|---|---|---|---|
+| `success` | `#77E3B7` · verde menta | `#0D2D21` | `#135B42` | 12.17 · 9.80 · 9.51 | 28.7 |
+| `warning` | `#F8CA65` · ámbar | `#302409` | `#61490C` | 12.30 · 9.91 · 9.81 | 22.6 |
+| `danger` | `#F275A0` · frambuesa | `#381D25` | `#70394B` | 7.07 · 5.69 · 5.73 | 12.5 |
+| `info` | `#72B8F2` · azul | `#12283B` | `#225176` | 8.91 · 7.18 · 7.07 | 25.7 |
+| `neutral` | Aluminio | Acero | — | 6.32 · 5.09 | — |
+
+- **Distinción:** la distancia mínima entre dos estados es ΔE 16.2 con visión normal y **8.8 en el peor caso de daltonismo** (éxito e info con tritanopía).
+- **Rojo de error:** es un **frambuesa**, desplazado hacia el rosa. Un rojo puro quedaba a ΔE 7.2 del Cerezo y un error podía leerse como acción.
+- La primera versión, con la misma luminosidad para todos, hacía que éxito y error fueran casi idénticos con deuteranopía (ΔE 0.8). Por eso se descartó.
+
+### Contexto categórico (`--ctx-<tono>-*`)
+
+Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH L 0.80) y saturación (C ≈ 0.12)**, así que se leen como una sola familia.
+
+| Tono | fg | bg | border | | Tono | fg | bg | border |
+|---|---|---|---|---|---|---|---|---|
+| `red` | `#FFA098` | `#3A1D1B` | `#733A36` | | `teal` | `#52D7C1` | `#052D27` | `#015A4F` |
+| `orange` | `#F9A870` | `#372010` | `#6E401E` | | `cyan` | `#47D2E8` | `#022C33` | `#025763` |
+| `amber` | `#E6B55D` | `#32240A` | `#64470E` | | `blue` | `#89C3FE` | `#14283C` | `#285077` |
+| `yellow` | `#D0BF5E` | `#2C270A` | `#574E0E` | | `indigo` | `#ABB9FE` | `#20243C` | `#414978` |
+| `lime` | `#A4CD79` | `#1F2B12` | `#3E5624` | | `violet` | `#C9ACFF` | `#2A2139` | `#544272` |
+| `green` | `#83D494` | `#152D1A` | `#295935` | | `magenta` | `#F19FD6` | `#351D2D` | `#6A3B5B` |
+
+- **Contraste del texto:** entre 9.6 y 10.7:1 sobre page, y entre 7.8 y 8.6:1 sobre su propio `-bg`. Todo AA.
+- **Separación del Cerezo:** todos los tonos son más claros y menos saturados que el Cerezo (L 0.655, tono 41.6°). Los más cercanos son `orange` (ΔE 14.8) y `red` (15.0), así que conviene no ponerlos junto a un botón.
+- **Usos previstos:** industrias, tipo de pieza (caso de estudio, experimento del lab, artículo), herramientas y series de gráficas.
+
+## Iconografía
+
+| Rol | Librería | Paquete |
+|---|---|---|
+| Interfaz | **Iconoir** (MIT) | `iconoir-react` |
+| Logos de herramientas | **Simple Icons** (íconos CC0; respetar las guías de cada marca) | `@icons-pack/react-simple-icons` |
+
+### Reglas
+
+1. **Una sola familia en la interfaz (Iconoir)**, con trazo de 1.5 px, el valor por defecto. No se mezcla con otras librerías.
+2. **Siempre con texto**, salvo los universales: cerrar, menú, flecha y enlace externo. Esos llevan `aria-label`.
+3. **Nunca decorativos.** Un ícono está ahí porque cumple una función, igual que el movimiento.
+4. **El color sigue al texto:** `--color-text-secondary` por defecto. Solo se vuelven Cerezo si son interactivos, y toman el `-fg` de un estado o tono solo dentro de la capa contextual.
+5. **Los momentos de firma se dibujan a mano:** la marca de taller y el colofón. Ahí no va ningún ícono de librería.
+6. **En Figma solo viven los íconos que se usan**, como componentes en `02 Components`.
+7. `react-icons` (que hoy mezcla Font Awesome, Heroicons, css.gg y Phosphor) sale del proyecto en I3.
 
 ## Espaciado, radios y layout
 
@@ -145,4 +208,4 @@ Solo lo que el portafolio usa. El orden y el incremento vienen de `docs/migratio
 
 - Validar la escala tipográfica en Figma y en pantallas reales.
 - Que la marca de taller (en proceso) se incorpore cuando exista; no inventar una.
-- Colores de estado, si aparece un caso real.
+- Asignar tonos `--ctx-*` a las categorías reales (industrias y tipos de pieza) cuando se definan en I5.
