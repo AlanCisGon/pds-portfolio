@@ -61,6 +61,18 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - `/api/rss`, si no hay blog
   - las entradas correspondientes en `once-ui.config.ts`, `content.tsx`, `sitemap.ts` y los tipos
 - **Listo cuando:** `next build` pasa y las rutas públicas responden igual.
+- **Resultado (2026-10-02) · hecho:**
+  - **Borrado:**
+    - `/blog` (11 posts de ejemplo, `Post`, `Posts`, `ShareSection`) y `/gallery`, con sus imágenes de ejemplo (888 KB);
+    - `Mailchimp` y `RouteGuard`;
+    - las APIs `/api/authenticate`, `/api/check-auth` y `/api/rss`;
+    - sus entradas en la configuración, el contenido, el sitemap y los tipos;
+    - `PAGE_ACCESS_PASSWORD`;
+    - las dependencias `cookie` y `@types/cookie`.
+  - **`iconLibrary`:** pasó de 48 a 11 íconos. Solo quedan los que usan el Header, el Footer, el ProjectCard, HeadingLink y About.
+  - **Rutas:** las públicas responden 200. `/blog`, `/gallery` y las APIs borradas dan 404. `/lab` sigue protegido.
+  - **Hallazgo:** el **CLS bajó de 0.225 a 0.013** en `/` y de **0.214 a 0.000** en el caso de estudio. Es una medición local con Lighthouse, donde solo el CLS y el JS (453 → 436 kB) son comparables con la línea base; el LCP se vuelve a medir en producción. El `RouteGuard` es un componente de cliente que pintaba primero un spinner y después el contenido; eso empujaba el footer. Con esto se confirma una de las hipótesis de I0.
+  - **Fuera de alcance, pendiente:** el sitemap genera URLs con doble barra (`alancisneros.design//about`) porque `baseURL` termina en `/`. Es un bug que ya existía.
 
 ### I2 · Primitivas de layout y tipografía (M)
 - **Hipótesis:** reemplazar los componentes más usados elimina la mayoría de los imports de Once UI sin cambiar la apariencia.
