@@ -4,10 +4,10 @@ import { Link } from "../Link";
 import styles from "./Footer.module.css";
 
 export type FooterProps = {
-  /** e.g. "© 2026 Alan Cisneros · Culiacán, México". */
-  signature: string;
-  /** Brand signature page: materials, decisions, versions and team. */
-  colophonHref: string;
+  /** e.g. "© 2026 Alan Cisneros · Culiacán, México". May include inline links. */
+  signature: ReactNode;
+  /** Brand signature page: materials, decisions, versions and team. Omitted until the page exists. */
+  colophonHref?: string;
   social: Array<{ href: string; label: string; icon: ReactNode }>;
 };
 
@@ -17,9 +17,11 @@ export function Footer({ signature, colophonHref, social }: FooterProps) {
     <footer className={styles.footer}>
       <div className={styles.signature}>
         <p className={styles.text}>{signature}</p>
-        <Link href={colophonHref} kind="standalone">
-          Colofón
-        </Link>
+        {colophonHref && (
+          <Link href={colophonHref} kind="standalone">
+            Colofón
+          </Link>
+        )}
       </div>
       <ul className={styles.social}>
         {social.map((s) => (

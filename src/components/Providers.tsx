@@ -2,9 +2,6 @@
 
 import {
   BorderStyle,
-  ChartMode,
-  ChartVariant,
-  DataThemeProvider,
   IconProvider,
   LayoutProvider,
   NeutralColor,
@@ -17,13 +14,15 @@ import {
   ToastProvider,
   TransitionStyle,
 } from "@once-ui-system/core";
-import { style, dataStyle } from "../resources";
+import { style } from "../resources";
 import { iconLibrary } from "../resources/icons";
 
+// Once UI context for the pages not yet migrated to src/ui. Removed in step D.
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <LayoutProvider>
       <ThemeProvider
+        theme="dark"
         brand={style.brand as Schemes}
         accent={style.accent as Schemes}
         neutral={style.neutral as NeutralColor}
@@ -34,23 +33,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         transition={style.transition as TransitionStyle}
         scaling={style.scaling as ScalingSize}
       >
-        <DataThemeProvider
-          variant={dataStyle.variant as ChartVariant}
-          mode={dataStyle.mode as ChartMode}
-          height={dataStyle.height}
-          axis={{
-            stroke: dataStyle.axis.stroke,
-          }}
-          tick={{
-            fill: dataStyle.tick.fill,
-            fontSize: dataStyle.tick.fontSize,
-            line: dataStyle.tick.line,
-          }}
-        >
-          <ToastProvider>
-            <IconProvider icons={iconLibrary}>{children}</IconProvider>
-          </ToastProvider>
-        </DataThemeProvider>
+        <ToastProvider>
+          <IconProvider icons={iconLibrary}>{children}</IconProvider>
+        </ToastProvider>
       </ThemeProvider>
     </LayoutProvider>
   );
