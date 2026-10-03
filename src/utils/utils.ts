@@ -12,6 +12,8 @@ type Team = {
 type Metadata = {
   title: string;
   subtitle?: string;
+  /** Client shown in the card meta line ("Coppel · 2024"). */
+  client?: string;
   publishedAt: string;
   summary: string;
   image?: string;
@@ -42,6 +44,7 @@ function readMDXFile(filePath: string) {
   const metadata: Metadata = {
     title: data.title || "",
     subtitle: data.subtitle || "",
+    client: data.client || "",
     publishedAt: data.publishedAt,
     summary: data.summary || "",
     image: data.image || "",
