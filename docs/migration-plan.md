@@ -48,7 +48,7 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - [x] Crear `src/styles/tokens.css` con los tokens **de la marca**. Se importa en `layout.tsx`, pero nada los usa todavía, así que no cambia nada visible.
   - [x] Crear las variables y estilos de texto en Figma con los mismos nombres: colecciones `Primitives`, `Semantic` (modo `Dark`), `Spacing`, `Radius` y `Motion`, más 12 estilos de texto.
   - [x] Crear la carpeta `src/ui/` (piloto T0).
-  - [ ] Registrar la línea base: CWV de Speed Insights, Lighthouse móvil de `/`, `/about` y `/work/project-helix`, y el peso de JS por ruta que reporta `next build`.
+  - [x] Registrar la línea base: Lighthouse móvil de `/`, `/about` y `/work/project-helix` y peso de JS (ver [Línea base](#línea-base-y-resultados)). Las CWV de usuarios reales se revisan en Speed Insights.
 - **Listo cuando:** la línea base está anotada al final de este documento.
 
 ### I1 · Poda (S)
@@ -254,6 +254,19 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 
 Esta tabla se llena en I0 y se actualiza al cerrar cada incremento.
 
-| Fecha | Incremento | LCP | CLS | INP | JS `/` (kB) | Notas |
-|---|---|---|---|---|---|---|
-| | I0 | | | | | |
+Medición: Lighthouse 12, **móvil**, una corrida por página sobre `alancisneros.design` (commit `8f658b8`, con T0 ya publicado). Lighthouse es una medición de laboratorio: los números varían entre corridas, así que se comparan tendencias, no décimas. Las Core Web Vitals de usuarios reales (incluido INP) se revisan en Vercel Speed Insights.
+
+| Fecha | Incremento | Página | Perf | LCP | CLS | TBT | JS transfer | A11y | Notas |
+|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-02 | I0 | `/` | 60 | 4.16 s | **0.225** | 540 ms | 453 kB | 96 | LCP = imagen del proyecto con `loading="lazy"`; CLS = el footer se desplaza (0.213) |
+| 2026-10-02 | I0 | `/about` | 82 | 4.14 s | 0.000 | 34 ms | 453 kB | 96 | LCP = bloque de introducción |
+| 2026-10-02 | I0 | `/work/project-helix` | 66 | 3.90 s | **0.214** | 449 ms | 452 kB | 92 | LCP = imagen con `width=0 height=0`; CLS = footer (0.213) |
+
+**Lectura de la línea base**
+- **Fuera del presupuesto** (`CLAUDE.md` → *Design Principles*: CLS < 0.1, LCP < 2.5 s):
+  - CLS en `/` y en el caso de estudio;
+  - LCP en las tres páginas.
+- **Hipótesis para incrementos futuros** (no se corrigen en I1 para no mezclar cambios):
+  - **LCP:** la imagen principal se carga de forma diferida. En I5 (`ProjectCard` y caso de estudio) e I6 (Home), cargarla con prioridad y con dimensiones reales.
+  - **CLS:** el footer se mueve porque el contenido de arriba crece tarde. Sospechosos: imágenes sin dimensiones (`width=0 height=0`) y `RevealFx`. Se resuelve en I5 e I6.
+  - **JS:** unos 450 kB en todas las rutas, casi todo de Once UI y del layout compartido. Debería bajar con I1 (poda), I2 (primitivas) e I7 (quitar Once UI).
