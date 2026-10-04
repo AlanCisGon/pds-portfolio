@@ -19,6 +19,20 @@ Dejar de depender del fork de **Magic Portfolio** y de **Once UI**, y quedarse c
 - No se agregan nuevos usos de Once UI.
 - Un componente se considera migrado cuando ya no queda ningún import suyo desde `@once-ui-system/core`.
 
+## Estado (2026-10-03): migración cerrada
+
+I2 a I7 se reemplazaron por una ruta de cuatro PRs, una vez que los 25 componentes de `src/ui` estuvieron en código:
+
+| Paso | PR | Qué cambió |
+|---|---|---|
+| A · Shell | #21 | Layout propio solo oscuro, `Header`/`Footer` de `src/ui`, Geist, íconos de Iconoir. Sin `ThemeToggle`. |
+| B · Work | #22 | Listado con `ProjectCard`, plantilla de caso de estudio, bloques MDX de `src/ui`. |
+| C · Home, About y 404 | #23 | Páginas sobre `src/ui`, sin `RevealFx`; se eliminan `Providers` e `icons.ts`. |
+| D · Cierre | este PR | Sin CSS ni dependencia de Once UI; Metadata API y JSON-LD propios; `site.config.ts`; paquete renombrado. |
+
+`grep -r "@once-ui-system" src` ya no devuelve nada. El puente de colores de I3 nunca se hizo (habría sido trabajo descartable).
+Las plantillas de página (Home, About, caso de estudio, listado y 404) son **propuestas sin frame en Figma**: se documentan en Figma para iterarlas allí.
+
 ## Punto de partida (2026-10-02)
 
 - **27 archivos** importan `@once-ui-system/core`.
@@ -241,7 +255,7 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 - La colección `Semantic` tiene un solo modo, `Dark`: `color/bg/page`, `color/bg/surface`, `color/text/primary`, `color/accent/default`, etc. Las colecciones `Spacing`, `Radius` y `Motion` completan los tokens.
 - En cada variable define **Code syntax → Web** con el nombre CSS (`--color-bg-surface`). Así `get_variable_defs` devuelve exactamente lo que va en `tokens.css`.
 
-**Tipografía:** la de la marca, con Geist Sans para el sistema, Newsreader para la voz y Geist Mono para la medida. El sitio todavía usa Figtree y Azeret Mono hasta I3.
+**Tipografía:** la de la marca, con Geist Sans para el sistema, Newsreader para la voz y Geist Mono para la medida. El sitio usa Geist Sans y Geist Mono desde el paso A; Newsreader sigue pendiente.
 
 **Estado (2026-10-02):** las variables y los estilos de texto ya están creados a partir de la marca. En `01 Foundations` hay muestras de color y tipografía conectadas a ellos.
 
@@ -255,14 +269,13 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 |---|---|---|---|---|
 | `Tag` (19:29) | `src/ui/Tag` | `Tag` | T0 | **hecho** |
 | `Chip` (41:197) | `src/ui/Chip` | — | Cuando haya filtros | en código · sin integrar |
-| `Icon/*` · `Logo/*` | `iconoir-react` · `@icons-pack/react-simple-icons` (mapa en `src/resources/tagIcons.tsx`) | `react-icons` | T0 (skills) · I3 (resto) | en curso |
-| `Stack` | `src/ui/Stack` | `Column`, `Row`, `Flex` | I2 | pendiente |
-| `Text` / `Heading` | `src/ui/Text`, `src/ui/Heading` | `Text`, `Heading` | I2 | pendiente |
-| `Button` · `IconButton` · `Link` · `NavItem` | `src/ui/*` | `Button`, `IconButton`, `SmartLink`, `ToggleButton` | I4 | en código · sin integrar |
-| `Header` / `Footer` | `src/ui/Header`, `src/ui/Footer` | `Header`, `Footer` actuales | I4 | en código · sin integrar |
-| `ProjectCard` · `Card` | `src/ui/ProjectCard`, `src/ui/Card` | `ProjectCard` actual | I5 · I6 | en código · sin integrar |
-| Bloques MDX: `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel`, `Callout`, `List`, `TableOfContents`, `HeadingLink` | `src/ui/*` | componentes MDX de Once UI | I5 | en código · sin integrar |
-| `Divider` · `Avatar` · `AvatarGroup` · `Badge` | `src/ui/*` | `Line`, `Avatar`, `AvatarGroup`, `Badge` | I2 · I4 · I5 | en código · sin integrar |
+| `Icon/*` · `Logo/*` | `iconoir-react` · `@icons-pack/react-simple-icons` (`src/resources/tagIcons.tsx`, `socialIcons.tsx`) | `react-icons` | T0 · A · C | **hecho** |
+| `Stack` · `Text` / `Heading` | CSS Modules por página con tokens | `Column`, `Row`, `Flex`, `Text`, `Heading` | B · C | **hecho** (sin componente: decisión de la ruta A–D) |
+| `Button` · `IconButton` · `Link` · `NavItem` | `src/ui/*` | `Button`, `IconButton`, `SmartLink`, `ToggleButton` | A · C | **hecho** |
+| `Header` / `Footer` | `src/ui/Header`, `src/ui/Footer` | `Header`, `Footer` de la plantilla | A | **hecho** |
+| `ProjectCard` · `Card` | `src/ui/ProjectCard`, `src/ui/Card` | `ProjectCard` de la plantilla | B | **hecho** (`Card` sin integrar) |
+| Bloques MDX: `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel`, `Callout`, `List`, `TableOfContents`, `HeadingLink` | `src/ui/*` | componentes MDX de Once UI | B | **hecho** |
+| `Divider` · `Avatar` · `AvatarGroup` · `Badge` | `src/ui/*` | `Line`, `Avatar`, `AvatarGroup`, `Badge` | B · C | **hecho** (`Badge` sin integrar) |
 
 ## Línea base y resultados
 
@@ -275,6 +288,9 @@ Medición: Lighthouse 12, **móvil**, una corrida por página sobre `alancisnero
 | 2026-10-02 | I0 | `/` | 60 | 4.16 s | **0.225** | 540 ms | 453 kB | 96 | LCP = imagen del proyecto con `loading="lazy"`; CLS = el footer se desplaza (0.213) |
 | 2026-10-02 | I0 | `/about` | 82 | 4.14 s | 0.000 | 34 ms | 453 kB | 96 | LCP = bloque de introducción |
 | 2026-10-02 | I0 | `/work/project-helix` | 66 | 3.90 s | **0.214** | 449 ms | 452 kB | 92 | LCP = imagen con `width=0 height=0`; CLS = footer (0.213) |
+| 2026-10-03 | D | `/` | 95 | 2.94 s | 0.000 | 67 ms | 147 kB | 100 | Local (`next start`), no producción. LCP = portada del proyecto destacado |
+| 2026-10-03 | D | `/about` | 93 | 3.16 s | 0.000 | 67 ms | 147 kB | 100 | Local. LCP = párrafo de introducción (*render delay*) |
+| 2026-10-03 | D | `/work/project-helix` | 93 | 3.09 s | 0.000 | 95 ms | 147 kB | 100 | Local. LCP = portada con `priority` |
 
 **Lectura de la línea base**
 - **Fuera del presupuesto** (`CLAUDE.md` → *Design Principles*: CLS < 0.1, LCP < 2.5 s):
@@ -284,3 +300,7 @@ Medición: Lighthouse 12, **móvil**, una corrida por página sobre `alancisnero
   - **LCP:** la imagen principal se carga de forma diferida. En I5 (`ProjectCard` y caso de estudio) e I6 (Home), cargarla con prioridad y con dimensiones reales.
   - **CLS:** el footer se mueve porque el contenido de arriba crece tarde. Sospechosos: imágenes sin dimensiones (`width=0 height=0`) y `RevealFx`. Se resuelve en I5 e I6.
   - **JS:** unos 450 kB en todas las rutas, casi todo de Once UI y del layout compartido. Debería bajar con I1 (poda), I2 (primitivas) e I7 (quitar Once UI).
+
+**Lectura al cerrar la migración (paso D)**
+- CLS resuelto en todas las páginas, accesibilidad en 100 y el JS bajó de ~450 kB a 147 kB.
+- **LCP sigue fuera del presupuesto** en laboratorio (~2.9–3.2 s): FCP ~0.9 s y la mayor parte es *render delay*. Probé no precargar Geist Mono y no mejoró (se revirtió). Siguiente paso: confirmarlo con Speed Insights en producción antes de optimizar más; si se confirma, revisar el peso de las portadas y las dos fuentes variables.

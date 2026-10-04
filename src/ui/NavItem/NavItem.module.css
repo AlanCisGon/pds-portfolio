@@ -1,6 +1,5 @@
 /* NavItem · Figma 02a Actions (28:140). */
-/* [href] lifts these above Once UI's global a:not(.button) rule (0,1,1 / 0,2,1 on hover) until step D. */
-.navItem[href] {
+.navItem {
   display: inline-flex;
   align-items: center;
   gap: var(--space-8);
@@ -45,8 +44,7 @@
 }
 
 /* current page: tonal surface + Cerezo icon (active state = where the hand goes) */
-.navItem[href][data-selected],
-.navItem[href][data-selected]:hover {
+.navItem[data-selected] {
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);
 }

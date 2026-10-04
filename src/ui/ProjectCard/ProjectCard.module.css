@@ -1,8 +1,7 @@
 /* ProjectCard · Figma 02e Cards & Site (35:144).
  * Concentric radii: card 20 − padding 8 = cover 12 (radius-control).
  * DECISION (2026-10-03): on hover the card rises to bg-elevated and fuses with cover and tags on purpose. */
-/* [href] lifts these above Once UI's global a:not(.button) rule (0,1,1 / 0,2,1 on hover) until step D. */
-.card[href] {
+.card {
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
@@ -14,8 +13,7 @@
   transition: background-color var(--duration-fast) var(--ease-settle);
 }
 
-.card[href]:hover {
-  color: inherit;
+.card:hover {
   background: var(--color-bg-elevated);
 }
 

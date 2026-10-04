@@ -1,37 +1,23 @@
 import { ArrowRight } from "iconoir-react";
 
-import { Meta, Schema } from "@once-ui-system/core";
-
 import { Projects } from "@/components/work/Projects";
-import { home, about, person, baseURL } from "@/resources";
+import { home, about, person } from "@/resources";
 import { Avatar, Button, Link } from "@/ui";
+import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import styles from "./page.module.css";
 
-export async function generateMetadata() {
-  return Meta.generate({
-    title: home.title,
-    description: home.description,
-    baseURL: baseURL,
-    path: home.path,
-    image: home.image,
-  });
-}
+export const metadata = pageMetadata({
+  title: home.title,
+  description: home.description,
+  path: home.path,
+  image: home.image,
+});
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <Schema
-        as="webPage"
-        baseURL={baseURL}
-        path={home.path}
-        title={home.title}
-        description={home.description}
-        image={`/api/og/generate?title=${encodeURIComponent(home.title)}`}
-        author={{
-          name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
-        }}
+      <JsonLd
+        data={pageSchema({ type: "WebPage", title: home.title, description: home.description, path: home.path })}
       />
 
       {/* Content first: no reveal animation, so the hero is the first paint. */}
