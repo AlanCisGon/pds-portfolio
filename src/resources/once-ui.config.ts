@@ -21,8 +21,8 @@ const display: DisplayConfig = {
   time: true,
 };
 
-// Once UI theme attributes, still needed by pages not yet migrated to src/ui (removed in step D).
-// The site is dark only: theme is forced in layout.tsx and Providers.
+// Once UI theme attributes for its global CSS, still loaded until step D.
+// The site is dark only: data-theme="dark" is rendered in layout.tsx.
 const style: StyleConfig = {
   theme: "dark",
   brand: "violet",

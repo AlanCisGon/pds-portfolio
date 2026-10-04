@@ -1,9 +1,6 @@
-import { Github, Linkedin, Mail } from "iconoir-react";
-
 import { Footer as SiteFooter, Link } from "@/ui";
 import { person, social } from "@/resources";
-
-const socialIcons = { github: <Github />, linkedin: <Linkedin />, email: <Mail /> } as const;
+import { socialIcons } from "@/resources/socialIcons";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -24,7 +21,7 @@ export function Footer() {
         .map((item) => ({
           href: item.link,
           label: item.name,
-          icon: socialIcons[item.icon as keyof typeof socialIcons],
+          icon: socialIcons[item.icon],
         }))}
     />
   );
