@@ -4,5 +4,12 @@
     "title": "UX Strategy — Grafo Rizomático",
     "description": "Grafo interactivo de UX Strategy: 40 nodos, 70+ conexiones, 10 categorías.",
     "createdAt": "2026-03-27"
+  },
+  {
+    "slug": "ui",
+    "title": "Catálogo de componentes",
+    "description": "Los 25 componentes del sistema de diseño (grupos 02a–02e de Figma) en código, con sus estados.",
+    "createdAt": "2026-10-03",
+    "href": "/lab/ui"
   }
 ]

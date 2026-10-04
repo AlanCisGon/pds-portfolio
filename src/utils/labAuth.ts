@@ -6,6 +6,8 @@ export type LabEntry = {
   title: string;
   description: string;
   createdAt: string;
+  /** Internal Lab page (e.g. "/lab/ui"). Without it, the entry is a single-file HTML artifact. */
+  href?: string;
 };
 
 export const labManifest: LabEntry[] = labEntries;

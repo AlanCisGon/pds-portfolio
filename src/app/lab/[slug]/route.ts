@@ -14,7 +14,8 @@ export async function GET(
 
   const { slug } = await params;
   // Only slugs listed in the manifest are served (also blocks path traversal).
-  const entry = labManifest.find((item) => item.slug === slug);
+  // Entries with `href` are app pages, not files.
+  const entry = labManifest.find((item) => item.slug === slug && !item.href);
   if (!entry) {
     return new Response("Not found", { status: 404, headers: LAB_HEADERS });
   }
