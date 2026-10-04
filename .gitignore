@@ -38,3 +38,6 @@ next-env.d.ts
 # AI assistant guide (kept local, not published)
 CLAUDE.md
 CLAUDE.local.md
+
+# brand guidelines: local only (public repo)
+brand/

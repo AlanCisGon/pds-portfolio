@@ -1,6 +1,6 @@
 # Auditoría de contenido vs. marca (2026-10-03)
 
-Fuente de verdad: `brand_guidelines/alan-brand-guidelines.md` (las referencias § son a ese documento) y los principios Lean UX de `CLAUDE.md` (proto-personas y estructura de caso de estudio). Auditoría de solo lectura sobre `main`; ningún texto se cambió todavía. **No se inventan cifras:** lo que falta queda como pregunta.
+Fuente de verdad: `brand/alan-brand-guidelines.md` (local, ignorado por git; las referencias § son a ese documento) y los principios Lean UX de `CLAUDE.md` (proto-personas y estructura de caso de estudio). Auditoría de solo lectura sobre `main`; ningún texto se cambió todavía. **No se inventan cifras:** lo que falta queda como pregunta.
 
 ## Resumen
 
