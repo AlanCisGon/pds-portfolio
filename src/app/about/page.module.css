@@ -1,0 +1,185 @@
+/* About (proposal on tokens; no Figma frame yet): profile + section index aside, content column. */
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-32);
+  width: 100%;
+  max-width: 1080px;
+  min-width: 0;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+.locationIcon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+}
+
+.locationIcon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.toc {
+  display: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
+  min-width: 0;
+  max-width: 720px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  scroll-margin-top: var(--space-64);
+}
+
+.name {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-line);
+  font-weight: var(--weight-semibold);
+}
+
+.role {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-line);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  padding-top: var(--space-16);
+}
+
+.intro {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-l-size);
+  line-height: var(--text-body-l-line);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+.sectionTitle {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--text-heading-l-size);
+  line-height: var(--text-heading-l-line);
+  font-weight: var(--weight-semibold);
+  scroll-margin-top: var(--space-64);
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.entryHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-8);
+}
+
+.entryTitle {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-line);
+  font-weight: var(--weight-semibold);
+}
+
+.meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+.entryRole {
+  margin: 0 0 var(--space-8);
+  color: var(--color-accent);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.entryText {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+}
+
+.entryText strong {
+  color: var(--color-text-primary);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin: 0;
+  padding: var(--space-8) 0 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .page {
+    grid-template-columns: 220px minmax(0, 720px);
+    gap: var(--space-64);
+  }
+
+  .aside {
+    position: sticky;
+    top: var(--space-32);
+    align-self: start;
+  }
+
+  .toc {
+    display: block;
+  }
+}

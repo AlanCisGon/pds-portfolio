@@ -5,7 +5,6 @@ import type {
   Social,
   Work,
 } from "@/types";
-import { Line, Row, Text } from "@once-ui-system/core";
 
 const person: Person = {
   firstName: "Alan",
@@ -19,9 +18,8 @@ const person: Person = {
 };
 
 const social: Social = [
-  // Links are automatically displayed.
-  // Import new icons in /once-ui/icons.ts
-  // Set essentials: true for links you want to show on the about page
+  // Links are automatically displayed. Icons: src/resources/socialIcons.tsx.
+  // Set essential: true for links you want to show on the about page
   {
     name: "GitHub",
     icon: "github",
@@ -52,29 +50,15 @@ const home: Home = {
   headline: <>Hi, I'm {person.firstName}</>,
   featured: {
     display: true,
-    title: (
-      <Row gap="12" vertical="center">
-        <strong className="ml-4">Cart & Checkout Optimization </strong>{" "}
-        <Line background="brand-alpha-strong" vert height="20" />
-        <Text marginRight="4" onBackground="brand-medium">
-          Featured work
-        </Text>
-      </Row>
-    ),
+    label: "Featured work",
+    title: "Cart & Checkout Optimization",
     href: "/work/project-helix",
   },
   subline: (
     <>
-      A product designer at{" "}
-      <Text as="span" size="xl" weight="strong">
-        Coppel
-      </Text>
-      , with 8+ years creating exceptional digital experiences. <br /> Focused
-      in{" "}
-      <Text as="span" size="xl" weight="strong">
-        eCommerce, Banking, and User Research
-      </Text>
-      . <br /> Solving real user problems through design.
+      A product designer at <strong>Coppel</strong>, with 8+ years creating exceptional digital
+      experiences. Focused on <strong>eCommerce, Banking, and User Research</strong>. Solving real
+      user problems through design.
     </>
   ),
 };
@@ -158,7 +142,7 @@ const about: About = {
         images: [
           {
             src: "/images/onikom-website.webp",
-            alt: "Coppel, Checkout Flow Redesign",
+            alt: "Onikom Systems website",
             width: 16,
             height: 9,
           },

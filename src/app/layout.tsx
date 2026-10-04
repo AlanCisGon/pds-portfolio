@@ -7,7 +7,7 @@ import classNames from "classnames";
 
 import { Meta } from "@once-ui-system/core";
 
-import { Footer, Header, Providers } from "@/components";
+import { Footer, Header } from "@/components";
 import { baseURL, style, home } from "@/resources";
 import { geistMono, geistSans } from "@/styles/fonts";
 // Enable Vercel Speed Insights
@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      // Dark only. The data-* attributes keep Once UI working on pages not yet migrated (removed in step D).
+      // Dark only. The data-* attributes feed Once UI's global CSS until it is removed (step D).
       data-theme="dark"
       data-brand={style.brand}
       data-accent={style.accent}
@@ -49,13 +49,11 @@ export default function RootLayout({
       className={classNames(geistSans.variable, geistMono.variable)}
     >
       <body className={styles.body}>
-        <Providers>
-          <SpeedInsights />
-          <Analytics />
-          <Header />
-          <main className={styles.main}>{children}</main>
-          <Footer />
-        </Providers>
+        <SpeedInsights />
+        <Analytics />
+        <Header />
+        <main className={styles.main}>{children}</main>
+        <Footer />
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import { IconName } from "@/resources/icons";
+import type { SocialIcon } from "@/resources/socialIcons";
 import { zones } from "tzdata";
 
 /**
@@ -35,11 +35,8 @@ export type Person = {
 export type Social = Array<{
   /** Name of the social platform */
   name: string;
-  /** Icon for the social platform
-   * The icons are a part of "src/resources/icons.ts" file.
-   * If you need a different icon, import it there and reference it everywhere else
-   */
-  icon: IconName;
+  /** Icon key, mapped to Iconoir in src/resources/socialIcons.tsx */
+  icon: SocialIcon;
   /**
    * The link to the social platform
    *
@@ -83,7 +80,9 @@ export interface Home extends BasePageConfig {
   /** Featured badge, which appears above the headline */
   featured: {
     display: boolean;
-    title: React.ReactNode;
+    /** Eyebrow, e.g. "Featured work" */
+    label: string;
+    title: string;
     href: string;
   };
   /** The sub text which appears below the headline */

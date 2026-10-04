@@ -1,22 +1,13 @@
-import {
-  Avatar,
-  Button,
-  Column,
-  Heading,
-  Icon,
-  IconButton,
-  Media,
-  Text,
-  Meta,
-  Schema,
-  Row,
-} from "@once-ui-system/core";
+import { Calendar, Globe } from "iconoir-react";
+
+import { Meta, Schema } from "@once-ui-system/core";
+
 import { baseURL, about, person, social } from "@/resources";
+import { socialIcons } from "@/resources/socialIcons";
 import { tagIcons } from "@/resources/tagIcons";
-import { Tag } from "@/ui";
-import TableOfContents from "@/components/about/TableOfContents";
-import styles from "@/components/about/about.module.scss";
-import React from "react";
+import { Avatar, Button, List, ListItem, Media, type MediaRatio, TableOfContents, Tag } from "@/ui";
+import { slugify } from "@/utils/slugify";
+import styles from "./page.module.css";
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -28,31 +19,25 @@ export async function generateMetadata() {
   });
 }
 
+/** Content images declare a width/height ratio; Media reserves one of its fixed ratios. */
+function toRatio(width: number, height: number): MediaRatio {
+  const r = width / height;
+  if (r > 1.5) return "16:9";
+  if (r > 1.1) return "4:3";
+  return "1:1";
+}
+
 export default function About() {
-  const structure = [
-    {
-      title: about.intro.title,
-      display: about.intro.display,
-      items: [],
-    },
-    {
-      title: about.work.title,
-      display: about.work.display,
-      items: about.work.experiences.map((experience) => experience.company),
-    },
-    {
-      title: about.studies.title,
-      display: about.studies.display,
-      items: about.studies.institutions.map((institution) => institution.name),
-    },
-    {
-      title: about.technical.title,
-      display: about.technical.display,
-      items: about.technical.skills.map((skill) => skill.title),
-    },
-  ];
+  const sections = [
+    { id: slugify(about.intro.title), label: about.intro.title, display: about.intro.display },
+    { id: slugify(about.work.title), label: about.work.title, display: about.work.display },
+    { id: slugify(about.studies.title), label: about.studies.title, display: about.studies.display },
+    { id: slugify(about.technical.title), label: about.technical.title, display: about.technical.display },
+  ].filter((section) => section.display);
+  const [intro, work, studies, technical] = sections.map((s) => s.id);
+
   return (
-    <Column maxWidth="m">
+    <div className={styles.page}>
       <Schema
         as="webPage"
         baseURL={baseURL}
@@ -66,279 +51,145 @@ export default function About() {
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      {about.tableOfContent.display && (
-        <Column
-          left="0"
-          style={{ top: "50%", transform: "translateY(-50%)" }}
-          position="fixed"
-          paddingLeft="24"
-          gap="32"
-          s={{ hide: true }}
-        >
-          <TableOfContents structure={structure} about={about} />
-        </Column>
-      )}
-      <Row fillWidth s={{ direction: "column"}} horizontal="center">
+
+      <aside className={styles.aside}>
         {about.avatar.display && (
-          <Column
-            className={styles.avatar}
-            top="64"
-            fitHeight
-            position="sticky"
-            s={{ position: "relative", style: { top: "auto" } }}
-            xs={{ style: { top: "auto" } }}
-            minWidth="160"
-            paddingX="l"
-            paddingBottom="xl"
-            gap="m"
-            flex={3}
-            horizontal="center"
-          >
-            <Avatar src={person.avatar} size="xl" />
-            <Row gap="8" vertical="center">
-              <Icon onBackground="accent-weak" name="globe" />
-              {person.location}
-            </Row>
+          <div className={styles.profile}>
+            <Avatar src={person.avatar} name={person.name} size="l" decorative />
+            <p className={styles.location}>
+              <span className={styles.locationIcon} aria-hidden="true">
+                <Globe />
+              </span>
+              {person.location.replace(/_/g, " ")}
+            </p>
             {person.languages && person.languages.length > 0 && (
-              <Row wrap gap="8">
-                {person.languages.map((language, index) => (
-                  <Tag key={index}>{language}</Tag>
+              <ul className={styles.tags} aria-label="Languages">
+                {person.languages.map((language) => (
+                  <li key={language}>
+                    <Tag size="small">{language}</Tag>
+                  </li>
                 ))}
-              </Row>
+              </ul>
             )}
-          </Column>
+          </div>
         )}
-        <Column className={styles.blockAlign} flex={9} maxWidth={40}>
-          <Column
-            id={about.intro.title}
-            fillWidth
-            minHeight="160"
-            vertical="center"
-            marginBottom="32"
-          >
+        {about.tableOfContent.display && sections.length > 1 && (
+          <div className={styles.toc}>
+            <TableOfContents entries={sections} title="On this page" />
+          </div>
+        )}
+      </aside>
+
+      <div className={styles.content}>
+        <header id={intro} className={styles.header}>
+          <h1 className={styles.name}>{person.name}</h1>
+          <p className={styles.role}>{person.role.trim()}</p>
+          <div className={styles.actions}>
             {about.calendar.display && (
-              <Row
-                fitWidth
-                border="brand-alpha-medium"
-                background="brand-alpha-weak"
-                radius="full"
-                padding="4"
-                gap="8"
-                marginBottom="m"
-                vertical="center"
-                className={styles.blockAlign}
-                style={{
-                  backdropFilter: "blur(var(--static-space-1))",
-                }}
+              <Button
+                href={about.calendar.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                leadingIcon={<Calendar />}
               >
-                <Icon paddingLeft="12" name="calendar" onBackground="brand-weak" />
-                <Row paddingX="8">Schedule a call</Row>
-                <IconButton
-                  href={about.calendar.link}
-                  data-border="rounded"
+                Schedule a call
+              </Button>
+            )}
+            {social
+              .filter((item) => item.essential && item.link)
+              .map((item) => (
+                <Button
+                  key={item.name}
+                  href={item.link}
                   variant="secondary"
-                  icon="chevronRight"
-                />
-              </Row>
-            )}
-            <Heading className={styles.textAlign} variant="display-strong-xl">
-              {person.name}
-            </Heading>
-            <Text
-              className={styles.textAlign}
-              variant="display-default-xs"
-              onBackground="neutral-weak"
-            >
-              {person.role}
-            </Text>
-            {social.length > 0 && (
-              <Row
-                className={styles.blockAlign}
-                paddingTop="20"
-                paddingBottom="8"
-                gap="8"
-                wrap
-                horizontal="center"
-                fitWidth
-                data-border="rounded"
-              >
-                {social
-                      .filter((item) => item.essential)
-                      .map(
-                  (item) =>
-                    item.link && (
-                      <React.Fragment key={item.name}>
-                        <Row s={{ hide: true }}>
-                          <Button
-                            key={item.name}
-                            href={item.link}
-                            prefixIcon={item.icon}
-                            label={item.name}
-                            size="s"
-                            weight="default"
-                            variant="secondary"
-                          />
-                        </Row>
-                        <Row hide s={{ hide: false }}>
-                          <IconButton
-                            size="l"
-                            key={`${item.name}-icon`}
-                            href={item.link}
-                            icon={item.icon}
-                            variant="secondary"
-                          />
-                        </Row>
-                      </React.Fragment>
-                    ),
+                  leadingIcon={socialIcons[item.icon]}
+                  {...(/^https?:/.test(item.link) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  {item.name}
+                </Button>
+              ))}
+          </div>
+        </header>
+
+        {about.intro.display && <p className={styles.intro}>{about.intro.description}</p>}
+
+        {about.work.display && (
+          <section className={styles.section} aria-labelledby={work}>
+            <h2 id={work} className={styles.sectionTitle}>
+              {about.work.title}
+            </h2>
+            {about.work.experiences.map((experience) => (
+              <article key={`${experience.company}-${experience.role}`} className={styles.entry}>
+                <div className={styles.entryHead}>
+                  <h3 className={styles.entryTitle}>{experience.company}</h3>
+                  <p className={styles.meta}>{experience.timeframe}</p>
+                </div>
+                <p className={styles.entryRole}>{experience.role}</p>
+                <List>
+                  {experience.achievements.map((achievement, index) => (
+                    <ListItem key={index}>{achievement}</ListItem>
+                  ))}
+                </List>
+                {experience.images?.map((image) => (
+                  <Media
+                    key={image.src}
+                    src={image.src}
+                    alt={image.alt}
+                    ratio={toRatio(image.width, image.height)}
+                    sizes="(min-width: 1024px) 720px, 100vw"
+                  />
+                ))}
+              </article>
+            ))}
+          </section>
+        )}
+
+        {about.studies.display && (
+          <section className={styles.section} aria-labelledby={studies}>
+            <h2 id={studies} className={styles.sectionTitle}>
+              {about.studies.title}
+            </h2>
+            {about.studies.institutions.map((institution) => (
+              <article key={institution.name} className={styles.entry}>
+                <h3 className={styles.entryTitle}>{institution.name}</h3>
+                <p className={styles.entryText}>{institution.description}</p>
+              </article>
+            ))}
+          </section>
+        )}
+
+        {about.technical.display && (
+          <section className={styles.section} aria-labelledby={technical}>
+            <h2 id={technical} className={styles.sectionTitle}>
+              {about.technical.title}
+            </h2>
+            {about.technical.skills.map((skill) => (
+              <article key={skill.title} className={styles.entry}>
+                <h3 className={styles.entryTitle}>{skill.title}</h3>
+                {skill.description && <p className={styles.entryText}>{skill.description}</p>}
+                {skill.tags && skill.tags.length > 0 && (
+                  <ul className={styles.tags}>
+                    {skill.tags.map((tag) => (
+                      <li key={tag.name}>
+                        <Tag leadingIcon={tag.icon ? tagIcons[tag.icon] : undefined}>{tag.name}</Tag>
+                      </li>
+                    ))}
+                  </ul>
                 )}
-              </Row>
-            )}
-          </Column>
-
-          {about.intro.display && (
-            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
-              {about.intro.description}
-            </Column>
-          )}
-
-          {about.work.display && (
-            <>
-              <Heading as="h2" id={about.work.title} variant="display-strong-s" marginBottom="m">
-                {about.work.title}
-              </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
-                {about.work.experiences.map((experience, index) => (
-                  <Column key={`${experience.company}-${experience.role}-${index}`} fillWidth>
-                    <Row fillWidth horizontal="between" vertical="end" marginBottom="4">
-                      <Text id={experience.company} variant="heading-strong-l">
-                        {experience.company}
-                      </Text>
-                      <Text variant="heading-default-xs" onBackground="neutral-weak">
-                        {experience.timeframe}
-                      </Text>
-                    </Row>
-                    <Text variant="body-default-s" onBackground="brand-weak" marginBottom="m">
-                      {experience.role}
-                    </Text>
-                    <Column as="ul" gap="16">
-                      {experience.achievements.map(
-                        (achievement: React.ReactNode, index: number) => (
-                          <Text
-                            as="li"
-                            variant="body-default-m"
-                            key={`${experience.company}-${index}`}
-                          >
-                            {achievement}
-                          </Text>
-                        ),
-                      )}
-                    </Column>
-                    {experience.images && experience.images.length > 0 && (
-                      <Row fillWidth paddingTop="m" paddingLeft="40" gap="12" wrap>
-                        {experience.images.map((image, index) => (
-                          <Row
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            minWidth={image.width}
-                            height={image.height}
-                          >
-                            <Media
-                              enlarge
-                              radius="m"
-                              sizes={image.width.toString()}
-                              alt={image.alt}
-                              src={image.src}
-                            />
-                          </Row>
-                        ))}
-                      </Row>
-                    )}
-                  </Column>
+                {skill.images?.map((image) => (
+                  <Media
+                    key={image.src}
+                    src={image.src}
+                    alt={image.alt}
+                    ratio={toRatio(image.width, image.height)}
+                    sizes="(min-width: 1024px) 720px, 100vw"
+                  />
                 ))}
-              </Column>
-            </>
-          )}
-
-          {about.studies.display && (
-            <>
-              <Heading as="h2" id={about.studies.title} variant="display-strong-s" marginBottom="m">
-                {about.studies.title}
-              </Heading>
-              <Column fillWidth gap="l" marginBottom="40">
-                {about.studies.institutions.map((institution, index) => (
-                  <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
-                      {institution.name}
-                    </Text>
-                    <Text variant="heading-default-xs" onBackground="neutral-weak">
-                      {institution.description}
-                    </Text>
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
-
-          {about.technical.display && (
-            <>
-              <Heading
-                as="h2"
-                id={about.technical.title}
-                variant="display-strong-s"
-                marginBottom="40"
-              >
-                {about.technical.title}
-              </Heading>
-              <Column fillWidth gap="l">
-                {about.technical.skills.map((skill, index) => (
-                  <Column key={`${skill}-${index}`} fillWidth gap="4">
-                    <Text id={skill.title} variant="heading-strong-l">
-                      {skill.title}
-                    </Text>
-                    <Text variant="body-default-m" onBackground="neutral-weak">
-                      {skill.description}
-                    </Text>
-                    {skill.tags && skill.tags.length > 0 && (
-                      <Row wrap gap="8" paddingTop="8">
-                        {skill.tags.map((tag, tagIndex) => (
-                          <Tag
-                            key={`${skill.title}-${tagIndex}`}
-                            leadingIcon={tag.icon ? tagIcons[tag.icon] : undefined}
-                          >
-                            {tag.name}
-                          </Tag>
-                        ))}
-                      </Row>
-                    )}
-                    {skill.images && skill.images.length > 0 && (
-                      <Row fillWidth paddingTop="m" gap="12" wrap>
-                        {skill.images.map((image, index) => (
-                          <Row
-                            key={index}
-                            border="neutral-medium"
-                            radius="m"
-                            minWidth={image.width}
-                            height={image.height}
-                          >
-                            <Media
-                              enlarge
-                              radius="m"
-                              sizes={image.width.toString()}
-                              alt={image.alt}
-                              src={image.src}
-                            />
-                          </Row>
-                        ))}
-                      </Row>
-                    )}
-                  </Column>
-                ))}
-              </Column>
-            </>
-          )}
-        </Column>
-      </Row>
-    </Column>
+              </article>
+            ))}
+          </section>
+        )}
+      </div>
+    </div>
   );
 }
