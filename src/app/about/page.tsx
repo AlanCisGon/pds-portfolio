@@ -1,23 +1,18 @@
 import { Calendar, Globe } from "iconoir-react";
 
-import { Meta, Schema } from "@once-ui-system/core";
-
-import { baseURL, about, person, social } from "@/resources";
+import { about, person, social } from "@/resources";
 import { socialIcons } from "@/resources/socialIcons";
 import { tagIcons } from "@/resources/tagIcons";
 import { Avatar, Button, List, ListItem, Media, type MediaRatio, TableOfContents, Tag } from "@/ui";
 import { slugify } from "@/utils/slugify";
+import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import styles from "./page.module.css";
 
-export async function generateMetadata() {
-  return Meta.generate({
-    title: about.title,
-    description: about.description,
-    baseURL: baseURL,
-    image: `/api/og/generate?title=${encodeURIComponent(about.title)}`,
-    path: about.path,
-  });
-}
+export const metadata = pageMetadata({
+  title: about.title,
+  description: about.description,
+  path: about.path,
+});
 
 /** Content images declare a width/height ratio; Media reserves one of its fixed ratios. */
 function toRatio(width: number, height: number): MediaRatio {
@@ -38,18 +33,8 @@ export default function About() {
 
   return (
     <div className={styles.page}>
-      <Schema
-        as="webPage"
-        baseURL={baseURL}
-        title={about.title}
-        description={about.description}
-        path={about.path}
-        image={`/api/og/generate?title=${encodeURIComponent(about.title)}`}
-        author={{
-          name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
-        }}
+      <JsonLd
+        data={pageSchema({ type: "WebPage", title: about.title, description: about.description, path: about.path })}
       />
 
       <aside className={styles.aside}>

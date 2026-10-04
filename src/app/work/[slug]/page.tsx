@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { Meta, Schema } from "@once-ui-system/core";
-
 import { CustomMDX, ScrollToHash } from "@/components";
 import { getHeadings } from "@/components/mdx";
 import { Projects } from "@/components/work/Projects";
-import { baseURL, about, person, work } from "@/resources";
+import { work } from "@/resources";
 import { AvatarGroup, Link, Media, TableOfContents, Tag } from "@/ui";
 import { formatDate } from "@/utils/formatDate";
 import { getPosts } from "@/utils/utils";
+import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import styles from "./page.module.css";
 
 const getProjects = () => getPosts(["src", "app", "work", "projects"]);
@@ -32,12 +31,13 @@ export async function generateMetadata({
   const post = await findPost(params);
   if (!post) return {};
 
-  return Meta.generate({
+  return pageMetadata({
     title: post.metadata.title,
     description: post.metadata.summary,
-    baseURL: baseURL,
-    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
     path: `${work.path}/${post.slug}`,
+    image: post.metadata.image || undefined,
+    type: "article",
+    publishedTime: post.metadata.publishedAt,
   });
 }
 
@@ -57,20 +57,15 @@ export default async function Project({
 
   return (
     <div className={styles.page}>
-      <Schema
-        as="blogPosting"
-        baseURL={baseURL}
-        path={`${work.path}/${post.slug}`}
-        title={metadata.title}
-        description={metadata.summary}
-        datePublished={metadata.publishedAt}
-        dateModified={metadata.publishedAt}
-        image={metadata.image || `/api/og/generate?title=${encodeURIComponent(metadata.title)}`}
-        author={{
-          name: person.name,
-          url: `${baseURL}${about.path}`,
-          image: `${baseURL}${person.avatar}`,
-        }}
+      <JsonLd
+        data={pageSchema({
+          type: "BlogPosting",
+          title: metadata.title,
+          description: metadata.summary,
+          path: `${work.path}/${post.slug}`,
+          image: metadata.image || undefined,
+          datePublished: metadata.publishedAt,
+        })}
       />
 
       <header className={styles.header}>

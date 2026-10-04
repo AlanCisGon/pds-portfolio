@@ -1,31 +1,34 @@
 # alancisneros.design
 
-Este repositorio contiene mi portafolio personal como Product / UX Designer.
-El proyecto está personalizado para mostrar mi experiencia, casos de estudio
-y enfoque profesional.
+Portafolio personal de Alan Cisneros, Product Experience Strategist: casos de estudio, experiencia y enfoque de diseño.
 
-## Sobre este proyecto
+En vivo: https://alancisneros.design
 
-Este sitio está construido como una adaptación y extensión de la plantilla
-original **Magic Portfolio** creada por Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://www.linkedin.com/in/lorant-one/).
+## Stack
 
-El repositorio original puede encontrarse aquí:
-https://github.com/once-ui-system/magic-portfolio.git
+- **Next.js 16** (App Router) + **React 19** + TypeScript estricto, desplegado en **Vercel**.
+- **Sistema de diseño propio** en `src/ui`: componentes con CSS Modules sobre tokens (`src/styles/tokens.css`), diseñados en Figma. Solo tema oscuro. Inventario y decisiones en [`docs/design-system.md`](docs/design-system.md).
+- **Tipografía:** Geist Sans y Geist Mono (paquete `geist`).
+- **Íconos:** Iconoir y Simple Icons.
+- **Contenido:** casos de estudio en MDX (`src/app/work/projects/*.mdx`, vía `next-mdx-remote`) y textos en `src/resources/content.tsx`.
+- **SEO:** Metadata API de Next y JSON-LD propios (`src/utils/seo.tsx`), sitemap y robots generados.
 
-## Cambios y personalizaciones
+## Desarrollo
 
-Respecto a la plantilla original, este proyecto incluye:
+```bash
+npm install
+cp .env.example .env.local   # LAB_USER / LAB_PASSWORD para probar /lab
+npm run dev                  # http://localhost:3000
+npm run build && npm run start
+```
 
-- Arquitectura de contenido personalizada
-- Componentes y secciones modificadas
-- Ajustes visuales y de layout
-- Integración de contenido propio (copy, proyectos y narrativa)
+- Configuración del sitio: `src/resources/site.config.ts` (URL canónica, rutas, datos del Header).
+- Catálogo privado de componentes: `/lab/ui` (detrás de Basic Auth).
 
-El objetivo es tener una version personalizada para uso personal y profesional
-del diseñador mexicano Alan Cisneros.
+## Historia
 
-## Licencia
+El proyecto empezó como un fork de la plantilla [Magic Portfolio](https://github.com/once-ui-system/magic-portfolio) de Lorant One, construida con Once UI. Entre el 2 y el 3 de octubre de 2026 se migró por incrementos a un sistema de diseño propio; ya no depende de Once UI. El registro de la migración está en [`docs/migration-plan.md`](docs/migration-plan.md).
 
-Este proyecto mantiene la licencia original del repositorio base.
-Consulta el archivo `LICENSE` para más información.
+## Créditos y licencia
 
+Partes del código provienen de Magic Portfolio, de Lorant One ([Threads](https://www.threads.net/@lorant.one) · [LinkedIn](https://www.linkedin.com/in/lorant-one/)), distribuido bajo **CC BY-NC 4.0**. Este repositorio mantiene esa licencia: consulta [`LICENSE`](LICENSE).
