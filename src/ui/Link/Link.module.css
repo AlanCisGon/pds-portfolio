@@ -1,12 +1,13 @@
 /* Link · Figma 02a Actions (28:107). Underline removed in the design audit (2026-10-03). */
-.link {
+/* [href] lifts these above Once UI's global a:not(.button) rule (0,1,1 / 0,2,1 on hover) until step D. */
+.link[href] {
   color: var(--color-accent);
   text-decoration: none;
   border-radius: 4px; /* focus ring corner (Figma FocusRing r4) */
   transition: color var(--duration-fast) var(--ease-settle);
 }
 
-.link:hover {
+.link[href]:hover {
   color: var(--color-accent-hover);
 }
 

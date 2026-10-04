@@ -24,7 +24,8 @@
   list-style: none;
 }
 
-.item {
+/* [href] lifts these above Once UI's global a:not(.button) rule (0,1,1 / 0,2,1 on hover) until step D. */
+.item[href] {
   display: flex;
   align-items: center;
   gap: var(--space-8);
@@ -68,7 +69,8 @@
   outline-offset: 2px;
 }
 
-.item[data-active] {
+.item[href][data-active],
+.item[href][data-active]:hover {
   color: var(--color-text-primary);
 }
 
@@ -79,4 +81,8 @@
 
 .item[data-active] .number {
   color: var(--color-accent);
+}
+
+.item[href]:hover:not([data-active]) {
+  color: var(--color-text-secondary);
 }

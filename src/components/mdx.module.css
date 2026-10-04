@@ -1,0 +1,61 @@
+/* Case-study prose. Rhythm: 24 before a section heading, 16 between blocks. */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-l-size);
+  line-height: var(--text-body-l-line);
+}
+
+.prose > :where(h2, h3, h4) {
+  margin-top: var(--space-24);
+}
+
+.prose > :where(h3) {
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-line);
+}
+
+.prose > :where(h4) {
+  font-size: var(--text-body-l-size);
+  line-height: var(--text-body-l-line);
+}
+
+.paragraph {
+  margin: 0;
+}
+
+.strong {
+  color: var(--color-text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.code {
+  padding: 0 var(--space-4);
+  border-radius: 4px;
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.quote {
+  margin: 0;
+  padding-left: var(--space-16);
+  border-left: 2px solid var(--color-accent);
+  color: var(--color-text-primary);
+  font-size: var(--text-quote-size);
+  line-height: var(--text-quote-line);
+}
+
+.anchor {
+  color: var(--color-accent);
+}
+
+.anchor:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}

@@ -9,5 +9,10 @@ export function List({ ordered = false, children }: { ordered?: boolean; childre
 
 /** Figma: ListItem. */
 export function ListItem({ children }: { children: ReactNode }) {
-  return <li className={styles.item}>{children}</li>;
+  // One wrapper so mixed inline content (text + <strong>) stays in the text column of the grid.
+  return (
+    <li className={styles.item}>
+      <span>{children}</span>
+    </li>
+  );
 }
