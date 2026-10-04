@@ -19,7 +19,7 @@ export function TocItem({ href, number, label, active = false }: { href: string;
 }
 
 /** Section index of a case study, numbered (structure shown with numbering). Tracks the section in view. */
-export function TableOfContents({ entries, title = "En este caso" }: { entries: TocEntry[]; title?: string }) {
+export function TableOfContents({ entries, title = "On this page" }: { entries: TocEntry[]; title?: string }) {
   const [active, setActive] = useState(entries[0]?.id);
 
   useEffect(() => {

@@ -15,7 +15,7 @@ export function MediaVideo({ src, poster, label }: { src: string; poster?: strin
         <button
           type="button"
           className={styles.play}
-          aria-label={label ? `Reproducir video: ${label}` : "Reproducir video"}
+          aria-label={label ? `Play video: ${label}` : "Play video"}
           onClick={() => {
             setStarted(true);
             void ref.current?.play();

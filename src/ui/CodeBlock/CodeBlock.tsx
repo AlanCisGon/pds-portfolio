@@ -33,14 +33,14 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
     <figure className={styles.block}>
       <figcaption className={styles.header}>
         <span className={styles.meta}>{language}</span>
-        <button type="button" className={styles.copy} onClick={copy} data-copied={copied || undefined} aria-label={copied ? "Código copiado" : "Copiar código"}>
+        <button type="button" className={styles.copy} onClick={copy} data-copied={copied || undefined} aria-label={copied ? "Code copied" : "Copy code"}>
           <span className={styles.icon} aria-hidden="true">
             {copied ? <Check /> : <Copy />}
           </span>
-          <span aria-hidden="true">{copied ? "Copiado" : "Copiar"}</span>
+          <span aria-hidden="true">{copied ? "Copied" : "Copy"}</span>
         </button>
         <span className={styles.status} role="status" aria-live="polite">
-          {copied ? "Código copiado" : ""}
+          {copied ? "Code copied" : ""}
         </span>
       </figcaption>
       <pre className={styles.pre}>

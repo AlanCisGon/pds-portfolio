@@ -19,7 +19,7 @@ export function Footer({ signature, colophonHref, social }: FooterProps) {
         <p className={styles.text}>{signature}</p>
         {colophonHref && (
           <Link href={colophonHref} kind="standalone">
-            Colofón
+            Colophon
           </Link>
         )}
       </div>
