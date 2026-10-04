@@ -68,7 +68,7 @@ export default function About() {
       <div className={styles.content}>
         <header id={intro} className={styles.header}>
           <h1 className={styles.name}>{person.name}</h1>
-          <p className={styles.role}>{person.role.trim()}</p>
+          <p className={styles.role}>{person.role}</p>
           <div className={styles.actions}>
             {about.calendar.display && (
               <Button

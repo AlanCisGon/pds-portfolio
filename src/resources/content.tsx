@@ -10,7 +10,7 @@ const person: Person = {
   firstName: "Alan",
   lastName: "Cisneros",
   name: "Alan Cisneros",
-  role: " Product Experience Strategist",
+  role: "Product Experience Strategist",
   avatar: "/images/avatar.jpg",
   email: "alancisgon@gmail.com",
   location: "America/Mazatlan", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
@@ -96,7 +96,7 @@ const about: About = {
   },
   work: {
     display: true, // set to false to hide this section
-    title: "Work Experience",
+    title: "Work experience",
     experiences: [
       {
         company: "Coppel",
@@ -104,7 +104,7 @@ const about: About = {
         role: "UX Design Lead — Purchase & Payments",
         achievements: [
           "Led bottom-funnel redesign and Salesforce Commerce Cloud implementation, improving conversion and checkout performance (+12% est.)",
-          "Designed and launched digital services: Motorcycle Insurance, Extended Warranties, and Recurrent Shipping (Web & App). (+25% up avg. ticket)",
+          "Designed and launched digital services: Motorcycle Insurance, Extended Warranties, and Recurring Shipping (Web & App). (+25% up avg. ticket)",
           "Established UX Writing Strategy for credit card BIN logic, reducing Dynamic CVV2 rejects. (-60% down rejection)",
           "Championed adoption of Design System standards across “Coppel Soluciones” landing pages and in-store systems. (+80% adoption across operative teams)",
           "Implemented UX metrics governance, tracking usability, accessibility, NPS, CSAT, TCR, and drop-off rate improvements.",
@@ -239,7 +239,7 @@ const about: About = {
           "Creation and maintenance of websites and web applications using front-end and back-end technologies",
         tags: [
           {
-            name: "NextJS",
+            name: "Next.js",
             icon: "nextjs",
           },
           {
@@ -282,7 +282,7 @@ const about: About = {
             icon: "claude",
           },
           {
-            name: "Gemini AI",
+            name: "Gemini",
             icon: "gemini",
           },
         ],
