@@ -13,9 +13,8 @@
   line-height: var(--text-label-m-line);
   text-decoration: none;
   white-space: nowrap;
-  transition:
-    background-color var(--duration-fast) var(--ease-settle),
-    color var(--duration-fast) var(--ease-settle);
+  transition: background-color var(--duration-fast) var(--ease-settle), color var(--duration-fast)
+    var(--ease-settle);
 }
 
 .icon {

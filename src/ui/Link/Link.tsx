@@ -18,7 +18,14 @@ export type LinkProps = {
 };
 
 /** Navigation link in Cerezo (5.68:1 on page). Avoid on bg-elevated (4.58:1). */
-export function Link({ href, children, kind = "inline", external, trailingIcon, className }: LinkProps) {
+export function Link({
+  href,
+  children,
+  kind = "inline",
+  external,
+  trailingIcon,
+  className,
+}: LinkProps) {
   const isExternal = external ?? /^https?:/.test(href);
   const cls = className ? `${styles.link} ${className}` : styles.link;
   const icon = trailingIcon ?? (isExternal ? <OpenNewWindow /> : <ArrowRight />);

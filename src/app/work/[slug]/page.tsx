@@ -80,12 +80,18 @@ export default async function Project({
 
         {team.length > 0 && (
           <div className={styles.team}>
-            <AvatarGroup people={team.map((member) => ({ name: member.name, src: member.avatar }))} />
+            <AvatarGroup
+              people={team.map((member) => ({ name: member.name, src: member.avatar }))}
+            />
             <p className={styles.names}>
               {team.map((member, i) => (
                 <span key={member.name}>
                   {i > 0 && ", "}
-                  {member.linkedIn ? <Link href={member.linkedIn}>{member.name}</Link> : member.name}
+                  {member.linkedIn ? (
+                    <Link href={member.linkedIn}>{member.name}</Link>
+                  ) : (
+                    member.name
+                  )}
                   {member.role && <span className={styles.role}> · {member.role}</span>}
                 </span>
               ))}

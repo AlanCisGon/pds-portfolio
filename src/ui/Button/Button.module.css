@@ -18,9 +18,8 @@
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;
-  transition:
-    background-color var(--duration-fast) var(--ease-settle),
-    color var(--duration-fast) var(--ease-settle);
+  transition: background-color var(--duration-fast) var(--ease-settle), color var(--duration-fast)
+    var(--ease-settle);
 }
 
 .button[data-size="s"] {

@@ -1,7 +1,7 @@
 import { ArrowRight } from "iconoir-react";
 
 import { Projects } from "@/components/work/Projects";
-import { home, about, person } from "@/resources";
+import { about, home, person } from "@/resources";
 import { Avatar, Button, Link } from "@/ui";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import styles from "./page.module.css";
@@ -17,7 +17,12 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <JsonLd
-        data={pageSchema({ type: "WebPage", title: home.title, description: home.description, path: home.path })}
+        data={pageSchema({
+          type: "WebPage",
+          title: home.title,
+          description: home.description,
+          path: home.path,
+        })}
       />
 
       {/* Content first: no reveal animation, so the hero is the first paint. */}
@@ -35,7 +40,11 @@ export default function Home() {
         <Button
           href={about.path}
           variant="secondary"
-          leadingIcon={about.avatar.display ? <Avatar src={person.avatar} name={person.name} size="s" decorative /> : undefined}
+          leadingIcon={
+            about.avatar.display ? (
+              <Avatar src={person.avatar} name={person.name} size="s" decorative />
+            ) : undefined
+          }
           trailingIcon={<ArrowRight />}
         >
           {about.title}

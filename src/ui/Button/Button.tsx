@@ -52,13 +52,30 @@ export function Button(props: ButtonProps) {
       );
     }
     return (
-      <NextLink href={href} target={target} rel={rel} className={cls} data-variant={variant} data-size={size}>
+      <NextLink
+        href={href}
+        target={target}
+        rel={rel}
+        className={cls}
+        data-variant={variant}
+        data-size={size}
+      >
         {content}
       </NextLink>
     );
   }
 
-  const { variant: _v, size: _s, leadingIcon: _l, trailingIcon: _t, children: _c, className: _cn, href: _h, type = "button", ...rest } = props;
+  const {
+    variant: _v,
+    size: _s,
+    leadingIcon: _l,
+    trailingIcon: _t,
+    children: _c,
+    className: _cn,
+    href: _h,
+    type = "button",
+    ...rest
+  } = props;
   return (
     <button type={type} className={cls} data-variant={variant} data-size={size} {...rest}>
       {content}

@@ -1,7 +1,18 @@
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import type { ComponentProps, ReactNode } from "react";
 
-import { Accordion, Callout, CodeBlock, Divider, HeadingLink, Link, List, ListItem, Media, Table } from "@/ui";
+import {
+  Accordion,
+  Callout,
+  CodeBlock,
+  Divider,
+  HeadingLink,
+  Link,
+  List,
+  ListItem,
+  Media,
+  Table,
+} from "@/ui";
 import { slugify } from "@/utils/slugify";
 import styles from "./mdx.module.css";
 
@@ -45,8 +56,16 @@ function MdxImage({ src, alt = "" }: { src?: string; alt?: string }) {
 function MdxPre({ children }: WithChildren) {
   // ```lang fences arrive as <pre><code className="language-lang">.
   if (children && typeof children === "object" && "props" in children) {
-    const { className = "", children: code } = children.props as { className?: string; children?: ReactNode };
-    return <CodeBlock code={textOf(code).replace(/\n$/, "")} language={className.replace("language-", "") || "text"} />;
+    const { className = "", children: code } = children.props as {
+      className?: string;
+      children?: ReactNode;
+    };
+    return (
+      <CodeBlock
+        code={textOf(code).replace(/\n$/, "")}
+        language={className.replace("language-", "") || "text"}
+      />
+    );
   }
   return <pre>{children}</pre>;
 }
@@ -66,7 +85,9 @@ const components: MDXRemoteProps["components"] = {
   hr: () => <Divider />,
   code: ({ children }: WithChildren) => <code className={styles.code}>{children}</code>,
   pre: MdxPre,
-  blockquote: ({ children }: WithChildren) => <blockquote className={styles.quote}>{children}</blockquote>,
+  blockquote: ({ children }: WithChildren) => (
+    <blockquote className={styles.quote}>{children}</blockquote>
+  ),
   // JSX blocks available to case studies.
   Table: (props: ComponentProps<typeof Table>) => <Table {...props} />,
   Callout,

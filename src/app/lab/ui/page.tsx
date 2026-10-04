@@ -1,6 +1,3 @@
-import { ArrowRight, Github, Home, Linkedin, Mail, User, ViewGrid } from "iconoir-react";
-import type { Metadata } from "next";
-import { SiClaude, SiFigma } from "@icons-pack/react-simple-icons";
 import {
   Accordion,
   Avatar,
@@ -26,6 +23,9 @@ import {
   TableOfContents,
   Tag,
 } from "@/ui";
+import { SiClaude, SiFigma } from "@icons-pack/react-simple-icons";
+import { ArrowRight, Github, Home, Linkedin, Mail, User, ViewGrid } from "iconoir-react";
+import type { Metadata } from "next";
 import { ChipDemo } from "./ChipDemo";
 import styles from "./page.module.css";
 
@@ -46,7 +46,10 @@ export default function UiCatalog() {
       <header className={styles.intro}>
         <p className={styles.eyebrow}>LAB · DESIGN SYSTEM</p>
         <h1 className={styles.title}>Catálogo de componentes</h1>
-        <p className={styles.lead}>Implementación en código de los grupos 02a–02e de Figma. Pasa el cursor y usa Tab para ver los estados.</p>
+        <p className={styles.lead}>
+          Implementación en código de los grupos 02a–02e de Figma. Pasa el cursor y usa Tab para ver
+          los estados.
+        </p>
       </header>
 
       <section className={styles.section} id="actions">
@@ -73,7 +76,8 @@ export default function UiCatalog() {
         </div>
         <div className={styles.row}>
           <p className={styles.body}>
-            Un párrafo con un <Link href="/about">enlace en el texto</Link> y otro <Link href="https://figma.com">externo</Link>.
+            Un párrafo con un <Link href="/about">enlace en el texto</Link> y otro{" "}
+            <Link href="https://figma.com">externo</Link>.
           </p>
           <Link href="/work" kind="standalone">
             Ver todos los proyectos
@@ -107,12 +111,31 @@ export default function UiCatalog() {
           <Avatar name="Alan Cisneros" size="s" />
           <Avatar name="Alan Cisneros" size="m" />
           <Avatar name="Alan Cisneros" size="l" src="/images/avatar.jpg" />
-          <AvatarGroup people={[{ name: "Alan Cisneros" }, { name: "Juana Martínez" }, { name: "Luis Ramos" }, { name: "Ana Pérez" }]} />
+          <AvatarGroup
+            people={[
+              { name: "Alan Cisneros" },
+              { name: "Juana Martínez" },
+              { name: "Luis Ramos" },
+              { name: "Ana Pérez" },
+            ]}
+          />
         </div>
         <Divider />
         <div className={styles.grid}>
           {(["info", "success", "warning", "danger", "neutral"] as const).map((t) => (
-            <Callout key={t} tone={t} title={{ info: "Contexto", success: "Resultado", warning: "Atención", danger: "Riesgo", neutral: "Nota" }[t]}>
+            <Callout
+              key={t}
+              tone={t}
+              title={
+                {
+                  info: "Contexto",
+                  success: "Resultado",
+                  warning: "Atención",
+                  danger: "Riesgo",
+                  neutral: "Nota",
+                }[t]
+              }
+            >
               Texto de apoyo del aviso. Una idea por callout; la evidencia antes que los adjetivos.
             </Callout>
           ))}
@@ -146,17 +169,31 @@ export default function UiCatalog() {
             ],
           }}
         />
-        <CodeBlock language="TSX" code={'import { Tag } from "@/ui";\n\n<Tag leadingIcon={<SiClaude />}>Claude</Tag>'} />
+        <CodeBlock
+          language="TSX"
+          code={'import { Tag } from "@/ui";\n\n<Tag leadingIcon={<SiClaude />}>Claude</Tag>'}
+        />
         <div className={styles.stack}>
-          <Accordion title="¿Cómo medimos el impacto?">Con la conversión por canal antes y después del rediseño, en el mismo periodo del año.</Accordion>
+          <Accordion title="¿Cómo medimos el impacto?">
+            Con la conversión por canal antes y después del rediseño, en el mismo periodo del año.
+          </Accordion>
           <Accordion title="Abierto por defecto" defaultOpen>
             El panel se expande desde su lugar y el chevron rota 180°.
           </Accordion>
         </div>
         <div className={styles.grid}>
-          <Media src={`${helix}/checkout-flow.webp`} alt="Flujo de checkout rediseñado" caption="Flujo de checkout rediseñado" />
+          <Media
+            src={`${helix}/checkout-flow.webp`}
+            alt="Flujo de checkout rediseñado"
+            caption="Flujo de checkout rediseñado"
+          />
           <Media ratio="4:3" caption="Sin imagen: placeholder tonal" />
-          <Media ratio="1:1" src={`${helix}/unified-cart.webp`} alt="Carrito unificado" caption="1:1" />
+          <Media
+            ratio="1:1"
+            src={`${helix}/unified-cart.webp`}
+            alt="Carrito unificado"
+            caption="1:1"
+          />
         </div>
         <Carousel
           label="Project Helix"
@@ -204,7 +241,13 @@ export default function UiCatalog() {
             tags={["Service Design", "Research", "UX Lead"]}
             cover={{ src: `${helix}/cart-cover.webp`, alt: "" }}
           />
-          <ProjectCard href="/work/movistar-mx" meta="Telecom · Movistar · 2019" title="Movistar México" summary="Sin portada: placeholder tonal 16:9." tags={["App"]} />
+          <ProjectCard
+            href="/work/movistar-mx"
+            meta="Telecom · Movistar · 2019"
+            title="Movistar México"
+            summary="Sin portada: placeholder tonal 16:9."
+            tags={["App"]}
+          />
         </div>
         <ProjectCard
           layout="horizontal"
@@ -224,7 +267,11 @@ export default function UiCatalog() {
             colophonHref="/lab"
             social={[
               { href: "https://github.com/AlanCisGon", label: "GitHub", icon: <Github /> },
-              { href: "https://www.linkedin.com/in/alancisgon/", label: "LinkedIn", icon: <Linkedin /> },
+              {
+                href: "https://www.linkedin.com/in/alancisgon/",
+                label: "LinkedIn",
+                icon: <Linkedin />,
+              },
               { href: "mailto:alancisgon@gmail.com", label: "Correo", icon: <Mail /> },
             ]}
           />

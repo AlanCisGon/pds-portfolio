@@ -17,9 +17,8 @@
   font-size: var(--text-label-m-size);
   line-height: var(--text-label-m-line);
   white-space: nowrap;
-  transition:
-    background-color var(--duration-fast) var(--ease-settle),
-    color var(--duration-fast) var(--ease-settle);
+  transition: background-color var(--duration-fast) var(--ease-settle), color var(--duration-fast)
+    var(--ease-settle);
 }
 
 .chip[data-size="s"] {

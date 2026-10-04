@@ -35,7 +35,13 @@ export function Avatar({ size = "m", src, name, decorative = false, initials }: 
       aria-hidden={decorative && !src ? true : undefined}
     >
       {src ? (
-        <Image src={src} alt={decorative ? "" : name} width={px} height={px} className={styles.image} />
+        <Image
+          src={src}
+          alt={decorative ? "" : name}
+          width={px}
+          height={px}
+          className={styles.image}
+        />
       ) : (
         <span aria-hidden="true">{text}</span>
       )}

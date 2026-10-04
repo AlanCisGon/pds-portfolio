@@ -16,7 +16,10 @@ type BaseProps = {
 
 export type IconButtonProps = BaseProps &
   (
-    | ({ href?: undefined } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof BaseProps | "children">)
+    | ({ href?: undefined } & Omit<
+        ButtonHTMLAttributes<HTMLButtonElement>,
+        keyof BaseProps | "children"
+      >)
     | { href: string; external?: boolean }
   );
 
@@ -40,16 +43,35 @@ export function IconButton(props: IconButtonProps) {
         data-size={size}
         aria-label={label}
         title={label}
-        {...(external && !props.href.startsWith("mailto:") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        {...(external && !props.href.startsWith("mailto:")
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
       >
         {glyph}
       </NextLink>
     );
   }
 
-  const { icon: _i, label: _l, variant: _v, size: _s, className: _c, href: _h, type = "button", ...rest } = props;
+  const {
+    icon: _i,
+    label: _l,
+    variant: _v,
+    size: _s,
+    className: _c,
+    href: _h,
+    type = "button",
+    ...rest
+  } = props;
   return (
-    <button type={type} className={cls} data-variant={variant} data-size={size} aria-label={label} title={label} {...rest}>
+    <button
+      type={type}
+      className={cls}
+      data-variant={variant}
+      data-size={size}
+      aria-label={label}
+      title={label}
+      {...rest}
+    >
       {glyph}
     </button>
   );

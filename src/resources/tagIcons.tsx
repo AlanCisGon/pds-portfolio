@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-import { AdobeIllustrator, AdobePhotoshop, Group } from "iconoir-react";
 import {
   SiClaude,
   SiConfluence,
@@ -17,6 +15,8 @@ import {
   SiTypescript,
   SiVercel,
 } from "@icons-pack/react-simple-icons";
+import { AdobeIllustrator, AdobePhotoshop, Group } from "iconoir-react";
+import type { ReactNode } from "react";
 
 /**
  * Leading icons for Tag, keyed by the `icon` field in content.tsx.

@@ -1,7 +1,7 @@
 import { Home, User, ViewGrid } from "iconoir-react";
 
-import { Header as SiteHeader } from "@/ui";
 import { about, display, person, routes, work } from "@/resources";
+import { Header as SiteHeader } from "@/ui";
 
 export function Header() {
   const items = [

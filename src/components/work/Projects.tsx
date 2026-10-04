@@ -12,7 +12,12 @@ interface ProjectsProps {
   priorityFirst?: boolean;
 }
 
-export function Projects({ range, exclude, layout = "vertical", priorityFirst = false }: ProjectsProps) {
+export function Projects({
+  range,
+  exclude,
+  layout = "vertical",
+  priorityFirst = false,
+}: ProjectsProps) {
   const excluded = new Set(exclude);
   const sorted = getProjects().filter((project) => !excluded.has(project.slug));
 

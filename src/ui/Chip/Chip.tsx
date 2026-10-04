@@ -41,10 +41,21 @@ export function Chip(props: ChipProps) {
 
   if (props.onRemove) {
     return (
-      <span className={cls} data-size={size} data-removable="" aria-disabled={disabled || undefined}>
+      <span
+        className={cls}
+        data-size={size}
+        data-removable=""
+        aria-disabled={disabled || undefined}
+      >
         {lead}
         <span>{label}</span>
-        <button type="button" className={styles.remove} onClick={props.onRemove} disabled={disabled} aria-label={`Remove ${label}`}>
+        <button
+          type="button"
+          className={styles.remove}
+          onClick={props.onRemove}
+          disabled={disabled}
+          aria-label={`Remove ${label}`}
+        >
           <span className={styles.icon} aria-hidden="true">
             <Xmark />
           </span>
