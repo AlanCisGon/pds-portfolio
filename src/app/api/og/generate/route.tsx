@@ -75,7 +75,7 @@ export async function GET(request: Request) {
         <img src={avatarSrc} width={88} height={88} style={{ borderRadius: 999, objectFit: "cover" }} />
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <span style={{ fontSize: 32, fontWeight: 600, color: palette.niebla }}>{person.name}</span>
-          <span style={{ fontSize: 24, color: palette.aluminio }}>{person.role.trim()}</span>
+          <span style={{ fontSize: 24, color: palette.aluminio }}>{person.role}</span>
         </div>
       </div>
     </div>,
