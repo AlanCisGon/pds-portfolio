@@ -22,7 +22,8 @@
   color: var(--color-text-primary);
   font-size: var(--text-title-size);
   line-height: var(--text-title-line);
-  font-weight: var(--weight-semibold);
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
 }
 
 .text {
