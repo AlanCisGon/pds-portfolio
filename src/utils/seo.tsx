@@ -52,6 +52,7 @@ export function pageMetadata({
 const author = {
   "@type": "Person",
   name: person.name,
+  jobTitle: person.role,
   url: `${baseURL}${about.path}`,
   image: `${baseURL}${person.avatar}`,
   sameAs: social.map((item) => item.link).filter((link) => link.startsWith("http")),

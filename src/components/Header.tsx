@@ -13,7 +13,7 @@ export function Header() {
   return (
     <SiteHeader
       items={items}
-      location={display.location ? person.location.replace(/_/g, " ") : ""}
+      location={display.location ? person.city : ""}
       timeZone={person.location}
     />
   );

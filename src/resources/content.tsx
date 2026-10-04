@@ -10,9 +10,10 @@ const person: Person = {
   firstName: "Alan",
   lastName: "Cisneros",
   name: "Alan Cisneros",
-  role: "Product Experience Strategist",
+  role: "Senior Product Designer",
   avatar: "/images/avatar.jpg",
   email: "alancisgon@gmail.com",
+  city: "Culiacán, Mexico",
   location: "America/Mazatlan", // Expecting the IANA time zone identifier, e.g., 'Europe/Vienna'
   languages: ["Spanish", "English"], // optional: Leave the array empty if you don't want to display languages
 };
@@ -45,20 +46,20 @@ const home: Home = {
   path: "/",
   image: "/images/og/home.webp",
   label: "Home",
-  title: `${person.name} | Product Designer & Strategist`,
-  description: `Portfolio website showcasing my work as a ${person.role}`,
-  headline: <>Hi, I'm {person.firstName}</>,
+  title: `${person.name} | ${person.role}`,
+  description: `${person.role} in ${person.city}. Case studies in e-commerce, financial services and telecom: cart and checkout at Coppel, app redesign at Movistar MX.`,
+  headline: <>I design products that balance business, technology, product and design.</>,
   featured: {
     display: true,
     label: "Featured work",
-    title: "Cart & Checkout Optimization",
+    title: "Cart and Checkout Optimization",
     href: "/work/project-helix",
   },
   subline: (
     <>
-      A product designer at <strong>Coppel</strong>, with 8+ years creating exceptional digital
-      experiences. Focused on <strong>eCommerce, Banking, and User Research</strong>. Solving real
-      user problems through design.
+      I'm {person.firstName}, a product designer with 8 years across <strong>e-commerce, financial
+      services and telecom</strong>. At <strong>Coppel</strong> I lead UX for Purchase &amp; Payments.
+      I start every project by understanding the real problem before designing the solution.
     </>
   ),
 };
@@ -67,7 +68,7 @@ const about: About = {
   path: "/about",
   label: "About",
   title: `About – ${person.name}`,
-  description: `Meet ${person.name}, ${person.role} from ${person.location}`,
+  description: `Meet ${person.name}, ${person.role} in ${person.city}: 8 years designing for e-commerce, financial services and telecom.`,
   tableOfContent: {
     display: true,
   },
@@ -83,31 +84,30 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        Strategic UX & Service Design Leader with 8+ years of experience
-        designing and scaling digital experiences across eCommerce, finance, and
-        omnichannel ecosystems. Recognized for bridging user research, design
-        strategy, and business impact, leading distributed multidisciplinary
-        teams through data-driven design operations. Combines a strong
-        background in Design Systems, UX maturity, and agile transformation,
-        with a human-centered leadership style that fosters autonomy, clarity
-        and measurable outcomes.
+        I'm a product designer based in Culiacán, Mexico. At Coppel I lead UX
+        for Purchase &amp; Payments; before that I was a UX researcher there, and
+        I led the UX team at Onikom Systems for clients like Movistar MX. My
+        work sits between business, technology, product and design: I research
+        early, prototype fast, test small and keep the customer at the center.
+        Lately I treat AI as a co-creation partner, prototyping with Claude Code
+        to get to ideas and to the shape of a problem faster.
       </>
     ),
   },
   work: {
     display: true, // set to false to hide this section
-    title: "Work experience",
+    title: "Experience",
     experiences: [
       {
         company: "Coppel",
         timeframe: "2022 - Present",
-        role: "UX Design Lead — Purchase & Payments",
+        role: "Design Lead — Purchase & Payments",
         achievements: [
-          "Led bottom-funnel redesign and Salesforce Commerce Cloud implementation, improving conversion and checkout performance (+12% est.)",
-          "Designed and launched digital services: Motorcycle Insurance, Extended Warranties, and Recurring Shipping (Web & App). (+25% up avg. ticket)",
-          "Established UX Writing Strategy for credit card BIN logic, reducing Dynamic CVV2 rejects. (-60% down rejection)",
-          "Championed adoption of Design System standards across “Coppel Soluciones” landing pages and in-store systems. (+80% adoption across operative teams)",
-          "Implemented UX metrics governance, tracking usability, accessibility, NPS, CSAT, TCR, and drop-off rate improvements.",
+          "Led a team of 6 (3 UI, 2 UX, 1 UX writer) through the cart and checkout redesign during the Salesforce Commerce Cloud migration: web conversion +2 pp (digital analytics, Jan 2026, 4 months after launch).",
+          "With the team, designed and launched Motorcycle Insurance, Extended Warranties and Recurring Shipping (web and app): average ticket +25% (BI, Jan 2026).",
+          "Removed the Order Review step and rewrote card BIN messaging, which let us move card payments to a secure iFrame: Dynamic CVV2 rejections −60% (Operations, Jan 2026).",
+          "Brought Design System standards to the “Coppel Soluciones” landing pages and in-store systems: +80% adoption across operations teams (Jan 2026).",
+          "Set up UX metrics tracking for the Purchase team: usability (SUM), accessibility (Lighthouse, axe), NPS (Medallia), CSAT, task completion and drop-off.",
         ],
         images: [
           // optional: leave the array empty if you don't want to display images
@@ -121,22 +121,24 @@ const about: About = {
       },
       {
         company: "Coppel",
-        timeframe: "2020 - 2022",
-        role: "UX Researcher — eCommerce New Customers",
+        timeframe: "2019 - 2022",
+        role: "UX Researcher — E-commerce New Customers",
         achievements: [
-          "Designed and institutionalized Heuristic Evaluation and Contribution Process frameworks across the UX team.",
+          "Piloted two practices for a UX team without design governance: the Validation Onion, to find and validate user problems layer by layer, and a Contribution Process, a shared way to add new research. Both were absorbed by Coppel's Experience Design Center of Excellence.",
+          "Set up heuristic evaluation as a shared practice across the UX team.",
           "Conducted UX Research for the Digital Credit Application (100% online acquisition).",
         ],
         images: [],
       },
       {
         company: "Onikom Systems",
-        timeframe: "2019 - 2020",
-        role: "Design & Research Team Lead — UX/UI",
+        timeframe: "2018 - 2019",
+        role: "UX Lead",
         achievements: [
-          "Introduced Lean UX and Validation Onion methods.",
-          "Designed and taught Lean UX internal course.",
-          "Delivered UX design for major clients: Movistar MX, CFE Contigo, Nadro.",
+          "Built a UX team that could serve several clients and products at once.",
+          "Joined client discovery and brought users' needs and problems back to the team to shape the product.",
+          "Introduced Lean UX and designed and taught an internal Lean UX course.",
+          "Delivered UX design for Movistar MX, CFE Contigo and Nadro.",
         ],
         images: [
           {
@@ -151,21 +153,21 @@ const about: About = {
   },
   studies: {
     display: true, // set to false to hide this section
-    title: "Studies",
+    title: "Education",
     institutions: [
       {
         name: "Universidad Nacional Autónoma de México (UNAM)",
-        description: "Bachelor's Degree - Design & Visual Communication.",
+        description: "B.A. in Design & Visual Communication, 2014 – 2017.",
       },
       {
         name: "Sperientia",
-        description: "Service Design & Jobs-to-be-Done Methodologies.",
+        description: "Diploma in Service Design & Jobs-to-be-Done, 2021.",
       },
     ],
   },
   technical: {
     display: true, // set to false to hide this section
-    title: "Technical skills",
+    title: "Skills",
     skills: [
       {
         title: "Design Leadership & Operations",
@@ -267,13 +269,13 @@ const about: About = {
         images: [],
       },
       {
-        title: "Generative AI & Design Innovation",
+        title: "AI-Powered Design",
         description: (
           <>
-            Integrating <strong>Generative AI</strong> into UX strategy,
-            research, and design operations to boost creativity, speed, and
-            decision-making across product teams, without losing a
-            human-centered approach.
+            I work with AI as a <strong>co-creation partner</strong>: rapid
+            prototyping and co-creation with Claude Code to explore more ideas
+            and understand problems faster. This portfolio and its design
+            system were built that way.
           </>
         ),
         tags: [
@@ -296,8 +298,8 @@ const about: About = {
 const work: Work = {
   path: "/work",
   label: "Work",
-  title: `Projects – ${person.name}`,
-  description: `Design and dev projects by ${person.name}`,
+  title: `Work – ${person.name}`,
+  description: `Case studies by ${person.name}: cart and checkout at Coppel and an app redesign at Movistar MX.`,
   // Create new project pages by adding a new .mdx file to app/work/projects
   // All projects will be listed on the /home and /work routes
 };

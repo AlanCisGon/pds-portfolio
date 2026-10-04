@@ -106,7 +106,7 @@ export default async function Project({
             )}
             {metadata.link && (
               <Link href={metadata.link} kind="standalone">
-                View project
+                Live site
               </Link>
             )}
           </div>

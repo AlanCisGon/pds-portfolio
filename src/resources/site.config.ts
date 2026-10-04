@@ -11,7 +11,7 @@ const routes: RoutesConfig = {
 };
 
 const display: DisplayConfig = {
-  /** Location (from person.location) on the left of the Header. */
+  /** Location (from person.city) on the left of the Header. */
   location: true,
 };
 

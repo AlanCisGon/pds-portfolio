@@ -204,7 +204,7 @@ export default function UiCatalog() {
             tags={["Service Design", "Research", "UX Lead"]}
             cover={{ src: `${helix}/cart-cover.webp`, alt: "" }}
           />
-          <ProjectCard href="/work/movistar-mx" meta="Telecom · Movistar · 2023" title="Movistar México" summary="Sin portada: placeholder tonal 16:9." tags={["App"]} />
+          <ProjectCard href="/work/movistar-mx" meta="Telecom · Movistar · 2019" title="Movistar México" summary="Sin portada: placeholder tonal 16:9." tags={["App"]} />
         </div>
         <ProjectCard
           layout="horizontal"

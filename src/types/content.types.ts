@@ -21,7 +21,9 @@ export type Person = {
   /** Path under /public. */
   avatar: string;
   email: string;
-  /** Also shown, with "_" as spaces, as the Header location. */
+  /** Visible place, e.g. "Culiacán, Mexico" (Header, About, SEO). */
+  city: string;
+  /** Drives the Header clock. */
   location: IANATimeZone;
   languages?: string[];
 };
