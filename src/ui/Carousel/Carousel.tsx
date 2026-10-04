@@ -25,18 +25,18 @@ export function Carousel({ images, label }: CarouselProps) {
   };
 
   return (
-    <section className={styles.carousel} aria-roledescription="carrusel" aria-label={label}>
+    <section className={styles.carousel} aria-roledescription="carousel" aria-label={label}>
       <div className={styles.viewport} tabIndex={0} onKeyDown={onKey} aria-live="polite">
         <div className={styles.track} style={{ transform: `translateX(-${index * 100}%)` }}>
           {images.map((img, i) => (
-            <div key={img.src} className={styles.slide} role="group" aria-roledescription="imagen" aria-label={`${i + 1} de ${count}`} aria-hidden={i !== index}>
+            <div key={img.src} className={styles.slide} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${count}`} aria-hidden={i !== index}>
               <Image src={img.src} alt={img.alt} fill sizes="(min-width: 768px) 720px, 100vw" className={styles.image} priority={i === 0} />
             </div>
           ))}
         </div>
       </div>
       <div className={styles.controls}>
-        <IconButton icon={<NavArrowLeft />} label="Anterior" onClick={() => go(index - 1)} />
+        <IconButton icon={<NavArrowLeft />} label="Previous" onClick={() => go(index - 1)} />
         <div className={styles.indicators}>
           {images.map((img, i) => (
             <button
@@ -44,13 +44,13 @@ export function Carousel({ images, label }: CarouselProps) {
               type="button"
               className={styles.dot}
               data-active={i === index || undefined}
-              aria-label={`Ir a la imagen ${i + 1}`}
+              aria-label={`Go to image ${i + 1}`}
               aria-current={i === index ? "true" : undefined}
               onClick={() => go(i)}
             />
           ))}
         </div>
-        <IconButton icon={<NavArrowRight />} label="Siguiente" onClick={() => go(index + 1)} />
+        <IconButton icon={<NavArrowRight />} label="Next" onClick={() => go(index + 1)} />
       </div>
       <p className={styles.counter} aria-hidden="true">
         {pad(index + 1)} / {pad(count)}

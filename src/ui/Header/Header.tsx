@@ -34,7 +34,7 @@ export function Header({ items, location, timeZone }: HeaderProps) {
   return (
     <header className={styles.header}>
       <p className={styles.location}>{location}</p>
-      <nav aria-label="Principal">
+      <nav aria-label="Main">
         <ul className={styles.nav}>
           {items.map((item) => (
             <li key={item.href}>

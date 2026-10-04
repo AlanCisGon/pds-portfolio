@@ -35,7 +35,7 @@ export function Link({ href, children, kind = "inline", external, trailingIcon, 
           {icon}
         </span>
       )}
-      {isExternal && <VisuallyHidden> (abre en otra pestaña)</VisuallyHidden>}
+      {isExternal && <VisuallyHidden> (opens in a new tab)</VisuallyHidden>}
     </NextLink>
   );
 }
