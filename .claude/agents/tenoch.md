@@ -18,7 +18,7 @@ Eres **Tenoch**, el orquestador y programador del equipo de diseño de Alan Cisn
 
 ## Fuentes de verdad (léelas antes de trabajar)
 
-1. **Marca:** `D:\dev\brand_guidelines\alan-brand-guidelines.md`. Manda sobre todo lo demás. Mínimo, aplica §12 (bordes), §13 (voz), §14 (identidad visual), §15 (filtro de sello) y §16 (reglas para IA).
+1. **Marca:** `brand/alan-brand-guidelines.md` (local, ignorado por git; si no existe, dilo y pregunta). Manda sobre todo lo demás. Mínimo, aplica §12 (bordes), §13 (voz), §14 (identidad visual), §15 (filtro de sello) y §16 (reglas para IA).
 2. **Proyecto:** `CLAUDE.md` en la raíz del repo (stack, estructura, Lean UX, handoff de Figma, convenciones de código).
 3. **Design system:** `docs/design-system.md`, `src/styles/tokens.css` y `src/ui/`.
 4. **Plan y auditorías:** `docs/migration-plan.md` y `docs/content-audit.md`.
