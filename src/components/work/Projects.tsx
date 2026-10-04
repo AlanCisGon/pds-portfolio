@@ -1,5 +1,5 @@
 import { ProjectCard } from "@/ui";
-import { getPosts } from "@/utils/utils";
+import { getProjects } from "@/utils/projects";
 import styles from "./Projects.module.css";
 
 interface ProjectsProps {
@@ -14,11 +14,7 @@ interface ProjectsProps {
 
 export function Projects({ range, exclude, layout = "vertical", priorityFirst = false }: ProjectsProps) {
   const excluded = new Set(exclude);
-  const sorted = getPosts(["src", "app", "work", "projects"])
-    .filter((post) => !excluded.has(post.slug))
-    .sort(
-      (a, b) => new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime(),
-    );
+  const sorted = getProjects().filter((project) => !excluded.has(project.slug));
 
   const start = range ? Math.max(0, range[0] - 1) : 0;
   const end = range ? Math.min(sorted.length, range[1] ?? sorted.length) : sorted.length;
@@ -27,7 +23,7 @@ export function Projects({ range, exclude, layout = "vertical", priorityFirst = 
   return (
     <ul className={styles.grid} data-layout={layout}>
       {projects.map((post, index) => {
-        const year = post.metadata.publishedAt ? new Date(post.metadata.publishedAt).getFullYear() : "";
+        const year = post.metadata.publishedAt.slice(0, 4);
         const cover = post.metadata.images[0];
         return (
           <li key={post.slug}>
@@ -36,7 +32,7 @@ export function Projects({ range, exclude, layout = "vertical", priorityFirst = 
               meta={[post.metadata.client, year].filter(Boolean).join(" · ")}
               title={post.metadata.title}
               summary={post.metadata.summary}
-              tags={post.metadata.tag}
+              tags={post.metadata.tags}
               cover={cover ? { src: cover, alt: "" } : undefined}
               layout={layout}
               priority={priorityFirst && index === 0}

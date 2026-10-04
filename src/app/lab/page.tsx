@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 
 import { Card } from "@/ui";
+import { formatDate } from "@/utils/format";
 import { labManifest } from "@/utils/labAuth";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = { title: "Lab", robots: { index: false, follow: false } };
 // Access is checked in proxy.ts; render per request so nothing is cached as a static page.
 export const dynamic = "force-dynamic";
-
-const formatDate = (iso: string) =>
-  new Date(`${iso}T00:00:00`).toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" });
 
 /** Private index (proposal on src/ui): app pages and single-file artifacts, newest first. */
 export default function LabIndex() {
@@ -30,7 +28,7 @@ export default function LabIndex() {
         {entries.map((entry) => (
           <li key={entry.slug}>
             <Card
-              eyebrow={`${entry.href ? "Página" : "Artefacto"} · ${formatDate(entry.createdAt)}`}
+              eyebrow={`${entry.href ? "Página" : "Artefacto"} · ${formatDate(entry.createdAt, "es-MX")}`}
               title={entry.title}
               href={entry.href ?? `/lab/${encodeURIComponent(entry.slug)}`}
             >

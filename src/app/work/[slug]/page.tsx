@@ -1,26 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CustomMDX, ScrollToHash } from "@/components";
+import { CustomMDX } from "@/components";
 import { getHeadings } from "@/components/mdx";
 import { Projects } from "@/components/work/Projects";
 import { work } from "@/resources";
 import { AvatarGroup, Link, Media, TableOfContents, Tag } from "@/ui";
-import { formatDate } from "@/utils/formatDate";
-import { getPosts } from "@/utils/utils";
+import { formatDate } from "@/utils/format";
+import { getProject, getProjects } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import styles from "./page.module.css";
 
-const getProjects = () => getPosts(["src", "app", "work", "projects"]);
-
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  return getProjects().map((post) => ({ slug: post.slug }));
+  return getProjects().map((project) => ({ slug: project.slug }));
 }
 
 async function findPost(params: Promise<{ slug: string | string[] }>) {
   const { slug } = await params;
   const slugPath = Array.isArray(slug) ? slug.join("/") : slug || "";
-  return getProjects().find((post) => post.slug === slugPath);
+  return getProject(slugPath);
 }
 
 export async function generateMetadata({
@@ -51,7 +49,7 @@ export default async function Project({
 
   const { metadata } = post;
   const team = metadata.team ?? [];
-  const tags = metadata.tag ?? [];
+  const tags = metadata.tags;
   const cover = metadata.images[0];
   const headings = getHeadings(post.content);
 
@@ -138,7 +136,6 @@ export default async function Project({
         </h2>
         <Projects exclude={[post.slug]} range={[1]} />
       </section>
-      <ScrollToHash />
     </div>
   );
 }
