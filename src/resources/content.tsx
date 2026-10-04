@@ -57,7 +57,7 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm {person.firstName}, a product designer with 8 years across <strong>e-commerce, financial
+      I’m {person.firstName}, a product designer with 8 years across <strong>e-commerce, financial
       services and telecom</strong>. At <strong>Coppel</strong> I lead UX for Purchase &amp; Payments.
       I start every project by understanding the real problem before designing the solution.
     </>
@@ -84,7 +84,7 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        I'm a product designer based in Culiacán, Mexico. At Coppel I lead UX
+        I’m a product designer based in Culiacán, Mexico. At Coppel I lead UX
         for Purchase &amp; Payments; before that I was a UX researcher there, and
         I led the UX team at Onikom Systems for clients like Movistar MX. My
         work sits between business, technology, product and design: I research

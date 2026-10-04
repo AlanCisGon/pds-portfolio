@@ -1,0 +1,17 @@
+# LF everywhere, regardless of core.autocrlf: Biome formats with LF and would
+# flag every file on a Windows checkout otherwise.
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.mp4 binary
+*.pdf binary
