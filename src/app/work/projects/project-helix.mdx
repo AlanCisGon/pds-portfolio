@@ -1,8 +1,8 @@
 ---
-title: "Project Helix: Cart and Checkout Optimization @ Coppel"
+title: "Project Helix: Cart and Checkout Optimization at Coppel"
 client: "Coppel"
-publishedAt: "2024-05-20"
-summary: "Led the UX team to unlock stagnant conversion rates by unifying the shopping cart and improving information architecture."
+publishedAt: "2025-09-01"
+summary: "How a team of six redesigned Coppel's cart and checkout in the middle of a platform migration, and lifted web conversion and app accessibility without breaking a single purchase rule."
 tags:
   - "Web"
   - "App (iOS/Android)"
@@ -12,7 +12,7 @@ images:
   - "/images/projects/helix/inner-cover.webp"
 team:
   - name: "Alan Cisneros"
-    role: "UX Team Lead"
+    role: "Design Lead"
     avatar: "/images/avatar.jpg"
     linkedIn: "https://www.linkedin.com/in/alancisgon/"
 link: "https://www.coppel.com"
@@ -20,101 +20,87 @@ link: "https://www.coppel.com"
 
 ## Overview
 
-As the **UX Team Lead** for the Purchase team at Coppel, I headed a multidisciplinary design team. Our primary goal was to redesign the critical **Cart and Checkout** stages, transforming a fragmented system into a unified and efficient experience.
+Project Helix redesigned the **cart and checkout** of Coppel's web and app while the store was migrating to Salesforce Commerce Cloud. We designed in Q4 2024, built during the migration (Q2 – Q3 2025) and launched in September 2025.
 
-## The Challenge: Metrics and Context (2H 2024)
+## Role and team
 
-At the start of the project, we faced a paradox in our performance indicators. Although brand perception was positive, transactional performance was lagging.
+We were a team of six: three UI designers, two UX designers and one UX writer, working with Product Owners and developers. As **Design Lead for the Purchase team**, I orchestrated the experience:
 
-We identified the following pain points:
+- I kept the purchase rules intact from the cart to the end of checkout while the platform underneath was replaced.
+- I pushed accessibility into the components themselves (accessible properties, not patches) and reworked the layout of Cart, Delivery details, address forms, payment method selection and the Thank You page.
+- I worked on how we worked: helping the team embrace uncertainty, get better at understanding problems before designing, and build a shared understanding with POs and developers.
 
-- **Stagnant Conversion:** Despite stable experience metrics, web conversion was very low.
-- **Accessibility Gap (A11y):** There was a critical disparity; the App’s accessibility score dropped so much, excluding a significant portion of our user base.
-- **Untapped Potential:** With a medium customer satisfaction, we knew there was purchase intent, but the technical process was acting as a barrier.
+## The challenge
 
-## Implemented Solutions
+Customers liked Coppel, but buying online was harder than it should have been:
 
-![A cart with multiple products: Motorcycles, clothes and furniture](/images/projects/helix/unified-cart.webp)
+- **Stagnant conversion.** Experience metrics were stable, but web conversion stayed low.
+- **An accessibility gap.** The app's accessibility score lagged far behind the web, leaving out part of our customers.
+- **Intent without a path.** Customer satisfaction showed people wanted to buy; the checkout itself was the barrier.
 
-### 1. Unified Shopping Cart
+The values behind these metrics are confidential, so this case study reports changes only.
 
-**Problem:** The inability to combine categories (Motorcycles, Clothing, Furniture) fragmented the user’s purchase intent.
-**Solution:**
+## Process and the hardest decision
 
-- **Unified Cart:** Developed a cart capable of processing multiple categories in a single transaction.
-- **Item Persistence (Save for Later):** When a user pays for one group of products, the remaining items stay securely in the cart for future purchases.
-- **Auto-Recovery:** A safety system that restores the cart after interruptions or connection errors.
+The hardest decision was to **change the experience during the platform migration at all**. Any change had to be millimeter-precise: one broken rule could stop purchases. We negotiated each change with product and development, and when information was incomplete we chose the best decision we could defend with what we knew, instead of waiting for certainty.
 
-![An image with better UX writing for humans](/images/projects/helix/human-writing.webp)
+## What we changed
 
-### 2. Information Architecture and Content
+![A cart holding motorcycles, clothing and furniture in a single order](/images/projects/helix/unified-cart.webp)
 
-**Problem:** Content lacked a logical structure for users with basic digital skills.
+### 1. One cart for every category
 
-**Solution:**
+**Problem:** Customers couldn't combine categories like motorcycles, clothing and furniture, so one purchase intent was split into several.
 
-- **Scannable UX Writing:** Concise text that reduces cognitive load and guides the user.
-- **Conversational Tone:** Adopted an instructional and natural language style designed to educate users and bridge the digital literacy gap.
+- **Unified cart:** one cart that processes several categories in a single transaction.
+- **Save for later:** when a customer pays for one group of products, the rest stay in the cart.
+- **Auto-recovery:** the cart is restored after interruptions or connection errors.
 
-![An image with Coppel Credit steps and content improved](/images/projects/helix/coppel-credit.webp)
+![Checkout copy rewritten in plain, human language](/images/projects/helix/human-writing.webp)
 
-### 3. Coppel Credit Payment Optimization
+### 2. Information architecture and content
 
-**Problem:** Frequent bank rejection issues and excessive friction during the final steps.
+**Problem:** Content wasn't structured for customers with basic digital skills.
 
-**Solution:**
+- **Scannable writing:** short copy that lowers cognitive load and guides each step.
+- **Conversational tone:** instructional, natural language that teaches as it goes and narrows the digital literacy gap.
 
-- **Logical Sequencing:** Restructured the flow so that previous choices naturally simplify the following steps.
-- **Elimination of "Order Review":** The flow was reduced by **6 steps**. By removing the redundant final stage, we mitigated bank rejections caused by expired dynamic CVVs, directly impacting the conversion rate.
+![Coppel Credit payment steps with clearer content](/images/projects/helix/coppel-credit.webp)
 
-## Impact and Results
+### 3. Coppel Credit and card payments
 
-The redesign successfully aligned the shopping experience with our users' high loyalty (NPS), resulting in substantial improvements across all key KPIs.
+**Problem:** Frequent bank rejections and friction in the final steps.
 
-### Performance Comparison Table
+- **Logical sequencing:** earlier choices simplify the steps that follow.
+- **No more Order Review:** we removed the redundant review step (7 steps → 6). That let us move card payments to a secure iFrame, which cut rejections caused by expired dynamic CVVs.
+
+## Results
+
+Measured in January 2026, four months after launch.
 
 <Table
+  caption="Project Helix results"
   data={{
     headers: [
-      { key: "metric", content: "Metric", sortable: true },
-      { key: "result", content: "Results" },
-      { key: "impact", content: "Impact" },
+      { key: "metric", content: "Metric" },
+      { key: "result", content: "Change" },
+      { key: "source", content: "Source" },
     ],
     rows: [
-      {
-        metric: "Web Conversion",
-        result: "Increased by +2 pp",
-        impact: "Doubled efficiency; removed purchase blockers.",
-      },
-      {
-        metric: "App Conversion",
-        result: "Held steady (+0.1 pp)",
-        impact: "Stabilized flow despite higher traffic.",
-      },
-      {
-        metric: "eCommerce NPS",
-        result: "Increased by +0.13pp",
-        impact: "Increased user trust and satisfaction.",
-      },
-      {
-        metric: "App Accessibility (A11y)",
-        result: "Increased by +30pp",
-        impact: "Fully inclusive experience for all abilities.",
-      },
-      {
-        metric: "Web Accessibility (A11y)",
-        result: "Increased by +4pp",
-        impact: "Maintained high industry standards.",
-      },
-      {
-        metric: "Usability (SUM)",
-        result: "Increased by +7pp",
-        impact: "Reduced cognitive load and errors.",
-      },
+      { metric: "Web conversion", result: "+2 pp", source: "Digital analytics" },
+      { metric: "App conversion", result: "Held steady (+0.1 pp) despite higher traffic", source: "Digital analytics" },
+      { metric: "Dynamic CVV2 rejections", result: "−60%", source: "Operations" },
+      { metric: "App accessibility", result: "+30 pts", source: "Lighthouse, axe DevTools" },
+      { metric: "Web accessibility", result: "+4 pts", source: "Lighthouse, axe DevTools" },
+      { metric: "Usability (SUM)", result: "+7 pts", source: "Usability testing" },
+      { metric: "E-commerce NPS", result: "Held steady (+0.13 pts)", source: "Medallia and manual measurement" },
     ],
   }}
 />
 
-### Conclusion
+The redesign improved web conversion, app accessibility and usability, and kept app conversion and NPS steady while the platform underneath changed.
 
-Project Helix did more than just fix technical friction; it democratized access to digital shopping. We achieved a substantial improvement on **App accessibility** and doubled web sales efficiency, proving that design centered on clarity and error prevention delivers a direct return on investment.
+## What I learned
+
+- **No big bangs during structural change.** Redesigning the experience and the process in the middle of a platform migration multiplied the risk. Next time I'd separate them.
+- **Empower the team to decide.** I acted as the team's experience filter. I'd rather build a high-performing team that makes those calls without going through me.

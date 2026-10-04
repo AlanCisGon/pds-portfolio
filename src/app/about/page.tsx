@@ -45,7 +45,7 @@ export default function About() {
               <span className={styles.locationIcon} aria-hidden="true">
                 <Globe />
               </span>
-              {person.location.replace(/_/g, " ")}
+              {person.city}
             </p>
             {person.languages && person.languages.length > 0 && (
               <ul className={styles.tags} aria-label="Languages">

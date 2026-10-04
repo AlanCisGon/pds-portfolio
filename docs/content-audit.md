@@ -140,3 +140,25 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
    - "View project";
    - "@" en los títulos;
    - textos de accesibilidad de `src/ui` en inglés.
+
+## Respuestas de la entrevista (2026-10-04)
+
+1. **Título canónico:** Senior Product Designer. **Cargo en Coppel:** Design Lead (Purchase & Payments). Excepción consciente a §1, que dice "Coordinador de diseño".
+2. **Años:** 8. Onikom de ago 2018 a ago 2019, Coppel desde ago 2019 (UX Researcher 2019 – 2022, Design Lead 2022 – hoy).
+3. **Idioma:** inglés (excepción a §16.1).
+4. **Helix:**
+   - nombre: Helix;
+   - fechas: diseño en Q4 2024, migración a Salesforce Commerce Cloud de Q2 a Q3 2025, lanzamiento en sep 2025, medición en ene 2026;
+   - valores absolutos confidenciales: solo se publican incrementos;
+   - fuentes: NPS con Medallia y medición manual; accesibilidad con Lighthouse y axe DevTools;
+   - pasos: de 7 a 6 (se quitó Order Review);
+   - equipo: 3 UI, 2 UXD y 1 UXW. Alan orquestó la experiencia, cuidó las reglas de compra durante la migración, metió accesibilidad y layout en Carrito, Datos de entrega, formularios de dirección, método de pago y Thank You Page, y trabajó la cultura del equipo con POs y devs;
+   - decisión más difícil: cambiar la experiencia durante la migración, con precisión milimétrica, negociando y decidiendo con información incompleta;
+   - aprendizajes: no hacer big bangs durante cambios estructurales; empoderar al equipo para decidir sin pasar por Alan como filtro.
+5. **Coppel:** todos los incrementos (+2 pp de conversión web, +25% de ticket, −60% de rechazos, +80% de adopción) se midieron en ene 2026 con analítica digital, BI y Operaciones. El −60% viene de quitar Order Review, que permitió un iFrame para pagos seguros con tarjeta. El "+12% est." se retira.
+6. **Movistar:** sin estudio formal; el feedback venía de reportes de marketing y CX tras cada release, con pruebas en producción e iteración. Alan era UX Lead en Onikom: formó un equipo de UX multicliente, participó en la captación de clientes y llevaba al equipo las necesidades de los usuarios. Año: 2018 – 2019.
+7. **Validation Onion y Contribution Process:** pilotos en Coppel para un equipo sin gobierno de diseño. El Onion valida problemas por capas; el CP homologó cómo contribuir con investigación. Los absorbió el Centro de Excelencia en Diseño de Experiencia y Alan dejó las DesignOps.
+8. **IA:** diseño potenciado por IA, con la IA como socio cocreador; prototipado rápido y cocreación con Claude Code.
+9. **Estudios:** UNAM 2014 – 2017; diplomado en Sperientia en 2021 (mayo a junio).
+
+**Pendiente:** confirmar la fuente del +7 pts de SUM (se publicó como "Usability testing") y pasar a inglés los textos de accesibilidad de `src/ui`.

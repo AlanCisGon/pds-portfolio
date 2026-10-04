@@ -7,7 +7,7 @@ export function Footer() {
 
   return (
     <SiteFooter
-      signature={`© ${year} · From 🇲🇽 by ${person.name}`}
+      signature={`© ${year} ${person.name} · ${person.city}`}
       social={social
         .filter((item) => item.link)
         .map((item) => ({
