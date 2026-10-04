@@ -22,7 +22,7 @@ export type ProjectCardProps = {
 };
 
 /** Case-study card. The whole card is ONE link (no nested links); the CTA is its visual affordance. */
-export function ProjectCard({ href, meta, title, summary, tags = [], cover, layout = "vertical", priority = false, cta = "Ver caso de estudio" }: ProjectCardProps) {
+export function ProjectCard({ href, meta, title, summary, tags = [], cover, layout = "vertical", priority = false, cta = "Read case study" }: ProjectCardProps) {
   return (
     <NextLink href={href} className={styles.card} data-layout={layout}>
       <span className={styles.cover}>
