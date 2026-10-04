@@ -33,7 +33,7 @@ export function Media({ kind = "image", src, alt = "", ratio = "16:9", caption, 
             <MediaImage />
           </span>
         )}
-        {src && kind === "image" && <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={styles.image} />}
+        {src && kind === "image" && <Image src={src} alt={alt} fill sizes={sizes} preload={priority} fetchPriority={priority ? "high" : undefined} className={styles.image} />}
         {src && kind === "video" && <MediaVideo src={src} poster={poster} label={caption ?? alt} />}
       </div>
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}

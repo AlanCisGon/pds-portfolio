@@ -27,7 +27,7 @@ export function ProjectCard({ href, meta, title, summary, tags = [], cover, layo
     <NextLink href={href} className={styles.card} data-layout={layout}>
       <span className={styles.cover}>
         {cover ? (
-          <Image src={cover.src} alt={cover.alt} fill sizes="(min-width: 768px) 400px, 100vw" priority={priority} className={styles.image} />
+          <Image src={cover.src} alt={cover.alt} fill sizes="(min-width: 768px) 400px, 100vw" preload={priority} fetchPriority={priority ? "high" : undefined} className={styles.image} />
         ) : (
           <span className={styles.placeholder} aria-hidden="true">
             <MediaImage />
