@@ -3,7 +3,7 @@ import "@/styles/tokens.css";
 
 import { Footer, Header } from "@/components";
 import { home } from "@/resources";
-import { geistMono, geistSans } from "@/styles/fonts";
+import { geistMono, geistSans, newsreader, newsreaderItalic } from "@/styles/fonts";
 // Enable Vercel Speed Insights
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${newsreaderItalic.variable}`}>
       <body className={styles.body}>
         <SpeedInsights />
         <Analytics />

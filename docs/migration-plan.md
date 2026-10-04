@@ -255,7 +255,7 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 - La colección `Semantic` tiene un solo modo, `Dark`: `color/bg/page`, `color/bg/surface`, `color/text/primary`, `color/accent/default`, etc. Las colecciones `Spacing`, `Radius` y `Motion` completan los tokens.
 - En cada variable define **Code syntax → Web** con el nombre CSS (`--color-bg-surface`). Así `get_variable_defs` devuelve exactamente lo que va en `tokens.css`.
 
-**Tipografía:** la de la marca, con Geist Sans para el sistema, Newsreader para la voz y Geist Mono para la medida. El sitio usa Geist Sans y Geist Mono desde el paso A; Newsreader sigue pendiente.
+**Tipografía:** la de la marca, con Geist Sans para el sistema, Newsreader para la voz y Geist Mono para la medida. El sitio usa Geist Sans y Geist Mono desde el paso A, y Newsreader para `Voice/*` desde F1.
 
 **Estado (2026-10-02):** las variables y los estilos de texto ya están creados a partir de la marca. En `01 Foundations` hay muestras de color y tipografía conectadas a ellos.
 

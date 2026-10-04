@@ -49,6 +49,8 @@
   color: var(--color-text-primary);
   font-size: var(--text-quote-size);
   line-height: var(--text-quote-line);
+  font-family: var(--font-newsreader-italic), var(--font-serif);
+  font-style: italic;
 }
 
 .anchor {
