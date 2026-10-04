@@ -1,311 +1,99 @@
-import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
-import React, { ReactNode } from "react";
-import { slugify as transliterate } from "transliteration";
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
+import type { ComponentProps, ReactNode } from "react";
 
-import {
-  Heading,
-  HeadingLink,
-  Text,
-  InlineCode,
-  CodeBlock,
-  TextProps,
-  MediaProps,
-  Accordion,
-  AccordionGroup,
-  Table,
-  Feedback,
-  Button,
-  Card,
-  Grid,
-  Row,
-  Column,
-  Icon,
-  Media,
-  SmartLink,
-  List,
-  ListItem,
-  Line,
-} from "@once-ui-system/core";
+import { Accordion, Callout, CodeBlock, Divider, HeadingLink, Link, List, ListItem, Media, Table } from "@/ui";
+import { slugify } from "@/utils/slugify";
+import styles from "./mdx.module.css";
 
-type CustomLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-  href: string;
-  children: ReactNode;
-};
+type WithChildren = { children?: ReactNode };
 
-function CustomLink({ href, children, ...props }: CustomLinkProps) {
-  if (href.startsWith("/")) {
-    return (
-      <SmartLink href={href} {...props}>
-        {children}
-      </SmartLink>
-    );
+function textOf(node: ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (node && typeof node === "object" && "props" in node) {
+    return textOf((node.props as WithChildren).children);
   }
+  return "";
+}
 
+function createHeading(as: "h2" | "h3" | "h4") {
+  const MdxHeading = ({ children }: WithChildren) => (
+    <HeadingLink id={slugify(textOf(children))} as={as}>
+      {children}
+    </HeadingLink>
+  );
+  MdxHeading.displayName = as;
+  return MdxHeading;
+}
+
+function MdxLink({ href = "", children }: { href?: string; children?: ReactNode }) {
+  // In-page anchors stay plain anchors so the browser scrolls without a client navigation.
   if (href.startsWith("#")) {
     return (
-      <a href={href} {...props}>
+      <a href={href} className={styles.anchor}>
         {children}
       </a>
     );
   }
-
-  return (
-    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
-      {children}
-    </a>
-  );
+  return <Link href={href}>{children}</Link>;
 }
 
-type AspectRatio = `${number} / ${number}`;
-
-function isAspectRatio(value: unknown): value is AspectRatio {
-  return (
-    typeof value === "string" && /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(value)
-  );
+function MdxImage({ src, alt = "" }: { src?: string; alt?: string }) {
+  return <Media src={src} alt={alt} />;
 }
 
-function SafeMedia({
-  alt,
-  src,
-  aspectRatio,
-  sizes = "(max-width: 960px) 100vw, 960px",
-  ...props
-}: MediaProps & { src: string; aspectRatio?: string; sizes?: string }) {
-  if (!src) {
-    console.error("Media requires a valid 'src' property.");
-    return null;
+function MdxPre({ children }: WithChildren) {
+  // ```lang fences arrive as <pre><code className="language-lang">.
+  if (children && typeof children === "object" && "props" in children) {
+    const { className = "", children: code } = children.props as { className?: string; children?: ReactNode };
+    return <CodeBlock code={textOf(code).replace(/\n$/, "")} language={className.replace("language-", "") || "text"} />;
   }
-
-  const ratio =
-    typeof aspectRatio === "string" &&
-    /^\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?$/.test(aspectRatio)
-      ? aspectRatio
-      : "16 / 9";
-
-  return (
-    <figure style={{ margin: "16px 0" }}>
-      <div
-        style={{
-          width: "100%",
-          aspectRatio: ratio,
-          overflow: "hidden",
-          borderRadius: "12px",
-          background: "rgba(0,0,0,0.04)",
-        }}
-      >
-        <Media
-          enlarge
-          radius="m"
-          sizes={sizes}
-          alt={alt}
-          src={src}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            display: "block",
-          }}
-          {...props}
-        />
-      </div>
-    </figure>
-  );
+  return <pre>{children}</pre>;
 }
 
-function createImage({
-  alt,
-  src,
-  aspectRatio,
-  ...props
-}: MediaProps & { src: string }) {
-  return <SafeMedia alt={alt} src={src} aspectRatio={aspectRatio} {...props} />;
-}
-
-function slugify(str: string): string {
-  const strWithAnd = str.replace(/&/g, " and "); // Replace & with 'and'
-  return transliterate(strWithAnd, {
-    lowercase: true,
-    separator: "-", // Replace spaces with -
-  }).replace(/\-\-+/g, "-"); // Replace multiple - with single -
-}
-
-function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
-  const CustomHeading = ({
-    children,
-    ...props
-  }: Omit<React.ComponentProps<typeof HeadingLink>, "as" | "id">) => {
-    const slug = slugify(children as string);
-    return (
-      <HeadingLink
-        marginTop="24"
-        marginBottom="12"
-        as={as}
-        id={slug}
-        {...props}
-      >
-        {children}
-      </HeadingLink>
-    );
-  };
-
-  CustomHeading.displayName = `${as}`;
-
-  return CustomHeading;
-}
-
-function createParagraph({ children }: TextProps) {
-  return (
-    <Text
-      style={{ lineHeight: "175%" }}
-      variant="body-default-m"
-      onBackground="neutral-medium"
-      marginTop="8"
-      marginBottom="12"
-    >
-      {children}
-    </Text>
-  );
-}
-
-function createInlineCode({ children }: { children: ReactNode }) {
-  return <InlineCode>{children}</InlineCode>;
-}
-
-function createCodeBlock(props: any) {
-  // For pre tags that contain code blocks
-  if (
-    props.children &&
-    props.children.props &&
-    props.children.props.className
-  ) {
-    const { className, children } = props.children.props;
-
-    // Extract language from className (format: language-xxx)
-    const language = className.replace("language-", "");
-    const label = language.charAt(0).toUpperCase() + language.slice(1);
-
-    return (
-      <CodeBlock
-        marginTop="8"
-        marginBottom="16"
-        codes={[
-          {
-            code: children,
-            language,
-            label,
-          },
-        ]}
-        copyButton={true}
-      />
-    );
-  }
-
-  // Fallback for other pre tags or empty code blocks
-  return <pre {...props} />;
-}
-
-function createList({ children }: { children: ReactNode }) {
-  return <List>{children}</List>;
-}
-
-function createListItem({ children }: { children: ReactNode }) {
-  return (
-    <ListItem marginTop="4" marginBottom="8" style={{ lineHeight: "175%" }}>
-      {children}
-    </ListItem>
-  );
-}
-
-function createHR() {
-  return (
-    <Row fillWidth horizontal="center">
-      <Line maxWidth="40" />
-    </Row>
-  );
-}
-
-const components = {
-  p: createParagraph as any,
-  h1: createHeading("h1") as any,
-  h2: createHeading("h2") as any,
-  h3: createHeading("h3") as any,
-  h4: createHeading("h4") as any,
-  h5: createHeading("h5") as any,
-  h6: createHeading("h6") as any,
-  img: createImage as any,
-  a: CustomLink as any,
-  code: createInlineCode as any,
-  pre: createCodeBlock as any,
-  ol: createList as any,
-  ul: createList as any,
-  li: createListItem as any,
-  hr: createHR as any,
-  Heading,
-  Text,
-  CodeBlock,
-  InlineCode,
+const components: MDXRemoteProps["components"] = {
+  h1: createHeading("h2"),
+  h2: createHeading("h2"),
+  h3: createHeading("h3"),
+  h4: createHeading("h4"),
+  p: ({ children }: WithChildren) => <p className={styles.paragraph}>{children}</p>,
+  strong: ({ children }: WithChildren) => <strong className={styles.strong}>{children}</strong>,
+  a: MdxLink,
+  img: MdxImage,
+  ul: ({ children }: WithChildren) => <List>{children}</List>,
+  ol: ({ children }: WithChildren) => <List ordered>{children}</List>,
+  li: ({ children }: WithChildren) => <ListItem>{children}</ListItem>,
+  hr: () => <Divider />,
+  code: ({ children }: WithChildren) => <code className={styles.code}>{children}</code>,
+  pre: MdxPre,
+  blockquote: ({ children }: WithChildren) => <blockquote className={styles.quote}>{children}</blockquote>,
+  // JSX blocks available to case studies.
+  Table: (props: ComponentProps<typeof Table>) => <Table {...props} />,
+  Callout,
+  Media,
   Accordion,
-  AccordionGroup,
-  Table: MdxTable,
-  Feedback,
-  Button,
-  Card,
-  Grid,
-  Row,
-  Column,
-  Icon,
-  Media: SafeMedia as any,
-  SmartLink,
 };
 
-type CustomMDXProps = MDXRemoteProps & {
-  components?: typeof components;
-};
+type CustomMDXProps = MDXRemoteProps;
 
 export function CustomMDX(props: CustomMDXProps) {
   return (
-    <MDXRemote
-      {...props}
-      // MDX is first-party repo content: allow JSX expression props (data={{...}}),
-      // still blocking dangerous globals (eval, process, ...).
-      options={{ blockJS: false, blockDangerousJS: true, ...props.options }}
-      components={{ ...components, ...(props.components || {}) }}
-    />
+    <div className={styles.prose}>
+      <MDXRemote
+        {...props}
+        // MDX is first-party repo content: allow JSX expression props (data={{...}}),
+        // still blocking dangerous globals (eval, process, ...).
+        options={{ blockJS: false, blockDangerousJS: true, ...props.options }}
+        components={{ ...components, ...(props.components || {}) }}
+      />
+    </div>
   );
 }
 
-function normalizeCell(value: any): React.ReactNode {
-  if (value == null) return "";
-  // Si viene como { content: ... }, extraemos content
-  if (typeof value === "object" && "content" in value)
-    return (value as any).content;
-  // ReactNode válido: string, number, JSX, etc.
-  return value as React.ReactNode;
-}
-
-function MdxTable({
-  data,
-  onRowClick,
-  ...props
-}: {
-  data: {
-    headers: { key: string; content: React.ReactNode; sortable?: boolean }[];
-    rows: Record<string, any>[]; // forma “editorial” en MDX
-  };
-  onRowClick?: (index: number) => void;
-}) {
-  const headers = Array.isArray(data?.headers) ? data.headers : [];
-  const objectRows = Array.isArray(data?.rows) ? data.rows : [];
-
-  const matrixRows: React.ReactNode[][] = objectRows.map((rowObj) =>
-    headers.map((h) => normalizeCell(rowObj?.[h.key])),
-  );
-
-  return (
-    <Table
-      data={{ headers, rows: matrixRows }}
-      onRowClick={onRowClick}
-      {...props}
-    />
-  );
+/** h2 entries of an MDX source, for the case-study TableOfContents. Same slugs as the rendered headings. */
+export function getHeadings(source: string): Array<{ id: string; label: string }> {
+  return [...source.matchAll(/^##\s+(.+)$/gm)].map(([, raw]) => {
+    const label = raw.replace(/[*_`]/g, "").trim();
+    return { id: slugify(label), label };
+  });
 }

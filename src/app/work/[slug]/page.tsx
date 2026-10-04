@@ -1,31 +1,27 @@
-import { notFound } from "next/navigation";
-import { getPosts } from "@/utils/utils";
-import {
-  Meta,
-  Schema,
-  AvatarGroup,
-  Button,
-  Column,
-  Flex,
-  Heading,
-  Media,
-  Text,
-  SmartLink,
-  Row,
-  Avatar,
-  Line,
-} from "@once-ui-system/core";
-import { baseURL, about, person, work } from "@/resources";
-import { formatDate } from "@/utils/formatDate";
-import { ScrollToHash, CustomMDX } from "@/components";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+import { Meta, Schema } from "@once-ui-system/core";
+
+import { CustomMDX, ScrollToHash } from "@/components";
+import { getHeadings } from "@/components/mdx";
 import { Projects } from "@/components/work/Projects";
+import { baseURL, about, person, work } from "@/resources";
+import { AvatarGroup, Link, Media, TableOfContents, Tag } from "@/ui";
+import { formatDate } from "@/utils/formatDate";
+import { getPosts } from "@/utils/utils";
+import styles from "./page.module.css";
+
+const getProjects = () => getPosts(["src", "app", "work", "projects"]);
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return getProjects().map((post) => ({ slug: post.slug }));
+}
+
+async function findPost(params: Promise<{ slug: string | string[] }>) {
+  const { slug } = await params;
+  const slugPath = Array.isArray(slug) ? slug.join("/") : slug || "";
+  return getProjects().find((post) => post.slug === slugPath);
 }
 
 export async function generateMetadata({
@@ -33,22 +29,14 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string | string[] }>;
 }): Promise<Metadata> {
-  const routeParams = await params;
-  const slugPath = Array.isArray(routeParams.slug)
-    ? routeParams.slug.join("/")
-    : routeParams.slug || "";
-
-  const posts = getPosts(["src", "app", "work", "projects"]);
-  let post = posts.find((post) => post.slug === slugPath);
-
+  const post = await findPost(params);
   if (!post) return {};
 
   return Meta.generate({
     title: post.metadata.title,
     description: post.metadata.summary,
     baseURL: baseURL,
-    image:
-      post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
+    image: post.metadata.image || `/api/og/generate?title=${post.metadata.title}`,
     path: `${work.path}/${post.slug}`,
   });
 }
@@ -58,116 +46,104 @@ export default async function Project({
 }: {
   params: Promise<{ slug: string | string[] }>;
 }) {
-  const routeParams = await params;
-  const slugPath = Array.isArray(routeParams.slug)
-    ? routeParams.slug.join("/")
-    : routeParams.slug || "";
+  const post = await findPost(params);
+  if (!post) notFound();
 
-  let post = getPosts(["src", "app", "work", "projects"]).find(
-    (post) => post.slug === slugPath,
-  );
-
-  if (!post) {
-    notFound();
-  }
-
-  const avatars =
-    post.metadata.team?.map((person) => ({
-      src: person.avatar,
-    })) || [];
+  const { metadata } = post;
+  const team = metadata.team ?? [];
+  const tags = metadata.tag ?? [];
+  const cover = metadata.images[0];
+  const headings = getHeadings(post.content);
 
   return (
-    <Column as="section" maxWidth="m" horizontal="center" gap="l">
+    <div className={styles.page}>
       <Schema
         as="blogPosting"
         baseURL={baseURL}
         path={`${work.path}/${post.slug}`}
-        title={post.metadata.title}
-        description={post.metadata.summary}
-        datePublished={post.metadata.publishedAt}
-        dateModified={post.metadata.publishedAt}
-        image={
-          post.metadata.image ||
-          `/api/og/generate?title=${encodeURIComponent(post.metadata.title)}`
-        }
+        title={metadata.title}
+        description={metadata.summary}
+        datePublished={metadata.publishedAt}
+        dateModified={metadata.publishedAt}
+        image={metadata.image || `/api/og/generate?title=${encodeURIComponent(metadata.title)}`}
         author={{
           name: person.name,
           url: `${baseURL}${about.path}`,
           image: `${baseURL}${person.avatar}`,
         }}
       />
-      <Column maxWidth="s" gap="16" horizontal="center" align="center">
-        <SmartLink href="/work">
-          <Text variant="label-strong-m">Projects</Text>
-        </SmartLink>
-        <Text
-          variant="body-default-xs"
-          onBackground="neutral-weak"
-          marginBottom="12"
-        >
-          {post.metadata.publishedAt && formatDate(post.metadata.publishedAt)}
-        </Text>
-        <Heading variant="display-strong-m">{post.metadata.title}</Heading>
-      </Column>
-      <Row marginBottom="32" horizontal="center">
-        <Row gap="16" vertical="center">
-          {post.metadata.team && (
-            <AvatarGroup reverse avatars={avatars} size="s" />
-          )}
-          <Text variant="label-default-m" onBackground="brand-weak">
-            {post.metadata.team?.map((member, idx) => (
-              <span key={idx}>
-                {idx > 0 && (
-                  <Text as="span" onBackground="neutral-weak">
-                    ,{" "}
-                  </Text>
-                )}
-                <SmartLink href={member.linkedIn}>{member.name}</SmartLink>
-              </span>
-            ))}
-          </Text>
-        </Row>
-      </Row>
 
-      {post.metadata.tag && post.metadata.tag.length > 0 && (
-        <Flex gap="8" wrap horizontal="center" marginBottom="32">
-          {post.metadata.tag.map((tag: string) => (
-            <Text
-              key={tag}
-              variant="label-default-s"
-              onBackground="neutral-medium"
-              style={{
-                padding: "4px 12px",
-                borderRadius: "var(--radius-full)", // O usa "20px" si no tienes la variable
-                border: "1px solid var(--neutral-border-weak)",
-              }}
-            >
-              {tag}
-            </Text>
-          ))}
-        </Flex>
-      )}
-      {post.metadata.images?.[0] && (
-        <div style={{ width: "100%", aspectRatio: "16 / 9" }}>
-          <Media
-            priority
-            radius="m"
-            alt={"image"}
-            src={post.metadata.images[0]}
-          />
+      <header className={styles.header}>
+        <Link href={work.path} kind="standalone">
+          All projects
+        </Link>
+        <p className={styles.meta}>
+          {[metadata.client, metadata.publishedAt && formatDate(metadata.publishedAt)]
+            .filter(Boolean)
+            .join(" · ")}
+        </p>
+        <h1 className={styles.title}>{metadata.title}</h1>
+        {metadata.summary && <p className={styles.summary}>{metadata.summary}</p>}
+
+        {team.length > 0 && (
+          <div className={styles.team}>
+            <AvatarGroup people={team.map((member) => ({ name: member.name, src: member.avatar }))} />
+            <p className={styles.names}>
+              {team.map((member, i) => (
+                <span key={member.name}>
+                  {i > 0 && ", "}
+                  {member.linkedIn ? <Link href={member.linkedIn}>{member.name}</Link> : member.name}
+                  {member.role && <span className={styles.role}> · {member.role}</span>}
+                </span>
+              ))}
+            </p>
+          </div>
+        )}
+
+        {(tags.length > 0 || metadata.link) && (
+          <div className={styles.extras}>
+            {tags.length > 0 && (
+              <ul className={styles.tags} aria-label="Scope">
+                {tags.map((tag) => (
+                  <li key={tag}>
+                    <Tag>{tag}</Tag>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {metadata.link && (
+              <Link href={metadata.link} kind="standalone">
+                View project
+              </Link>
+            )}
+          </div>
+        )}
+      </header>
+
+      {cover && (
+        <div className={styles.cover}>
+          <Media src={cover} alt="" priority sizes="(min-width: 1024px) 960px, 100vw" />
         </div>
       )}
-      <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
-        <CustomMDX source={post.content} />
-      </Column>
-      <Column fillWidth gap="40" horizontal="center" marginTop="40">
-        <Line maxWidth="40" />
-        <Heading as="h2" variant="heading-strong-xl" marginBottom="24">
+
+      <div className={styles.body}>
+        {headings.length > 1 && (
+          <aside className={styles.toc}>
+            <TableOfContents entries={headings} title="In this case study" />
+          </aside>
+        )}
+        <article className={styles.article}>
+          <CustomMDX source={post.content} />
+        </article>
+      </div>
+
+      <section className={styles.related} aria-labelledby="related-projects">
+        <h2 id="related-projects" className={styles.relatedTitle}>
           Related projects
-        </Heading>
+        </h2>
         <Projects exclude={[post.slug]} range={[1]} />
-      </Column>
+      </section>
       <ScrollToHash />
-    </Column>
+    </div>
   );
 }

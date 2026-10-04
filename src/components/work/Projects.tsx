@@ -1,95 +1,50 @@
+import { ProjectCard } from "@/ui";
 import { getPosts } from "@/utils/utils";
-import { Column } from "@once-ui-system/core";
-import { ProjectCard } from "@/components";
+import styles from "./Projects.module.css";
 
 interface ProjectsProps {
+  /** 1-indexed range over the projects sorted by date (newest first). */
   range?: [number, number?];
   exclude?: string[];
-  /**
-   * CLS-safe:
-   * Reserva espacio vertical aproximado para evitar layout shifts
-   * cuando este bloque está near/above-the-fold.
-   */
-  reserveCount?: number;
-  /**
-   * Altura estimada por card (px). Ajusta si tus cards son más altas/bajas.
-   */
-  estimatedCardHeight?: number;
-  /**
-   * Cuántas cards deben tratarse como "priority" (ej. imágenes above-the-fold)
-   */
-  priorityCount?: number;
+  /** horizontal = featured card (Home desktop); always vertical on mobile. */
+  layout?: "vertical" | "horizontal";
+  /** Load the first cover with priority when the list is above the fold (LCP). */
+  priorityFirst?: boolean;
 }
 
-/**
- * Projects — CLS-safe list renderer
- *
- * - No muta arrays al ordenar
- * - Permite reservar espacio (reduce CLS) cuando se usa cerca del fold
- * - Separa responsabilidades: layout estable aquí, detalles en ProjectCard
- */
-export function Projects({
-  range,
-  exclude,
-  reserveCount = 0,
-  estimatedCardHeight = 520,
-  priorityCount = 2,
-}: ProjectsProps) {
-  // Cargar posts (asumimos sync y local)
-  let allProjects = getPosts(["src", "app", "work", "projects"]);
+export function Projects({ range, exclude, layout = "vertical", priorityFirst = false }: ProjectsProps) {
+  const excluded = new Set(exclude);
+  const sorted = getPosts(["src", "app", "work", "projects"])
+    .filter((post) => !excluded.has(post.slug))
+    .sort(
+      (a, b) => new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime(),
+    );
 
-  // Excluir por slug
-  if (exclude?.length) {
-    const excludeSet = new Set(exclude);
-    allProjects = allProjects.filter((post) => !excludeSet.has(post.slug));
-  }
-
-  // Ordenar sin mutar: copia antes de sort
-  const sortedProjects = [...allProjects].sort((a, b) => {
-    const aTime = new Date(a.metadata.publishedAt).getTime();
-    const bTime = new Date(b.metadata.publishedAt).getTime();
-    return bTime - aTime;
-  });
-
-  // Rango (1-indexed como ya lo usas)
   const start = range ? Math.max(0, range[0] - 1) : 0;
-  const end = range
-    ? Math.min(sortedProjects.length, range[1] ?? sortedProjects.length)
-    : sortedProjects.length;
-
-  const displayedProjects = sortedProjects.slice(start, end);
-
-  // Reserva CLS-safe: si reserveCount > 0, calculamos un minHeight aproximado
-  // para que el layout no "crezca" cuando cargan imágenes/fuentes.
-  const minHeight =
-    reserveCount > 0 ? reserveCount * estimatedCardHeight : undefined;
+  const end = range ? Math.min(sorted.length, range[1] ?? sorted.length) : sorted.length;
+  const projects = sorted.slice(start, end);
 
   return (
-    <Column
-      fillWidth
-      gap="xl"
-      marginBottom="40"
-      paddingX="l"
-      style={minHeight ? { minHeight } : undefined}
-    >
-      {displayedProjects.map((post, index) => (
-        <ProjectCard
-          key={post.slug}
-          href={`/work/${post.slug}`}
-          // Nota: tu ProjectCard original tenía priority prop,
-          // la versión CLS-safe que hicimos ya no la necesita, pero si decides
-          // reintroducirla, aquí queda listo.
-          // priority={index < priorityCount}
-          images={post.metadata.images}
-          title={post.metadata.title}
-          description={post.metadata.summary}
-          content={post.content}
-          avatars={
-            post.metadata.team?.map((member) => ({ src: member.avatar })) || []
-          }
-          link={post.metadata.link || ""}
-        />
-      ))}
-    </Column>
+    <ul className={styles.grid} data-layout={layout}>
+      {projects.map((post, index) => {
+        const year = post.metadata.publishedAt ? new Date(post.metadata.publishedAt).getFullYear() : "";
+        const cover = post.metadata.images[0];
+        return (
+          <li key={post.slug}>
+            <ProjectCard
+              href={`/work/${post.slug}`}
+              meta={[post.metadata.client, year].filter(Boolean).join(" · ")}
+              title={post.metadata.title}
+              summary={post.metadata.summary}
+              tags={post.metadata.tag}
+              cover={cover ? { src: cover, alt: "" } : undefined}
+              layout={layout}
+              priority={priorityFirst && index === 0}
+              cta="Read case study"
+            />
+          </li>
+        );
+      })}
+    </ul>
   );
 }

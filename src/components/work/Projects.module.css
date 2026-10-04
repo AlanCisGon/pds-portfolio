@@ -1,0 +1,22 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: var(--space-24);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grid[data-layout="horizontal"] {
+  grid-template-columns: 1fr;
+}
+
+/* Equal-height cards in a row. */
+.grid > li {
+  display: flex;
+}
+
+.grid > li > * {
+  flex: 1;
+}
