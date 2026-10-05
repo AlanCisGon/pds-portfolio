@@ -1,3 +1,6 @@
 {
-  "agent": "tenoch"
+  "agent": "tenoch",
+  "permissions": {
+    "allow": ["mcp__plugin_figma_figma"]
+  }
 }
