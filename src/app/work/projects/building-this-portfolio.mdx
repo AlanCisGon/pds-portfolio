@@ -2,15 +2,16 @@
 title: "Building this portfolio with my AI design team"
 client: "Personal project"
 publishedAt: "2026-10-04"
-summary: "How I turned a template fork into a site with its own design system in three days, working with three AI agents I designed as my UX team, one tested change at a time and with no invented metrics."
+summary: "How my AI design team and I turned a template fork into a site with its own design system in three days, one tested change at a time and with no invented metrics."
 tags:
   - "Design system"
   - "AI-assisted design"
   - "Web"
+# [EVIDENCIA PENDIENTE: cover image for the case study]
 images: []
 team:
   - name: "Alan Cisneros"
-    role: "Senior Product Designer"
+    role: "Project owner & lead designer"
     avatar: "/images/avatar.jpg"
     linkedIn: "https://www.linkedin.com/in/alancisgon/"
   - name: "Tenoch"
@@ -29,24 +30,24 @@ team:
 
 ## Overview
 
-On October 2, 2026, alancisneros.design was a fork of the Magic Portfolio template, built on the Once UI library. By October 3 it no longer depended on Once UI: the site ran on 25 components of its own, designed in Figma and sharing the same token names in Figma and in CSS. On October 4 we rewrote the copy from a content interview, tuned performance and accessibility, and turned the way I had been working with AI into a team.
+On October 2, 2026, alancisneros.design was a fork of the Magic Portfolio template, built on the Once UI library. By October 3 it no longer depended on Once UI: the site ran on 25 components of its own, designed in Figma and sharing the same token names in Figma and in CSS. On October 4 we rewrote the copy from a content interview and tuned performance and accessibility.
+
+I built it with Tenoch, Clara and Ameyali. From the first day I worked with Claude Code on three fronts: code, the design system and content. The team took shape as the work did; on October 4 I gave each role a name, a brief and the brand guidelines.
 
 <Callout tone="info" title="Who “we” is in this case study">
   Tenoch, Clara and Ameyali are **AI agents** (Claude Code) that I designed and direct as my UX team. They are not people. I define the brand, answer the interviews, make the decisions and approve every merge.
 </Callout>
 
-This is the first product where I am the client, the designer and the material at the same time, so I wanted it built the way I'd build a product for anyone else: one change at a time, each one tested on a preview, and every claim backed by evidence.
+This is the first product where I am the client, the designer and the material at the same time, so we built it the way I'd build a product for anyone else: one change at a time, each one tested on a preview, and every claim backed by evidence.
 
 ## Role and team
 
 The team is me and three AI agents, each defined in the repository with its own role, sources of truth and limits:
 
-- **Me (Alan):** I own the brand guidelines and the product decisions. I designed in Figma [EVIDENCIA PENDIENTE: which components or frames you designed yourself], answered the content interview that every piece of copy now comes from, and approved every merge. Nothing reaches production without my approval.
-- **Tenoch (AI agent, orchestrator and developer):** writes the code (Next.js, MDX, CSS Modules), runs the checks, opens a pull request per change with a Vercel preview, and hands design and content work to Clara and Ameyali.
-- **Clara (AI agent, design system designer):** maintains the design system in Figma (variables, text styles, components) and reports drift between Figma and code. She doesn't edit code; she reports the drift to Tenoch.
-- **Ameyali (AI agent, writer and editor):** writes case studies and site copy in my voice, interviews me for evidence and marks what's missing instead of filling the gap. She drafted this case study from the project's docs and the record of its pull requests.
-
-One honest detail about timing: the migration and the content rewrite happened in Claude Code sessions **before** these roles had names. On October 4 I split that work into three agents (PR #30), so each one starts from the brand guidelines and knows what it can and can't do. [EVIDENCIA PENDIENTE: which tasks before October 4 you'd count as Tenoch's, Clara's or Ameyali's work, if any]
+- **Me (Alan), project owner and lead designer:** I own the brand guidelines and the product decisions. I designed in Figma [EVIDENCIA PENDIENTE: which components or frames you designed yourself and which ones Claude built by script], answered the content interview that every piece of copy now comes from, and approved every merge. Nothing reaches production without my approval.
+- **Tenoch (AI agent, orchestrator and developer):** the code front. Writes the code (Next.js, MDX, CSS Modules), runs the checks, opens a pull request per change with a Vercel preview, and hands design and content work to Clara and Ameyali.
+- **Clara (AI agent, design system designer):** the design system front. Maintains the system in Figma (variables, text styles, components) and reports drift between Figma and code. She doesn't edit code; she reports the drift to Tenoch.
+- **Ameyali (AI agent, writer and editor):** the content front. Writes case studies and site copy in my voice, interviews me for evidence and marks what's missing instead of filling the gap. She drafted this case study from the project's docs, the record of its pull requests and my answers.
 
 ## The challenge
 
@@ -73,20 +74,31 @@ Before designing every foundation, we tested the full Figma-to-code cycle with t
 
 ### Prune before migrating
 
-Next we deleted what nobody used: the template's blog with its 11 sample posts, the gallery, a newsletter form and a client-side password gate. That gate turned out to be the cause of the layout shift: it painted a spinner first and then the content, pushing the footer down. Removing it took CLS from 0.225 to 0.013 on Home (lab).
+Next we deleted what the brand didn't need: the template's blog with its 11 sample posts, the gallery, a newsletter form and a client-side password gate. That gate turned out to be the cause of the layout shift: it painted a spinner first and then the content, pushing the footer down. Removing it took CLS from 0.225 to 0.013 on Home (lab).
+
+### Change the route mid-plan
+
+The plan still had six increments (I2 to I7) to replace Once UI piece by piece. Once the 25 components existed in code, we dropped them for a short route of pull requests that moved whole sections at once: the site shell, Work, then Home, About and the 404 page, and finally the removal of every remaining trace of Once UI. We also skipped a planned bridge that would have mapped the template's colors to the brand's, because it would have been throwaway work. Each step stayed small enough to preview and revert.
 
 ### The hardest decision
 
-The plan still had six increments (I2 to I7) to replace Once UI piece by piece. Once the 25 components existed in code, we dropped them and replaced it with a short route of pull requests that moved whole sections at once: the site shell, Work, then Home, About and the 404 page, and finally the removal of every remaining trace of Once UI. We also skipped a planned bridge that would have mapped the template's colors to the brand's, because it would have been throwaway work.
+The hardest call wasn't technical. It was creating my brand and then living by it. Writing the guidelines was the easy part; the hard part came when they started saying no to things I had on the site and valued.
 
-It meant trading the plan we had written for a faster path, while keeping each step small enough to preview and revert. [EVIDENCIA PENDIENTE: why this was the hardest call for you, who proposed it, and what you weighed]
+Holding to them meant taking out pieces that didn't fit:
+
+- **The blog, the gallery and the newsletter.** They came with the template, but nothing in them was evidence of how I work. We removed all three in the first increment.
+- **The "+12% est." conversion figure.** It contradicted the measured one (+2 pp), and an estimate next to a measurement erodes trust in both. We retired it.
+- **Inflated titles.** Six different job titles, among them "Strategic UX & Service Design Leader" and "Product Experience Strategist". Now there is one, Senior Product Designer, and company titles live only in Experience.
+- **CV jargon.** Phrases like "exceptional digital experiences" and "data-driven design operations" could have been signed by any designer. We replaced them with what I actually did, where and for whom.
+
+A brand I don't apply to my own site is just a document. Respecting my own limits made the site smaller, and I trust it more.
 
 ## What we changed
 
 - **Our own design system.** 25 components in `src/ui`, designed in Figma, built with CSS Modules and tokens, and documented in `docs/design-system.md`. The site is dark only, as the brand defines.
 - **No dependency on Once UI.** As of October 3, a search for Once UI imports in the code returns nothing.
 - **A voice for the brand.** Newsreader now carries editorial headlines and quotes; Geist Sans and Geist Mono carry the interface and the data.
-- **Copy from evidence.** We audited every page against the brand guidelines, I answered an interview with dates, roles and metric sources, and we rewrote the copy from those answers. One title everywhere (Senior Product Designer), my city instead of a time zone, and a "+12% est." conversion figure removed because it contradicted the measured one.
+- **Copy from evidence.** We audited every page against the brand guidelines, I answered an interview with dates, roles and metric sources, and we rewrote the copy from those answers. One title everywhere (Senior Product Designer), my city instead of a time zone, and no "+12% est." figure.
 - **Accessible text in the site's language.** The components' screen reader labels moved from Spanish to English, to match the page.
 - **Rules for AI.** Short design directives (`docs/ai-directives.md`) so any assistant generating UI here uses the tokens and components, not one-off values.
 - **Faster main image.** The largest image on the case study pages now loads with high priority.
@@ -112,7 +124,7 @@ It meant trading the plan we had written for a faster path, while keeping each s
 
 ## Results
 
-These are lab measurements (Lighthouse, mobile) unless the table says otherwise. Lab numbers vary between runs, so I read them as trends. The first baseline ran on production and the closing run of the migration ran on a local production build, so the before and after columns don't come from identical environments.
+These are lab measurements (Lighthouse, mobile) unless the table says otherwise. Lab numbers vary between runs, so we read them as trends. The first baseline ran on production and the closing run of the migration ran on a local production build, so the before and after columns don't come from identical environments.
 
 <Table
   caption="Results of the migration and the October 4 increments"
@@ -142,8 +154,9 @@ What we haven't measured: whether recruiters find my role and contact faster, or
 
 ## What I learned
 
+- **A brand only counts when it says no.** The guidelines became useful the moment they made me remove things I liked. Having the reason written down is what let me hold the line.
 - **Agents need permissions, not just instructions.** Clara was defined to work in Figma, but she couldn't until I authorized the Figma connection (MCP) for her. Writing a good role isn't enough; the tools have to be in place before the work starts. Her first assignment, UI tests for the new components from my mood board, stopped at step one: she reported the missing connection and touched nothing, which is exactly what her rules asked for.
 - **A fix that works on one page can do nothing on another.** Loading the main image with high priority took the case study's LCP from 3.77 s to 2.12 s in the lab, and didn't move Home at all. An earlier experiment, not preloading one of the fonts, didn't help either, and we reverted it. Reverting is a valid outcome.
-- **Lab numbers aren't real visitors.** Every performance result here comes from the lab. Until Speed Insights has enough real-visitor data, I'm treating them as promising, not proven.
+- **Lab numbers aren't real visitors.** Every performance result here comes from the lab. Until Speed Insights has enough real-visitor data, we're treating them as promising, not proven.
 - **AI keeps the "don't invent" rule only if the evidence exists.** The content audit couldn't rewrite my case studies until I answered its questions with dates, roles and sources. The rule protects trust, but the evidence has to come from me.
-- **It's too early to judge the team.** I created Tenoch, Clara and Ameyali on October 4. I don't have evidence yet that three agents with defined roles work better than one general session. That's what I'll watch in the next increments.
+- **It's too early to judge the team's shape.** The three fronts existed from the first day, but they've had names and briefs only since October 4. I don't have evidence yet that three agents with defined roles work better than one general session. That's what we'll watch in the next increments.
