@@ -3,7 +3,7 @@ import { getProjects } from "@/utils/projects";
 import styles from "./Projects.module.css";
 
 interface ProjectsProps {
-  /** 1-indexed range over the projects sorted by date (newest first). */
+  /** 1-indexed range over the projects (featured first, then newest first). */
   range?: [number, number?];
   exclude?: string[];
   /** horizontal = featured card (Home desktop); always vertical on mobile. */

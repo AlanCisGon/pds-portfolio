@@ -23,6 +23,8 @@ export type ProjectMeta = {
   team: TeamMember[];
   /** Live product URL ("View project"). */
   link: string;
+  /** Pinned before the rest: Home shows the first project as the featured card. */
+  featured: boolean;
 };
 
 export type Project = { slug: string; metadata: ProjectMeta; content: string };
@@ -42,17 +44,22 @@ function readProject(file: string): Project {
       tags: data.tags ?? [],
       team: data.team ?? [],
       link: data.link ?? "",
+      featured: data.featured === true,
     },
   };
 }
 
-/** All case studies, newest first. */
+/** All case studies: featured first, then newest first. */
 export function getProjects(): Project[] {
   return fs
     .readdirSync(PROJECTS_DIR)
     .filter((file) => file.endsWith(".mdx"))
     .map(readProject)
-    .sort((a, b) => b.metadata.publishedAt.localeCompare(a.metadata.publishedAt));
+    .sort(
+      (a, b) =>
+        Number(b.metadata.featured) - Number(a.metadata.featured) ||
+        b.metadata.publishedAt.localeCompare(a.metadata.publishedAt),
+    );
 }
 
 export function getProject(slug: string): Project | undefined {
