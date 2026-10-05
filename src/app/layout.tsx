@@ -4,10 +4,10 @@ import "@/styles/tokens.css";
 import { Footer, Header } from "@/components";
 import { home } from "@/resources";
 import { geistMono, geistSans, newsreader, newsreaderItalic } from "@/styles/fonts";
+import { pageMetadata } from "@/utils/seo";
+import { Analytics } from "@vercel/analytics/next";
 // Enable Vercel Speed Insights
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
-import { pageMetadata } from "@/utils/seo";
 import styles from "./layout.module.css";
 
 export const metadata = pageMetadata({
@@ -26,7 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${newsreaderItalic.variable}`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${newsreaderItalic.variable}`}
+    >
       <body className={styles.body}>
         <SpeedInsights />
         <Analytics />

@@ -13,7 +13,12 @@ export default function Work() {
   return (
     <div className={styles.page}>
       <JsonLd
-        data={pageSchema({ type: "WebPage", title: work.title, description: work.description, path: work.path })}
+        data={pageSchema({
+          type: "WebPage",
+          title: work.title,
+          description: work.description,
+          path: work.path,
+        })}
       />
       <h1 className={styles.title}>{work.label}</h1>
       <Projects priorityFirst />

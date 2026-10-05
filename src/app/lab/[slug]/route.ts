@@ -1,14 +1,11 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { NextRequest } from "next/server";
-import { checkLabAuth, LAB_HEADERS, labManifest } from "@/utils/labAuth";
+import { LAB_HEADERS, checkLabAuth, labManifest } from "@/utils/labAuth";
+import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> },
-) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const denied = checkLabAuth(request.headers.get("authorization"));
   if (denied) return denied;
 

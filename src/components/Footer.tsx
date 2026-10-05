@@ -1,6 +1,6 @@
-import { Footer as SiteFooter } from "@/ui";
 import { person, social } from "@/resources";
 import { socialIcons } from "@/resources/socialIcons";
+import { Footer as SiteFooter } from "@/ui";
 
 export function Footer() {
   const year = new Date().getFullYear();

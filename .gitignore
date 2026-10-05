@@ -41,3 +41,7 @@ CLAUDE.local.md
 
 # brand guidelines: local only (public repo)
 brand/
+
+# Claude Code: local worktrees and per-user settings
+.claude/worktrees/
+.claude/settings.local.json

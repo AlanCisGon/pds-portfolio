@@ -29,8 +29,22 @@ export function Carousel({ images, label }: CarouselProps) {
       <div className={styles.viewport} tabIndex={0} onKeyDown={onKey} aria-live="polite">
         <div className={styles.track} style={{ transform: `translateX(-${index * 100}%)` }}>
           {images.map((img, i) => (
-            <div key={img.src} className={styles.slide} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${count}`} aria-hidden={i !== index}>
-              <Image src={img.src} alt={img.alt} fill sizes="(min-width: 768px) 720px, 100vw" className={styles.image} priority={i === 0} />
+            <div
+              key={img.src}
+              className={styles.slide}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${count}`}
+              aria-hidden={i !== index}
+            >
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                sizes="(min-width: 768px) 720px, 100vw"
+                className={styles.image}
+                priority={i === 0}
+              />
             </div>
           ))}
         </div>

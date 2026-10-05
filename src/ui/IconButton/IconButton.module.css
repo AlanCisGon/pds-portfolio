@@ -14,9 +14,8 @@
   border-radius: var(--radius-control);
   cursor: pointer;
   text-decoration: none;
-  transition:
-    background-color var(--duration-fast) var(--ease-settle),
-    color var(--duration-fast) var(--ease-settle);
+  transition: background-color var(--duration-fast) var(--ease-settle), color var(--duration-fast)
+    var(--ease-settle);
 }
 
 .iconButton[data-size="s"] {

@@ -17,7 +17,14 @@ export type NavItemProps = {
 };
 
 /** Main navigation item in the Header. */
-export function NavItem({ href, label, icon, selected = false, showLabel = true, compactOnMobile = false }: NavItemProps) {
+export function NavItem({
+  href,
+  label,
+  icon,
+  selected = false,
+  showLabel = true,
+  compactOnMobile = false,
+}: NavItemProps) {
   return (
     <NextLink
       href={href}

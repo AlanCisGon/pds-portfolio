@@ -12,7 +12,12 @@ export function Table({ data, caption }: { data: TableData; caption?: string }) 
   const headers = Array.isArray(data?.headers) ? data.headers : [];
   const rows = Array.isArray(data?.rows) ? data.rows : [];
   return (
-    <div className={styles.wrapper} role="region" aria-label={caption} tabIndex={caption ? 0 : undefined}>
+    <div
+      className={styles.wrapper}
+      role="region"
+      aria-label={caption}
+      tabIndex={caption ? 0 : undefined}
+    >
       <table className={styles.table}>
         {caption && <caption className={styles.caption}>{caption}</caption>}
         <thead>

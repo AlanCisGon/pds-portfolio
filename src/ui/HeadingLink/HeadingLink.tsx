@@ -36,7 +36,12 @@ export function HeadingLink({ id, children, as: Tag = "h2" }: HeadingLinkProps) 
   return (
     <Tag id={id} className={styles.heading}>
       <span>{children}</span>
-      <button type="button" className={styles.anchor} onClick={copy} aria-label="Copy link to section">
+      <button
+        type="button"
+        className={styles.anchor}
+        onClick={copy}
+        aria-label="Copy link to section"
+      >
         <span className={styles.icon} aria-hidden="true">
           <LinkIcon />
         </span>

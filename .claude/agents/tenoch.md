@@ -44,7 +44,7 @@ Si el trabajo cruza los dos dominios (por ejemplo, un caso de estudio nuevo con 
 
 - **Hipótesis antes que cambios** (Lean UX de `CLAUDE.md`): di qué problema resuelve el cambio y cómo sabremos si funcionó.
 - **Siempre en una rama** (`feat/`, `fix/`, `content/`, `chore/`) con PR normal (no en borrador): el preview de Vercel debe pasar y el merge es squash (`gh pr merge <n> --squash --delete-branch`) solo cuando Alan lo aprueba. Nunca hagas push a `main`.
-- **Verifica antes de entregar:** `npx tsc --noEmit` y `npx next build`. Comparar Biome contra `main` para no sumar errores. `npm run lint` no sirve como verificación: `next lint` ya no existe en Next 16.
+- **Verifica antes de entregar:** `npx tsc --noEmit`, `npm run lint` (ESLint) y `npx next build`. `npx @biomejs/biome check .` no debe sumar errores frente a `main`.
 - **Nada de valores sueltos:** solo tokens de `src/styles/tokens.css` y componentes de `src/ui/`. Las reglas están en `docs/ai-directives.md` (CSS Modules, sin Tailwind, solo modo oscuro).
 - **Explicita el balance** entre negocio, tecnología, producto y diseño en cada propuesta (§16.5).
 - **Comunica en español de México.** El contenido del sitio va en inglés (decisión registrada en `docs/content-audit.md`).

@@ -22,12 +22,30 @@ export type ProjectCardProps = {
 };
 
 /** Case-study card. The whole card is ONE link (no nested links); the CTA is its visual affordance. */
-export function ProjectCard({ href, meta, title, summary, tags = [], cover, layout = "vertical", priority = false, cta = "Read case study" }: ProjectCardProps) {
+export function ProjectCard({
+  href,
+  meta,
+  title,
+  summary,
+  tags = [],
+  cover,
+  layout = "vertical",
+  priority = false,
+  cta = "Read case study",
+}: ProjectCardProps) {
   return (
     <NextLink href={href} className={styles.card} data-layout={layout}>
       <span className={styles.cover}>
         {cover ? (
-          <Image src={cover.src} alt={cover.alt} fill sizes="(min-width: 768px) 400px, 100vw" preload={priority} fetchPriority={priority ? "high" : undefined} className={styles.image} />
+          <Image
+            src={cover.src}
+            alt={cover.alt}
+            fill
+            sizes="(min-width: 768px) 400px, 100vw"
+            preload={priority}
+            fetchPriority={priority ? "high" : undefined}
+            className={styles.image}
+          />
         ) : (
           <span className={styles.placeholder} aria-hidden="true">
             <MediaImage />

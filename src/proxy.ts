@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { checkLabAuth, LAB_HEADERS } from "@/utils/labAuth";
+import { LAB_HEADERS, checkLabAuth } from "@/utils/labAuth";
+import { type NextRequest, NextResponse } from "next/server";
 
 export function proxy(request: NextRequest) {
   const denied = checkLabAuth(request.headers.get("authorization"));

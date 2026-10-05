@@ -1,10 +1,4 @@
-import type {
-  About,
-  Home,
-  Person,
-  Social,
-  Work,
-} from "@/types";
+import type { About, Home, Person, Social, Work } from "@/types";
 
 const person: Person = {
   firstName: "Alan",
@@ -57,9 +51,10 @@ const home: Home = {
   },
   subline: (
     <>
-      I'm {person.firstName}, a product designer with 8 years across <strong>e-commerce, financial
-      services and telecom</strong>. At <strong>Coppel</strong> I lead UX for Purchase &amp; Payments.
-      I start every project by understanding the real problem before designing the solution.
+      I’m {person.firstName}, a product designer with 8 years across{" "}
+      <strong>e-commerce, financial services and telecom</strong>. At <strong>Coppel</strong> I lead
+      UX for Purchase &amp; Payments. I start every project by understanding the real problem before
+      designing the solution.
     </>
   ),
 };
@@ -84,13 +79,12 @@ const about: About = {
     title: "Introduction",
     description: (
       <>
-        I'm a product designer based in Culiacán, Mexico. At Coppel I lead UX
-        for Purchase &amp; Payments; before that I was a UX researcher there, and
-        I led the UX team at Onikom Systems for clients like Movistar MX. My
-        work sits between business, technology, product and design: I research
-        early, prototype fast, test small and keep the customer at the center.
-        Lately I treat AI as a co-creation partner, prototyping with Claude Code
-        to get to ideas and to the shape of a problem faster.
+        I’m a product designer based in Culiacán, Mexico. At Coppel I lead UX for Purchase &amp;
+        Payments; before that I was a UX researcher there, and I led the UX team at Onikom Systems
+        for clients like Movistar MX. My work sits between business, technology, product and design:
+        I research early, prototype fast, test small and keep the customer at the center. Lately I
+        treat AI as a co-creation partner, prototyping with Claude Code to get to ideas and to the
+        shape of a problem faster.
       </>
     ),
   },
@@ -195,8 +189,7 @@ const about: About = {
       },
       {
         title: "Design & Prototyping",
-        description:
-          "User interface design, tokens, UI component libraries, design documentation",
+        description: "User interface design, tokens, UI component libraries, design documentation",
         tags: [
           {
             name: "Figma",
@@ -272,10 +265,9 @@ const about: About = {
         title: "AI-Powered Design",
         description: (
           <>
-            I work with AI as a <strong>co-creation partner</strong>: rapid
-            prototyping and co-creation with Claude Code to explore more ideas
-            and understand problems faster. This portfolio and its design
-            system were built that way.
+            I work with AI as a <strong>co-creation partner</strong>: rapid prototyping and
+            co-creation with Claude Code to explore more ideas and understand problems faster. This
+            portfolio and its design system were built that way.
           </>
         ),
         tags: [

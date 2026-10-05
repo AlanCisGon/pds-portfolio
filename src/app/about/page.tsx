@@ -4,8 +4,8 @@ import { about, person, social } from "@/resources";
 import { socialIcons } from "@/resources/socialIcons";
 import { tagIcons } from "@/resources/tagIcons";
 import { Avatar, Button, List, ListItem, Media, type MediaRatio, TableOfContents, Tag } from "@/ui";
-import { slugify } from "@/utils/slugify";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
+import { slugify } from "@/utils/slugify";
 import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
@@ -26,15 +26,28 @@ export default function About() {
   const sections = [
     { id: slugify(about.intro.title), label: about.intro.title, display: about.intro.display },
     { id: slugify(about.work.title), label: about.work.title, display: about.work.display },
-    { id: slugify(about.studies.title), label: about.studies.title, display: about.studies.display },
-    { id: slugify(about.technical.title), label: about.technical.title, display: about.technical.display },
+    {
+      id: slugify(about.studies.title),
+      label: about.studies.title,
+      display: about.studies.display,
+    },
+    {
+      id: slugify(about.technical.title),
+      label: about.technical.title,
+      display: about.technical.display,
+    },
   ].filter((section) => section.display);
   const [intro, work, studies, technical] = sections.map((s) => s.id);
 
   return (
     <div className={styles.page}>
       <JsonLd
-        data={pageSchema({ type: "WebPage", title: about.title, description: about.description, path: about.path })}
+        data={pageSchema({
+          type: "WebPage",
+          title: about.title,
+          description: about.description,
+          path: about.path,
+        })}
       />
 
       <aside className={styles.aside}>
@@ -88,7 +101,9 @@ export default function About() {
                   href={item.link}
                   variant="secondary"
                   leadingIcon={socialIcons[item.icon]}
-                  {...(/^https?:/.test(item.link) ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  {...(/^https?:/.test(item.link)
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                 >
                   {item.name}
                 </Button>
@@ -156,7 +171,9 @@ export default function About() {
                   <ul className={styles.tags}>
                     {skill.tags.map((tag) => (
                       <li key={tag.name}>
-                        <Tag leadingIcon={tag.icon ? tagIcons[tag.icon] : undefined}>{tag.name}</Tag>
+                        <Tag leadingIcon={tag.icon ? tagIcons[tag.icon] : undefined}>
+                          {tag.name}
+                        </Tag>
                       </li>
                     ))}
                   </ul>

@@ -24,7 +24,16 @@ export type MediaProps = {
   sizes?: string;
 };
 
-export function Media({ kind = "image", src, alt = "", ratio = "16:9", caption, poster, priority = false, sizes = "(min-width: 768px) 720px, 100vw" }: MediaProps) {
+export function Media({
+  kind = "image",
+  src,
+  alt = "",
+  ratio = "16:9",
+  caption,
+  poster,
+  priority = false,
+  sizes = "(min-width: 768px) 720px, 100vw",
+}: MediaProps) {
   return (
     <figure className={styles.media}>
       <div className={styles.frame} data-ratio={ratio}>
@@ -33,7 +42,17 @@ export function Media({ kind = "image", src, alt = "", ratio = "16:9", caption, 
             <MediaImage />
           </span>
         )}
-        {src && kind === "image" && <Image src={src} alt={alt} fill sizes={sizes} preload={priority} fetchPriority={priority ? "high" : undefined} className={styles.image} />}
+        {src && kind === "image" && (
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            sizes={sizes}
+            preload={priority}
+            fetchPriority={priority ? "high" : undefined}
+            className={styles.image}
+          />
+        )}
         {src && kind === "video" && <MediaVideo src={src} poster={poster} label={caption ?? alt} />}
       </div>
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
