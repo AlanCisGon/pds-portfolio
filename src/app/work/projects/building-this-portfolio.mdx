@@ -7,8 +7,9 @@ tags:
   - "Design system"
   - "AI-assisted design"
   - "Web"
-# [EVIDENCIA PENDIENTE: cover image for the case study]
-images: []
+images:
+  - "/images/projects/portfolio/home-live.webp"
+  - "/images/projects/portfolio/component-catalog.webp"
 team:
   - name: "Alan Cisneros"
     role: "Project owner & lead designer"
@@ -44,7 +45,7 @@ This is the first product where I am the client, the designer and the material a
 
 The team is me and three AI agents, each defined in the repository with its own role, sources of truth and limits:
 
-- **Me (Alan), project owner and lead designer:** I own the brand guidelines and the product decisions. I designed in Figma [EVIDENCIA PENDIENTE: which components or frames you designed yourself and which ones Claude built by script], answered the content interview that every piece of copy now comes from, and approved every merge. Nothing reaches production without my approval.
+- **Me (Alan), project owner and lead designer:** I own the brand guidelines and the product decisions. I designed the design system under a delegated UI model: I defined the brand, the tokens, the rules, which components the site needed and every decision about them; the team built it in Figma and in code under my direction, and I reviewed and approved each piece. I also answered the content interview that every piece of copy now comes from, and approved every merge. Nothing reaches production without my approval.
 - **Tenoch (AI agent, orchestrator and developer):** the code front. Writes the code (Next.js, MDX, CSS Modules), runs the checks, opens a pull request per change with a Vercel preview, and hands design and content work to Clara and Ameyali.
 - **Clara (AI agent, design system designer):** the design system front. Maintains the system in Figma (variables, text styles, components) and reports drift between Figma and code. She doesn't edit code; she reports the drift to Tenoch.
 - **Ameyali (AI agent, writer and editor):** the content front. Writes case studies and site copy in my voice, interviews me for evidence and marks what's missing instead of filling the gap. She drafted this case study from the project's docs, the record of its pull requests and my answers.
@@ -95,7 +96,7 @@ A brand I don't apply to my own site is just a document. Respecting my own limit
 
 ## What we changed
 
-- **Our own design system.** 25 components in `src/ui`, designed in Figma, built with CSS Modules and tokens, and documented in `docs/design-system.md`. The site is dark only, as the brand defines.
+- **Our own design system.** 25 components in `src/ui`, built with CSS Modules and tokens and documented in `docs/design-system.md`. I designed the system; the team built it in Figma and in code under a delegated UI model, and I approved each piece. The site is dark only, as the brand defines.
 - **No dependency on Once UI.** As of October 3, a search for Once UI imports in the code returns nothing.
 - **A voice for the brand.** Newsreader now carries editorial headlines and quotes; Geist Sans and Geist Mono carry the interface and the data.
 - **Copy from evidence.** We audited every page against the brand guidelines, I answered an interview with dates, roles and metric sources, and we rewrote the copy from those answers. One title everywhere (Senior Product Designer), my city instead of a time zone, and no "+12% est." figure.
@@ -103,6 +104,10 @@ A brand I don't apply to my own site is just a document. Respecting my own limit
 - **Rules for AI.** Short design directives (`docs/ai-directives.md`) so any assistant generating UI here uses the tokens and components, not one-off values.
 - **Faster main image.** The largest image on the case study pages now loads with high priority.
 - **Tooling that works.** A lint setup that had been broken now runs, line endings are consistent, and formatter warnings dropped from 1,479 to 9.
+
+All the components are gathered in a private catalog at `/lab/ui`. Its demo text is in Spanish, the language the team and I work in.
+
+![Component catalog: buttons, links, navigation and chips from the design system](/images/projects/portfolio/component-catalog.webp)
 
 <Accordion title="Every increment, in order">
 
@@ -143,20 +148,21 @@ These are lab measurements (Lighthouse, mobile) unless the table says otherwise.
       { metric: "Accessibility and CLS after the new typeface (F1)", result: "Held at 100 and 0", source: "Lighthouse (lab, local production build, median of 3 runs), Oct 4" },
       { metric: "Largest image load (LCP), case study", result: "3.77 s → 2.12 s", source: "Lighthouse (lab, local production build, median of 3 runs), Oct 4" },
       { metric: "Largest image load (LCP), Home", result: "No change", source: "Lighthouse (lab, local production build, median of 3 runs), Oct 4" },
-      { metric: "LCP for real visitors", result: "Not measured yet", source: "Vercel Speed Insights (pending)" },
+      { metric: "Real Experience Score, desktop (real visitors)", result: "99 (“Great”); Home 99, About 99", source: "Vercel Speed Insights, P75, first week after launch (to Oct 4), small sample" },
+      { metric: "LCP for real visitors, mobile", result: "Not measured yet", source: "Vercel Speed Insights: no mobile data reported yet; field LCP needs a paid plan" },
       { metric: "Job titles across the site", result: "6 → 1", source: "Content audit, Oct 3 → Oct 4" },
       { metric: "Formatter warnings", result: "1,479 → 9", source: "Biome, Oct 4" },
     ],
   }}
 />
 
-What we haven't measured: whether recruiters find my role and contact faster, or whether hiring managers read case studies more deeply. Those were the hypotheses behind the redesign; the site has only had its new form since October 3. [EVIDENCIA PENDIENTE: page views, referrers or Speed Insights data after the launch]
+What we haven't measured: whether recruiters find my role and contact faster, or whether hiring managers read case studies more deeply. Those were the hypotheses behind the redesign; the site has only had its new form since October 3. The first week of traffic is too small to judge them: a handful of visitors, all from Mexico and mostly arriving from Vercel, which almost certainly means the team and me reviewing the site. The one real-visitor number we trust so far is the desktop experience score above, and even that comes from a small sample. Mobile field data, including LCP, is still unmeasured.
 
 ## What I learned
 
 - **A brand only counts when it says no.** The guidelines became useful the moment they made me remove things I liked. Having the reason written down is what let me hold the line.
 - **Agents need permissions, not just instructions.** Clara was defined to work in Figma, but she couldn't until I authorized the Figma connection (MCP) for her. Writing a good role isn't enough; the tools have to be in place before the work starts. Her first assignment, UI tests for the new components from my mood board, stopped at step one: she reported the missing connection and touched nothing, which is exactly what her rules asked for.
 - **A fix that works on one page can do nothing on another.** Loading the main image with high priority took the case study's LCP from 3.77 s to 2.12 s in the lab, and didn't move Home at all. An earlier experiment, not preloading one of the fonts, didn't help either, and we reverted it. Reverting is a valid outcome.
-- **Lab numbers aren't real visitors.** Every performance result here comes from the lab. Until Speed Insights has enough real-visitor data, we're treating them as promising, not proven.
+- **Lab numbers aren't real visitors.** Almost every performance result here comes from the lab. The first real-visitor score, 99 on desktop, points the same way, but it rests on one week and a small sample, and mobile has no data yet. Until Speed Insights has more, we're treating the results as promising, not proven.
 - **AI keeps the "don't invent" rule only if the evidence exists.** The content audit couldn't rewrite my case studies until I answered its questions with dates, roles and sources. The rule protects trust, but the evidence has to come from me.
 - **It's too early to judge the team's shape.** The three fronts existed from the first day, but they've had names and briefs only since October 4. I don't have evidence yet that three agents with defined roles work better than one general session. That's what we'll watch in the next increments.
