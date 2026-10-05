@@ -2,7 +2,11 @@
   "name": "alancisneros-design",
   "version": "3.0.0",
   "private": true,
-  "description": "Portfolio of Alan Cisneros, Product Experience Strategist: alancisneros.design",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "description": "Portfolio of Alan Cisneros, Senior Product Designer: alancisneros.design",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
