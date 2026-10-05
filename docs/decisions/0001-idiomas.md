@@ -8,7 +8,7 @@
 
 - El §16.1 de las guías de marca pide español de México salvo que se pida otro idioma. En la entrevista del 2026-10-04 (`docs/content-audit.md`), Alan confirmó el inglés para el portafolio como excepción.
 - El sitio declara `lang="en"` sin variedad. Ameyali no sabe qué ortografía ni qué formatos usar, y Tenoch no sabe qué locale pasar a `Intl`.
-- Los textos de accesibilidad de `src/ui` siguen en español porque los textos que viven en el código no tenían dueño.
+- Los textos de accesibilidad de `src/ui` ya están en inglés (#28), pero están escritos dentro de los componentes y no tenían dueño.
 - Ameyali marca [REVISIÓN NATIVA PENDIENTE] y [EVIDENCIA PENDIENTE], pero no estaba definido qué pasa con esas marcas al pedir un merge.
 
 ## Decisión
@@ -23,6 +23,6 @@
 ## Consecuencias
 
 - Tenoch cambia `lang="en"` por `lang="en-US"` y revisa los formatos de fecha.
-- Se cierra el pendiente de `docs/content-audit.md`: Tenoch convierte los textos de accesibilidad de `src/ui` en props y Ameyali escribe su versión en inglés.
+- Tenoch convierte los textos de accesibilidad de `src/ui` en props y Ameyali los revisa.
 - En el sitio, Ameyali ya no pregunta la variedad: usa su voz en-US.
 - Cambiar de variedad o sumar un idioma requiere un ADR nuevo que reemplace a este.
