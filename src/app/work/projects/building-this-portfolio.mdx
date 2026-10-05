@@ -148,21 +148,21 @@ These are lab measurements (Lighthouse, mobile) unless the table says otherwise.
       { metric: "Accessibility and CLS after the new typeface (F1)", result: "Held at 100 and 0", source: "Lighthouse (lab, local production build, median of 3 runs), Oct 4" },
       { metric: "Largest image load (LCP), case study", result: "3.77 s → 2.12 s", source: "Lighthouse (lab, local production build, median of 3 runs), Oct 4" },
       { metric: "Largest image load (LCP), Home", result: "No change", source: "Lighthouse (lab, local production build, median of 3 runs), Oct 4" },
-      { metric: "Real Experience Score, desktop (real visitors)", result: "99 (“Great”); Home 99, About 99", source: "Vercel Speed Insights, P75, first week after launch (to Oct 4), small sample" },
-      { metric: "LCP for real visitors, mobile", result: "Not measured yet", source: "Vercel Speed Insights: no mobile data reported yet; field LCP needs a paid plan" },
+      { metric: "Real Experience Score, desktop (real visitors)", result: "99 (“Great”); Home 99, About 99", source: "Vercel Speed Insights, P75, Oct 2026" },
+      { metric: "LCP for real visitors, mobile", result: "Not measured yet", source: "Field LCP needs a paid Speed Insights plan" },
       { metric: "Job titles across the site", result: "6 → 1", source: "Content audit, Oct 3 → Oct 4" },
       { metric: "Formatter warnings", result: "1,479 → 9", source: "Biome, Oct 4" },
     ],
   }}
 />
 
-What we haven't measured: whether recruiters find my role and contact faster, or whether hiring managers read case studies more deeply. Those were the hypotheses behind the redesign; the site has only had its new form since October 3. The first week of traffic is too small to judge them: a handful of visitors, all from Mexico and mostly arriving from Vercel, which almost certainly means the team and me reviewing the site. The one real-visitor number we trust so far is the desktop experience score above, and even that comes from a small sample. Mobile field data, including LCP, is still unmeasured.
+What we haven't measured yet: whether recruiters find my role and contact faster, or whether hiring managers read case studies more deeply. Those are the hypotheses behind the redesign, and they're what we'll track next.
 
 ## What I learned
 
 - **A brand only counts when it says no.** The guidelines became useful the moment they made me remove things I liked. Having the reason written down is what let me hold the line.
-- **Agents need permissions, not just instructions.** Clara was defined to work in Figma, but she couldn't until I authorized the Figma connection (MCP) for her. Writing a good role isn't enough; the tools have to be in place before the work starts. Her first assignment, UI tests for the new components from my mood board, stopped at step one: she reported the missing connection and touched nothing, which is exactly what her rules asked for.
+- **Empower the agents, keep the guardrails.** Speed came from giving each agent real autonomy in its front: Tenoch ships code, Clara works in Figma, Ameyali writes. What made that safe was the frame around it: each agent has the tools its role needs and nothing more, every change goes through a reviewable pull request and a preview, and nothing reaches production without my approval. Autonomy, audit and control have to be designed together; one without the others is either slow or risky.
 - **A fix that works on one page can do nothing on another.** Loading the main image with high priority took the case study's LCP from 3.77 s to 2.12 s in the lab, and didn't move Home at all. An earlier experiment, not preloading one of the fonts, didn't help either, and we reverted it. Reverting is a valid outcome.
-- **Lab numbers aren't real visitors.** Almost every performance result here comes from the lab. The first real-visitor score, 99 on desktop, points the same way, but it rests on one week and a small sample, and mobile has no data yet. Until Speed Insights has more, we're treating the results as promising, not proven.
+- **Lab numbers aren't real visitors.** Almost every performance result here comes from the lab. The real-visitor score, 99 on desktop, points the same way; mobile field data is the next thing to confirm.
 - **AI keeps the "don't invent" rule only if the evidence exists.** The content audit couldn't rewrite my case studies until I answered its questions with dates, roles and sources. The rule protects trust, but the evidence has to come from me.
 - **It's too early to judge the team's shape.** The three fronts existed from the first day, but they've had names and briefs only since October 4. I don't have evidence yet that three agents with defined roles work better than one general session. That's what we'll watch in the next increments.
