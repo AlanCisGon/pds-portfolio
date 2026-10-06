@@ -152,20 +152,13 @@ As the method grew, so did a question: how should an agent's judgment change ove
 
 Each change is tested against real cases with my verdict. The naming rounds are the first.
 
-### Borrowed judgment, with credit
+{/* [REVISIÓN NATIVA PENDIENTE]: sección reescrita sin nombres de influencias (rama content/no-influence-names). */}
 
-The agents' judgment doesn't come from the model's average. It comes from people. Each agent carries a short library of authors I chose, and from each one it takes a rule it can apply, never a style to imitate:
+### Judgment that comes from people
 
-- **Tenoch** builds with Fred Brooks's conceptual integrity, so the site feels made by one mind, and with Heydon Pickering and Kat Holmes, so every technical decision asks whom it leaves out. Kim Scott's *Radical Candor* shapes how he gives feedback: specific, direct and with a way forward.
-- **Clara** works from Alla Kholmatova, Brad Frost, Nathan Curtis and Jina Anne. That's where her rule comes from: if it doesn't have a token, it doesn't exist yet.
-- **Ameyali** writes with Ursula K. Le Guin's ear for rhythm, Italo Calvino's exactness and Augusto Monterroso's economy. In English her voice is E.B. White; in Mexican Spanish, Jorge Ibargüengoitia.
-- **Julieta**'s library starts with Richard Rumelt, Teresa Torres and Marty Cagan.
+The agents' judgment doesn't come from the model's average. It comes from people. Each agent carries its own small library of human authors and their books, which I chose from a list. From each one it takes a rule it can apply, never a style to imitate.
 
-The names honor people and places too. Tenoch is the leader who, in Mexica tradition, guided his people to found Tenochtitlan. Clara is a nod to Clara Porset, the designer who reworked the traditional Mexican butaque with modern principles. Julieta is for Julieta Fierro, the Mexican astronomer who explains what's far away in plain words; she is alive, so the agent never speaks for her. Ameyali comes from the Nahuatl *ameyalli*, a spring.
-
-Some of these choices are personal. Julieta Fierro and Clara Porset, the women behind two of the names, are references of mine, and so is Jorge Ibargüengoitia, whose clear, unsolemn Spanish became Ameyali's voice in that language. One more reference stays outside the agents' libraries and is only mine: Jon Yablonski's *Laws of UX*.
-
-I chose every author from a list, and that choice is the point. When an agent makes a call, I can trace it to a person and a page, check it, and give that person credit. A team made of AI can still owe its judgment to people, and stay accountable to one.
+That choice is the point. When an agent makes a call, I can trace where it came from and check it. A team made of AI can still owe its judgment to people, and stay accountable to one.
 
 ### The hardest decision
 
@@ -247,12 +240,14 @@ These are lab measurements (Lighthouse, mobile) unless the table says otherwise.
 
 What we haven't measured yet: whether recruiters find my role and contact faster, or whether hiring managers read case studies more deeply. Those are the hypotheses behind the redesign, and they're what we'll track next.
 
+{/* [REVISIÓN NATIVA PENDIENTE]: el aprendizaje “Judgment needs an author” se reescribió sin nombres. */}
+
 ## What I learned
 
 - **A brand only counts when it says no.** The guidelines became useful the moment they made me remove things I liked. Having the reason written down is what let me hold the line.
 - **Empower the agents, keep the guardrails.** Speed came from giving each agent real autonomy in its front. What made that safe was the frame: the tools each role needs and no more, a reviewable pull request for every change, and my approval before production. Autonomy, audit and control have to be designed together.
 - **A good brief and a method make the difference.** The name arrived once the brief had explicit constraints (language, warmth, who the name includes) and the method had room to explore. Ameyali's questions about the brief did more than any new rule.
-- **Judgment needs an author.** Without named authors, an agent's judgment is the model's average. With them, I can see where a call came from, question it, and credit the person behind it.
+- **Judgment needs an author.** Without human sources, an agent's judgment is the model's average. With them, I can see where a call came from and question it.
 - **A fix that works on one page can do nothing on another.** Loading the main image with high priority took the case study's LCP from 3.77 s to 2.12 s in the lab, and didn't move Home at all. An earlier font experiment didn't help either, and we reverted it. Reverting is a valid outcome.
 - **AI keeps the “don't invent” rule only if the evidence exists.** The content audit couldn't rewrite my case studies until I answered its questions with dates, roles and sources. The evidence has to come from me.
 - **It's too early to judge the team's shape.** The calibration set holds one case, and I don't have evidence yet that four agents with defined roles work better than one general session. That's what we'll watch next.
