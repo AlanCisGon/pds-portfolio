@@ -45,3 +45,6 @@ brand/
 # Claude Code: local worktrees and per-user settings
 .claude/worktrees/
 .claude/settings.local.json
+
+# Strategy: local only (sensitive: career goals, unreleased Coppel work). Lives with brand/ until #64.
+docs/estrategia.md
