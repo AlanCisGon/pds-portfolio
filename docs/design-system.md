@@ -1,10 +1,10 @@
-# Design system del portafolio · v0.1
+# Somara Design System (SDS) · v0.1
 
-Sistema de diseño **solo para alancisneros.design**. No es un producto aparte: vive en este repo y crece al ritmo de la migración (`docs/migration-plan.md`).
+Sistema de diseño de Somara Studio (ADR 0004), **solo para alancisneros.design** por ahora. No es un producto aparte: vive en este repo y crece al ritmo de la migración (`docs/migration-plan.md`).
 
 - **Fuente de verdad:** `alan-brand-guidelines.md` §14, "Identidad visual" (v1.1, 2 de octubre de 2026). Si este documento y la guía de marca difieren, manda la guía.
 - **En código:** `src/styles/tokens.css` (variables CSS) y `src/ui/` (componentes con **CSS Modules**).
-- **En Figma:** archivo *PDS · Portfolio Design System*, página `01 Foundations`. Cada variable lleva su nombre CSS en *Code syntax → Web*, con el formato `var(--nombre)` que Figma muestra en Dev Mode.
+- **En Figma:** archivo *SDS · Somara Design System*, página `01 Foundations`. Cada variable lleva su nombre CSS en *Code syntax → Web*, con el formato `var(--nombre)` que Figma muestra en Dev Mode.
 
 ## Decisiones v0.1
 
@@ -234,7 +234,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
 
 - **Catálogo privado:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. Muestra cada componente con sus variantes, para compararlo con Figma.
-- **Página de Figma:** cada grupo vive en su propia página del archivo *PDS · Portfolio Design System*.
+- **Página de Figma:** cada grupo vive en su propia página del archivo *SDS · Somara Design System*.
 
 | Grupo (Figma) | Componentes | Sin uso público |
 |---|---|---|

@@ -1,4 +1,4 @@
-// Portfolio design system components (docs/design-system.md). Must not import from the app or from Once UI.
+// Somara Design System (SDS) components (docs/design-system.md). Must not import from the app or from Once UI.
 // 02a Actions
 export * from "./Button";
 export * from "./IconButton";

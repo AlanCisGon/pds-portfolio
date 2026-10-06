@@ -12,7 +12,7 @@ Dejar de depender del fork de **Magic Portfolio** y de **Once UI**, y quedarse c
 
 **Fuentes de verdad**
 - **Marca:** `alan-brand-guidelines.md` §14 (v1.1), que define color, tipografía, composición y movimiento.
-- **Design system del portafolio:** `docs/design-system.md` (v0.1), con los tokens, las reglas de uso y las convenciones de CSS Modules. No es un producto aparte; vive aquí y crece con la migración.
+- **Somara Design System (SDS, ADR 0004):** `docs/design-system.md` (v0.1), con los tokens, las reglas de uso y las convenciones de CSS Modules. No es un producto aparte; vive aquí y crece con la migración.
 
 **Reglas durante la migración**
 - El código nuevo va en `src/ui/` y usa los tokens de `src/styles/tokens.css`.
@@ -239,7 +239,7 @@ Ya salen de la marca y están creadas en Figma y en código; ver `docs/design-sy
 
 ## Setup de Figma
 
-Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnVdxcqR7ON3zyzbBL)**, en tu equipo Pro. Ya tiene creadas las páginas de abajo.
+Archivo: **[SDS · Somara Design System](https://www.figma.com/design/DuBGDnVdxcqR7ON3zyzbBL)**, en tu equipo Pro. Ya tiene creadas las páginas de abajo.
 
 | Página | Contenido |
 |---|---|
