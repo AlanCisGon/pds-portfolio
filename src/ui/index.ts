@@ -27,5 +27,6 @@ export * from "./Card";
 export * from "./ProjectCard";
 export * from "./Header";
 export * from "./Footer";
+export * from "./TeamCard";
 // Utilities
 export * from "./VisuallyHidden";

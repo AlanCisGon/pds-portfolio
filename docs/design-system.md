@@ -241,7 +241,7 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 | 02b Content | `Tag`, `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem` | `Badge` |
 | 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | `Carousel` |
 | 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | — |
-| 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer` | `Card` |
+| 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer`, `TeamCard` | `Card` |
 
 ### Notas de implementación
 
@@ -254,6 +254,7 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - `IconButton` requiere `label`;
   - los `Link` externos anuncian "opens in a new tab" (los textos accesibles van en inglés, como la página);
   - `CodeBlock` y `HeadingLink` confirman con `aria-live`, sin Toast.
+- **`TeamCard` (02e, `83:152`):** tarjeta estática de integrante (avatar, nombre, rol y descripción), con `layout` horizontal o vertical. El rol nunca va en Cerezo. Su patrón `TeamGrid` (03 Patterns, `84:87`) vive en `src/components/work/TeamGrid.tsx` y se usa desde el MDX.
 - **Proyecto destacado (`home.featured` en `content.tsx`):** un `Link` standalone sobre el titular de Home que lleva al caso destacado. Se apaga con `display: false`.
 - **Decisión de auditoría · hover de tarjetas:** `Card` y `ProjectCard` se funden con sus superficies internas en hover, a propósito.
 - **`Link` inline siempre subrayado** (2026-10-05, revierte la decisión de auditoría del 2026-10-03): dentro de un párrafo, el Cerezo contra el texto Niebla da unos 2.8:1, por debajo de los 3:1 que pide WCAG 1.4.1 cuando el enlace se distingue solo por color. El subrayado (`text-decoration-thickness: from-font`) lo resuelve sin depender del color. `standalone` no lleva subrayado: lo distingue su ícono.
