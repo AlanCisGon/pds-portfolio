@@ -18,24 +18,6 @@
   text-align: center;
 }
 
-.featured {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-8);
-  margin: 0;
-}
-
-.featuredLabel {
-  color: var(--color-text-secondary);
-  font-family: var(--font-mono);
-  font-size: var(--text-meta-size);
-  line-height: var(--text-meta-line);
-  letter-spacing: var(--text-meta-tracking);
-  text-transform: uppercase;
-}
-
 .headline {
   margin: 0;
   color: var(--color-text-primary);

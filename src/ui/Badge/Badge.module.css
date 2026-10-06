@@ -21,6 +21,11 @@
   white-space: nowrap;
 }
 
+/* Without an icon the label needs its own air (Figma 30:35, proposal from #86). */
+.badge[data-icon="false"] {
+  padding-inline: var(--space-8);
+}
+
 .badge[data-tone="info"] {
   --badge-fg: var(--status-info-fg);
   --badge-bg: var(--status-info-bg);

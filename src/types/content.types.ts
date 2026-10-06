@@ -49,8 +49,19 @@ export interface PageConfig {
 export interface Home extends PageConfig {
   image: string;
   headline: ReactNode;
-  /** Link above the headline to the featured case study. */
-  featured: Toggle & { label: string; title: string; href: string };
+  /** Featured case study below the hero (FeaturedCase, Figma 05 Explorations A2). Copy by Ameyali. */
+  featured: Toggle & {
+    /** Case study slug: its cover and team come from the MDX, and it is left out of the list below. */
+    slug: string;
+    meta: string;
+    badge: string;
+    proof: string;
+    title: string;
+    role: string;
+    cta: string;
+    /** Cover image for the featured block (16:9). Alt text by Ameyali. */
+    cover: { src: string; alt: string };
+  };
   subline: ReactNode;
 }
 

@@ -34,7 +34,9 @@ export function Projects({
           <li key={post.slug}>
             <ProjectCard
               href={`/work/${post.slug}`}
-              meta={[post.metadata.client, year].filter(Boolean).join(" · ")}
+              meta={[post.metadata.client, post.metadata.codename, year]
+                .filter(Boolean)
+                .join(" · ")}
               title={post.metadata.title}
               summary={post.metadata.summary}
               tags={post.metadata.tags}
