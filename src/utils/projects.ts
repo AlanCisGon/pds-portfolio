@@ -11,6 +11,8 @@ export type ProjectMeta = {
   title: string;
   /** Client in the meta line ("Coppel · 2024"). */
   client: string;
+  /** Internal project name, shown only in the meta line ("Coppel · Project Helix · 2025"). */
+  codename: string;
   /** ISO date, YYYY-MM-DD. */
   publishedAt: string;
   summary: string;
@@ -37,6 +39,7 @@ function readProject(file: string): Project {
     metadata: {
       title: data.title ?? "",
       client: data.client ?? "",
+      codename: data.codename ?? "",
       publishedAt: data.publishedAt ?? "",
       summary: data.summary ?? "",
       image: data.image ?? "",

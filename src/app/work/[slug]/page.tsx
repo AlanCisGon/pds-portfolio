@@ -71,7 +71,11 @@ export default async function Project({
           All projects
         </Link>
         <p className={styles.meta}>
-          {[metadata.client, metadata.publishedAt && formatDate(metadata.publishedAt)]
+          {[
+            metadata.client,
+            metadata.codename,
+            metadata.publishedAt && formatDate(metadata.publishedAt),
+          ]
             .filter(Boolean)
             .join(" · ")}
         </p>

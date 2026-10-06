@@ -1,8 +1,9 @@
 import { ArrowRight } from "iconoir-react";
 
 import { Projects } from "@/components/work/Projects";
-import { about, home, person } from "@/resources";
-import { Avatar, Button, Link } from "@/ui";
+import { about, home, person, work } from "@/resources";
+import { Avatar, Button, FeaturedCase } from "@/ui";
+import { getProject } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import styles from "./page.module.css";
 
@@ -14,6 +15,7 @@ export const metadata = pageMetadata({
 });
 
 export default function Home() {
+  const featured = home.featured.display ? getProject(home.featured.slug) : undefined;
   return (
     <div className={styles.page}>
       <JsonLd
@@ -27,14 +29,6 @@ export default function Home() {
 
       {/* Content first: no reveal animation, so the hero is the first paint. */}
       <section className={styles.hero}>
-        {home.featured.display && (
-          <p className={styles.featured}>
-            <span className={styles.featuredLabel}>{home.featured.label}</span>
-            <Link href={home.featured.href} kind="standalone">
-              {home.featured.title}
-            </Link>
-          </p>
-        )}
         <h1 className={styles.headline}>{home.headline}</h1>
         <p className={styles.subline}>{home.subline}</p>
         <Button
@@ -51,8 +45,23 @@ export default function Home() {
         </Button>
       </section>
 
-      <Projects range={[1, 1]} layout="horizontal" priorityFirst />
-      <Projects range={[2]} />
+      {featured && (
+        <FeaturedCase
+          href={`${work.path}/${featured.slug}`}
+          meta={home.featured.meta}
+          badge={home.featured.badge}
+          proof={home.featured.proof}
+          title={home.featured.title}
+          role={home.featured.role}
+          team={featured.metadata.team
+            .filter((member) => member.avatar)
+            .map((member) => ({ name: member.name, src: member.avatar }))}
+          cta={home.featured.cta}
+          cover={home.featured.cover}
+          priority
+        />
+      )}
+      <Projects exclude={featured ? [featured.slug] : undefined} />
     </div>
   );
 }

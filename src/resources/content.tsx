@@ -45,9 +45,15 @@ const home: Home = {
   headline: <>I design products that balance business, technology, product and design.</>,
   featured: {
     display: true,
-    label: "Featured work",
-    title: "Cart and Checkout Optimization",
-    href: "/work/project-helix",
+    slug: "building-this-portfolio",
+    meta: "Case study · Somara Studio",
+    badge: "Featured work",
+    proof:
+      "Three days from template fork to a design system of its own: 25 components, and accessibility from 92–96 to 100 (Lighthouse, lab).",
+    title: "How I direct an AI design team",
+    role: "I set the brand, the rules and the final approval. Somara Studio, my team of AI agents, designs, writes and ships with me.",
+    cta: "Read how we built it",
+    cover: { src: "/images/projects/portfolio/team-cards.webp", alt: "" },
   },
   subline: (
     <>

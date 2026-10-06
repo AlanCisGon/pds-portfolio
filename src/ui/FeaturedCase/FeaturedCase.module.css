@@ -1,0 +1,104 @@
+/* FeaturedCase · Figma 05 Explorations, A2 editorial (105-260 / 105-341). No surface: separated by a divider. */
+.featured {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+/* Two levels: 24 between proof / who / action, 16 inside each group (Figma 105-260). */
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-24);
+  min-width: 0;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+/* The evidence leads by weight, not only by order (Voice). */
+.proof {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-card-size);
+  line-height: var(--text-card-line);
+  text-wrap: pretty;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-line);
+}
+
+.role {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.roleText {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+}
+
+/* Stretched link: the CTA is the only <a>, its hit area covers the block. */
+.cta::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.cover {
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 400px;
+    align-items: start;
+    gap: var(--space-48);
+  }
+
+  .proof {
+    font-size: var(--text-title-size);
+    line-height: var(--text-title-line);
+  }
+}

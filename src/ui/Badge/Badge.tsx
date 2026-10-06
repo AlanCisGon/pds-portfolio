@@ -24,7 +24,7 @@ export type BadgeProps = {
 /** Status badge. ≠ Tag (informative) ≠ Chip (interactive). Not interactive. */
 export function Badge({ tone = "neutral", children, showIcon = true }: BadgeProps) {
   return (
-    <span className={styles.badge} data-tone={tone}>
+    <span className={styles.badge} data-tone={tone} data-icon={showIcon}>
       {showIcon && (
         <span className={styles.icon} aria-hidden="true">
           {statusIcons[tone]}
