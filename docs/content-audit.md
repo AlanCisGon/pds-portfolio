@@ -163,4 +163,4 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
 
 **Confirmado (2026-10-06):** el SUM de Helix es +7 pp (no pts), medido por el equipo interno de CX & Research en ene 2026; en el sitio la fuente se publica como "CX & Research team". También se escribe "dynamic CVV" en todos lados, nunca "CVV2".
 
-**Pendiente:** pasar a inglés los textos de accesibilidad de `src/ui`.
+**Pendiente:** los textos de accesibilidad de `src/ui` ya están en inglés (F2, #28), pero varios siguen escritos dentro del componente (`AvatarGroup`, `Header`, `HeadingLink`, `CodeBlock`, `Carousel`, `Chip`, `MediaVideo`). Según el ADR 0001 deben exponerse como props para que Ameyali los revise.
