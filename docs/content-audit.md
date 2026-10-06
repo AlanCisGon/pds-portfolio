@@ -144,7 +144,7 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
 ## Respuestas de la entrevista (2026-10-04)
 
 1. **Título canónico:** Senior Product Designer. **Cargo en Coppel:** Design Lead (Purchase & Payments). Excepción consciente a §1, que dice "Coordinador de diseño".
-2. **Años:** 8. Onikom de ago 2018 a ago 2019, Coppel desde ago 2019 (UX Researcher 2019 – 2022, Design Lead 2022 – hoy).
+2. **Años:** 8. Onikom de mar 2018 a ago 2019 (corregido el 2026-10-06; antes decía ago 2018), Coppel desde ago 2019 (UX Researcher 2019 – 2022, Design Lead 2022 – hoy).
 3. **Idioma:** inglés (excepción a §16.1).
 4. **Helix:**
    - nombre: Helix;
@@ -156,9 +156,11 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
    - decisión más difícil: cambiar la experiencia durante la migración, con precisión milimétrica, negociando y decidiendo con información incompleta;
    - aprendizajes: no hacer big bangs durante cambios estructurales; empoderar al equipo para decidir sin pasar por Alan como filtro.
 5. **Coppel:** todos los incrementos (+2 pp de conversión web, +25% de ticket, −60% de rechazos, +80% de adopción) se midieron en ene 2026 con analítica digital, BI y Operaciones. El −60% viene de quitar Order Review, que permitió un iFrame para pagos seguros con tarjeta. El "+12% est." se retira.
-6. **Movistar:** sin estudio formal; el feedback venía de reportes de marketing y CX tras cada release, con pruebas en producción e iteración. Alan era UX Lead en Onikom: formó un equipo de UX multicliente, participó en la captación de clientes y llevaba al equipo las necesidades de los usuarios. Año: 2018 – 2019.
+6. **Movistar:** sin estudio formal; el feedback venía de reportes de marketing y CX tras cada release, con pruebas en producción e iteración. Alan era UX Lead en Onikom: formó un equipo de UX multicliente, participó en la captación de clientes y llevaba al equipo las necesidades de los usuarios. Fechas del proyecto: mar 2018 – feb 2019; Alan entró a Onikom con este proyecto (confirmado el 2026-10-06). Equipo UX de 3: Alan (UX Lead), un UI y un UXD.
 7. **Validation Onion y Contribution Process:** pilotos en Coppel para un equipo sin gobierno de diseño. El Onion valida problemas por capas; el CP homologó cómo contribuir con investigación. Los absorbió el Centro de Excelencia en Diseño de Experiencia y Alan dejó las DesignOps.
 8. **IA:** diseño potenciado por IA, con la IA como socio cocreador; prototipado rápido y cocreación con Claude Code.
 9. **Estudios:** UNAM 2014 – 2017; diplomado en Sperientia en 2021 (mayo a junio).
 
-**Pendiente:** confirmar la fuente del +7 pts de SUM (se publicó como "Usability testing") y pasar a inglés los textos de accesibilidad de `src/ui`.
+**Confirmado (2026-10-06):** el SUM de Helix es +7 pp (no pts), medido por el equipo interno de CX & Research en ene 2026; en el sitio la fuente se publica como "CX & Research team". También se escribe "dynamic CVV" en todos lados, nunca "CVV2".
+
+**Pendiente:** los textos de accesibilidad de `src/ui` ya están en inglés (F2, #28), pero varios siguen escritos dentro del componente (`AvatarGroup`, `Header`, `HeadingLink`, `CodeBlock`, `Carousel`, `Chip`, `MediaVideo`). Según el ADR 0001 deben exponerse como props para que Ameyali los revise.
