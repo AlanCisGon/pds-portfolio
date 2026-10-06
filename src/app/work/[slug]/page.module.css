@@ -45,11 +45,15 @@
 
 .team {
   display: flex;
+  flex-wrap: wrap;
+  align-self: stretch; /* full width, so names only wrap when they truly don't fit */
   align-items: center;
   gap: var(--space-8);
 }
 
+/* Names sit beside the avatars while they have ~256 px; with a large team on mobile they drop below. */
 .names {
+  flex: 1 1 calc(var(--space-64) * 4);
   margin: 0;
   color: var(--color-text-primary);
   font-size: var(--text-body-s-size);
