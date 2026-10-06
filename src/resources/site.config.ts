@@ -1,4 +1,4 @@
-import type { DisplayConfig, RoutesConfig } from "@/types";
+import type { RoutesConfig } from "@/types";
 
 /** Canonical origin, without a trailing slash: paths are appended as `${baseURL}/work`. */
 const baseURL = "https://alancisneros.design";
@@ -10,9 +10,4 @@ const routes: RoutesConfig = {
   "/work": true,
 };
 
-const display: DisplayConfig = {
-  /** Location (from person.city) on the left of the Header. */
-  location: true,
-};
-
-export { baseURL, display, routes };
+export { baseURL, routes };

@@ -1,6 +1,6 @@
 import { Home, User, ViewGrid } from "iconoir-react";
 
-import { about, display, person, routes, work } from "@/resources";
+import { about, routes, work } from "@/resources";
 import { Header as SiteHeader } from "@/ui";
 
 export function Header() {
@@ -11,10 +11,7 @@ export function Header() {
   ].filter((item) => !!item);
 
   return (
-    <SiteHeader
-      items={items}
-      location={display.location ? person.city : ""}
-      timeZone={person.location}
-    />
+    // No location or clock: the place lives in the colophon (decision of Alan, 2026-10-06).
+    <SiteHeader items={items} />
   );
 }
