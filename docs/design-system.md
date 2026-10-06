@@ -253,7 +253,7 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - los `Link` externos anuncian "opens in a new tab" (los textos accesibles van en inglés, como la página);
   - `CodeBlock` y `HeadingLink` confirman con `aria-live`, sin Toast.
 - **Decisión de auditoría · hover de tarjetas:** `Card` y `ProjectCard` se funden con sus superficies internas en hover, a propósito.
-- **⚠️ Decisión de auditoría · `Link` sin subrayado:** dentro de un párrafo, el Cerezo contra el texto Niebla da unos 2.8:1, por debajo de los 3:1 que pide WCAG 1.4.1 cuando el enlace se distingue solo por color. Reconsiderarlo antes de I5, cuando los enlaces lleguen a los textos largos de los casos de estudio.
+- **`Link` inline siempre subrayado** (2026-10-05, revierte la decisión de auditoría del 2026-10-03): dentro de un párrafo, el Cerezo contra el texto Niebla da unos 2.8:1, por debajo de los 3:1 que pide WCAG 1.4.1 cuando el enlace se distingue solo por color. El subrayado (`text-decoration-thickness: from-font`) lo resuelve sin depender del color. `standalone` no lleva subrayado: lo distingue su ícono.
 
 ## Pendientes
 
