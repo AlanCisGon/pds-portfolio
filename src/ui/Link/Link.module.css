@@ -1,4 +1,4 @@
-/* Link · Figma 02a Actions (28:107). Underline removed in the design audit (2026-10-03). */
+/* Link · Figma 02a Actions (28:107). inline is underlined: color alone is ~2.8:1 against body text (WCAG 1.4.1). */
 .link {
   color: var(--color-accent);
   text-decoration: none;
@@ -15,9 +15,11 @@
   outline-offset: 2px;
 }
 
-/* inline inherits the paragraph's type */
+/* inline inherits the paragraph's type and is always underlined */
 .link[data-kind="inline"] {
   font: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: from-font;
 }
 
 .link[data-kind="standalone"] {
