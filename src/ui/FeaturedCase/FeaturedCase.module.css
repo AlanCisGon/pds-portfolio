@@ -13,12 +13,19 @@
   gap: var(--space-24);
 }
 
+/* Two levels: 24 between proof / who / action, 16 inside each group (Figma 105-260). */
 .column {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-16);
+  gap: var(--space-24);
   min-width: 0;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
 }
 
 .metaRow {

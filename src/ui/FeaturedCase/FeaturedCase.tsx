@@ -47,21 +47,25 @@ export function FeaturedCase({
       <Divider />
       <div className={styles.row}>
         <div className={styles.column}>
-          <div className={styles.metaRow}>
-            <p className={styles.meta}>{meta}</p>
-            {badge && (
-              <Badge tone="neutral" showIcon={false}>
-                {badge}
-              </Badge>
-            )}
+          <div className={styles.group}>
+            <div className={styles.metaRow}>
+              {badge && (
+                <Badge tone="neutral" showIcon={false}>
+                  {badge}
+                </Badge>
+              )}
+              <p className={styles.meta}>{meta}</p>
+            </div>
+            <p className={styles.proof}>{proof}</p>
           </div>
-          <p className={styles.proof}>{proof}</p>
-          <h2 id={titleId} className={styles.title}>
-            {title}
-          </h2>
-          <div className={styles.role}>
-            {team && team.length > 0 && <AvatarGroup people={team} />}
-            <p className={styles.roleText}>{role}</p>
+          <div className={styles.group}>
+            <h2 id={titleId} className={styles.title}>
+              {title}
+            </h2>
+            <div className={styles.role}>
+              {team && team.length > 0 && <AvatarGroup people={team} />}
+              <p className={styles.roleText}>{role}</p>
+            </div>
           </div>
           <Link href={href} kind="standalone" className={styles.cta}>
             {cta}
