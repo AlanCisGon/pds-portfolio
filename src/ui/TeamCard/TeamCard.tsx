@@ -27,7 +27,7 @@ export function TeamCard({
 }: TeamCardProps) {
   return (
     <div className={styles.card} data-layout={layout}>
-      <Avatar size="l" src={avatarSrc} name={name} initials={initials} decorative />
+      <Avatar size="xl" src={avatarSrc} name={name} initials={initials} decorative />
       <div className={styles.text}>
         <p className={styles.name}>{name}</p>
         <p className={styles.role}>{role}</p>
