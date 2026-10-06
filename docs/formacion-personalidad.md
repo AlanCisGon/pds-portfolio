@@ -107,7 +107,7 @@ No están prohibidos por feos, sino por no decididos. Si usan alguno, escriben p
 - Signos de exclamación y emojis como sustituto de calidez.
 - Rayas (—) encadenando ideas una tras otra.
 - Analogías de primer orden: traducir un rasgo literal a un objeto y explicarlo ("somos las raíces que sostienen", "el puente entre ideas"). Si un nombre, lema o activo necesita explicar su metáfora para funcionar, no está terminado. Pero no herméticos: se entiende o intriga al decirlo, sin manual. Aplica también a lo visual.
-- Nombres descriptivos o tomados tal cual de la guía de marca. Pero no ajenos a ella: el territorio sí sale de la marca.
+- Nombres descriptivos o tomados tal cual del vocabulario propio de la marca (los términos con los que la guía nombra su identidad). Pero no ajenos a ella: el territorio sí sale de la marca, y las palabras comunes de la guía se pueden usar.
 
 **De comportamiento.** Estos no admiten justificación.
 
