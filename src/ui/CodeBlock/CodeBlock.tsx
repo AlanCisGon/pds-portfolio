@@ -45,9 +45,9 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
           </span>
           <span aria-hidden="true">{copied ? "Copied" : "Copy"}</span>
         </button>
-        <span className={styles.status} role="status" aria-live="polite">
+        <output className={styles.status} aria-live="polite">
           {copied ? "Code copied" : ""}
-        </span>
+        </output>
       </figcaption>
       <pre className={styles.pre}>
         <code>{code}</code>

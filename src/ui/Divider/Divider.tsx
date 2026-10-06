@@ -6,12 +6,7 @@ export function Divider({
 }: { orientation?: "horizontal" | "vertical" }) {
   if (orientation === "vertical") {
     return (
-      <span
-        className={styles.divider}
-        data-orientation="vertical"
-        role="separator"
-        aria-orientation="vertical"
-      />
+      <hr className={styles.divider} data-orientation="vertical" aria-orientation="vertical" />
     );
   }
   return <hr className={styles.divider} data-orientation="horizontal" />;
