@@ -12,4 +12,4 @@ Casos reales que Alan aprobó o rechazó, cada uno con su porqué. Sirven como p
 
 | # | Caso | Agente | Veredicto |
 |---|---|---|---|
-| 0001 | [Nombre del equipo](0001-nombre-del-equipo.md) | Ameyali | Rechazado: literal |
+| 0001 | [Nombre del equipo](0001-nombre-del-equipo.md) | Ameyali | Ronda 1 rechazada por literal; aprobada con el método de #74 (Somara Studio) |
