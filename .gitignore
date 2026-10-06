@@ -48,3 +48,6 @@ brand/
 
 # Strategy: local only (sensitive: career goals, unreleased Coppel work). Lives with brand/ until #64.
 docs/estrategia.md
+
+# Drafts that need company approval before publishing: local only.
+docs/drafts/private/
