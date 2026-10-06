@@ -1,0 +1,3 @@
+#!/bin/sh
+# Formats and checks staged files with Biome (.lintstagedrc.js). Installed by `npm install` (scripts/install-hooks.mjs).
+npx --no-install lint-staged

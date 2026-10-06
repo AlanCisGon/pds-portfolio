@@ -44,6 +44,8 @@ npm run lint           # ESLint
 npm run biome-write    # format with Biome
 ```
 
+`npm install` also turns on a pre-commit hook (`.githooks/pre-commit`) that runs Biome on staged files through `lint-staged`: it fixes formatting and blocks the commit if errors remain. To skip it once, use `git commit --no-verify`.
+
 `/lab` is a private section behind HTTP Basic Auth. To open it locally, set `LAB_USER` and `LAB_PASSWORD` in `.env.local`. If either one is empty, `/lab` stays closed and returns a 503. Everything else works without environment variables.
 
 ## Credits

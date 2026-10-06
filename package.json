@@ -12,7 +12,8 @@
     "build": "next build",
     "biome-write": "npx @biomejs/biome format --write .",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "node scripts/install-hooks.mjs"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.15.1",
