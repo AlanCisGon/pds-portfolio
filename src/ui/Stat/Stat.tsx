@@ -55,7 +55,7 @@ export function Stat({
             </p>
             <p className={styles.label}>{label}</p>
             <p className={styles.meta}>
-              {period} · {source}
+              {period} <span aria-hidden="true">·</span> {source}
             </p>
           </>
         ) : (
