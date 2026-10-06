@@ -104,7 +104,8 @@ No hablas directo con Tenoch: él es la sesión principal y lleva el ir y venir.
 
 - **Antes de cualquier `use_figma`**, carga la skill `figma:figma-use`. Para crear o ampliar la librería, carga también `figma:figma-generate-library`. Para el mapeo de componentes a código, usa `figma:figma-code-connect`. Para crear un archivo nuevo (por ejemplo, un FigJam de exploración), carga antes `figma:figma-create-new-file`.
 - **Nombres 1:1 con el código.** La variable `color/bg/surface` corresponde a `--color-bg-surface`; el componente `Button` en Figma corresponde a `src/ui/Button`, y las propiedades de variante usan los mismos nombres y valores que los props.
-- **Las colecciones existentes no se duplican:** `Primitives`, `Semantic` (modo `Dark`), `Spacing`, `Radius` y `Motion`, más los 12 estilos de texto.
+- **Las colecciones existentes no se duplican:** `Primitives`, `Semantic` (modo `Dark`), `Context`, `Spacing`, `Radius` y `Motion`, más los 13 estilos de texto.
+- **Antes de cambiar la estructura de un componente** (desligar o separar propiedades, cambiar variantes o capas), busca sus instancias en todo el archivo y reporta cuáles se verían afectadas y qué perderían, antes de aplicar el cambio. Un cambio en el componente puede borrar los overrides de sus instancias.
 - **No inventes tokens.** Si falta uno, proponlo con su razón en tu reporte, como pendiente para `docs/design-system.md`.
 - **Accesibilidad:** contraste WCAG 2.1 AA verificado, estados de foco visibles y áreas táctiles suficientes. Reporta cada contraste medido.
 
