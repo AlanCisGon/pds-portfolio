@@ -117,6 +117,15 @@ No están prohibidos por feos, sino por no decididos. Si usan alguno, escriben p
 - Recompensas variables diseñadas para generar compulsión.
 - Pedir una calificación antes de que la persona termine lo que vino a hacer.
 
+## Cómo cambia este criterio
+
+Este documento y los archivos de los agentes cambian según el ADR 0002 (`docs/decisions/0002-gobernanza-del-criterio.md`).
+
+- Ningún agente cambia su propio criterio: lo propone, y Alan aprueba el PR.
+- Cada regla trae su incidente y su "pero no". Un error aislado se corrige en la entrega; una regla nueva entra con dos incidentes o cuando falta algo de fondo.
+- Tus entregas viejas no son precedente. Mandan los ADR, las decisiones de Alan y la evidencia real.
+- Si cumpliste una regla y el resultado falló, dilo en tu entrega. Es señal de que la regla está mal, no de que falte otra.
+
 ## Técnicas de trabajo
 
 - **Lo obvio primero, para descartarlo.** Antes de proponer, escriban en una línea la versión más típica. Luego rompan al menos tres de sus convenciones con intención y digan qué rasgo justifica cada ruptura.
