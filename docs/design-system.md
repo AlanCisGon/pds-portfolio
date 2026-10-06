@@ -182,7 +182,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | Voz (cerezo) | Newsreader | `--font-serif` |
 | Medida (calibrador) | Geist Mono | `--font-mono` |
 
-### Escala v0.1 (propuesta, por validar en Figma)
+### Escala v0.1 (coincide con los 13 estilos de texto de Figma, auditoría del 2026-10-05)
 
 | Estilo | Familia | Tamaño / interlineado | Peso |
 |---|---|---|---|
@@ -230,18 +230,18 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 
 ## Componentes del portafolio
 
-Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`). Todavía **no se usan en las páginas públicas**, salvo `Tag`: entran al sitio en cada incremento de `docs/migration-plan.md`.
+Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
 
 - **Catálogo privado:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. Muestra cada componente con sus variantes, para compararlo con Figma.
 - **Página de Figma:** cada grupo vive en su propia página del archivo *PDS · Portfolio Design System*.
 
-| Grupo (Figma) | Componentes | Entra al sitio en |
+| Grupo (Figma) | Componentes | Sin uso público |
 |---|---|---|
-| 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip` | I4 (`Chip` cuando haya filtros) |
-| 02b Content | `Tag` (en uso desde T0), `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem` | I2 · I4 · I5 |
-| 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | I5 (bloques MDX) |
-| 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | I5 |
-| 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer` | I4 (Header/Footer) · I5 · I6 |
+| 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip` | `Chip` |
+| 02b Content | `Tag`, `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem` | `Badge` |
+| 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | `Carousel` |
+| 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | — |
+| 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer` | `Card` |
 
 ### Notas de implementación
 
@@ -254,12 +254,13 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - `IconButton` requiere `label`;
   - los `Link` externos anuncian "opens in a new tab" (los textos accesibles van en inglés, como la página);
   - `CodeBlock` y `HeadingLink` confirman con `aria-live`, sin Toast.
+- **Proyecto destacado (`home.featured` en `content.tsx`):** un `Link` standalone sobre el titular de Home que lleva al caso destacado. Se apaga con `display: false`.
 - **Decisión de auditoría · hover de tarjetas:** `Card` y `ProjectCard` se funden con sus superficies internas en hover, a propósito.
 - **`Link` inline siempre subrayado** (2026-10-05, revierte la decisión de auditoría del 2026-10-03): dentro de un párrafo, el Cerezo contra el texto Niebla da unos 2.8:1, por debajo de los 3:1 que pide WCAG 1.4.1 cuando el enlace se distingue solo por color. El subrayado (`text-decoration-thickness: from-font`) lo resuelve sin depender del color. `standalone` no lleva subrayado: lo distingue su ícono.
 
 ## Pendientes
 
-- Validar la escala tipográfica en Figma y en pantallas reales.
+- Validar la escala tipográfica en pantallas reales.
 - Que la marca de taller (en proceso) se incorpore cuando exista; no inventar una.
 - Asignar tonos `--ctx-*` a las categorías reales (industrias y tipos de pieza) cuando se definan en I5.
 - Token de resorte para gestos y arrastres (marca §14: amortiguamiento crítico, sin rebote). Se define cuando exista el primer gesto.
