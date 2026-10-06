@@ -39,15 +39,7 @@ next-env.d.ts
 CLAUDE.md
 CLAUDE.local.md
 
-# brand guidelines: local only (public repo)
-brand/
 
 # Claude Code: local worktrees and per-user settings
 .claude/worktrees/
 .claude/settings.local.json
-
-# Strategy: local only (sensitive: career goals, unreleased Coppel work). Lives with brand/ until #64.
-docs/estrategia.md
-
-# Drafts that need company approval before publishing: local only.
-docs/drafts/private/
