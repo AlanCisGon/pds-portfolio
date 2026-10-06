@@ -82,6 +82,7 @@ export default async function Project({
           <div className={styles.team}>
             <AvatarGroup
               people={team.map((member) => ({ name: member.name, src: member.avatar }))}
+              max={team.length}
             />
             <p className={styles.names}>
               {team.map((member, i) => (
