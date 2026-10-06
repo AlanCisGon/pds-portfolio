@@ -127,6 +127,7 @@ export default function About() {
                 <p className={styles.entryRole}>{experience.role}</p>
                 <List>
                   {experience.achievements.map((achievement, index) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: static ReactNode list from content.tsx, never reordered
                     <ListItem key={index}>{achievement}</ListItem>
                   ))}
                 </List>

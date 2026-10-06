@@ -9,11 +9,22 @@ export function MediaVideo({
   src,
   poster,
   label,
-}: { src: string; poster?: string; label?: string }) {
+  captions,
+  captionsLabel = "English",
+}: {
+  src: string;
+  poster?: string;
+  label?: string;
+  /** WebVTT captions URL. Required for any video with speech (WCAG 1.2.2). */
+  captions?: string;
+  /** Name of the captions track in the player menu. */
+  captionsLabel?: string;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
   return (
     <>
+      {/* biome-ignore lint/a11y/useMediaCaption: the track renders when `captions` is set; silent screen recordings need none (WCAG 1.2.2 applies to speech) */}
       <video
         ref={ref}
         src={src}
@@ -22,7 +33,11 @@ export function MediaVideo({
         preload="metadata"
         className={styles.image}
         aria-label={label}
-      />
+      >
+        {captions && (
+          <track kind="captions" src={captions} srcLang="en" label={captionsLabel} default />
+        )}
+      </video>
       {!started && (
         <button
           type="button"

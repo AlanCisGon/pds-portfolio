@@ -46,9 +46,9 @@ export function HeadingLink({ id, children, as: Tag = "h2" }: HeadingLinkProps) 
           <LinkIcon />
         </span>
       </button>
-      <span className={styles.status} role="status" aria-live="polite">
+      <output className={styles.status} aria-live="polite">
         {copied ? "Link copied" : ""}
-      </span>
+      </output>
     </Tag>
   );
 }

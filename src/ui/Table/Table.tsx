@@ -12,12 +12,7 @@ export function Table({ data, caption }: { data: TableData; caption?: string }) 
   const headers = Array.isArray(data?.headers) ? data.headers : [];
   const rows = Array.isArray(data?.rows) ? data.rows : [];
   return (
-    <div
-      className={styles.wrapper}
-      role="region"
-      aria-label={caption}
-      tabIndex={caption ? 0 : undefined}
-    >
+    <section className={styles.wrapper} aria-label={caption} tabIndex={caption ? 0 : undefined}>
       <table className={styles.table}>
         {caption && <caption className={styles.caption}>{caption}</caption>}
         <thead>
@@ -31,6 +26,7 @@ export function Table({ data, caption }: { data: TableData; caption?: string }) 
         </thead>
         <tbody>
           {rows.map((row, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: rows come from static MDX, have no id and are never reordered
             <tr key={i} className={styles.row}>
               {headers.map((h) => (
                 <td key={h.key} className={styles.td}>
@@ -41,6 +37,6 @@ export function Table({ data, caption }: { data: TableData; caption?: string }) 
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 }

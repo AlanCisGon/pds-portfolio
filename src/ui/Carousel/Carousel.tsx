@@ -26,12 +26,14 @@ export function Carousel({ images, label }: CarouselProps) {
 
   return (
     <section className={styles.carousel} aria-roledescription="carousel" aria-label={label}>
+      {/* biome-ignore lint/a11y/noNoninteractiveTabindex: focusable so arrow keys move slides (APG carousel); visible focus ring in CSS */}
       <div className={styles.viewport} tabIndex={0} onKeyDown={onKey} aria-live="polite">
         <div className={styles.track} style={{ transform: `translateX(-${index * 100}%)` }}>
           {images.map((img, i) => (
             <div
               key={img.src}
               className={styles.slide}
+              // biome-ignore lint/a11y/useSemanticElements: APG carousel slide is role="group" + aria-roledescription; <fieldset> is for form controls
               role="group"
               aria-roledescription="slide"
               aria-label={`${i + 1} of ${count}`}
