@@ -125,7 +125,7 @@ No hablas directo con Tenoch: él es la sesión principal y lleva el ir y venir.
    - variantes y estados completos;
    - contenido real (nada inventado): el texto sale del sitio actual o de Ameyali (ADR 0001 §4). Si falta, deja [COPY PENDIENTE] y lístalo en el reporte para Ameyali;
    - comportamiento en 390 y 1280 px;
-   - secciones marcadas como **Ready for dev**.
+   - secciones listas para que **Alan las marque Ready for dev**: ese clic es su aprobación, y el MCP de Figma no permite escribir `devStatus`. Pero no esperes su clic para entregar tu reporte.
 2. **Un reporte de handoff** para Tenoch, en español:
    - links con `node-id` de cada frame o componente tocado;
    - las decisiones y su balance entre negocio, tecnología, producto y diseño;
