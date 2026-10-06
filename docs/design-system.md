@@ -4,7 +4,7 @@ Sistema de diseño **solo para alancisneros.design**. No es un producto aparte: 
 
 - **Fuente de verdad:** `alan-brand-guidelines.md` §14, "Identidad visual" (v1.1, 2 de octubre de 2026). Si este documento y la guía de marca difieren, manda la guía.
 - **En código:** `src/styles/tokens.css` (variables CSS) y `src/ui/` (componentes con **CSS Modules**).
-- **En Figma:** archivo *PDS · Portfolio Design System*, página `01 Foundations`. Las variables usan los mismos nombres que el CSS (*Code syntax → Web*).
+- **En Figma:** archivo *PDS · Portfolio Design System*, página `01 Foundations`. Cada variable lleva su nombre CSS en *Code syntax → Web*, con el formato `var(--nombre)` que Figma muestra en Dev Mode.
 
 ## Decisiones v0.1
 
@@ -155,7 +155,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 3. **Nunca decorativos.** Un ícono está ahí porque cumple una función, igual que el movimiento.
 4. **El color sigue al texto:** `--color-text-secondary` por defecto. Solo se vuelven Cerezo si son interactivos, y toman el `-fg` de un estado o tono solo dentro de la capa contextual.
 5. **Los momentos de firma se dibujan a mano:** la marca de taller y el colofón. Ahí no va ningún ícono de librería.
-6. **En Figma solo viven los íconos que se usan**, como componentes en `02 Components`.
+6. **En Figma solo viven los íconos que se usan**, como componentes en `02 Icons`.
 7. `react-icons` (que hoy mezcla Font Awesome, Heroicons, css.gg y Phosphor) sale del proyecto en I3.
 
 ## Espaciado, radios y layout
@@ -164,9 +164,9 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 |---|---|---|
 | `--space-4` | 4 px | Solo dentro de componentes pequeños |
 | `--space-8` … `--space-64` | 8, 16, 24, 32, 48, 64 px | Todo lo demás |
-| `--radius-control` | 12 px | Botones, inputs, tags |
+| `--radius-control` | 12 px | Botones, inputs, callouts |
 | `--radius-card` | 20 px | Tarjetas bento |
-| `--radius-pill` | 999 px | Píldoras (si el diseño lo pide) |
+| `--radius-pill` | 999 px | Tags, chips, badges, `NavItem`, el menú del `Header`, avatares y otras formas circulares |
 | `--page-padding` | 16 px → 24 px desde 768 | Padding de página |
 | `--bento-gap` | 16 px → 24 px desde 768 | Separación entre tarjetas |
 
@@ -182,7 +182,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | Voz (cerezo) | Newsreader | `--font-serif` |
 | Medida (calibrador) | Geist Mono | `--font-mono` |
 
-### Escala v0.1 (propuesta, por validar en Figma)
+### Escala v0.1 (coincide con los 13 estilos de texto de Figma, auditoría del 2026-10-05)
 
 | Estilo | Familia | Tamaño / interlineado | Peso |
 |---|---|---|---|
@@ -222,24 +222,26 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 - **Ubicación:** `src/ui/<Nombre>/<Nombre>.tsx` + `<Nombre>.module.css` + `index.ts`. `src/ui` **no importa nada de la app** ni de Once UI.
 - **Solo tokens:** color, espacio, radio, tipografía y movimiento con `var(--…)`. Sin hex ni px sueltos, salvo `0` y bordes de `1px`. Más adelante se automatiza con un lint (stylelint `declaration-strict-value`).
 - **Variantes con atributos `data-*`:** `data-variant="primary"`, `data-size="s"`. Los nombres y valores son los mismos que las propiedades del componente en Figma.
+- **Figma ↔ props:** en Figma la propiedad va con mayúscula (`Variant`, `Size`, `State`); lo que coincide 1:1 con el prop es el **valor** (`variant="primary"`). `State` no es un prop: en código es `:hover`, `:active`, `:focus-visible` o `disabled`.
+- **`FocusRing` en Figma:** su radio es el del control + 4, concéntrico con el `outline-offset` de 2 px más el trazo de 2 px. Es la única capa con radio sin variable; en código, `outline` sigue el `border-radius` del control.
 - **Foco visible** en todo lo interactivo: `outline: 2px solid var(--color-focus-ring); outline-offset: 2px` en `:focus-visible`.
 - **Accesibilidad:** HTML semántico primero; `aria-label` en controles sin texto visible.
 - **Movimiento:** transiciones con tokens. Dentro de `@media (prefers-reduced-motion: reduce)` solo se anima `opacity`.
 
 ## Componentes del portafolio
 
-Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`). Todavía **no se usan en las páginas públicas**, salvo `Tag`: entran al sitio en cada incremento de `docs/migration-plan.md`.
+Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
 
 - **Catálogo privado:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. Muestra cada componente con sus variantes, para compararlo con Figma.
 - **Página de Figma:** cada grupo vive en su propia página del archivo *PDS · Portfolio Design System*.
 
-| Grupo (Figma) | Componentes | Entra al sitio en |
+| Grupo (Figma) | Componentes | Sin uso público |
 |---|---|---|
-| 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip` | I4 (`Chip` cuando haya filtros) |
-| 02b Content | `Tag` (en uso desde T0), `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem` | I2 · I4 · I5 |
-| 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | I5 (bloques MDX) |
-| 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | I5 |
-| 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer` | I4 (Header/Footer) · I5 · I6 |
+| 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip` | `Chip` |
+| 02b Content | `Tag`, `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem` | `Badge` |
+| 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | `Carousel` |
+| 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | — |
+| 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer` | `Card` |
 
 ### Notas de implementación
 
@@ -252,11 +254,15 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - `IconButton` requiere `label`;
   - los `Link` externos anuncian "opens in a new tab" (los textos accesibles van en inglés, como la página);
   - `CodeBlock` y `HeadingLink` confirman con `aria-live`, sin Toast.
+- **Proyecto destacado (`home.featured` en `content.tsx`):** un `Link` standalone sobre el titular de Home que lleva al caso destacado. Se apaga con `display: false`.
 - **Decisión de auditoría · hover de tarjetas:** `Card` y `ProjectCard` se funden con sus superficies internas en hover, a propósito.
 - **`Link` inline siempre subrayado** (2026-10-05, revierte la decisión de auditoría del 2026-10-03): dentro de un párrafo, el Cerezo contra el texto Niebla da unos 2.8:1, por debajo de los 3:1 que pide WCAG 1.4.1 cuando el enlace se distingue solo por color. El subrayado (`text-decoration-thickness: from-font`) lo resuelve sin depender del color. `standalone` no lleva subrayado: lo distingue su ícono.
 
 ## Pendientes
 
-- Validar la escala tipográfica en Figma y en pantallas reales.
+- Validar la escala tipográfica en pantallas reales.
 - Que la marca de taller (en proceso) se incorpore cuando exista; no inventar una.
 - Asignar tonos `--ctx-*` a las categorías reales (industrias y tipos de pieza) cuando se definan en I5.
+- Token de resorte para gestos y arrastres (marca §14: amortiguamiento crítico, sin rebote). Se define cuando exista el primer gesto.
+- Los tokens con `color-mix` (`accent/hover`, `accent/pressed`, `state/*`) tienen hex estático en Figma: si cambia un primitivo, hay que recalcularlos a mano.
+- Figma: radios sin variable en `Avatar`, el `Dot` del `Carousel` y el `PlayButton` de `Media`, y `Tag` con `Size=Medium/Small` en lugar de `m/s` (S2).

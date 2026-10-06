@@ -245,15 +245,20 @@ Archivo: **[PDS · Portfolio Design System](https://www.figma.com/design/DuBGDnV
 |---|---|
 | `00 Cover` | Estado del sistema y changelog |
 | `01 Foundations` | Variables y estilos de texto |
-| `02 Components` | Componentes con variantes |
+| `02 Icons` | Íconos en uso (Iconoir y Simple Icons) |
+| `02a Actions` · `02b Content` · `02c Data & Media` · `02d Navigation` · `02e Cards & Site` | Componentes con variantes, por grupo |
 | `03 Patterns` | Bloques de caso de estudio, hero, listas de proyectos |
 | `04 Pages` | Pantallas completas (desktop 1280 y mobile 390) |
-| `05 Handoff` | Secciones marcadas **Ready for dev** |
+
+No hay página `05 Handoff`: *Ready for dev* se marca sobre la sección, en la página donde vive.
 
 **Variables**
-- La colección `Primitives` guarda las escalas de color, espacio, radios y tamaños tipográficos.
-- La colección `Semantic` tiene un solo modo, `Dark`: `color/bg/page`, `color/bg/surface`, `color/text/primary`, `color/accent/default`, etc. Las colecciones `Spacing`, `Radius` y `Motion` completan los tokens.
-- En cada variable define **Code syntax → Web** con el nombre CSS (`--color-bg-surface`). Así `get_variable_defs` devuelve exactamente lo que va en `tokens.css`.
+- `Primitives` (modo `Brand`): la paleta.
+- `Semantic` (modo `Dark`): `color/bg/page`, `color/bg/surface`, `color/text/primary`, `color/accent/default`, etc.
+- `Context` (modo `Dark`): estatus y tonos categóricos de la capa contextual.
+- `Spacing`, `Radius` y `Motion` (duraciones, *stagger* y las curvas `ease/settle` y `ease/exit`).
+- Los pesos y las familias viven en los estilos de texto, no en variables.
+- En cada variable, **Code syntax → Web** lleva el nombre CSS como `var(--color-bg-surface)`. `get_variable_defs` devuelve el nombre que va en `tokens.css`.
 
 **Tipografía:** la de la marca, con Geist Sans para el sistema, Newsreader para la voz y Geist Mono para la medida. El sitio usa Geist Sans y Geist Mono desde el paso A, y Newsreader para `Voice/*` desde F1.
 
