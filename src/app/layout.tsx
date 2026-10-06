@@ -3,7 +3,7 @@ import "@/styles/tokens.css";
 
 import { Footer, Header } from "@/components";
 import { home } from "@/resources";
-import { geistMono, geistSans, newsreader, newsreaderItalic } from "@/styles/fonts";
+import { amstelvar, amstelvarItalic, chivoMono, hostGrotesk } from "@/styles/fonts";
 import { pageMetadata } from "@/utils/seo";
 import { Analytics } from "@vercel/analytics/next";
 // Enable Vercel Speed Insights
@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} ${newsreaderItalic.variable}`}
+      className={`${hostGrotesk.variable} ${chivoMono.variable} ${amstelvar.variable} ${amstelvarItalic.variable}`}
     >
       <body className={styles.body}>
         <SpeedInsights />

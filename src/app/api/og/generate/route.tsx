@@ -16,7 +16,7 @@ const palette = {
   cerezo: "#D2734E",
 } as const;
 
-const fontsDir = path.join(process.cwd(), "node_modules", "geist", "dist", "fonts");
+const fontsDir = path.join(process.cwd(), "src", "assets", "og");
 const readAsset = (...parts: string[]) => readFile(path.join(...parts));
 
 /** Open Graph image (1200 × 630): /api/og/generate?title=… — proposal on brand tokens. */
@@ -24,9 +24,9 @@ export async function GET(request: Request) {
   const title = (new URL(request.url).searchParams.get("title") || person.name).slice(0, 120);
 
   const [regular, semibold, mono, avatar] = await Promise.all([
-    readAsset(fontsDir, "geist-sans", "Geist-Regular.ttf"),
-    readAsset(fontsDir, "geist-sans", "Geist-SemiBold.ttf"),
-    readAsset(fontsDir, "geist-mono", "GeistMono-Regular.ttf"),
+    readAsset(fontsDir, "HostGrotesk-Regular.ttf"),
+    readAsset(fontsDir, "HostGrotesk-SemiBold.ttf"),
+    readAsset(fontsDir, "ChivoMono-Regular.ttf"),
     readAsset(process.cwd(), "public", person.avatar),
   ]);
   const avatarSrc = `data:image/jpeg;base64,${avatar.toString("base64")}`;
@@ -42,12 +42,12 @@ export async function GET(request: Request) {
         padding: 72,
         background: palette.titanio,
         borderTop: `8px solid ${palette.cerezo}`,
-        fontFamily: "Geist",
+        fontFamily: "Host Grotesk",
       }}
     >
       <span
         style={{
-          fontFamily: "Geist Mono",
+          fontFamily: "Chivo Mono",
           fontSize: 24,
           letterSpacing: "0.04em",
           textTransform: "uppercase",
@@ -92,9 +92,9 @@ export async function GET(request: Request) {
       width: 1200,
       height: 630,
       fonts: [
-        { name: "Geist", data: regular, weight: 400, style: "normal" },
-        { name: "Geist", data: semibold, weight: 600, style: "normal" },
-        { name: "Geist Mono", data: mono, weight: 400, style: "normal" },
+        { name: "Host Grotesk", data: regular, weight: 400, style: "normal" },
+        { name: "Host Grotesk", data: semibold, weight: 600, style: "normal" },
+        { name: "Chivo Mono", data: mono, weight: 400, style: "normal" },
       ],
       headers: { "Cache-Control": "public, max-age=86400, s-maxage=604800, immutable" },
     },

@@ -22,7 +22,7 @@ Sistema de diseño de Somara Studio (ADR 0004), **solo para alancisneros.design*
 ## Reglas de uso (de la marca)
 
 1. **Frío por estructura, cálido por contacto.** Los fríos construyen la estructura. El Cerezo es el único color cálido y aparece **solo donde va la mano**: botones, enlaces, foco y estados activos. Nunca como decoración. La única excepción son los colores de la [capa contextual](#capa-contextual), que nunca son interactivos.
-2. **La serif es la voz.** Newsreader solo en titulares editoriales, citas y principios. **Nunca** en botones, formularios ni navegación.
+2. **La serif es la voz.** Amstelvar solo en titulares editoriales, citas y principios. **Nunca** en botones, formularios ni navegación.
 3. **Bordes que se funden.** Las tarjetas se distinguen por el tono de la superficie, no por líneas. Si un borde es indispensable: 1 px de `--color-border-subtle`. La estructura se muestra con alineación, numeración y metadata.
 4. **Radios concéntricos:** radio interior = radio exterior − padding. Tarjetas a 20 px, controles a 12 px.
 5. **Movimiento "cierre suave":**
@@ -178,39 +178,44 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 
 | Rol | Familia | Variable |
 |---|---|---|
-| Sistema (aluminio) | Geist Sans | `--font-sans` |
-| Voz (cerezo) | Newsreader | `--font-serif` |
-| Medida (calibrador) | Geist Mono | `--font-mono` |
+| Interfaz | Host Grotesk | `--font-sans` |
+| Voz | Amstelvar v1.000 | `--font-serif` |
+| Medida | Chivo Mono | `--font-mono` |
+
+Decisión de Alan del 2026-10-06 (ADR 0005). Cada familia se elige por su función:
+- **Host Grotesk:** neogrotesca de interfaz, legible en tamaños chicos y neutra para que la voz destaque.
+- **Amstelvar:** serif variable con tamaño óptico, así que el mismo archivo funciona en titulares de 56 px y en citas de 24 px.
+- **Chivo Mono:** monoespaciada para cifras y metadatos, que alinea columnas. Viene de Omnibus-Type, de Buenos Aires.
 
 ### Escala v0.1 (coincide con los 15 estilos de texto de Figma: auditoría del 2026-10-05, más `Measure/Code` y `Measure/Figure`)
 
 | Estilo | Familia | Tamaño / interlineado | Peso |
 |---|---|---|---|
-| `display` | Newsreader | 40 → 56 px (fluido) / 1.14 | 400 |
-| `title` | Newsreader | 32 → 40 px (fluido) / 1.2 | 400 |
-| `quote` | Newsreader itálica | 24 / 32 | 400 |
-| `card` | Newsreader | 24 / 32 | 400 |
-| `heading-l` | Geist Sans | 32 / 40 | 600 |
-| `heading-m` | Geist Sans | 24 / 32 | 600 |
-| `heading-s` | Geist Sans | 20 / 28 | 600 |
-| `body-l` | Geist Sans | 18 / 28 | 400 |
-| `body-m` | Geist Sans | 16 / 24 | 400 |
-| `body-s` | Geist Sans | 14 / 20 | 400 |
-| `label-m` | Geist Sans | 14 / 20 | 500 |
-| `label-s` | Geist Sans | 12 / 16 | 500 |
-| `meta` | Geist Mono | 12 / 16, tracking 0.04em | 400 |
-| `code` | Geist Mono | 14 / 20 | 400 |
-| `figure` | Geist Mono | 32 / 40 | 500 |
-| `Voice/Cover` (solo Figma) | Newsreader | 96 / 104 | 400 |
+| `display` | Amstelvar | 40 → 56 px (fluido) / 1.14 | 400 |
+| `title` | Amstelvar | 32 → 40 px (fluido) / 1.2 | 400 |
+| `quote` | Amstelvar itálica | 24 / 32 | 400 |
+| `card` | Amstelvar | 24 / 32 | 400 |
+| `heading-l` | Host Grotesk | 32 / 40 | 600 |
+| `heading-m` | Host Grotesk | 24 / 32 | 600 |
+| `heading-s` | Host Grotesk | 20 / 28 | 600 |
+| `body-l` | Host Grotesk | 18 / 28 | 400 |
+| `body-m` | Host Grotesk | 16 / 24 | 400 |
+| `body-s` | Host Grotesk | 14 / 20 | 400 |
+| `label-m` | Host Grotesk | 14 / 20 | 500 |
+| `label-s` | Host Grotesk | 12 / 16 | 500 |
+| `meta` | Chivo Mono | 12 / 16, tracking 0.04em | 400 |
+| `code` | Chivo Mono | 14 / 20 | 400 |
+| `figure` | Chivo Mono | 32 / 40 | 500 |
+| `Voice/Cover` (solo Figma) | Amstelvar | 96 / 104 | 400 |
 
 `Voice/Cover` es solo para documentación: el título de la portada del archivo de Figma (1920×960), legible en la miniatura. No va a código ni tiene token en `tokens.css`.
 
 **Carga de fuentes:**
 
-- **Geist Sans y Geist Mono**, desde I3, con el paquete oficial `geist` (archivos locales). Exponen `--font-geist-sans` y `--font-geist-mono`. Hoy (T0) Geist Sans se carga con `next/font/google`.
-- **Newsreader** con `next/font/google`, que expone `--font-newsreader`.
-- **Por qué locales:** en T0, un deploy de producción falló al resolver una fuente de Google Fonts con la caché de build de Vercel, y se resolvió con un redeploy. Las fuentes locales evitan esa dependencia del build. Ver `docs/migration-plan.md` → I3.
-- Fuera de los tags de About, el sitio sigue con Figtree y Azeret Mono hasta I3.
+- **Host Grotesk y Chivo Mono** con `next/font/google`: exponen `--font-host-grotesk` y `--font-chivo-mono`. Si un deploy de producción falla con `next/font/google queries have exactly one entry`, es la caché de build de Vercel: se resuelve con un redeploy del mismo commit.
+- **Amstelvar** no está en Google Fonts. Sale de `public/fonts/` como un subconjunto latino que solo conserva los ejes `wght` (300–700) y `opsz` (8–144): 75 KB la romana y 78 KB la itálica, que no se precarga. Se carga con `next/font/local`, que expone `--font-amstelvar` y `--font-amstelvar-italic`. Los artefactos internos usan los mismos archivos. El subconjunto se generó desde el release v1.000 de `googlefonts/amstelvar-beta`. La versión AmstelvarAlpha de 2017 no sirve: le faltan los acentos.
+- **Imagen OG:** usa TTF estáticos de Host Grotesk (400 y 600) y Chivo Mono (400) en `src/assets/og/`, porque satori no lee woff2.
+- **Licencias:** las tres son OFL 1.1, y sus textos están en `public/fonts/OFL-*.txt`.
 
 ## Movimiento
 
@@ -263,7 +268,7 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 - **`TeamCard` (02e, `83:152`):** tarjeta estática de integrante (avatar `xl`, nombre en `Voice/Card`, rol y descripción), con `layout` horizontal o vertical. El rol nunca va en Cerezo. Su patrón `TeamGrid` (03 Patterns, `84:87`) vive en `src/components/work/TeamGrid.tsx` y se usa desde el MDX.
 - **`Badge` (02b, `30:35`):** `showIcon` es un eje de variante en Figma (`true`/`false`), igual que el prop. Sin ícono, el padding horizontal es `--space-8` (`.badge[data-icon="false"]`); con ícono, `--space-4`. Sin ícono, el texto debe nombrar el estatus: nunca solo el color.
 - **`Avatar` (02b, `29:13`):** en Figma, la propiedad booleana `Src` corresponde al prop `src`. Activada, la capa `Photo` muestra la foto como relleno de imagen (override por instancia, nunca desligada); apagada (por omisión), se ven las iniciales (`Initials` ↔ `initials`, que por omisión salen de `name`). En código, la foto lleva `alt` con el nombre, o `decorative` (`alt=""`) cuando el nombre ya se ve al lado.
-- **`Stat` (02b, `177:92`):** incremento + unidad (`pp` para tasas, `pts` para puntajes, `%` para cambio relativo) + qué se midió + periodo · fuente. La cifra va en `figure` (Geist Mono). **La honestidad vive en la API:** si falta el valor, el periodo o la fuente, el componente muestra el `Badge` neutral *pending* en lugar del número. Un caso sin ninguna métrica completa no muestra el bloque (`CaseStats` devuelve `null`); *pending* solo marca un hueco entre métricas reales. Solo incrementos: los absolutos de Coppel son confidenciales. Lleva un `Divider` arriba. `accessibleValue` da la lectura completa para lectores de pantalla ("+2 percentage points", "down 60 percent"). Desde el MDX se usa `<CaseStats>` (`src/components/work/CaseStats.tsx`), que toma el copy de `work.caseStudy`. ≠ `FactSheet` ≠ `Table`.
+- **`Stat` (02b, `177:92`):** incremento + unidad (`pp` para tasas, `pts` para puntajes, `%` para cambio relativo) + qué se midió + periodo · fuente. La cifra va en `figure` (Chivo Mono). **La honestidad vive en la API:** si falta el valor, el periodo o la fuente, el componente muestra el `Badge` neutral *pending* en lugar del número. Un caso sin ninguna métrica completa no muestra el bloque (`CaseStats` devuelve `null`); *pending* solo marca un hueco entre métricas reales. Solo incrementos: los absolutos de Coppel son confidenciales. Lleva un `Divider` arriba. `accessibleValue` da la lectura completa para lectores de pantalla ("+2 percentage points", "down 60 percent"). Desde el MDX se usa `<CaseStats>` (`src/components/work/CaseStats.tsx`), que toma el copy de `work.caseStudy`. ≠ `FactSheet` ≠ `Table`.
 - **`FactSheet` (02b, `177:128`):** un `<dl>` de 1 a 5 pares (Client, My role, Team, Dates, Industry) arriba de la portada. Etiqueta en `meta` mayúsculas y valor en `body-m`. 2 columnas, y 4 desde 768, con gap `--bento-gap`. Si falta un dato, el par se omite; nunca se rellena. Sin línea ni superficie. **Opción B (Alan, 2026-10-06; exploración `184:583`):** el par Team ocupa 2 columnas (`wide`) y lleva el `AvatarGroup`, los nombres con LinkedIn y una nota (`teamNote`); reemplaza la línea de equipo del encabezado.
 - **Proyecto destacado (`home.featured` en `content.tsx`):** un `Link` standalone sobre el titular de Home que lleva al caso destacado. Se apaga con `display: false`.
 - **Decisión de auditoría · hover de tarjetas:** `Card` y `ProjectCard` se funden con sus superficies internas en hover, a propósito.

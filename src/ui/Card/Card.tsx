@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import styles from "./Card.module.css";
 
 export type CardProps = {
-  /** Figma: `Eyebrow` — numbering/metadata in Geist Mono. */
+  /** Figma: `Eyebrow` — numbering/metadata in Chivo Mono. */
   eyebrow?: string;
   /** Figma: `Title`. */
   title: string;
