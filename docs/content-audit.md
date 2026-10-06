@@ -163,4 +163,11 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
 
 **Confirmado (2026-10-06):** el SUM de Helix es +7 pp (no pts), medido por el equipo interno de CX & Research en ene 2026; en el sitio la fuente se publica como "CX & Research team". También se escribe "dynamic CVV" en todos lados, nunca "CVV2".
 
+**Confirmado (2026-10-06, respuestas al PR #102):**
+
+- **Equipo de Helix:** 7 personas contando a Alan (Alan + 3 UI + 2 UXD + 1 UXW). Alan dirigía a 6, así que el logro de Experience ("Led a team of 6") sigue siendo correcto; el caso dice "a team of seven".
+- **Rol en el caso:** "Design Lead, Purchase & Payments", igual que en Experience (antes decía "Purchase team").
+- **SUM:** es la Single Usability Metric (Sauro y Kindlund). Se explica una vez en Results; la etiqueta del `Stat` queda corta: "Usability (SUM)".
+- **Fechas de Helix en la ficha:** en trimestres, "Q4 2024 – Q3 2025" (antes "Q4 2024 – Sep 2025"). El lanzamiento de sep 2025 cae dentro de Q3.
+
 **Pendiente:** los textos de accesibilidad de `src/ui` ya están en inglés (F2, #28), pero varios siguen escritos dentro del componente (`AvatarGroup`, `Header`, `HeadingLink`, `CodeBlock`, `Carousel`, `Chip`, `MediaVideo`). Según el ADR 0001 deben exponerse como props para que Ameyali los revise.

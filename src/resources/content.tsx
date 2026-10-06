@@ -298,6 +298,18 @@ const work: Work = {
   label: "Work",
   title: `Work – ${person.name}`,
   description: `Case studies by ${person.name}: cart and checkout at Coppel and an app redesign at Movistar MX.`,
+  caseStudy: {
+    facts: {
+      client: "Client",
+      role: "My role",
+      team: "Team",
+      dates: "Dates",
+      industry: "Industry",
+    },
+    statPending: "Not verified yet",
+    statUnits: { pp: "percentage points", pts: "points", "%": "percent" },
+    statDecrease: "down",
+  },
   // Create new project pages by adding a new .mdx file to app/work/projects
   // All projects will be listed on the /home and /work routes
 };

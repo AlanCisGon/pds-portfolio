@@ -25,6 +25,12 @@ export type ProjectMeta = {
   team: TeamMember[];
   /** Live product URL ("View project"). */
   link: string;
+  /** FactSheet: when the project ran ("Q4 2024 – Sep 2025"). Empty = the pair is omitted. */
+  dates: string;
+  /** FactSheet: industry. Empty = the pair is omitted. */
+  industry: string;
+  /** FactSheet: line under the avatars in the Team pair ("3 UI · 2 UX · 1 UX writer"). */
+  teamNote: string;
   /** Pinned before the rest: Home shows the first project as the featured card. */
   featured: boolean;
 };
@@ -47,6 +53,9 @@ function readProject(file: string): Project {
       tags: data.tags ?? [],
       team: data.team ?? [],
       link: data.link ?? "",
+      dates: data.dates ?? "",
+      industry: data.industry ?? "",
+      teamNote: data.teamNote ?? "",
       featured: data.featured === true,
     },
   };
