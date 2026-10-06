@@ -1,180 +1,398 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>UX Strategy — Grafo Rizomático | Alan Cisneros</title>
-<meta name="description" content="Grafo interactivo de UX Strategy: 40 nodos, 70+ conexiones, 10 categorías. Frameworks, psicología, datos, organización y tendencias emergentes."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0C0F1A;overflow:hidden;font-family:'IBM Plex Sans','Segoe UI',system-ui,sans-serif}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Grafo rizomático de UX Strategy · Alan Cisneros</title>
+<meta name="description" content="41 nodos · 10 categorías · 3 tipos de relación.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono&display=swap" rel="stylesheet">
+<style>/* SDS tokens (copy of src/styles/tokens.css). Dark only. Typography: Host Grotesk / Chivo Mono / Amstelvar (ADR 0005). */
+@font-face { font-family: "Amstelvar"; src: url("/fonts/amstelvar-roman.woff2") format("woff2"); font-weight: 300 700; font-display: swap; }
+:root {
+  color-scheme: dark;
+  --color-bg-page: #0e1114; --color-bg-surface: #171b20; --color-bg-elevated: #20262d;
+  --color-text-primary: #e8ecf1; --color-text-secondary: #8c96a3; --color-accent: #d2734e; --color-on-accent: #0e1114;
+  --color-border-subtle: color-mix(in srgb, #8c96a3 12%, transparent);
+  --color-border-strong: color-mix(in srgb, #8c96a3 28%, transparent);
+  --state-hover-surface: color-mix(in oklab, #20262d 92%, #e8ecf1);
+  --font-sans: "Host Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Amstelvar", Georgia, "Times New Roman", serif;
+  --font-mono: "Chivo Mono", ui-monospace, Menlo, monospace;
+  --space-4: 4px; --space-8: 8px; --space-16: 16px; --space-24: 24px; --space-32: 32px; --space-48: 48px;
+  --radius-control: 12px; --radius-card: 20px; --radius-pill: 999px;
+  --text-title-size: clamp(32px, 2.5vw + 20px, 40px); --text-title-line: 1.2;
+  --text-meta-size: 12px; --text-meta-line: 16px; --text-meta-tracking: 0.04em;
+  --duration-fast: 150ms; --duration-base: 250ms; --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ctx-blue-fg: #89c3fe; --ctx-blue-bg: #14283c; --ctx-blue-border: #285077;
+  --ctx-violet-fg: #c9acff; --ctx-violet-bg: #2a2139; --ctx-violet-border: #544272;
+  --ctx-green-fg: #83d494; --ctx-green-bg: #152d1a; --ctx-green-border: #295935;
+  --ctx-amber-fg: #e6b55d; --ctx-amber-bg: #32240a; --ctx-amber-border: #64470e;
+  --ctx-yellow-fg: #d0bf5e; --ctx-yellow-bg: #2c270a; --ctx-yellow-border: #574e0e;
+  --ctx-magenta-fg: #f19fd6; --ctx-magenta-bg: #351d2d; --ctx-magenta-border: #6a3b5b;
+  --ctx-cyan-fg: #47d2e8; --ctx-cyan-bg: #022c33; --ctx-cyan-border: #025763;
+  --ctx-teal-fg: #52d7c1; --ctx-teal-bg: #052d27; --ctx-teal-border: #015a4f;
+  --ctx-indigo-fg: #abb9fe; --ctx-indigo-bg: #20243c; --ctx-indigo-border: #414978;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--color-bg-page); color: var(--color-text-primary); font: 16px/24px var(--font-sans); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+#app { max-width: 1280px; margin: 0 auto; padding: var(--space-24) var(--space-16) var(--space-48); }
+.top { display: flex; flex-direction: column; gap: var(--space-16); margin-bottom: var(--space-24); }
+.meta, .grp-h, .marker, .eyebrow, .help-h { margin: 0; font-family: var(--font-mono); font-size: var(--text-meta-size); line-height: var(--text-meta-line); letter-spacing: var(--text-meta-tracking); text-transform: uppercase; color: var(--color-text-secondary); }
+h1 { margin: 0; font-family: var(--font-serif); font-weight: 400; font-size: var(--text-title-size); line-height: var(--text-title-line); }
+.filters { display: flex; gap: var(--space-8); overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--space-16)); padding: 2px var(--space-16); }
+.chip { flex: none; display: inline-flex; align-items: center; gap: var(--space-8); height: 32px; padding: 0 var(--space-16); border: 1px solid var(--color-border-strong); border-radius: var(--radius-pill); background: transparent; font-size: 14px; font-weight: 500; cursor: pointer; transition: background var(--duration-fast) var(--ease-settle); }
+.chip:hover { background: var(--state-hover-surface); }
+.chip[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-on-accent); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--fg); flex: none; }
+/* Category tones */
+[data-cat="framework"] { --fg: var(--ctx-blue-fg); --bg: var(--ctx-blue-bg); --bd: var(--ctx-blue-border); }
+[data-cat="discipline"] { --fg: var(--ctx-violet-fg); --bg: var(--ctx-violet-bg); --bd: var(--ctx-violet-border); }
+[data-cat="behavior"] { --fg: var(--ctx-green-fg); --bg: var(--ctx-green-bg); --bd: var(--ctx-green-border); }
+[data-cat="strategy"] { --fg: var(--ctx-amber-fg); --bg: var(--ctx-amber-bg); --bd: var(--ctx-amber-border); }
+[data-cat="case"] { --fg: var(--ctx-yellow-fg); --bg: var(--ctx-yellow-bg); --bd: var(--ctx-yellow-border); }
+[data-cat="psychology"] { --fg: var(--ctx-magenta-fg); --bg: var(--ctx-magenta-bg); --bd: var(--ctx-magenta-border); }
+[data-cat="data"] { --fg: var(--ctx-cyan-fg); --bg: var(--ctx-cyan-bg); --bd: var(--ctx-cyan-border); }
+[data-cat="org"] { --fg: var(--ctx-teal-fg); --bg: var(--ctx-teal-bg); --bd: var(--ctx-teal-border); }
+[data-cat="emerging"] { --fg: var(--ctx-indigo-fg); --bg: var(--ctx-indigo-bg); --bd: var(--ctx-indigo-border); }
+[data-cat="core"] { --fg: var(--color-text-primary); --bg: var(--color-bg-elevated); --bd: var(--color-text-primary); }
+/* Graph (desktop ≥ 1280) */
+.stage, .index-desk { display: none; }
+.graph { position: relative; width: 100%; aspect-ratio: 848 / 612; }
+.edges { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.e { stroke: var(--color-border-strong); stroke-width: 1; fill: none; transition: stroke var(--duration-fast) var(--ease-settle); }
+.e-s { stroke-width: 1.5; }
+.e-i { stroke-dasharray: 4 4; }
+.e-e { stroke-dasharray: 1 4; stroke-linecap: round; }
+.e.on { stroke: var(--color-text-secondary); }
+.e.off { stroke: var(--color-border-subtle); }
+.node { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; white-space: nowrap; cursor: pointer;
+  border: 1px solid var(--bd); background: var(--bg); color: var(--fg); padding: var(--space-8) var(--space-16); font-size: 12px; line-height: 16px; font-weight: 500;
+  transition: background var(--duration-fast) var(--ease-settle), color var(--duration-fast) var(--ease-settle), border-color var(--duration-fast) var(--ease-settle); }
+.node[data-kind="concept"] { border-radius: var(--radius-pill); }
+.node[data-kind="case"] { border-radius: 0; font-family: var(--font-mono); font-weight: 400; text-transform: uppercase; letter-spacing: var(--text-meta-tracking); }
+.node[data-kind="core"] { width: 112px; height: 112px; border-radius: 50%; white-space: normal; text-align: center; font-size: 20px; line-height: 28px; font-weight: 600; padding: var(--space-16); }
+.node.dim { background: var(--color-bg-page); color: var(--color-text-secondary); border-color: var(--color-border-subtle); }
+.node.peek { background: var(--state-hover-surface); color: var(--color-text-primary); }
+.node[aria-pressed="true"] { background: var(--color-accent); color: var(--color-on-accent); border-color: var(--color-accent); }
+.node[data-kind="core"]:focus-visible { outline-offset: 4px; }
+.legend { list-style: none; margin: var(--space-16) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-8) var(--space-24); font-size: 12px; line-height: 16px; color: var(--color-text-secondary); }
+.legend li { display: flex; align-items: center; gap: var(--space-8); }
+/* Panel */
+.panel { display: flex; flex-direction: column; gap: var(--space-16); }
+.surface { background: var(--color-bg-surface); border-radius: var(--radius-card); padding: var(--space-24); display: flex; flex-direction: column; gap: var(--space-8); }
+.surface p { margin: 0; color: var(--color-text-secondary); font-size: 14px; line-height: 20px; }
+.p-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
+.marker { display: flex; align-items: center; gap: var(--space-8); color: var(--fg); }
+.close { display: inline-grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: var(--radius-pill); background: transparent; cursor: pointer; color: var(--color-text-secondary); }
+.close:hover { background: var(--state-hover-surface); color: var(--color-text-primary); }
+.card h2 { margin: 0; font-size: 20px; line-height: 28px; font-weight: 600; color: var(--color-text-primary); }
+.card .desc { color: var(--color-text-primary); font-size: 16px; line-height: 24px; }
+.src a { color: var(--color-accent); text-decoration: underline; text-decoration-thickness: from-font; }
+.rels { display: flex; flex-direction: column; gap: var(--space-16); }
+.rel { display: flex; flex-direction: column; gap: var(--space-8); }
+.rel ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-8); }
+.rel .chip { height: 28px; padding: 0 var(--space-8); font-size: 12px; }
+/* Index (mobile list and desktop accordion) */
+.index { display: flex; flex-direction: column; gap: var(--space-24); }
+.grp { display: flex; flex-direction: column; gap: var(--space-8); }
+.grp ul { list-style: none; margin: 0; padding: 0; background: var(--color-bg-surface); border-radius: var(--radius-card); overflow: hidden; }
+.grp li + li { border-top: 1px solid var(--color-border-subtle); }
+.row { width: 100%; min-height: 56px; display: flex; align-items: center; gap: var(--space-8); padding: var(--space-16); border: 0; background: transparent; text-align: left; cursor: pointer; }
+.row:hover { background: var(--state-hover-surface); }
+.row .nm { flex: 1; }
+.row .ct { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-secondary); }
+.index-desk summary { cursor: pointer; margin-top: var(--space-24); font-weight: 500; }
+.index-desk .index { margin-top: var(--space-16); }
+/* Mobile neighbourhood */
+.mobile { display: block; }
+.hood { display: flex; flex-direction: column; gap: var(--space-16); }
+.back { align-self: flex-start; display: inline-flex; align-items: center; gap: var(--space-4); height: 32px; padding: 0 var(--space-8); border: 0; border-radius: var(--radius-pill); background: transparent; cursor: pointer; font-size: 14px; font-weight: 500; }
+.back:hover { background: var(--state-hover-surface); }
+.hood .graph { aspect-ratio: 358 / 360; max-width: 358px; width: 100%; margin: 0 auto; }
+.hood .node { min-height: 36px; }
+.hood .node::after { content: ""; position: absolute; inset: -4px; }
+@media (min-width: 1280px) {
+  #app { padding: var(--space-48); }
+  .mobile { display: none; }
+  .stage { display: grid; grid-template-columns: minmax(0, 848px) 360px; gap: var(--space-48); align-items: start; }
+  .index-desk { display: block; }
+  .filters { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
+  .panel { position: sticky; top: var(--space-24); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition-property: opacity !important; } }
 </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="text/babel">
-const {useState,useRef,useEffect,useCallback}=React;
+<div id="app">
+<header class="top">
+<p class="meta">Lab · 41 nodos · 10 categorías · 3 tipos de relación</p>
+<h1>Grafo rizomático de UX Strategy</h1>
+<div class="filters" role="group" aria-label="Filtrar por categoría"></div>
+</header>
+<div class="stage">
+<div class="graphwrap">
+<div class="graph" role="group" aria-label="Grafo de UX Strategy: 41 conceptos y sus relaciones"><svg class="edges" aria-hidden="true"></svg></div>
+<ul class="legend" aria-label="Relaciones">
+<li><svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" class="e e-s on"/></svg>Estructura: un concepto da origen a otro.</li>
+<li><svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" class="e e-i on"/></svg>Influencia: dos conceptos se informan o se cruzan.</li>
+<li><svg width="32" height="8" aria-hidden="true"><line x1="0" y1="4" x2="32" y2="4" class="e e-e on"/></svg>Ejemplo: un caso real que muestra el concepto.</li>
+</ul>
+<details class="index-desk"><summary>Índice (41)</summary><div class="index"></div></details>
+</div>
+<aside class="panel" aria-label="Detalle del nodo"></aside>
+</div>
+<div class="mobile">
+<div class="index index-mob"></div>
+<div class="hood" hidden></div>
+</div>
+</div>
+<script>const DATA={"nodes":[{"id":"ux-strategy","cat":"core","kind":"core","name":"UX Strategy","eyebrow":"","desc":"Plan de acción a largo plazo que conecta necesidades del negocio con la experiencia del usuario.","x":430,"y":264,"w":112,"h":112},{"id":"nng","cat":"framework","kind":"concept","name":"Nielsen Norman","eyebrow":"3 componentes","desc":"Nielsen Norman Group: Visión + Metas/Métricas + Plan de Acción.","x":228,"y":156,"w":129,"h":32},{"id":"levy","cat":"framework","kind":"concept","name":"Jaime Levy","eyebrow":"4 pilares","desc":"Business Strategy + Value Innovation + Validated User Research + Killer UX Design.","x":313,"y":80,"w":101,"h":32},{"id":"garrett","cat":"framework","kind":"concept","name":"Jesse J. Garrett","eyebrow":"5 planos","desc":"Estrategia → Alcance → Estructura → Esqueleto → Superficie.","x":518,"y":80,"w":142,"h":32},{"id":"smashing","cat":"framework","kind":"concept","name":"Smashing Magazine","eyebrow":"Diagnóstico → acción","desc":"Diagnóstico → Políticas guía → Plan de acción concreto.","x":603,"y":128,"w":149,"h":32},{"id":"behavioral","cat":"discipline","kind":"concept","name":"Economía conductual","eyebrow":"","desc":"Cómo las personas toman decisiones reales (no racionales). Sesgos cognitivos aplicados al diseño.","x":117,"y":300,"w":163,"h":32},{"id":"nudge","cat":"discipline","kind":"concept","name":"Nudge Theory","eyebrow":"","desc":"Thaler & Sunstein: arquitectura de decisiones para guiar comportamiento sin prohibir opciones.","x":74,"y":156,"w":115,"h":32},{"id":"service-design","cat":"discipline","kind":"concept","name":"Service Design","eyebrow":"","desc":"Orquesta personas, procesos y tecnología detrás de cada interacción visible.","x":104,"y":444,"w":129,"h":32},{"id":"design-thinking","cat":"discipline","kind":"concept","name":"Design Thinking","eyebrow":"","desc":"Empatizar → Definir → Idear → Prototipar → Testear.","x":245,"y":496,"w":136,"h":32},{"id":"kahneman","cat":"behavior","kind":"concept","name":"Kahneman","eyebrow":"Sistema 1 y 2","desc":"Sistema 1 (rápido, automático) vs Sistema 2 (lento, deliberado).","x":74,"y":108,"w":87,"h":32},{"id":"hook","cat":"behavior","kind":"concept","name":"Hook Model","eyebrow":"Nir Eyal","desc":"Trigger → Action → Variable Reward → Investment.","x":235,"y":417,"w":101,"h":32},{"id":"fogg","cat":"behavior","kind":"concept","name":"Fogg Model","eyebrow":"B=M×A×P","desc":"Behavior = Motivation × Ability × Prompt.","x":352,"y":448,"w":101,"h":32},{"id":"jtbd","cat":"behavior","kind":"concept","name":"Jobs to Be Done","eyebrow":"","desc":"Christensen: las personas contratan soluciones para un 'trabajo' en sus vidas.","x":586,"y":450,"w":136,"h":32},{"id":"blue-ocean","cat":"strategy","kind":"concept","name":"Blue Ocean","eyebrow":"","desc":"Crear espacios de mercado nuevos donde la competencia es irrelevante.","x":714,"y":306,"w":101,"h":32},{"id":"gamification","cat":"strategy","kind":"concept","name":"Gamification","eyebrow":"Octalysis","desc":"Mecánicas de juego como fundamento del producto, no como adorno.","x":654,"y":498,"w":115,"h":32},{"id":"apple","cat":"case","kind":"case","name":"Apple","eyebrow":"","desc":"Simplicidad como filosofía. Consistencia entre dispositivos. Onboarding sin fricción.","x":757,"y":114,"w":70,"h":32},{"id":"airbnb","cat":"case","kind":"case","name":"Airbnb","eyebrow":"","desc":"Confianza como principio de diseño. Reviews bidireccionales, precios transparentes.","x":714,"y":210,"w":78,"h":32},{"id":"spotify","cat":"case","kind":"case","name":"Spotify","eyebrow":"","desc":"Personalización como engagement. Discover Weekly, continuidad cross-device.","x":586,"y":32,"w":85,"h":32},{"id":"tesla","cat":"case","kind":"case","name":"Tesla","eyebrow":"","desc":"Actualización continua como UX. OTA updates, app como llave.","x":780,"y":405,"w":70,"h":32},{"id":"duolingo","cat":"case","kind":"case","name":"Duolingo","eyebrow":"","desc":"Gamificación como motor de crecimiento. 140.6 M de usuarios activos al mes (2T 2026); la gran mayoría de su crecimiento es orgánico.","src":["Duolingo, Q2 2026 Shareholder Letter","https://www.sec.gov/Archives/edgar/data/0001562088/000162828026053299/q2fy26duolingo6-30x26share.htm"],"x":501,"y":559,"w":93,"h":32},{"id":"netflix","cat":"case","kind":"case","name":"Netflix","eyebrow":"","desc":"Personalización algorítmica masiva. El algoritmo ES el producto.","x":415,"y":32,"w":85,"h":32},{"id":"ge-health","cat":"case","kind":"case","name":"GE Healthcare","eyebrow":"","desc":"MRI pediátrico: niños pasaron de sedación a pedir repetir el estudio.","x":313,"y":544,"w":131,"h":32},{"id":"monzo","cat":"case","kind":"case","name":"Monzo","eyebrow":"","desc":"Transparencia radical en banca. La comunidad codiseña el producto.","x":164,"y":544,"w":70,"h":32},{"id":"hick","cat":"psychology","kind":"concept","name":"Ley de Hick","eyebrow":"","desc":"Más opciones = más tiempo para decidir. Netflix, Apple, Amazon lo aplican.","x":58,"y":252,"w":108,"h":32},{"id":"fitts","cat":"psychology","kind":"concept","name":"Ley de Fitts","eyebrow":"","desc":"Tiempo para alcanzar target depende de tamaño y distancia. Fundamental en mobile.","x":62,"y":396,"w":115,"h":32},{"id":"miller","cat":"psychology","kind":"concept","name":"Ley de Miller","eyebrow":"","desc":"Memoria de trabajo: 7±2 elementos. Chunking y progressive disclosure.","x":65,"y":492,"w":122,"h":32},{"id":"cognitive-load","cat":"psychology","kind":"concept","name":"Cognitive Load","eyebrow":"","desc":"Sweller: intrínseca (tarea), extrínseca (mal diseño), germane (aprendizaje).","x":134,"y":204,"w":129,"h":32},{"id":"emotional-design","cat":"psychology","kind":"concept","name":"Emotional Design","eyebrow":"","desc":"Don Norman: visceral (estética), conductual (usabilidad), reflexivo (identidad).","x":163,"y":348,"w":142,"h":32},{"id":"cialdini","cat":"psychology","kind":"concept","name":"Cialdini","eyebrow":"6 principios","desc":"Reciprocidad, compromiso, prueba social, autoridad, escasez, afinidad.","x":70,"y":540,"w":87,"h":32},{"id":"dark-patterns","cat":"psychology","kind":"concept","name":"Dark Patterns","eyebrow":"El espectro ético","desc":"El espectro ético. ¿Cancel flow > signup flow? = Dark pattern.","x":202,"y":592,"w":122,"h":32},{"id":"lean-ux","cat":"data","kind":"concept","name":"Lean UX","eyebrow":"","desc":"Hipótesis → Experimento mínimo → Aprendizaje validado → Iteración.","x":318,"y":352,"w":80,"h":32},{"id":"heart","cat":"data","kind":"concept","name":"HEART Framework","eyebrow":"","desc":"Google: Happiness, Engagement, Adoption, Retention, Task Success.","x":415,"y":400,"w":136,"h":32},{"id":"ab-testing","cat":"data","kind":"concept","name":"A/B Testing","eyebrow":"","desc":"Formular hipótesis, diseñar experimentos, decidir con datos.","x":501,"y":352,"w":108,"h":32},{"id":"research-ops","cat":"data","kind":"concept","name":"ResearchOps","eyebrow":"","desc":"Infraestructura para investigación de usuarios escalable y sistemática.","x":415,"y":496,"w":108,"h":32},{"id":"designops","cat":"org","kind":"concept","name":"DesignOps","eyebrow":"","desc":"Libera a los diseñadores de admin. Sin DesignOps, el diseño no escala. Las organizaciones aplican, en promedio, solo 22% de sus prácticas.","src":["NN/g, DesignOps Maturity (2020)","https://www.nngroup.com/articles/designops-maturity-low/"],"x":287,"y":273,"w":94,"h":32},{"id":"design-systems","cat":"org","kind":"concept","name":"Design Systems","eyebrow":"","desc":"Componentes reutilizables. Con un design system, el equipo terminó sus tareas 34% más rápido (Figma, 2019). PayPal: un prototipo en 8 min contra más de 1 h antes.","src":["Figma, Measuring the value of design systems (2019)","https://www.figma.com/blog/measuring-the-value-of-design-systems/"],"src2":["UXPin, caso PayPal","https://www.uxpin.com/studio/blog/paypal-scaled-design-process-uxpin-merge/"],"x":373,"y":128,"w":129,"h":32},{"id":"ux-maturity","cat":"org","kind":"concept","name":"UX Maturity Model","eyebrow":"","desc":"NN/g: 6 niveles, de Ausente a Guiada por el usuario. 66% de quienes hicieron su quiz está en el nivel 2 o 3 (2022).","src":["NN/g, The 6 Levels of UX Maturity (2021)","https://www.nngroup.com/articles/ux-maturity-model/"],"x":458,"y":176,"w":149,"h":32},{"id":"ai-ux","cat":"emerging","kind":"concept","name":"AI + UX","eyebrow":"Delegative UI","desc":"Nielsen 2026: de Conversational UI a Delegative UI. Bottleneck = juicio.","x":628,"y":258,"w":80,"h":32},{"id":"conversational-ux","cat":"emerging","kind":"concept","name":"Conversational UX","eyebrow":"","desc":"Unos 150 M de personas en EE. UU. usan asistentes de voz (2024). El diseño pasa de dibujar a escribir conversaciones.","src":["eMarketer, Voice Assistant User Forecast 2024","https://www.emarketer.com/content/voice-assistant-user-forecast-2024"],"x":714,"y":354,"w":149,"h":32},{"id":"spatial","cat":"emerging","kind":"concept","name":"Spatial Computing","eyebrow":"","desc":"AR/VR maduro: servicio técnico, retail, navegación. Diseñar en 3D.","x":758,"y":258,"w":149,"h":32},{"id":"ethical-design","cat":"emerging","kind":"concept","name":"Ethical Design","eyebrow":"Ética e inclusión","desc":"WCAG 3.0: de checklist a usabilidad real. Transparencia algorítmica obligatoria.","x":665,"y":402,"w":129,"h":32}],"edges":[{"f":"ux-strategy","t":"nng","k":"s"},{"f":"ux-strategy","t":"levy","k":"s"},{"f":"ux-strategy","t":"garrett","k":"s"},{"f":"ux-strategy","t":"smashing","k":"s"},{"f":"ux-strategy","t":"behavioral","k":"s"},{"f":"ux-strategy","t":"service-design","k":"s"},{"f":"ux-strategy","t":"design-thinking","k":"s"},{"f":"ux-strategy","t":"blue-ocean","k":"s"},{"f":"behavioral","t":"nudge","k":"s"},{"f":"behavioral","t":"kahneman","k":"s"},{"f":"nudge","t":"kahneman","k":"i"},{"f":"behavioral","t":"hook","k":"s"},{"f":"behavioral","t":"fogg","k":"s"},{"f":"hook","t":"fogg","k":"i"},{"f":"hook","t":"gamification","k":"i"},{"f":"fogg","t":"jtbd","k":"i"},{"f":"jtbd","t":"blue-ocean","k":"i"},{"f":"jtbd","t":"levy","k":"i"},{"f":"blue-ocean","t":"levy","k":"i"},{"f":"gamification","t":"fogg","k":"i"},{"f":"design-thinking","t":"service-design","k":"i"},{"f":"design-thinking","t":"fogg","k":"i"},{"f":"apple","t":"garrett","k":"e"},{"f":"apple","t":"blue-ocean","k":"e"},{"f":"airbnb","t":"nudge","k":"e"},{"f":"airbnb","t":"jtbd","k":"e"},{"f":"airbnb","t":"blue-ocean","k":"e"},{"f":"spotify","t":"behavioral","k":"e"},{"f":"spotify","t":"nng","k":"e"},{"f":"spotify","t":"netflix","k":"i"},{"f":"tesla","t":"blue-ocean","k":"e"},{"f":"tesla","t":"jtbd","k":"e"},{"f":"duolingo","t":"gamification","k":"e"},{"f":"duolingo","t":"hook","k":"e"},{"f":"duolingo","t":"fogg","k":"e"},{"f":"netflix","t":"behavioral","k":"e"},{"f":"ge-health","t":"design-thinking","k":"e"},{"f":"ge-health","t":"service-design","k":"e"},{"f":"monzo","t":"nudge","k":"e"},{"f":"monzo","t":"service-design","k":"e"},{"f":"nng","t":"levy","k":"i"},{"f":"garrett","t":"smashing","k":"i"},{"f":"nudge","t":"hook","k":"i"},{"f":"service-design","t":"jtbd","k":"i"},{"f":"behavioral","t":"cognitive-load","k":"s"},{"f":"cognitive-load","t":"hick","k":"s"},{"f":"cognitive-load","t":"fitts","k":"s"},{"f":"cognitive-load","t":"miller","k":"s"},{"f":"behavioral","t":"emotional-design","k":"s"},{"f":"behavioral","t":"cialdini","k":"s"},{"f":"nudge","t":"dark-patterns","k":"i"},{"f":"cialdini","t":"nudge","k":"i"},{"f":"kahneman","t":"cognitive-load","k":"i"},{"f":"apple","t":"emotional-design","k":"e"},{"f":"dark-patterns","t":"ethical-design","k":"i"},{"f":"ux-strategy","t":"lean-ux","k":"s"},{"f":"lean-ux","t":"ab-testing","k":"i"},{"f":"lean-ux","t":"heart","k":"i"},{"f":"heart","t":"research-ops","k":"i"},{"f":"ab-testing","t":"nudge","k":"i"},{"f":"spotify","t":"ab-testing","k":"e"},{"f":"fogg","t":"lean-ux","k":"i"},{"f":"ux-strategy","t":"designops","k":"s"},{"f":"designops","t":"design-systems","k":"i"},{"f":"design-systems","t":"ux-maturity","k":"i"},{"f":"designops","t":"lean-ux","k":"i"},{"f":"cognitive-load","t":"design-systems","k":"i"},{"f":"ux-maturity","t":"service-design","k":"i"},{"f":"ux-strategy","t":"ai-ux","k":"s"},{"f":"ai-ux","t":"conversational-ux","k":"i"},{"f":"ai-ux","t":"spatial","k":"i"},{"f":"ai-ux","t":"ethical-design","k":"i"},{"f":"conversational-ux","t":"fitts","k":"i"},{"f":"spatial","t":"fitts","k":"i"},{"f":"monzo","t":"ethical-design","k":"e"}],"cats":{"core":["Núcleo",null],"framework":["Frameworks de UX","blue"],"discipline":["Disciplinas hermanas","violet"],"behavior":["Comportamiento","green"],"strategy":["Estrategia de mercado","amber"],"case":["Casos","yellow"],"psychology":["Psicología","magenta"],"data":["Datos","cyan"],"org":["Organización","teal"],"emerging":["Temas emergentes","indigo"]},"W":848,"H":612};
+(function () {
+  "use strict";
+  var N = DATA.nodes, E = DATA.edges, CATS = DATA.cats, W = DATA.W, H = DATA.H;
+  var byId = {}; N.forEach(function (n) { byId[n.id] = n; n.links = []; });
+  E.forEach(function (e) {
+    byId[e.f].links.push({ id: e.t, k: e.k, out: true });
+    byId[e.t].links.push({ id: e.f, k: e.k, out: false });
+  });
+  var CORE = "ux-strategy";
+  var state = { sel: null, filt: null, peek: null };
+  var desk = window.matchMedia("(min-width: 1280px)");
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var el = function (tag, attrs, kids) {
+    var x = document.createElement(tag);
+    for (var k in attrs || {}) {
+      if (k === "text") x.textContent = attrs[k];
+      else if (k.slice(0, 2) === "on") x.addEventListener(k.slice(2), attrs[k]);
+      else x.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c) x.appendChild(c); });
+    return x;
+  };
+  var conns = function (n) { var c = n.links.length; return c + (c === 1 ? " conexión" : " conexiones"); };
+  var catName = function (n) { return CATS[n.cat][0]; };
+  var X = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6.76 17.24 12 12m5.24-5.24L12 12m0 0L6.76 6.76M12 12l5.24 5.24"/></svg>';
+  var LEFT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>';
+  var RIGHT = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
 
-const NODES=[
-{id:"ux-strategy",label:"UX Strategy",group:"core",x:500,y:400,desc:"Plan de acción a largo plazo que conecta necesidades del negocio con la experiencia del usuario."},
-{id:"nng",label:"NNG\n3 Componentes",group:"framework",x:280,y:220,desc:"Nielsen Norman Group: Visión + Metas/Métricas + Plan de Acción."},
-{id:"levy",label:"Jaime Levy\n4 Pilares",group:"framework",x:380,y:140,desc:"Business Strategy + Value Innovation + Validated User Research + Frictionless UX."},
-{id:"garrett",label:"J.J. Garrett\n5 Planos",group:"framework",x:620,y:140,desc:"Estrategia → Alcance → Estructura → Esqueleto → Superficie."},
-{id:"smashing",label:"Smashing Mag\nDiag→Acción",group:"framework",x:720,y:220,desc:"Diagnóstico → Políticas guía → Plan de acción concreto."},
-{id:"behavioral",label:"Behavioral\nEconomics",group:"discipline",x:150,y:400,desc:"Cómo las personas toman decisiones reales (no racionales). Sesgos cognitivos aplicados al diseño."},
-{id:"nudge",label:"Nudge\nTheory",group:"discipline",x:100,y:280,desc:"Thaler & Sunstein: arquitectura de decisiones para guiar comportamiento sin prohibir opciones."},
-{id:"service-design",label:"Service\nDesign",group:"discipline",x:150,y:540,desc:"Orquesta personas, procesos y tecnología detrás de cada interacción visible."},
-{id:"design-thinking",label:"Design\nThinking",group:"discipline",x:300,y:620,desc:"Empatizar → Definir → Idear → Prototipar → Testear."},
-{id:"kahneman",label:"Kahneman\nSistema 1 & 2",group:"behavior",x:100,y:160,desc:"Sistema 1 (rápido, automático) vs Sistema 2 (lento, deliberado)."},
-{id:"hook",label:"Hook Model\nNir Eyal",group:"behavior",x:280,y:500,desc:"Trigger → Action → Variable Reward → Investment."},
-{id:"fogg",label:"Fogg Model\nB=M×A×P",group:"behavior",x:420,y:580,desc:"Behavior = Motivation × Ability × Prompt."},
-{id:"jtbd",label:"Jobs to\nBe Done",group:"behavior",x:700,y:540,desc:"Christensen: las personas contratan soluciones para un 'trabajo' en sus vidas."},
-{id:"blue-ocean",label:"Blue Ocean\nStrategy",group:"strategy",x:850,y:400,desc:"Crear espacios de mercado nuevos donde la competencia es irrelevante."},
-{id:"gamification",label:"Gamification\nOctalysis",group:"strategy",x:780,y:580,desc:"Mecánicas de juego como fundamento del producto, no como adorno."},
-{id:"apple",label:"Apple",group:"case",x:900,y:160,desc:"Simplicidad como filosofía. Consistencia entre dispositivos. Onboarding sin fricción."},
-{id:"airbnb",label:"Airbnb",group:"case",x:850,y:280,desc:"Confianza como principio de diseño. Reviews bidireccionales, precios transparentes."},
-{id:"spotify",label:"Spotify",group:"case",x:700,y:80,desc:"Personalización como engagement. Discover Weekly, continuidad cross-device."},
-{id:"tesla",label:"Tesla",group:"case",x:920,y:500,desc:"Actualización continua como UX. OTA updates, app como llave."},
-{id:"duolingo",label:"Duolingo",group:"case",x:600,y:650,desc:"Gamificación como motor de crecimiento. 500M+ usuarios, 80% orgánicos."},
-{id:"netflix",label:"Netflix",group:"case",x:500,y:80,desc:"Personalización algorítmica masiva. El algoritmo ES el producto."},
-{id:"ge-health",label:"GE\nHealthcare",group:"case",x:380,y:680,desc:"MRI pediátrico: niños pasaron de sedación a pedir repetir el estudio."},
-{id:"monzo",label:"Monzo",group:"case",x:200,y:680,desc:"Transparencia radical en banca. La comunidad co-diseña el producto."},
-{id:"hick",label:"Ley de\nHick",group:"psychology",x:60,y:350,desc:"Más opciones = más tiempo para decidir. Netflix, Apple, Amazon lo aplican."},
-{id:"fitts",label:"Ley de\nFitts",group:"psychology",x:60,y:450,desc:"Tiempo para alcanzar target depende de tamaño y distancia. Fundamental en mobile."},
-{id:"miller",label:"Ley de\nMiller",group:"psychology",x:60,y:550,desc:"Memoria de trabajo: 7±2 elementos. Chunking y progressive disclosure."},
-{id:"cognitive-load",label:"Cognitive\nLoad",group:"psychology",x:170,y:320,desc:"Sweller: intrínseca (tarea), extrínseca (mal diseño), germane (aprendizaje)."},
-{id:"emotional-design",label:"Emotional\nDesign",group:"psychology",x:180,y:470,desc:"Don Norman: visceral (estética), conductual (usabilidad), reflexivo (identidad)."},
-{id:"cialdini",label:"Cialdini\n6 Principios",group:"psychology",x:100,y:620,desc:"Reciprocidad, compromiso, prueba social, autoridad, escasez, afinidad."},
-{id:"dark-patterns",label:"Dark Patterns\nvs Ethics",group:"psychology",x:250,y:750,desc:"El espectro ético. ¿Cancel flow > signup flow? = Dark pattern."},
-{id:"lean-ux",label:"Lean UX",group:"data",x:400,y:480,desc:"Hipótesis → Experimento mínimo → Aprendizaje validado → Iteración."},
-{id:"heart",label:"HEART\nFramework",group:"data",x:500,y:530,desc:"Google: Happiness, Engagement, Adoption, Retention, Task Success."},
-{id:"ab-testing",label:"A/B\nTesting",group:"data",x:600,y:480,desc:"Formular hipótesis, diseñar experimentos, decidir con datos."},
-{id:"research-ops",label:"Research\nOps",group:"data",x:500,y:610,desc:"Infraestructura para investigación de usuarios escalable y sistemática."},
-{id:"designops",label:"DesignOps",group:"org",x:350,y:350,desc:"Libera diseñadores de admin. Sin DesignOps, el diseño no escala. Solo 22% lo hacen bien."},
-{id:"design-systems",label:"Design\nSystems",group:"org",x:450,y:300,desc:"Componentes reutilizables. McKinsey: 20-30% ahorro anual. PayPal: 8X más rápido."},
-{id:"ux-maturity",label:"UX Maturity\nModel",group:"org",x:550,y:350,desc:"NNG: 6 niveles de Ausente a User-driven. Mayoría en nivel 2-3."},
-{id:"ai-ux",label:"AI + UX\nDelegative UI",group:"emerging",x:750,y:350,desc:"Nielsen 2026: de Conversational UI a Delegative UI. Bottleneck = juicio."},
-{id:"conversational-ux",label:"Conversational\nUX",group:"emerging",x:850,y:450,desc:"149M+ usan asistentes de voz. Diseño pasa de dibujar a escribir conversaciones."},
-{id:"spatial",label:"Spatial\nComputing",group:"emerging",x:900,y:350,desc:"AR/VR maduro: servicio técnico, retail, navegación. Diseñar en 3D."},
-{id:"ethical-design",label:"Ethical &\nInclusive",group:"emerging",x:800,y:500,desc:"WCAG 3.0: de checklist a usabilidad real. Transparencia algorítmica obligatoria."},
-];
+  var live = el("p", { "aria-live": "polite", style: "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" });
+  document.body.appendChild(live);
 
-const EDGES=[
-{from:"ux-strategy",to:"nng",type:"defines"},{from:"ux-strategy",to:"levy",type:"defines"},{from:"ux-strategy",to:"garrett",type:"defines"},{from:"ux-strategy",to:"smashing",type:"defines"},
-{from:"ux-strategy",to:"behavioral",type:"feeds"},{from:"ux-strategy",to:"service-design",type:"feeds"},{from:"ux-strategy",to:"design-thinking",type:"feeds"},{from:"ux-strategy",to:"blue-ocean",type:"feeds"},
-{from:"behavioral",to:"nudge",type:"derives"},{from:"behavioral",to:"kahneman",type:"derives"},{from:"nudge",to:"kahneman",type:"informs"},{from:"behavioral",to:"hook",type:"derives"},{from:"behavioral",to:"fogg",type:"derives"},
-{from:"hook",to:"fogg",type:"informs"},{from:"hook",to:"gamification",type:"informs"},{from:"fogg",to:"jtbd",type:"informs"},{from:"jtbd",to:"blue-ocean",type:"informs"},{from:"jtbd",to:"levy",type:"informs"},
-{from:"blue-ocean",to:"levy",type:"informs"},{from:"gamification",to:"fogg",type:"informs"},{from:"design-thinking",to:"service-design",type:"informs"},{from:"design-thinking",to:"fogg",type:"informs"},
-{from:"apple",to:"garrett",type:"exemplifies"},{from:"apple",to:"blue-ocean",type:"exemplifies"},{from:"airbnb",to:"nudge",type:"exemplifies"},{from:"airbnb",to:"jtbd",type:"exemplifies"},{from:"airbnb",to:"blue-ocean",type:"exemplifies"},
-{from:"spotify",to:"behavioral",type:"exemplifies"},{from:"spotify",to:"nng",type:"exemplifies"},{from:"spotify",to:"netflix",type:"relates"},{from:"tesla",to:"blue-ocean",type:"exemplifies"},{from:"tesla",to:"jtbd",type:"exemplifies"},
-{from:"duolingo",to:"gamification",type:"exemplifies"},{from:"duolingo",to:"hook",type:"exemplifies"},{from:"duolingo",to:"fogg",type:"exemplifies"},{from:"netflix",to:"behavioral",type:"exemplifies"},
-{from:"ge-health",to:"design-thinking",type:"exemplifies"},{from:"ge-health",to:"service-design",type:"exemplifies"},{from:"monzo",to:"nudge",type:"exemplifies"},{from:"monzo",to:"service-design",type:"exemplifies"},
-{from:"nng",to:"levy",type:"relates"},{from:"garrett",to:"smashing",type:"relates"},{from:"nudge",to:"hook",type:"informs"},{from:"service-design",to:"jtbd",type:"informs"},
-{from:"behavioral",to:"cognitive-load",type:"derives"},{from:"cognitive-load",to:"hick",type:"derives"},{from:"cognitive-load",to:"fitts",type:"derives"},{from:"cognitive-load",to:"miller",type:"derives"},
-{from:"behavioral",to:"emotional-design",type:"derives"},{from:"behavioral",to:"cialdini",type:"derives"},{from:"nudge",to:"dark-patterns",type:"informs"},{from:"cialdini",to:"nudge",type:"informs"},
-{from:"kahneman",to:"cognitive-load",type:"informs"},{from:"emotional-design",to:"apple",type:"exemplifies"},{from:"dark-patterns",to:"ethical-design",type:"informs"},
-{from:"ux-strategy",to:"lean-ux",type:"feeds"},{from:"lean-ux",to:"ab-testing",type:"informs"},{from:"lean-ux",to:"heart",type:"informs"},{from:"heart",to:"research-ops",type:"informs"},
-{from:"ab-testing",to:"nudge",type:"informs"},{from:"ab-testing",to:"spotify",type:"exemplifies"},{from:"fogg",to:"lean-ux",type:"informs"},
-{from:"ux-strategy",to:"designops",type:"feeds"},{from:"designops",to:"design-systems",type:"informs"},{from:"design-systems",to:"ux-maturity",type:"informs"},
-{from:"designops",to:"lean-ux",type:"informs"},{from:"cognitive-load",to:"design-systems",type:"informs"},{from:"ux-maturity",to:"service-design",type:"informs"},
-{from:"ux-strategy",to:"ai-ux",type:"feeds"},{from:"ai-ux",to:"conversational-ux",type:"informs"},{from:"ai-ux",to:"spatial",type:"informs"},{from:"ai-ux",to:"ethical-design",type:"informs"},
-{from:"ethical-design",to:"dark-patterns",type:"informs"},{from:"conversational-ux",to:"fitts",type:"informs"},{from:"spatial",to:"fitts",type:"informs"},{from:"ethical-design",to:"monzo",type:"exemplifies"},
-];
+  // ── Filters ──
+  var filters = $(".filters");
+  function renderFilters() {
+    filters.innerHTML = "";
+    filters.appendChild(el("button", { class: "chip", "aria-pressed": String(!state.filt), text: "Todas", onclick: function () { setFilt(null); } }));
+    Object.keys(CATS).forEach(function (k) {
+      if (k === "core") return;
+      var b = el("button", { class: "chip", "data-cat": k, "aria-pressed": String(state.filt === k), onclick: function () { setFilt(state.filt === k ? null : k); } },
+        [el("span", { class: "dot", "aria-hidden": "true" })]);
+      b.appendChild(document.createTextNode(CATS[k][0]));
+      filters.appendChild(b);
+    });
+  }
+  function setFilt(k) { state.filt = k; renderFilters(); update(); renderIndex(); }
 
-const GC={
-core:{color:"#F59E0B",label:"Núcleo",glow:"rgba(245,158,11,0.4)"},
-framework:{color:"#3B82F6",label:"Frameworks UX",glow:"rgba(59,130,246,0.35)"},
-discipline:{color:"#8B5CF6",label:"Disciplinas Hermanas",glow:"rgba(139,92,246,0.35)"},
-behavior:{color:"#10B981",label:"Modelos de Comportamiento",glow:"rgba(16,185,129,0.35)"},
-strategy:{color:"#F43F5E",label:"Estrategia de Mercado",glow:"rgba(244,63,94,0.35)"},
-case:{color:"#64748B",label:"Casos de Éxito",glow:"rgba(100,116,139,0.3)"},
-psychology:{color:"#EC4899",label:"Capa Psicológica",glow:"rgba(236,72,153,0.35)"},
-data:{color:"#06B6D4",label:"Capa de Datos",glow:"rgba(6,182,212,0.35)"},
-org:{color:"#F97316",label:"Capa Organizacional",glow:"rgba(249,115,22,0.35)"},
-emerging:{color:"#A855F7",label:"Capa Emergente",glow:"rgba(168,85,247,0.35)"},
-};
+  // ── Desktop graph ──
+  var graph = $(".stage .graph"), svg = $(".stage .edges");
+  svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  var lines = E.map(function (e) {
+    var a = byId[e.f], b = byId[e.t];
+    var l = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    l.setAttribute("x1", a.x); l.setAttribute("y1", a.y); l.setAttribute("x2", b.x); l.setAttribute("y2", b.y);
+    l.setAttribute("class", "e e-" + e.k);
+    svg.appendChild(l);
+    return { e: e, l: l };
+  });
+  var buttons = {};
+  N.forEach(function (n) {
+    var b = el("button", {
+      class: "node", "data-kind": n.kind, "data-cat": n.cat, "aria-pressed": "false", tabindex: n.id === CORE ? "0" : "-1",
+      "aria-label": n.name + ", " + catName(n) + " · " + conns(n),
+      style: "left:" + (n.x / W * 100) + "%;top:" + (n.y / H * 100) + "%",
+      text: n.name,
+      onclick: function () { select(state.sel === n.id ? null : n.id); },
+      onmouseenter: function () { state.peek = n.id; update(); },
+      onmouseleave: function () { state.peek = null; update(); },
+      onfocus: function () { state.peek = n.id; roving(n.id); update(); },
+      onblur: function () { state.peek = null; update(); }
+    });
+    buttons[n.id] = b;
+    graph.appendChild(b);
+  });
+  function roving(id) { for (var k in buttons) buttons[k].tabIndex = k === id ? 0 : -1; }
+  graph.addEventListener("keydown", function (ev) {
+    var cur = document.activeElement && document.activeElement.classList.contains("node") ? N.find(function (n) { return buttons[n.id] === document.activeElement; }) : byId[CORE];
+    var dir = { ArrowRight: [1, 0], ArrowLeft: [-1, 0], ArrowDown: [0, 1], ArrowUp: [0, -1] }[ev.key];
+    var next = null;
+    if (dir) {
+      var best = Infinity;
+      N.forEach(function (n) {
+        if (n === cur) return;
+        var dx = n.x - cur.x, dy = n.y - cur.y, d = Math.hypot(dx, dy);
+        if ((dx * dir[0] + dy * dir[1]) / d < Math.SQRT1_2) return; // ±45° cone
+        if (d < best) { best = d; next = n; }
+      });
+    } else if (ev.key === "Home") next = byId[CORE];
+    else if (ev.key === "Escape" && state.sel) { var s = state.sel; select(null); buttons[s].focus(); ev.preventDefault(); return; }
+    if (next) { ev.preventDefault(); roving(next.id); buttons[next.id].focus(); }
+  });
 
-const ES={
-defines:{color:"#3B82F6",dash:"",label:"define"},
-feeds:{color:"#8B5CF6",dash:"8,4",label:"alimenta"},
-derives:{color:"#10B981",dash:"",label:"deriva"},
-informs:{color:"#94A3B8",dash:"4,4",label:"informa"},
-exemplifies:{color:"#F59E0B",dash:"6,3",label:"ejemplifica"},
-relates:{color:"#CBD5E1",dash:"2,4",label:"se relaciona"},
-};
+  function active() { return state.sel || state.peek; }
+  function update() {
+    var a = active(), near = {};
+    if (a) { near[a] = true; byId[a].links.forEach(function (l) { near[l.id] = true; }); }
+    N.forEach(function (n) {
+      var b = buttons[n.id];
+      b.setAttribute("aria-pressed", String(state.sel === n.id));
+      var dim = a ? !near[n.id] : state.filt ? n.cat !== state.filt : false;
+      b.classList.toggle("dim", dim);
+      b.classList.toggle("peek", !!(state.peek === n.id && state.sel !== n.id));
+    });
+    lines.forEach(function (o) {
+      var on = a ? (o.e.f === a || o.e.t === a) : state.filt ? (byId[o.e.f].cat === state.filt || byId[o.e.t].cat === state.filt) : false;
+      var off = (a || state.filt) && !on;
+      o.l.classList.toggle("on", on); o.l.classList.toggle("off", !!off);
+    });
+    if (desk.matches) renderPanel($(".panel"), state.sel);
+  }
+  function select(id) {
+    state.sel = id;
+    if (id) { var n = byId[id]; live.textContent = n.name + ", " + catName(n) + ". " + conns(n) + "."; }
+    update();
+  }
 
-function App(){
-const svgRef=useRef(null);
-const[sel,setSel]=useState(null);
-const[hov,setHov]=useState(null);
-const[drag,setDrag]=useState(null);
-const[nodes,setNodes]=useState(NODES);
-const[off,setOff]=useState({x:0,y:0});
-const[filt,setFilt]=useState(null);
+  // ── Panel (shared by desktop aside and mobile neighbourhood) ──
+  function chip(n, onpick) {
+    var b = el("button", { class: "chip", "data-cat": n.cat, onclick: function () { onpick(n.id); } }, [el("span", { class: "dot", "aria-hidden": "true" })]);
+    b.appendChild(document.createTextNode(n.name));
+    return el("li", {}, [b]);
+  }
+  function group(title, list, onpick) {
+    if (!list.length) return null;
+    return el("div", { class: "rel" }, [el("p", { class: "grp-h", text: title }), el("ul", {}, list.map(function (l) { return chip(byId[l.id], onpick); }))]);
+  }
+  function renderPanel(box, id, opts) {
+    opts = opts || {};
+    var pick = opts.pick || function (x) { select(x); roving(x); buttons[x].focus(); };
+    box.innerHTML = "";
+    if (id) {
+      var n = byId[id], L = n.links;
+      var head = el("div", { class: "p-head" }, [el("p", { class: "marker", "data-cat": n.cat }, [el("span", { class: "dot", "aria-hidden": "true" }), document.createTextNode(catName(n))])]);
+      if (!opts.noClose) {
+        var c = el("button", { class: "close", "aria-label": "Cerrar panel", onclick: function () { select(null); buttons[id].focus(); } });
+        c.innerHTML = X; head.appendChild(c);
+      }
+      var card = el("div", { class: "surface card" }, [
+        n.eyebrow ? el("p", { class: "eyebrow", text: n.eyebrow }) : null,
+        el("h2", { text: n.name }),
+        el("p", { class: "desc", text: n.desc })
+      ]);
+      [n.src, n.src2].forEach(function (s) { if (s) card.appendChild(el("p", { class: "src" }, [el("a", { href: s[1], target: "_blank", rel: "noopener", text: s[0] })])); });
+      var f = function (k, out) { return L.filter(function (l) { return l.k === k && (out === undefined || l.out === out); }); };
+      var isCase = n.kind === "case";
+      var rels = el("div", { class: "surface rels" }, [
+        group("Deriva de", f("s", false), pick),
+        group("Da origen a · " + f("s", true).length, f("s", true), pick),
+        group("Influencias · " + f("i").length, f("i"), pick),
+        isCase ? group("Ejemplifica · " + f("e", true).length, f("e", true), pick) : group("Ejemplos · " + f("e", false).length, f("e", false), pick)
+      ]);
+      box.appendChild(head); box.appendChild(card); box.appendChild(rels);
+    } else if (state.filt) {
+      var mem = N.filter(function (x) { return x.cat === state.filt; });
+      box.appendChild(el("p", { class: "marker", "data-cat": state.filt }, [el("span", { class: "dot", "aria-hidden": "true" }), document.createTextNode(CATS[state.filt][0] + " · " + mem.length + " nodos")]));
+      box.appendChild(el("div", { class: "surface rels" }, [el("div", { class: "rel" }, [el("ul", {}, mem.map(function (x) { return chip(x, pick); }))])]));
+    } else {
+      box.appendChild(el("div", { class: "surface" }, [
+        el("p", { class: "help-h", text: "Cómo leer" }),
+        el("p", { text: "Cada nodo es un concepto y cada línea, una relación. Elige un nodo para ver qué es y con qué se conecta; filtra arriba para ver una sola categoría." }),
+        el("p", { text: "Con teclado: las flechas te mueven entre nodos, Enter abre el panel, Inicio te regresa al núcleo y Esc lo cierra." })
+      ]));
+    }
+  }
 
-const gn=useCallback(id=>nodes.find(n=>n.id===id),[nodes]);
-const conn=useCallback(nid=>{const s=new Set();EDGES.forEach(e=>{if(e.from===nid)s.add(e.to);if(e.to===nid)s.add(e.from)});return s},[]);
+  // ── Index (mobile list + desktop accordion) ──
+  function renderIndex() {
+    document.querySelectorAll(".index").forEach(function (box) {
+      var mob = box.classList.contains("index-mob");
+      box.innerHTML = "";
+      Object.keys(CATS).forEach(function (k) {
+        if (state.filt && k !== state.filt) return;
+        var mem = N.filter(function (n) { return n.cat === k; });
+        var ul = el("ul", {}, mem.map(function (n) {
+          var r = el("button", { class: "row", "data-id": n.id, onclick: function () {
+            if (mob) location.hash = n.id; else { select(n.id); roving(n.id); buttons[n.id].focus(); }
+          } }, [el("span", { class: "nm", text: n.name }), el("span", { class: "ct", text: String(n.links.length) })]);
+          if (mob) r.insertAdjacentHTML("beforeend", RIGHT);
+          return el("li", {}, [r]);
+        }));
+        box.appendChild(el("div", { class: "grp" }, [el("p", { class: "grp-h", "data-cat": k, text: CATS[k][0] + " · " + mem.length }), ul]));
+      });
+    });
+  }
 
-const act=sel||hov;
-const ac=act?conn(act):new Set();
+  // ── Mobile neighbourhood (#id) ──
+  var hood = $(".hood"), indexMob = $(".index-mob");
+  function renderHood() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!byId[id] || desk.matches) { hood.hidden = true; indexMob.hidden = false; filters.hidden = false; return; }
+    var n = byId[id];
+    hood.hidden = false; indexMob.hidden = true; filters.hidden = true;
+    hood.innerHTML = "";
+    var back = el("button", { class: "back", "aria-label": "Volver al índice", onclick: function () {
+      history.pushState("", "", location.pathname); renderHood();
+      var r = $('.index-mob .row[data-id="' + id + '"]'); if (r) r.focus();
+    } });
+    back.innerHTML = LEFT + "Índice";
+    var order = { s: 0, i: 1, e: 2 };
+    var nb = n.links.slice().sort(function (a, b) { return order[a.k] - order[b.k]; }).slice(0, 8);
+    var VW = 358, VH = 360, cx = VW / 2, cy = VH / 2;
+    var g = el("div", { class: "graph", role: "group", "aria-label": "Vecindario de " + n.name });
+    var s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    s.setAttribute("class", "edges"); s.setAttribute("aria-hidden", "true"); s.setAttribute("viewBox", "0 0 " + VW + " " + VH);
+    g.appendChild(s);
+    var place = function (m, x, y, center) {
+      var b = el("button", { class: "node", "data-kind": m.kind === "core" ? "concept" : m.kind, "data-cat": m.cat, "aria-pressed": String(!!center),
+        "aria-label": m.name + ", " + catName(m) + " · " + conns(m), text: m.name, style: "left:" + (x / VW * 100) + "%;top:" + (y / VH * 100) + "%" ,
+        onclick: function () { if (!center) location.hash = m.id; } });
+      g.appendChild(b);
+    };
+    var pos = nb.map(function (l, i) {
+      var ang = -Math.PI / 2 + ((i + (nb.length > 4 ? 0.5 : 0)) / nb.length) * Math.PI * 2, m = byId[l.id];
+      return { l: l, m: m, half: Math.min(150, m.name.length * 3.6 + 20), x: cx + Math.cos(ang) * 120, y: cy + Math.sin(ang) * 140 };
+    });
+    for (var it = 0; it < 80; it++) {
+      pos.forEach(function (p) { p.x = Math.max(p.half + 2, Math.min(VW - p.half - 2, p.x)); });
+      for (var a = 0; a < pos.length; a++) for (var b = a + 1; b < pos.length; b++) {
+        var A = pos[a], B = pos[b], ox = A.half + B.half + 8 - Math.abs(A.x - B.x), oy = 44 - Math.abs(A.y - B.y);
+        if (ox > 0 && oy > 0) { var d = (A.y < B.y ? -1 : 1) * oy / 2; A.y += d; B.y -= d; }
+      }
+    }
+    pos.forEach(function (p) {
+      var l = p.l, m = p.m, x = p.x, y = Math.max(20, Math.min(VH - 20, p.y));
+      var ln = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      ln.setAttribute("x1", cx); ln.setAttribute("y1", cy); ln.setAttribute("x2", x); ln.setAttribute("y2", y);
+      ln.setAttribute("class", "e on e-" + l.k); s.appendChild(ln);
+      place(m, x, y, false);
+    });
+    place(n, cx, cy, true);
+    var panel = el("div", { class: "panel" });
+    renderPanel(panel, id, { noClose: true, pick: function (x) { location.hash = x; } });
+    hood.appendChild(back); hood.appendChild(g); hood.appendChild(panel);
+    live.textContent = n.name + ", " + catName(n) + ". " + conns(n) + ".";
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", renderHood);
+  desk.addEventListener("change", function () { update(); renderHood(); });
 
-const hmd=(e,nid)=>{e.stopPropagation();const n=gn(nid);const svg=svgRef.current;const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const sp=pt.matrixTransform(svg.getScreenCTM().inverse());setDrag(nid);setOff({x:sp.x-n.x,y:sp.y-n.y})};
-const hmm=useCallback(e=>{if(!drag)return;const svg=svgRef.current;const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const sp=pt.matrixTransform(svg.getScreenCTM().inverse());setNodes(p=>p.map(n=>n.id===drag?{...n,x:sp.x-off.x,y:sp.y-off.y}:n))},[drag,off]);
-const hmu=useCallback(()=>setDrag(null),[]);
-
-useEffect(()=>{window.addEventListener("mousemove",hmm);window.addEventListener("mouseup",hmu);return()=>{window.removeEventListener("mousemove",hmm);window.removeEventListener("mouseup",hmu)}},[hmm,hmu]);
-
-const eo=(edge)=>{if(!act&&!filt)return 0.35;if(act){if(edge.from===act||edge.to===act)return 0.85;return 0.06}if(filt){const f=gn(edge.from),t=gn(edge.to);if(f?.group===filt||t?.group===filt)return 0.5;return 0.04}return 0.35};
-const no=(node)=>{if(!act&&!filt)return 1;if(act){if(node.id===act||ac.has(node.id))return 1;return 0.15}if(filt){if(node.group===filt)return 1;return 0.18}return 1};
-
-const sn=sel?gn(sel):null;
-
-return React.createElement("div",{style:{width:"100%",height:"100vh",background:"#0C0F1A",fontFamily:"'IBM Plex Sans',system-ui,sans-serif",display:"flex",flexDirection:"column",overflow:"hidden",position:"relative"}},
-React.createElement("div",{style:{padding:"16px 24px 12px",borderBottom:"1px solid rgba(255,255,255,0.06)",background:"linear-gradient(180deg,rgba(12,15,26,1) 0%,rgba(12,15,26,0.95) 100%)",zIndex:10}},
-React.createElement("div",{style:{display:"flex",alignItems:"center",gap:12,marginBottom:12}},
-React.createElement("div",{style:{width:36,height:36,borderRadius:10,background:"linear-gradient(135deg,#F59E0B,#F97316)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}},"\uD83E\uDDED"),
-React.createElement("div",null,
-React.createElement("h1",{style:{margin:0,fontSize:18,fontWeight:700,color:"#F8FAFC",letterSpacing:"-0.02em"}},"UX Strategy \u2014 Grafo Rizom\u00E1tico"),
-React.createElement("p",{style:{margin:0,fontSize:11,color:"#64748B"}},"Toca un nodo para explorar \u00B7 Arrastra para reorganizar \u00B7 Filtra por categor\u00EDa"))),
-React.createElement("div",{style:{display:"flex",gap:6,flexWrap:"wrap"}},
-React.createElement("button",{onClick:()=>setFilt(null),style:{padding:"4px 10px",borderRadius:6,border:"1px solid",borderColor:!filt?"rgba(248,250,252,0.3)":"rgba(255,255,255,0.08)",background:!filt?"rgba(248,250,252,0.1)":"transparent",color:!filt?"#F8FAFC":"#64748B",fontSize:11,fontWeight:500,cursor:"pointer",fontFamily:"inherit"}},"Todos"),
-...Object.entries(GC).map(([k,c])=>React.createElement("button",{key:k,onClick:()=>setFilt(filt===k?null:k),style:{padding:"4px 10px",borderRadius:6,border:"1px solid",borderColor:filt===k?c.color+"66":"rgba(255,255,255,0.08)",background:filt===k?c.color+"20":"transparent",color:filt===k?c.color:"#64748B",fontSize:11,fontWeight:500,cursor:"pointer",fontFamily:"inherit"}},React.createElement("span",{style:{display:"inline-block",width:7,height:7,borderRadius:"50%",background:c.color,marginRight:5,verticalAlign:"middle"}}),c.label)))),
-React.createElement("div",{style:{flex:1,position:"relative"}},
-React.createElement("svg",{ref:svgRef,viewBox:"0 0 1020 820",style:{width:"100%",height:"100%",cursor:drag?"grabbing":"default"},onClick:()=>setSel(null)},
-React.createElement("defs",null,
-...Object.entries(GC).map(([k,c])=>React.createElement("filter",{key:k,id:`glow-${k}`,x:"-50%",y:"-50%",width:"200%",height:"200%"},
-React.createElement("feGaussianBlur",{stdDeviation:"8",result:"blur"}),
-React.createElement("feFlood",{floodColor:c.glow,floodOpacity:"1"}),
-React.createElement("feComposite",{in2:"blur",operator:"in"}),
-React.createElement("feMerge",null,React.createElement("feMergeNode"),React.createElement("feMergeNode",{in:"SourceGraphic"})))),
-React.createElement("marker",{id:"arrow",viewBox:"0 0 10 10",refX:"9",refY:"5",markerWidth:"6",markerHeight:"6",orient:"auto-start-reverse"},
-React.createElement("path",{d:"M 0 0 L 10 5 L 0 10 z",fill:"#475569",fillOpacity:"0.5"}))),
-EDGES.map((edge,i)=>{const from=gn(edge.from),to=gn(edge.to);if(!from||!to)return null;const s=ES[edge.type]||ES.informs;const op=eo(edge);const hl=act&&(edge.from===act||edge.to===act);const dx=to.x-from.x,dy=to.y-from.y,dist=Math.sqrt(dx*dx+dy*dy),nx=dx/dist,ny=dy/dist,r=38;const x1=from.x+nx*r,y1=from.y+ny*r,x2=to.x-nx*r,y2=to.y-ny*r;const mx=(x1+x2)/2,my=(y1+y2)/2,cx=mx+ny*(dist*0.12),cy=my-nx*(dist*0.12);
-return React.createElement("g",{key:i,style:{transition:"opacity 0.3s"},opacity:op},React.createElement("path",{d:`M ${x1} ${y1} Q ${cx} ${cy} ${x2} ${y2}`,fill:"none",stroke:hl?s.color:"#334155",strokeWidth:hl?2:1,strokeDasharray:s.dash,markerEnd:"url(#arrow)",style:{transition:"stroke 0.3s,stroke-width 0.3s"}}))}),
-nodes.map(node=>{const c=GC[node.group];const op=no(node);const ia=node.id===act;const isC=node.group==="core";const r=isC?48:36;const lines=node.label.split("\n");
-return React.createElement("g",{key:node.id,style:{cursor:"grab",transition:"opacity 0.3s"},opacity:op,onMouseDown:e=>hmd(e,node.id),onMouseEnter:()=>setHov(node.id),onMouseLeave:()=>setHov(null),onClick:e=>{e.stopPropagation();setSel(sel===node.id?null:node.id)}},
-(ia||isC)&&React.createElement("circle",{cx:node.x,cy:node.y,r:r+8,fill:"none",stroke:c.color,strokeWidth:ia?2:1,strokeOpacity:ia?0.5:0.15,strokeDasharray:ia?"":"3,3"}),
-React.createElement("circle",{cx:node.x,cy:node.y,r:r,fill:ia?c.color+"25":"#0F1629",stroke:ia?c.color:c.color+"60",strokeWidth:ia?2.5:1.5,filter:ia?`url(#glow-${node.group})`:undefined,style:{transition:"all 0.2s"}}),
-React.createElement("circle",{cx:node.x,cy:node.y-r+10,r:3,fill:c.color,opacity:0.8}),
-...lines.map((line,li)=>React.createElement("text",{key:li,x:node.x,y:node.y+(li-(lines.length-1)/2)*13+2,textAnchor:"middle",dominantBaseline:"central",fill:ia?"#F8FAFC":"#CBD5E1",fontSize:isC?12:10.5,fontWeight:isC?700:500,fontFamily:"'IBM Plex Sans',system-ui,sans-serif",style:{pointerEvents:"none",userSelect:"none"}},line)))})),
-sn&&React.createElement("div",{style:{position:"absolute",bottom:16,left:16,right:16,background:"rgba(15,22,41,0.95)",backdropFilter:"blur(20px)",border:`1px solid ${GC[sn.group].color}33`,borderRadius:14,padding:"16px 20px",zIndex:20}},
-React.createElement("div",{style:{display:"flex",alignItems:"center",gap:10,marginBottom:8}},
-React.createElement("span",{style:{display:"inline-block",width:10,height:10,borderRadius:"50%",background:GC[sn.group].color}}),
-React.createElement("span",{style:{fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:"0.06em",color:GC[sn.group].color}},GC[sn.group].label),
-React.createElement("button",{onClick:e=>{e.stopPropagation();setSel(null)},style:{marginLeft:"auto",background:"rgba(255,255,255,0.06)",border:"none",color:"#94A3B8",borderRadius:6,width:24,height:24,cursor:"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"inherit"}},"\u00D7")),
-React.createElement("h3",{style:{margin:"0 0 6px",fontSize:16,fontWeight:700,color:"#F8FAFC",letterSpacing:"-0.01em"}},sn.label.replace("\n"," ")),
-React.createElement("p",{style:{margin:0,fontSize:13,color:"#94A3B8",lineHeight:1.55}},sn.desc),
-React.createElement("div",{style:{marginTop:10,display:"flex",gap:6,flexWrap:"wrap"}},...[...ac].map(id=>{const n=gn(id);if(!n)return null;const cc=GC[n.group];return React.createElement("span",{key:id,onClick:e=>{e.stopPropagation();setSel(id)},style:{padding:"3px 8px",borderRadius:5,background:cc.color+"15",border:`1px solid ${cc.color}30`,color:cc.color,fontSize:10,fontWeight:500,cursor:"pointer"}},n.label.replace("\n"," "))})))
-));
-}
-
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+  renderFilters(); renderIndex(); update(); renderHood();
+})();
 </script>
 </body>
 </html>
