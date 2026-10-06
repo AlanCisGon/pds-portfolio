@@ -75,6 +75,8 @@
   --text-title-line: 1.2;
   --text-quote-size: 24px;
   --text-quote-line: 32px;
+  --text-card-size: 24px; /* Voice/Card: editorial title inside a card (TeamCard name). Roman, never italic. */
+  --text-card-line: 32px;
 
   /* System — Geist Sans: interface, body, navigation, data. */
   --text-heading-l-size: 32px;

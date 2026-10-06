@@ -27,10 +27,10 @@
 .name {
   margin: 0;
   color: var(--color-text-primary);
-  font-family: var(--font-sans);
-  font-weight: var(--weight-semibold);
-  font-size: var(--text-heading-s-size);
-  line-height: var(--text-heading-s-line);
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-card-size);
+  line-height: var(--text-card-line);
 }
 
 .role {

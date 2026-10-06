@@ -1,10 +1,10 @@
 import Image from "next/image";
 import styles from "./Avatar.module.css";
 
-const SIZES = { s: 24, m: 32, l: 48 } as const;
+const SIZES = { s: 24, m: 32, l: 48, xl: 64 } as const;
 
 export type AvatarProps = {
-  /** Figma: `Size` (s 24 / m 32 / l 48). */
+  /** Figma: `Size` (s 24 / m 32 / l 48 / xl 64). */
   size?: keyof typeof SIZES;
   /** Photo. Falls back to initials when absent. */
   src?: string;
