@@ -13,6 +13,8 @@ export * from "./AvatarGroup";
 export * from "./Badge";
 export * from "./Callout";
 export * from "./List";
+export * from "./Stat";
+export * from "./FactSheet";
 // 02c Data & Media
 export * from "./Table";
 export * from "./CodeBlock";

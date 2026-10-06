@@ -98,4 +98,15 @@ export interface About extends PageConfig {
   };
 }
 
-export interface Work extends PageConfig {}
+export interface Work extends PageConfig {
+  /** Case-study copy shared by every case (Ameyali). */
+  caseStudy: {
+    /** FactSheet labels. */
+    facts: { client: string; role: string; team: string; dates: string; industry: string };
+    /** Stat: badge text when a metric has no period or source yet. */
+    statPending: string;
+    /** Stat: how screen readers read each unit, and the word for a decrease ("down 60 percent"). */
+    statUnits: { pp: string; pts: string; "%": string };
+    statDecrease: string;
+  };
+}

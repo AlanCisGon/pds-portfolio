@@ -182,7 +182,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | Voz (cerezo) | Newsreader | `--font-serif` |
 | Medida (calibrador) | Geist Mono | `--font-mono` |
 
-### Escala v0.1 (coincide con los 13 estilos de texto de Figma, auditoría del 2026-10-05)
+### Escala v0.1 (coincide con los 15 estilos de texto de Figma: auditoría del 2026-10-05, más `Measure/Code` y `Measure/Figure`)
 
 | Estilo | Familia | Tamaño / interlineado | Peso |
 |---|---|---|---|
@@ -199,6 +199,8 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | `label-m` | Geist Sans | 14 / 20 | 500 |
 | `label-s` | Geist Sans | 12 / 16 | 500 |
 | `meta` | Geist Mono | 12 / 16, tracking 0.04em | 400 |
+| `code` | Geist Mono | 14 / 20 | 400 |
+| `figure` | Geist Mono | 32 / 40 | 500 |
 
 **Carga de fuentes:**
 
@@ -231,7 +233,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 
 ## Componentes del portafolio
 
-Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
+Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
 
 - **Catálogo privado:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. Muestra cada componente con sus variantes, para compararlo con Figma.
 - **Página de Figma:** cada grupo vive en su propia página del archivo *SDS · Somara Design System*.
@@ -239,7 +241,7 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 | Grupo (Figma) | Componentes | Sin uso público |
 |---|---|---|
 | 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip` | `Chip` |
-| 02b Content | `Tag`, `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem` | `Badge` |
+| 02b Content | `Tag`, `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem`, `Stat`, `FactSheet` | `Badge` |
 | 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | `Carousel` |
 | 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | — |
 | 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer`, `TeamCard` | `Card` |
@@ -256,6 +258,9 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - los `Link` externos anuncian "opens in a new tab" (los textos accesibles van en inglés, como la página);
   - `CodeBlock` y `HeadingLink` confirman con `aria-live`, sin Toast.
 - **`TeamCard` (02e, `83:152`):** tarjeta estática de integrante (avatar `xl`, nombre en `Voice/Card`, rol y descripción), con `layout` horizontal o vertical. El rol nunca va en Cerezo. Su patrón `TeamGrid` (03 Patterns, `84:87`) vive en `src/components/work/TeamGrid.tsx` y se usa desde el MDX.
+- **`Badge` (02b, `30:35`):** `showIcon` es un eje de variante en Figma (`true`/`false`), igual que el prop. Sin ícono, el padding horizontal es `--space-8` (`.badge[data-icon="false"]`); con ícono, `--space-4`. Sin ícono, el texto debe nombrar el estatus: nunca solo el color.
+- **`Stat` (02b, `177:92`):** incremento + unidad (`pp` para tasas, `pts` para puntajes, `%` para cambio relativo) + qué se midió + periodo · fuente. La cifra va en `figure` (Geist Mono). **La honestidad vive en la API:** si falta el valor, el periodo o la fuente, el componente muestra el `Badge` neutral *pending* en lugar del número. Un caso sin ninguna métrica completa no muestra el bloque (`CaseStats` devuelve `null`); *pending* solo marca un hueco entre métricas reales. Solo incrementos: los absolutos de Coppel son confidenciales. Lleva un `Divider` arriba. `accessibleValue` da la lectura completa para lectores de pantalla ("+2 percentage points", "down 60 percent"). Desde el MDX se usa `<CaseStats>` (`src/components/work/CaseStats.tsx`), que toma el copy de `work.caseStudy`. ≠ `FactSheet` ≠ `Table`.
+- **`FactSheet` (02b, `177:128`):** un `<dl>` de 1 a 5 pares (Client, My role, Team, Dates, Industry) arriba de la portada. Etiqueta en `meta` mayúsculas y valor en `body-m`. 2 columnas, y 4 desde 768, con gap `--bento-gap`. Si falta un dato, el par se omite; nunca se rellena. Sin línea ni superficie. **Opción B (Alan, 2026-10-06; exploración `184:583`):** el par Team ocupa 2 columnas (`wide`) y lleva el `AvatarGroup`, los nombres con LinkedIn y una nota (`teamNote`); reemplaza la línea de equipo del encabezado.
 - **Proyecto destacado (`home.featured` en `content.tsx`):** un `Link` standalone sobre el titular de Home que lleva al caso destacado. Se apaga con `display: false`.
 - **Decisión de auditoría · hover de tarjetas:** `Card` y `ProjectCard` se funden con sus superficies internas en hover, a propósito.
 - **`Link` inline siempre subrayado** (2026-10-05, revierte la decisión de auditoría del 2026-10-03): dentro de un párrafo, el Cerezo contra el texto Niebla da unos 2.8:1, por debajo de los 3:1 que pide WCAG 1.4.1 cuando el enlace se distingue solo por color. El subrayado (`text-decoration-thickness: from-font`) lo resuelve sin depender del color. `standalone` no lleva subrayado: lo distingue su ícono.
@@ -267,4 +272,5 @@ Los 25 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 - Asignar tonos `--ctx-*` a las categorías reales (industrias y tipos de pieza) cuando se definan en I5.
 - Token de resorte para gestos y arrastres (marca §14: amortiguamiento crítico, sin rebote). Se define cuando exista el primer gesto.
 - Los tokens con `color-mix` (`accent/hover`, `accent/pressed`, `state/*`) tienen hex estático en Figma: si cambia un primitivo, hay que recalcularlos a mano.
+- Figma (#68): `Header` con reloj y navegación en español, `Footer` "México", `TableOfContents` con 6 ítems fijos, label por omisión del `Badge` en español, `AvatarGroup` solo con `Count=2|3`, `Avatar` sin variante de foto y `Link` inline sin ligar a `Label`.
 - Figma: radios sin variable en `Avatar`, el `Dot` del `Carousel` y el `PlayButton` de `Media`, y `Tag` con `Size=Medium/Small` en lugar de `m/s` (S2).

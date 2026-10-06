@@ -5,7 +5,7 @@ import { CustomMDX } from "@/components";
 import { getHeadings } from "@/components/mdx";
 import { Projects } from "@/components/work/Projects";
 import { work } from "@/resources";
-import { AvatarGroup, Link, Media, TableOfContents, Tag } from "@/ui";
+import { AvatarGroup, FactSheet, Link, Media, TableOfContents, Tag } from "@/ui";
 import { formatDate } from "@/utils/format";
 import { getProject, getProjects } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
@@ -52,6 +52,7 @@ export default async function Project({
   const tags = metadata.tags;
   const cover = metadata.images[0];
   const headings = getHeadings(post.content);
+  const { facts } = work.caseStudy;
 
   return (
     <div className={styles.page}>
@@ -82,27 +83,38 @@ export default async function Project({
         <h1 className={styles.title}>{metadata.title}</h1>
         {metadata.summary && <p className={styles.summary}>{metadata.summary}</p>}
 
-        {team.length > 0 && (
-          <div className={styles.team}>
-            <AvatarGroup
-              people={team.map((member) => ({ name: member.name, src: member.avatar }))}
-              max={team.length}
-            />
-            <p className={styles.names}>
-              {team.map((member, i) => (
-                <span key={member.name}>
-                  {i > 0 && ", "}
-                  {member.linkedIn ? (
-                    <Link href={member.linkedIn}>{member.name}</Link>
-                  ) : (
-                    member.name
+        <FactSheet
+          items={[
+            { label: facts.client, value: metadata.client },
+            { label: facts.role, value: team[0]?.role },
+            {
+              label: facts.team,
+              wide: true,
+              value: team.length > 0 && (
+                <span className={styles.team}>
+                  <span className={styles.teamRow}>
+                    <AvatarGroup
+                      people={team.map((member) => ({ name: member.name, src: member.avatar }))}
+                      max={team.length}
+                    />
+                    {team
+                      .filter((member) => member.linkedIn)
+                      .map((member) => (
+                        <Link key={member.name} href={member.linkedIn}>
+                          {member.name}
+                        </Link>
+                      ))}
+                  </span>
+                  {metadata.teamNote && (
+                    <span className={styles.teamNote}>{metadata.teamNote}</span>
                   )}
-                  {member.role && <span className={styles.role}> · {member.role}</span>}
                 </span>
-              ))}
-            </p>
-          </div>
-        )}
+              ),
+            },
+            { label: facts.dates, value: metadata.dates },
+            { label: facts.industry, value: metadata.industry },
+          ]}
+        />
 
         {(tags.length > 0 || metadata.link) && (
           <div className={styles.extras}>

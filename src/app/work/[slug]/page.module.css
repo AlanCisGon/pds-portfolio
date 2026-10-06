@@ -43,25 +43,24 @@
   line-height: var(--text-body-l-line);
 }
 
+/* Team pair of the FactSheet (option B, Figma 184:583): avatars + linked names, then a note. */
 .team {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.teamRow {
+  display: flex;
   flex-wrap: wrap;
-  align-self: stretch; /* full width, so names only wrap when they truly don't fit */
   align-items: center;
   gap: var(--space-8);
 }
 
-/* Names sit beside the avatars while they have ~256 px; with a large team on mobile they drop below. */
-.names {
-  flex: 1 1 calc(var(--space-64) * 4);
-  margin: 0;
-  color: var(--color-text-primary);
+.teamNote {
+  color: var(--color-text-secondary);
   font-size: var(--text-body-s-size);
   line-height: var(--text-body-s-line);
-}
-
-.role {
-  color: var(--color-text-secondary);
 }
 
 .extras {

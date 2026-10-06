@@ -9,6 +9,7 @@ import {
   Carousel,
   CodeBlock,
   Divider,
+  FactSheet,
   Footer,
   Header,
   HeadingLink,
@@ -19,6 +20,8 @@ import {
   Media,
   NavItem,
   ProjectCard,
+  Stat,
+  StatGrid,
   Table,
   TableOfContents,
   Tag,
@@ -120,6 +123,28 @@ export default function UiCatalog() {
             ]}
           />
         </div>
+        <Divider />
+        <FactSheet
+          items={[
+            { label: "Client", value: "Coppel" },
+            { label: "My role", value: "Design Lead" },
+            { label: "Team", value: "3 UI · 2 UX · 1 UX writer", wide: true },
+            { label: "Dates", value: "Q4 2024 – Sep 2025" },
+            { label: "Industry", value: "" },
+          ]}
+        />
+        <StatGrid>
+          <Stat
+            value="+2"
+            unit="pp"
+            label="Web conversion"
+            period="Jan 2026"
+            source="Digital analytics"
+            accessibleValue="+2 percentage points"
+            pendingLabel="Not verified yet"
+          />
+          <Stat unit="pts" label="Sin fuente: estado pending" pendingLabel="Not verified yet" />
+        </StatGrid>
         <Divider />
         <div className={styles.grid}>
           {(["info", "success", "warning", "danger", "neutral"] as const).map((t) => (

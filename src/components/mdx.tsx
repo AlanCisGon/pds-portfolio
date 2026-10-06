@@ -1,6 +1,7 @@
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import type { ComponentProps, ReactNode } from "react";
 
+import { CaseStats } from "@/components/work/CaseStats";
 import { TeamGrid } from "@/components/work/TeamGrid";
 import {
   Accordion,
@@ -95,6 +96,7 @@ const components: MDXRemoteProps["components"] = {
   Media,
   Accordion,
   TeamGrid,
+  CaseStats,
 };
 
 type CustomMDXProps = MDXRemoteProps;

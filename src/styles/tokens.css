@@ -102,6 +102,8 @@
   --text-meta-tracking: 0.04em;
   --text-code-size: 14px; /* Measure/Code — code blocks */
   --text-code-line: 20px;
+  --text-figure-size: 32px; /* Measure/Figure — Stat figures (Geist Mono, --weight-medium) */
+  --text-figure-line: 40px;
 
   --weight-regular: 400;
   --weight-medium: 500;
