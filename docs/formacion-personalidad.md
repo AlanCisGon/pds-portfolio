@@ -106,8 +106,8 @@ No están prohibidos por feos, sino por no decididos. Si usan alguno, escriben p
 - "¡Ups! Algo salió mal".
 - Signos de exclamación y emojis como sustituto de calidez.
 - Rayas (—) encadenando ideas una tras otra.
-- Analogías de primer orden: traducir un rasgo literal a un objeto y explicarlo ("somos las raíces", "la veta que ordena"). Un nombre, lema o activo que necesita explicar su metáfora para funcionar no está terminado. Esto aplica también a los activos visuales.
-- Nombres descriptivos o tomados tal cual de la guía de marca.
+- Analogías de primer orden: traducir un rasgo literal a un objeto y explicarlo ("somos las raíces que sostienen", "el puente entre ideas"). Si un nombre, lema o activo necesita explicar su metáfora para funcionar, no está terminado. Pero no herméticos: se entiende o intriga al decirlo, sin manual. Aplica también a lo visual.
+- Nombres descriptivos o tomados tal cual de la guía de marca. Pero no ajenos a ella: el territorio sí sale de la marca.
 
 **De comportamiento.** Estos no admiten justificación.
 

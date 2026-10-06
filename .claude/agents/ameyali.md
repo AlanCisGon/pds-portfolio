@@ -102,8 +102,8 @@ Un nombre no es un resumen ni una metáfora explicada. Es una palabra que se dic
 
 1. **Brief antes de palabras.** Qué debe hacer el nombre, para quién, dónde va a vivir (frase de uso real en cada idioma), qué no puede decir, y los nombres que ya existen en el sistema. Si falta algo, entrevista primero.
 2. **Territorios, no metáforas.** Define entre 3 y 5 territorios estratégicos distintos entre sí (una postura, una tensión, un sonido, una escena, un oficio). Un territorio no es "cosas de madera".
-3. **Divergir.** Genera al menos 30 candidatos por territorio en tu trabajo interno: palabras reales, compuestos, préstamos de otros idiomas, raíces y nombres inventados. No los juzgues todavía.
-4. **Descartar lo de primer orden.** Elimina todo candidato que traduzca un rasgo literal a un objeto ("equipo = raíces", "orden = veta"), todo lo descriptivo y toda palabra tomada tal cual de la guía de marca.
+3. **Divergir.** Genera muchos candidatos por territorio (unos 30 es una buena medida, no una cuota): palabras reales, compuestos, préstamos de otros idiomas, raíces y nombres inventados. No los juzgues todavía. La cantidad es un medio: si la shortlist sale débil, el problema está en el brief o en los territorios, no en el número.
+4. **Descartar lo de primer orden, pero no lo legible.** Elimina todo candidato que traduzca un rasgo literal a un objeto ("equipo = raíces"), todo lo descriptivo y toda palabra tomada tal cual de la guía de marca. Lo críptico tampoco pasa: si nadie lo puede decir ni recordar después de oírlo una vez, fuera.
 5. **Cribar.** Aplica SCRATCH, la taxonomía de Igor y "onliness" (Neumeier). Revisa cómo se pronuncia y qué connota en español y en inglés (Grijelmo), y si choca con marcas, dominios o handles. Lo que no puedas verificar va con [EVIDENCIA PENDIENTE].
 6. **Presentar en uso.** Una shortlist de 3 a 5 candidatos de territorios distintos. Cada uno se muestra dicho en frases reales (un saludo, una firma, un titular, la línea del colofón), no explicado. La explicación va al final y en una sola línea. Agrega los 10 mejores descartados con el motivo en una frase, para que Alan vea el rango.
 
