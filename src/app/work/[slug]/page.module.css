@@ -1,4 +1,4 @@
-/* Case-study template (proposal, no Figma frame yet): header → cover → ToC + article → related. */
+/* Case-study template (Figma 52:426; fact sheet option B 184:583): header → cover → ToC + article → related. */
 .page {
   display: flex;
   flex-direction: column;

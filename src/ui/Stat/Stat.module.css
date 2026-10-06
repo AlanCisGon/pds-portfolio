@@ -1,9 +1,8 @@
 /* Stat · Figma 02b Content (177:92). */
 .stat {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
   min-width: 0;
+  padding-top: var(--space-16); /* Divider → body, as in Figma */
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .body {

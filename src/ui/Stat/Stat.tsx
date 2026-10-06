@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { Badge } from "../Badge";
-import { Divider } from "../Divider";
 import { VisuallyHidden } from "../VisuallyHidden";
 import styles from "./Stat.module.css";
 
@@ -24,6 +23,7 @@ export type StatProps = {
 };
 
 /**
+ * The top rule is decorative (border-top, Figma Divider 29:4), so screen readers don't announce a separator per Stat.
  * Evidence: increment + unit + what was measured + period · source (Figma 02b, 177:92).
  * Honesty lives in the API: without value, period or source it shows the pending Badge instead of a number.
  * ≠ FactSheet (case data) ≠ Table (many rows). Not interactive.
@@ -40,7 +40,6 @@ export function Stat({
   const complete = Boolean(value && period && source);
   return (
     <div className={styles.stat} data-evidence={complete ? "complete" : "pending"}>
-      <Divider />
       <div className={styles.body}>
         {complete ? (
           <>
