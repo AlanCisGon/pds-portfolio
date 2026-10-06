@@ -1,6 +1,6 @@
 ---
 title: "Building this portfolio with my AI design team"
-client: "Personal project"
+client: "Somara Studio"
 publishedAt: "2026-10-04"
 summary: "How my AI design team and I turned a template fork into a site with its own design system in three days, one tested change at a time and with no invented metrics."
 tags:
@@ -47,13 +47,44 @@ This is the first product where I am the client, the designer and the material a
 
 ## Role and team
 
-The team is me and four AI agents, each defined in the repository with its own role, sources of truth and limits:
+<TeamGrid
+  humanLabel="Human · makes the calls"
+  human={{
+    name: "Alan",
+    role: "Owns the project, leads design",
+    description: "Defines the brand, the tokens and the rules. Answers the interviews, makes the calls and approves every change.",
+    avatar: "/images/avatar.jpg",
+  }}
+  agentsLabel="Somara Studio · AI agents"
+  agents={[
+    {
+      name: "Tenoch",
+      role: "Orchestrates and codes",
+      description: "Writes the code, runs the checks and opens one reviewable change for every improvement, then routes work to the team.",
+      avatar: "/images/team/tenoch.webp",
+    },
+    {
+      name: "Clara",
+      role: "Keeps the design system",
+      description: "Maintains variables, styles and components in Figma, gives the brand its visual form, and designs around what I need as the client.",
+      avatar: "/images/team/clara.webp",
+    },
+    {
+      name: "Ameyali",
+      role: "Writes and interviews",
+      description: "Interviews me, writes in my voice from what I answer, and keeps every word true to my brand.",
+      avatar: "/images/team/ameyali.webp",
+    },
+    {
+      name: "Julieta",
+      role: "Builds the backlog with Tenoch",
+      description: "Works alongside Tenoch to turn what’s ahead into clear issues in the backlog, and shares the credit for writing them.",
+      avatar: "/images/team/julieta.webp",
+    },
+  ]}
+/>
 
-- **Me (Alan), project owner and lead designer:** I own the brand guidelines and the product decisions. I designed the design system under a delegated UI model: I defined the tokens, the rules, which components the site needed and every decision about them; the team built it in Figma and in code, and I approved each piece. I answered the content interview behind every piece of copy, and I chose the authors behind each agent's judgment.
-- **Tenoch (AI agent, orchestrator and developer):** writes the code, runs the checks, opens a pull request per change with a Vercel preview, and hands design, content and discovery to the others.
-- **Clara (AI agent, design system designer):** maintains the system in Figma and reports drift between Figma and code. She can read the repository but not write to it, so her proposals reach the code through Tenoch.
-- **Ameyali (AI agent, writer and editor):** writes case studies and site copy in my voice, interviews me for evidence and marks what's missing instead of filling the gap. She drafted this case study.
-- **Julieta (AI agent, product strategist):** the newest member. So far she has worked alongside Tenoch, and the two share credit for writing the issues in the project backlog.
+Each agent is defined in the repository with its own role, sources of truth and limits. I designed the design system under a delegated UI model: I decided which components the site needed and every detail about them, the team built them in Figma and in code, and I approved each piece. I also chose the authors behind each agent’s judgment. Clara can read the repository but not write to it, so her proposals reach the code through Tenoch. Ameyali drafted this case study.
 
 ## The challenge
 
