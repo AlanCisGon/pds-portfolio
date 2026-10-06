@@ -39,7 +39,7 @@ team:
 
 On October 2, 2026, alancisneros.design was a fork of the Magic Portfolio template, built on the Once UI library. By October 3 it no longer depended on Once UI: the site ran on 25 components of its own, designed in Figma and sharing the same token names in Figma and in CSS. On October 4 we rewrote the copy from a content interview and tuned performance and accessibility.
 
-I built it with four AI agents: Tenoch, Clara, Ameyali and Julieta. From the first day I worked with Claude Code on three fronts: code, the design system and content. On October 4 each front got a name; on October 5 a fourth agent joined for strategy, and the team became Somara Studio.
+I built it with four AI agents: Tenoch, Clara, Ameyali and Julieta. From the first day I worked with Claude Code on three fronts: code, the design system and content. On October 4 each front got a name; on October 5 a fourth agent joined, and the team became Somara Studio.
 
 <Callout tone="info" title="Who “we” is in this case study">
   Tenoch, Clara, Ameyali and Julieta are **AI agents** (Claude Code) that I designed and direct. Together they are Somara Studio. They are not people, and they never present themselves as people. I define the brand, answer the interviews, make the decisions and approve every merge.
@@ -55,7 +55,7 @@ The team is me and four AI agents, each defined in the repository with its own r
 - **Tenoch (AI agent, orchestrator and developer):** writes the code, runs the checks, opens a pull request per change with a Vercel preview, and hands design, content and discovery to the others.
 - **Clara (AI agent, design system designer):** maintains the system in Figma and reports drift between Figma and code. She can read the repository but not write to it, so her proposals reach the code through Tenoch.
 - **Ameyali (AI agent, writer and editor):** writes case studies and site copy in my voice, interviews me for evidence and marks what's missing instead of filling the gap. She drafted this case study.
-- **Julieta (AI agent, product strategist):** owns discovery and strategy: what's worth building, and what we won't build.
+- **Julieta (AI agent, product strategist):** the newest member. So far she has worked alongside Tenoch, and the two share credit for writing the issues in the project backlog.
 
 ## The challenge
 
@@ -97,37 +97,31 @@ You can see them at work on this site: a headline about balancing business, tech
 
 ### Giving the team a shape
 
-On October 4 the three fronts became Tenoch, Clara and Ameyali, each with a file that sets its role, its sources of truth, what it may touch and what it must hand off. On October 5 Julieta joined, because nobody owned the question that comes before all the others: is this worth building?
+On October 4 the three fronts became Tenoch, Clara and Ameyali, each with a file that sets its role, its sources of truth, what it may touch and what it must hand off. On October 5 Julieta joined, and she and Tenoch started turning the work ahead into issues in the backlog.
 
 All four share a personality training: a six-step method, a list of banned words and visual defaults, and seven tests every piece passes before delivery. Every personality decision has to be one a person made, for a reason.
 
 Limits mattered as much as roles. Clara now works only in Figma, with no way to edit code or docs. Each agent gets the tools its job needs and nothing more.
 
-### When the names were too literal
+### Finding a name
 
-On October 5 the team needed a name for the project board, the site's colophon and this case study. Ameyali brought two: Veta, the grain of the wood, and Tequio, the Mexican tradition of communal work. Both translated a trait literally, and both needed an explanation to work. I turned them down:
+On October 5 the team needed a name for the project board, the site's colophon and this case study. It took four rounds, and each one sharpened the method. Ameyali gained a professional naming process: a brief before any words, strategic territories instead of metaphors, dozens of candidates before judging one, and a short list shown in real sentences.
 
-> “Your proposals are super basic. They make first-grade analogies. I need professionals in branding and writing.”
->
-> — Me, translated from Spanish
-
-The failure had two causes. Ameyali had no naming method, and Tenoch's brief asked for exactly two names, each justified by a passage from the guidelines, which pushed her toward the literal. We fixed both. Ameyali got a professional naming process: a brief first, territories instead of metaphors, dozens of candidates before judging one, and a short list shown in real sentences.
-
-Three more rounds followed. After the second, about 60 candidates, I sharpened the brief: the name belongs to the agents, doesn't carry my surname, and works the same in English and Spanish. The third left one survivor, and it felt cold. The fourth asked for invented names with warmth. One stayed:
+The brief grew too. In the second round, with about 60 candidates, I set its edges: the name belongs to the agents, doesn't carry my surname, and works the same in English and Spanish. The third round showed we needed warmth. The fourth asked for invented names that carried it. One stood out:
 
 > “I love Somara Studio.”
 
-It's a coined word, built on the sound of *somos*, Spanish for "we are." It needs no explanation to work.
+It's a coined word, built on the sound of *somos*, Spanish for “we are.” It needs no explanation to work.
 
-### Rules for changing the rules
+### How the team's judgment grows
 
-The rejection exposed a second risk. After a bad delivery, the quick fix is one more rule in the agent's file, and left alone those files fill with patches that contradict each other. So I set how the agents' judgment may change:
+As the method grew, so did a question: how should an agent's judgment change over time? Rules added one at a time can end up contradicting each other, so I set how they change:
 
 - No agent edits its own criteria; I approve every change in a pull request.
-- Every rule names its incident and its counterweight, and a single mistake is fixed in the delivery, not with a new rule.
+- Every rule names the case that motivated it and its counterweight, the “but not” that keeps it balanced.
 - Each agent file is capped at 180 lines. If a rule doesn't fit, another one goes.
 
-Each change is tested against cases I approved or rejected. The rejected names are case 0001.
+Each change is tested against real cases with my verdict. The naming rounds are the first.
 
 ### Borrowed judgment, with credit
 
@@ -136,13 +130,13 @@ The agents' judgment doesn't come from the model's average. It comes from people
 - **Tenoch** builds with Fred Brooks's conceptual integrity, so the site feels made by one mind, and with Heydon Pickering and Kat Holmes, so every technical decision asks whom it leaves out. Kim Scott's *Radical Candor* shapes how he gives feedback: specific, direct and with a way forward.
 - **Clara** works from Alla Kholmatova, Brad Frost, Nathan Curtis and Jina Anne. That's where her rule comes from: if it doesn't have a token, it doesn't exist yet.
 - **Ameyali** writes with Ursula K. Le Guin's ear for rhythm, Italo Calvino's exactness and Augusto Monterroso's economy. In English her voice is E.B. White; in Mexican Spanish, Jorge Ibargüengoitia.
-- **Julieta** thinks with Richard Rumelt, Teresa Torres and Marty Cagan: a diagnosis before any solution, and a small test for each assumption before anyone builds.
+- **Julieta**'s library starts with Richard Rumelt, Teresa Torres and Marty Cagan.
 
 The names honor people and places too. Tenoch is the leader who, in Mexica tradition, guided his people to found Tenochtitlan. Clara is a nod to Clara Porset, the designer who reworked the traditional Mexican butaque with modern principles. Julieta is for Julieta Fierro, the Mexican astronomer who explains what's far away in plain words; she is alive, so the agent never speaks for her. Ameyali comes from the Nahuatl *ameyalli*, a spring.
 
-{/* [EVIDENCIA PENDIENTE]: por qué Alan eligió a estos autores y estos nombres; una escena o historia propia con alguno de ellos. Si la hay, va aquí, en una o dos oraciones. */}
+Some of these choices are personal. Julieta Fierro and Clara Porset, the women behind two of the names, are references of mine, and so is Jorge Ibargüengoitia, whose clear, unsolemn Spanish became Ameyali's voice in that language. One more reference stays outside the agents' libraries and is only mine: Jon Yablonski's *Laws of UX*.
 
-When an agent makes a call, I can trace it to a person and a page, and give that person credit. A team made of AI can still owe its judgment to people.
+I chose every author from a list, and that choice is the point. When an agent makes a call, I can trace it to a person and a page, check it, and give that person credit. A team made of AI can still owe its judgment to people, and stay accountable to one.
 
 ### The hardest decision
 
@@ -151,9 +145,9 @@ The hardest call wasn't technical. It was creating my brand and then living by i
 Holding to them meant taking out pieces that didn't fit:
 
 - **The blog, the gallery and the newsletter.** They came with the template, but nothing in them was evidence of how I work.
-- **The "+12% est." conversion figure.** It contradicted the measured one (+2 pp), and an estimate next to a measurement erodes trust in both.
-- **Inflated titles.** Six job titles, among them "Strategic UX & Service Design Leader". Now there is one, Senior Product Designer.
-- **CV jargon.** Phrases like "exceptional digital experiences" could have been signed by any designer. We replaced them with what I actually did, where and for whom.
+- **The “+12% est.” conversion figure.** It contradicted the measured one (+2 pp), and an estimate next to a measurement erodes trust in both.
+- **Inflated titles.** Six job titles, among them “Strategic UX & Service Design Leader.” Now there is one, Senior Product Designer.
+- **CV jargon.** Phrases like “exceptional digital experiences” could have been signed by any designer. We replaced them with what I actually did, where and for whom.
 
 A brand I don't apply to my own site is just a document. Respecting my own limits made the site smaller, and I trust it more.
 
@@ -162,7 +156,7 @@ A brand I don't apply to my own site is just a document. Respecting my own limit
 - **Our own design system.** 25 components in `src/ui`, built with CSS Modules and tokens and documented in `docs/design-system.md`. The site is dark only, as the brand defines.
 - **No dependency on Once UI.** As of October 3, a search for Once UI imports in the code returns nothing.
 - **A voice for the brand.** Newsreader now carries editorial headlines and quotes; Geist Sans and Geist Mono carry the interface and the data.
-- **Copy from evidence.** We audited every page against the brand guidelines, I answered an interview with dates, roles and metric sources, and we rewrote the copy from those answers. One title everywhere (Senior Product Designer), my city instead of a time zone, and no "+12% est." figure.
+- **Copy from evidence.** We audited every page against the brand guidelines, I answered an interview with dates, roles and metric sources, and we rewrote the copy from those answers. One title everywhere (Senior Product Designer), my city instead of a time zone, and no “+12% est.” figure.
 - **Accessible text in the site's language.** The components' screen reader labels moved from Spanish to English, to match the page.
 - **A team with written judgment.** Four agents, each with a role, limits and a library of authors; a shared personality training; rules for changing their criteria; and a calibration set to test those changes.
 - **Faster main image.** The largest image on the case study pages now loads with high priority.
@@ -188,7 +182,7 @@ All the components are gathered in a private catalog at `/lab/ui`.
 - **Tooling (Oct 4, #34):** working lint, line endings and formatter cleanup.
 - **Security update (#35):** Next.js update.
 - **Clara in Figma only (#38).**
-- **Oct 5:** Julieta joins; languages (ADR 0001); the last 9 Biome findings resolved (#72); naming method (#74); governing the agents' criteria (ADR 0002, #75); team name, Somara Studio (ADR 0003, #76).
+- **Oct 5:** Julieta joins; languages (ADR 0001); the last 9 Biome findings resolved (#72); a naming method for Ameyali (#74); how the agents' criteria change (ADR 0002, #75); team name, Somara Studio (ADR 0003, #76).
 
 </Accordion>
 
@@ -217,7 +211,7 @@ These are lab measurements (Lighthouse, mobile) unless the table says otherwise.
       { metric: "LCP for real visitors, mobile", result: "Not measured yet", source: "Field LCP needs a paid Speed Insights plan" },
       { metric: "Job titles across the site", result: "6 → 1", source: "Content audit, Oct 3 → Oct 4" },
       { metric: "Formatter warnings", result: "1,479 → 0", source: "Biome, Oct 4 → Oct 5 (#72)" },
-      { metric: "Team name", result: "2 names rejected → 1 approved after 4 rounds", source: "Calibration case 0001 and ADR 0003, Oct 5" },
+      { metric: "Team name", result: "Somara Studio, approved after 4 rounds", source: "ADR 0003, Oct 5" },
     ],
   }}
 />
@@ -228,10 +222,10 @@ What we haven't measured yet: whether recruiters find my role and contact faster
 
 - **A brand only counts when it says no.** The guidelines became useful the moment they made me remove things I liked. Having the reason written down is what let me hold the line.
 - **Empower the agents, keep the guardrails.** Speed came from giving each agent real autonomy in its front. What made that safe was the frame: the tools each role needs and no more, a reviewable pull request for every change, and my approval before production. Autonomy, audit and control have to be designed together.
-- **Half of a bad delivery is the brief.** What changed the names was a brief with explicit constraints (language, warmth, who the name includes), and Ameyali's questions about it helped more than any new rule.
+- **A good brief and a method make the difference.** The name arrived once the brief had explicit constraints (language, warmth, who the name includes) and the method had room to explore. Ameyali's questions about the brief did more than any new rule.
 - **Judgment needs an author.** Without named authors, an agent's judgment is the model's average. With them, I can see where a call came from, question it, and credit the person behind it.
 - **A fix that works on one page can do nothing on another.** Loading the main image with high priority took the case study's LCP from 3.77 s to 2.12 s in the lab, and didn't move Home at all. An earlier font experiment didn't help either, and we reverted it. Reverting is a valid outcome.
-- **AI keeps the "don't invent" rule only if the evidence exists.** The content audit couldn't rewrite my case studies until I answered its questions with dates, roles and sources. The evidence has to come from me.
+- **AI keeps the “don't invent” rule only if the evidence exists.** The content audit couldn't rewrite my case studies until I answered its questions with dates, roles and sources. The evidence has to come from me.
 - **It's too early to judge the team's shape.** The calibration set holds one case, and I don't have evidence yet that four agents with defined roles work better than one general session. That's what we'll watch next.
 
 ---
