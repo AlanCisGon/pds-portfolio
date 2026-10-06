@@ -7,15 +7,16 @@ import styles from "./Header.module.css";
 
 export type HeaderProps = {
   items: Array<{ href: string; label: string; icon: ReactNode }>;
-  /** Shown on the left (desktop), e.g. "América/Mazatlán". */
-  location: string;
-  /** IANA time zone for the local clock on the right. */
-  timeZone: string;
+  /** Optional, shown on the left (desktop). The site leaves it empty: location lives in the colophon. */
+  location?: string;
+  /** Optional IANA time zone for a local clock on the right. Omit it for no clock. */
+  timeZone?: string;
 };
 
-function useClock(timeZone: string) {
+function useClock(timeZone?: string) {
   const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
+    if (!timeZone) return;
     const fmt = new Intl.DateTimeFormat("es-MX", {
       hour: "2-digit",
       minute: "2-digit",
@@ -30,7 +31,7 @@ function useClock(timeZone: string) {
   return time;
 }
 
-/** Site header: location · pill navigation · local time. No theme toggle (dark only). */
+/** Site header: pill navigation, centered. Optional location and clock on the sides (empty cells keep the nav centered). */
 export function Header({ items, location, timeZone }: HeaderProps) {
   const pathname = usePathname();
   const time = useClock(timeZone);
@@ -39,7 +40,7 @@ export function Header({ items, location, timeZone }: HeaderProps) {
 
   return (
     <header className={styles.header}>
-      <p className={styles.location}>{location}</p>
+      <p className={styles.location}>{location ?? ""}</p>
       <nav aria-label="Main">
         <ul className={styles.nav}>
           {items.map((item) => (
@@ -55,9 +56,7 @@ export function Header({ items, location, timeZone }: HeaderProps) {
           ))}
         </ul>
       </nav>
-      <p className={styles.time}>
-        <time>{time ?? "--:--"}</time>
-      </p>
+      <p className={styles.time}>{timeZone && <time>{time ?? "--:--"}</time>}</p>
     </header>
   );
 }
