@@ -110,9 +110,10 @@ We followed Lean UX and wrote the rules down in the repository, so both people a
 
 Before designing every foundation, we tested the full Figma-to-code cycle with the smallest component on the site, the `Tag` in the About skills. The variables came back from Figma with the exact names in `tokens.css`, and the build matched the frame. The test also exposed friction we fixed before scaling, like a component that mixed informative and interactive behavior and had to become two (`Tag` and `Chip`).
 
+
 ### Prune before migrating
 
-Next we deleted what the brand didn't need: the template's blog with its 11 sample posts, the gallery, a newsletter form and a client-side password gate. That gate turned out to be the cause of the layout shift: it painted a spinner first and then the content, pushing the footer down. Removing it took CLS from 0.225 to 0.013 on Home (lab).
+Next we deleted what the brand didn't need: the template's blog with its 11 sample posts, the gallery, a newsletter form and a password screen that came with the template. That screen turned out to be the cause of the layout shift: it painted a spinner first and then the content, pushing the footer down. Removing it took CLS from 0.225 to 0.013 on Home (lab).
 
 ### Change the route mid-plan
 
@@ -120,7 +121,8 @@ The plan still had six increments to replace Once UI piece by piece. Once the 25
 
 ### The brand comes first, for everyone
 
-I wrote my brand guidelines on October 2, the day the migration started. They stay private, outside this public repository. Every agent reads them before it starts working, raises conflicts instead of settling them quietly, and can propose a change to them but never make it.
+
+I wrote my brand guidelines on October 2, the day the migration started. Every agent reads them before it starts working, raises conflicts instead of settling them quietly, and can propose a change to them but never make it.
 
 You can see them at work on this site: a headline about balancing business, technology, product and design; a dark interface with a single warm color, used only where the hand goes (buttons, links, focus); a serif kept for headlines and quotes; and no number without a source.
 
@@ -183,16 +185,14 @@ A brand I don't apply to my own site is just a document. Respecting my own limit
 - **Faster main image.** The largest image on the case study pages now loads with high priority.
 - **Tooling that works.** A lint setup that had been broken now runs, line endings are consistent, and formatter warnings dropped from 1,479 to 0.
 
-All the components are gathered in a private catalog at `/lab/ui`.
-
 ![Component catalog: buttons, links, navigation and chips from the design system](/images/projects/portfolio/component-catalog.webp)
 
 <Accordion title="Every increment, in order">
 
 - **T0 (Oct 2):** `Tag`, first Figma-to-code test.
 - **I0 (Oct 2):** shared tokens in Figma and code, plus a Lighthouse baseline.
-- **I1 (Oct 2):** pruning: blog, gallery, newsletter and password gate removed.
-- **Steps A to E (Oct 2–3):** own dark-only shell (#21); Work (#22); Home, About and 404 (#23); closing without Once UI (#24); the Lab index on the new system (#25); last template pieces rewritten (#26).
+- **I1 (Oct 2):** pruning: blog, gallery, newsletter and the template's password screen removed.
+- **Steps A to E (Oct 2–3):** own dark-only shell (#21); Work (#22); Home, About and 404 (#23); closing without Once UI (#24); last template pieces rewritten (#26).
 - **F1 (Oct 4, #27):** Newsreader as the brand's voice.
 - **F2 (Oct 4, #28):** accessibility text in English.
 - **Content rewrite (Oct 4, #29):** copy rebuilt from the content interview.
