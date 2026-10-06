@@ -11,7 +11,7 @@ I believe good product design balances business, technology, product and design,
 ## How it's built
 
 - **Next.js 16** (App Router), **React 19** and strict **TypeScript**, deployed on **Vercel**.
-- **Its own design system** in `src/ui`: components written with CSS Modules on top of design tokens (`src/styles/tokens.css`). Dark mode only.
+- **Its own design system, the Somara Design System (SDS)**, in `src/ui`: components written with CSS Modules on top of design tokens (`src/styles/tokens.css`). Dark mode only.
 - **Figma is the source of truth for visuals; code is the source of truth for behavior.** Figma variables use the same names as the CSS custom properties, so a token means the same thing in both places.
 - **Type:** Geist Sans and Geist Mono for the system, Newsreader for editorial headlines and quotes. **Icons:** Iconoir, plus Simple Icons for tool logos.
 - **Content:** case studies are MDX files in `src/app/work/projects/`; the rest of the copy lives in `src/resources/content.tsx`.

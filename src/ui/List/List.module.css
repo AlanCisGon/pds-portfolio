@@ -6,7 +6,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: pds-list;
+  counter-reset: sds-list;
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   font-size: var(--text-body-m-size);
@@ -17,7 +17,7 @@
   display: grid;
   grid-template-columns: var(--space-16) 1fr;
   column-gap: var(--space-8);
-  counter-increment: pds-list;
+  counter-increment: sds-list;
 }
 
 .item::before {
@@ -29,5 +29,5 @@ ul.list > .item::before {
 }
 
 ol.list > .item::before {
-  content: counter(pds-list) ".";
+  content: counter(sds-list) ".";
 }

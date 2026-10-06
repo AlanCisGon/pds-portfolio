@@ -29,7 +29,7 @@ import type { Metadata } from "next";
 import { ChipDemo } from "./ChipDemo";
 import styles from "./page.module.css";
 
-// Private component catalog (behind /lab Basic Auth). Compare against Figma: PDS · Portfolio Design System.
+// Private component catalog (behind /lab Basic Auth). Compare against Figma: SDS · Somara Design System.
 export const metadata: Metadata = { title: "Lab · UI", robots: { index: false, follow: false } };
 
 const nav = [
