@@ -105,7 +105,7 @@ const about: About = {
         achievements: [
           "Led a team of 6 (3 UI, 2 UX, 1 UX writer) through the cart and checkout redesign during the Salesforce Commerce Cloud migration: web conversion +2 pp (digital analytics, Jan 2026, 4 months after launch).",
           "With the team, designed and launched Motorcycle Insurance, Extended Warranties and Recurring Shipping (web and app): average ticket +25% (BI, Jan 2026).",
-          "Removed the Order Review step and rewrote card BIN messaging, which let us move card payments to a secure iFrame: Dynamic CVV2 rejections −60% (Operations, Jan 2026).",
+          "Removed the Order Review step and rewrote card BIN messaging, which let us move card payments to a secure iFrame: dynamic CVV rejections −60% (Operations, Jan 2026).",
           "Brought Design System standards to the “Coppel Soluciones” landing pages and in-store systems: +80% adoption across operations teams (Jan 2026).",
           "Set up UX metrics tracking for the Purchase team: usability (SUM), accessibility (Lighthouse, axe), NPS (Medallia), CSAT, task completion and drop-off.",
         ],
