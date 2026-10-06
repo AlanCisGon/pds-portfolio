@@ -26,6 +26,6 @@
 - **Rendimiento:** Amstelvar se sirve como un subconjunto latino con solo los ejes `wght` (300–700) y `opsz`: 75 KB la romana y 78 KB la itálica, que no se precarga. Pesaba 1.4 MB con sus 12 ejes. Host Grotesk y Chivo Mono llegan por `next/font/google`.
 - **Imagen OG:** usa TTF estáticos en `src/assets/og/`.
 - **Dependencias:** sale el paquete `geist`.
-- **Figma:** Clara ya aplicó Host Grotesk y Chivo Mono. Los estilos `Voice/*` quedan bloqueados hasta que Alan instale Amstelvar v1.000 en su equipo, porque Figma solo tiene la versión alfa, sin acentos.
+- **Figma:** los estilos `System/*` y `Measure/*` ya usan Host Grotesk y Chivo Mono; Clara los revisó y corrigió los textos sueltos. Los estilos `Voice/*` quedan bloqueados hasta que Alan instale Amstelvar v1.000 en su equipo, porque Figma solo tiene la versión alfa, sin acentos.
 - **Guía de marca:** §14 nombra las fuentes anteriores y solo Alan la edita. Ameyali propuso una redacción por función para que Alan la revise.
 - **Reversible:** cambiar una familia es cambiar `src/styles/fonts.ts` y las tres variables `--font-*`. Clara propone crear también variables de familia en Figma para que el próximo cambio sea un solo valor.
