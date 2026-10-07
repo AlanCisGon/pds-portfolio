@@ -1,14 +1,20 @@
 [
   {
+    "slug": "como-trabajamos",
+    "title": "Cómo trabajamos cuando les hablo",
+    "description": "La historia de Somara Studio en cinco escenas: de lo que Alan dice al cambio en el sitio.",
+    "createdAt": "2026-10-06"
+  },
+  {
     "slug": "ux-strategy",
-    "title": "UX Strategy — Grafo Rizomático",
-    "description": "Grafo interactivo de UX Strategy: 40 nodos, 70+ conexiones, 10 categorías.",
+    "title": "Grafo rizomático de UX Strategy",
+    "description": "41 conceptos, 10 categorías y 3 tipos de relación, con fuentes verificadas. Se explora por vecindario en el teléfono.",
     "createdAt": "2026-03-27"
   },
   {
     "slug": "ui",
     "title": "Catálogo de componentes",
-    "description": "Los 25 componentes del sistema de diseño (grupos 02a–02e de Figma) en código, con sus estados.",
+    "description": "Los 27 componentes del Somara Design System en código, con sus estados.",
     "createdAt": "2026-10-03",
     "href": "/lab/ui"
   }
