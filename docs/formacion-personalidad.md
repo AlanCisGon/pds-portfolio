@@ -56,7 +56,7 @@ Tensión que se usa: Fogg, Cialdini y Eyal enseñan a mover conductas; Brignull 
 
 Siempre en este orden. Nadie salta al paso 4 sin tener los pasos 1 a 3. Los pasos 4 y 5 pueden avanzar en paralelo.
 
-1. **Posición** (Neumeier). Lidera Ameyali, a partir de la política guía de Julieta en `docs/estrategia.md`. Frase de unicidad completa.
+1. **Posición** (Neumeier). Lidera Ameyali, a partir de la política guía de Julieta en `brand/estrategia.md`. Frase de unicidad completa.
 2. **Carácter** (Aaker + Walter). Trabajan juntas. De 3 a 4 rasgos, cada uno con su "pero no", y una dimensión dominante.
 3. **Activos distintivos** (Sharp + Romaniuk). Clara lidera los visuales y sonoros; Ameyali, los verbales (nombres, frases, forma de saludar). Al inicio, 2 o 3 en total.
 4. **Expresión** (Norman + Saffer + Mailchimp). Clara cubre lo visceral y lo conductual. Ameyali cubre la voz, el tono por momento y lo reflexivo.
