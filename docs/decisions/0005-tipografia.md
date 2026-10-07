@@ -14,7 +14,7 @@
 
 | Rol | Antes | Ahora | Función |
 |---|---|---|---|
-| Interfaz (`System/*`, `--font-sans`) | Geist Sans | **Host Grotesk** | Neogrotesca legible en 12 a 16 px, neutra para no competir con la voz. |
+| Interfaz (`System/*`, `--font-sans`) | Geist Sans | **Host Grotesk** | Cada letra mide lo mismo en todos los pesos (el texto no reacomoda la línea al cambiar de peso); legible en 12 a 16 px y neutra para no competir con la voz. |
 | Voz (`Voice/*`, `--font-serif`) | Newsreader | **Amstelvar v1.000** | Serif variable con tamaño óptico (8–144): un solo archivo para titulares y citas. Tiene itálica real para `quote`. |
 | Medida (`Measure/*`, `--font-mono`) | Geist Mono | **Chivo Mono** | Monoespaciada para cifras, metadatos y código; mismo ancho de carácter que Geist Mono, así que la retícula no cambia. Viene de Omnibus-Type (Buenos Aires). |
 

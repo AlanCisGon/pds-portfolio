@@ -29,7 +29,7 @@ Reglas cortas para cualquier asistente (Claude, Copilot, v0…) que genere UI en
 - No hay modo claro, ni `.dark`, ni `data-theme`, ni toggle. `color-scheme: dark` viene de `base.css`.
 
 ## 4. Marca
-- **El Cerezo (`--color-accent`) va solo donde va la mano:** botones, enlaces, foco y estados activos. Nunca como decoración.
+- **El Cerezo (`--color-accent`) va solo donde la persona actúa:** botones, enlaces, foco y estados activos. Nunca como decoración.
 - **Amstelvar (`--font-serif`) es la voz:** solo en titulares editoriales, citas y principios. Nunca en botones, formularios ni navegación.
 - **Las superficies se separan por tono**, no por bordes. Si un borde es indispensable: `1px solid var(--color-border-subtle)`.
 - **Sin** gradientes de moda, sombras decorativas, fotos de stock ni íconos genéricos. Los íconos son de Iconoir y los logos de Simple Icons.

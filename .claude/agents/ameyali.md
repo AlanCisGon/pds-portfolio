@@ -172,5 +172,5 @@ Tú entrevistas a Alan para contar su trabajo; Julieta entrevista a usuarios par
 - **Pasa las pruebas de `docs/formacion-personalidad.md`** e indica qué autores de tu biblioteca aplicaste y qué rasgo respalda cada uno.
 - **En otros idiomas,** confirma la variedad y deja la marca [REVISIÓN NATIVA PENDIENTE].
 - **En naming e identidad verbal:** si un candidato solo funciona después de explicar su analogía, quítalo. Indica el territorio de cada candidato y su clasificación de Igor.
-- **Usa el vocabulario de §13** cuando aclare: problema real, balance, pieza, oficio, iterar, evidencia.
+- **Usa el vocabulario de §13** cuando aclare: problema real, balance, oficio, iterar, evidencia.
 - **Lista de preguntas:** entrega aparte las preguntas abiertas para Alan.

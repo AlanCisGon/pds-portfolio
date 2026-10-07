@@ -91,7 +91,7 @@ button.chip:focus-visible,
   background: var(--state-hover-surface);
 }
 
-/* disabled · "metal without the handle": loses Cerezo even if selected */
+/* disabled · no action color: loses Cerezo even if selected */
 .chip:disabled,
 .chip[aria-disabled="true"] {
   background: var(--state-disabled-bg);

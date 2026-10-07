@@ -46,7 +46,7 @@
   outline-offset: 2px;
 }
 
-/* primary · Cerezo: where the hand goes */
+/* primary · Cerezo: where people act */
 .button[data-variant="primary"] {
   background: var(--color-accent);
   color: var(--color-on-accent);
@@ -79,7 +79,7 @@
   background: var(--state-pressed-surface);
 }
 
-/* disabled · "metal without the handle": no Cerezo, no hover, no motion */
+/* disabled · no action color: no Cerezo, no hover, no motion */
 .button:disabled,
 .button[aria-disabled="true"] {
   background: var(--state-disabled-bg);

@@ -42,7 +42,7 @@
   outline-offset: 2px;
 }
 
-/* current page: tonal surface + Cerezo icon (active state = where the hand goes) */
+/* current page: tonal surface + Cerezo icon (active state = where people act) */
 .navItem[data-selected] {
   background: var(--color-bg-elevated);
   color: var(--color-text-primary);

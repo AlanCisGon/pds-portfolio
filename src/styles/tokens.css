@@ -26,7 +26,7 @@
   /* Borders only when indispensable: surfaces separate by tone, not lines. */
   --color-border-subtle: color-mix(in srgb, var(--palette-aluminio) 12%, transparent);
 
-  /* The only warm color, and only where the hand goes: buttons, links, focus, active states. */
+  /* The only warm color, and only where people act: buttons, links, focus, active states. */
   --color-accent: var(--palette-cerezo); /* 5.68:1 on page · avoid on elevated (4.58:1) */
   --color-accent-hover: color-mix(in oklab, var(--palette-cerezo) 85%, var(--palette-niebla)); /* ≈ #D78667 */
   --color-accent-pressed: color-mix(in oklab, var(--palette-cerezo) 92%, var(--palette-titanio)); /* ≈ #C06B4A */
@@ -35,7 +35,7 @@
   --color-on-accent-strong: var(--palette-niebla); /* 6.32:1 */
   --color-focus-ring: var(--palette-cerezo);
 
-  /* ── States · interaction (≠ status). Disabled = "metal without the handle": the warmth leaves ──
+  /* ── States · interaction (≠ status). Disabled = no action color: the warmth leaves ──
    * WCAG exempts inactive controls from contrast, but they stay perceivable (~3:1 on page)
    * and clearly dimmer than secondary text (2×). No hover, press or motion while disabled.
    */
