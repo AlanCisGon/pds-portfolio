@@ -48,10 +48,6 @@ npm run biome-write    # format with Biome
 
 `/lab` is a private section behind HTTP Basic Auth. To open it locally, set `LAB_USER` and `LAB_PASSWORD` in `.env.local`. If either one is empty, `/lab` stays closed and returns a 503. Everything else works without environment variables.
 
-## Credits
-
-This project started as a fork of [Magic Portfolio](https://github.com/once-ui-system/magic-portfolio) by Lorant One ([Threads](https://www.threads.net/@lorant.one) · [LinkedIn](https://www.linkedin.com/in/lorant-one/)), built with Once UI. Thank you for the starting point. On October 2–3, 2026 I finished migrating it to my own design system, and it no longer depends on Once UI.
-
 ## License
 
 - **Code** is under the [MIT License](LICENSE): use it, adapt it and build on it freely, as long as you keep the copyright notice.
