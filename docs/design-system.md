@@ -16,12 +16,12 @@ Sistema de diseño de Somara Studio (ADR 0004), **solo para alancisneros.design*
 | Espaciado | Escala de 8, con **4 px solo dentro de componentes pequeños** | La marca pide densidad laxa en escala de 8; el 4 resuelve piezas como tags e ícono + texto. |
 | Escala tipográfica | Propuesta v0.1, abajo | La marca define familias, no tamaños. Pendiente de validar en Figma. |
 | Color contextual | **Capa aparte, arriba de las foundations**: estatus (`--status-*`) y 12 tonos categóricos (`--ctx-*`) | Excepción explícita y acotada a "un solo color cálido": nunca interactiva, en dosis pequeñas, nunca solo color. Ver [Capa contextual](#capa-contextual). |
-| Deshabilitado | **"Metal sin mango"**: fondo Acero y texto Aluminio al 65 % hacia Titanio, sin Cerezo | El Cerezo marca donde va la mano; un control deshabilitado pierde la madera. Sin colores nuevos. Ver [Estados de interacción](#estados-de-interacción). |
+| Deshabilitado | **Sin color de acción**: fondo Acero y texto Aluminio al 65 % hacia Titanio, sin Cerezo | El Cerezo marca donde la persona actúa; si no puede actuar, el control pierde el Cerezo. Sin colores nuevos. Ver [Estados de interacción](#estados-de-interacción). |
 | Íconos | **Iconoir** para interfaz + **Simple Icons** para logos | Iconoir obtuvo la mejor puntuación contra los criterios de marca y se mantiene activo. Los logos identifican herramientas, así que no cuentan como íconos genéricos. Ver [Iconografía](#iconografía). |
 
 ## Reglas de uso (de la marca)
 
-1. **Frío por estructura, cálido por contacto.** Los fríos construyen la estructura. El Cerezo es el único color cálido y aparece **solo donde va la mano**: botones, enlaces, foco y estados activos. Nunca como decoración. La única excepción son los colores de la [capa contextual](#capa-contextual), que nunca son interactivos.
+1. **Frío por estructura, cálido por contacto.** Los fríos construyen la estructura. El Cerezo es el único color cálido y aparece **solo donde la persona actúa**: botones, enlaces, foco y estados activos. Nunca como decoración. La única excepción son los colores de la [capa contextual](#capa-contextual), que nunca son interactivos.
 2. **La serif es la voz.** Amstelvar solo en titulares editoriales, citas y principios. **Nunca** en botones, formularios ni navegación.
 3. **Bordes que se funden.** Las tarjetas se distinguen por el tono de la superficie, no por líneas. Si un borde es indispensable: 1 px de `--color-border-subtle`. La estructura se muestra con alineación, numeración y metadata.
 4. **Radios concéntricos:** radio interior = radio exterior − padding. Tarjetas a 20 px, controles a 12 px.
@@ -71,13 +71,13 @@ Los **estados** (`--state-*`) describen cómo está un control interactivo. No d
 
 | Estado | Tokens | Notas |
 |---|---|---|
-| Default | `--color-accent`, `--color-on-accent` | Cerezo solo donde va la mano |
+| Default | `--color-accent`, `--color-on-accent` | Cerezo solo donde la persona actúa |
 | Hover | `--color-accent-hover` | `--duration-fast`, `--ease-settle` |
 | Pressed | `--color-accent-pressed` | — |
 | Focus visible | `--color-focus-ring` | `outline: 2px`, `outline-offset: 2px` |
 | **Disabled** | `--state-disabled-fg`, `--state-disabled-bg`, `--state-disabled-border` | Ver abajo |
 
-### Disabled · "metal sin mango"
+### Disabled · sin color de acción
 
 El Cerezo es el mango de madera de una herramienta de metal. Cuando la mano ya no puede ir, **la madera se va** y queda solo la estructura fría.
 
@@ -102,7 +102,7 @@ Color de **estatus** y de **contexto** que vive **arriba de las foundations**. A
 
 ### Reglas
 
-1. **Nunca donde va la mano.** Botones, enlaces, foco y estados activos siguen siendo exclusivos del Cerezo. Un color contextual nunca es interactivo.
+1. **Nunca donde la persona actúa.** Botones, enlaces, foco y estados activos siguen siendo exclusivos del Cerezo. Un color contextual nunca es interactivo.
 2. **Dosis pequeñas.** Va en badges, tags, puntos de estado, marcas de gráficas y fondos tenues de avisos (`-bg`), nunca en superficies grandes.
 3. **Nunca solo color.** Siempre va con un ícono de Iconoir y con texto (WCAG 1.4.1).
 4. **Máximo 6 categorías a la vez.** A cada categoría se le asigna un tono fijo (por ejemplo `finanzas → blue`), siempre el mismo en todo el sitio.
@@ -183,7 +183,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | Medida | Chivo Mono | `--font-mono` |
 
 Decisión de Alan del 2026-10-06 (ADR 0005). Cada familia se elige por su función:
-- **Host Grotesk:** neogrotesca de interfaz, legible en tamaños chicos y neutra para que la voz destaque.
+- **Host Grotesk:** cada letra mide lo mismo en todos los pesos, así que el texto no reacomoda la línea al cambiar de peso; legible en tamaños chicos y neutra para que la voz destaque.
 - **Amstelvar:** serif variable con tamaño óptico, así que el mismo archivo funciona en titulares de 56 px y en citas de 24 px.
 - **Chivo Mono:** monoespaciada para cifras y metadatos, que alinea columnas. Viene de Omnibus-Type, de Buenos Aires.
 

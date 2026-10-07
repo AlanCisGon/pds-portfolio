@@ -4,7 +4,7 @@ import { Play } from "iconoir-react";
 import { useRef, useState } from "react";
 import styles from "./Media.module.css";
 
-/** Video with a Cerezo play button (where the hand goes). Native controls after start; no autoplay with sound. */
+/** Video with a Cerezo play button (where people act). Native controls after start; no autoplay with sound. */
 export function MediaVideo({
   src,
   poster,

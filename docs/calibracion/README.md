@@ -13,3 +13,4 @@ Casos reales que Alan aprobó o rechazó, cada uno con su porqué. Sirven como p
 | # | Caso | Agente | Veredicto |
 |---|---|---|---|
 | 0001 | [Nombre del equipo](0001-nombre-del-equipo.md) | Ameyali | Ronda 1 rechazada por literal; aprobada con el método de #74 (Somara Studio) |
+| 0002 | [Justificar por función, no por metáfora](0002-justificacion-por-funcion.md) | Criterio compartido | Aprobada (revisión de marca v1.2, 2026-10-06) |
