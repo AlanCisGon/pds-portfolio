@@ -30,7 +30,7 @@ Reglas cortas para cualquier asistente (Claude, Copilot, v0…) que genere UI en
 
 ## 4. Marca
 - **El Cerezo (`--color-accent`) va solo donde va la mano:** botones, enlaces, foco y estados activos. Nunca como decoración.
-- **Newsreader (`--font-serif`) es la voz:** solo en titulares editoriales, citas y principios. Nunca en botones, formularios ni navegación.
+- **Amstelvar (`--font-serif`) es la voz:** solo en titulares editoriales, citas y principios. Nunca en botones, formularios ni navegación.
 - **Las superficies se separan por tono**, no por bordes. Si un borde es indispensable: `1px solid var(--color-border-subtle)`.
 - **Sin** gradientes de moda, sombras decorativas, fotos de stock ni íconos genéricos. Los íconos son de Iconoir y los logos de Simple Icons.
 

@@ -6,7 +6,7 @@ import styles from "./ProjectCard.module.css";
 
 export type ProjectCardProps = {
   href: string;
-  /** Industry · client · year, in Geist Mono. */
+  /** Industry · client · year, in Chivo Mono. */
   meta: string;
   title: string;
   summary?: string;

@@ -62,13 +62,13 @@
   --radius-pill: 999px;
 
   /* ── Typography · families (next/font variables, with fallbacks) ── */
-  --font-sans: var(--font-geist-sans, "Geist"), system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-serif: var(--font-newsreader, "Newsreader"), Georgia, "Times New Roman", serif;
-  --font-mono: var(--font-geist-mono, "Geist Mono"), ui-monospace, "SFMono-Regular", Menlo,
+  --font-sans: var(--font-host-grotesk, "Host Grotesk"), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: var(--font-amstelvar, "Amstelvar"), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-chivo-mono, "Chivo Mono"), ui-monospace, "SFMono-Regular", Menlo,
     monospace;
 
   /* ── Typography · scale (proposal v0.1, line heights on a 4-pt grid) ── */
-  /* Voice — Newsreader: editorial headlines, quotes, principles. Never in buttons, forms or navigation. */
+  /* Voice — Amstelvar: editorial headlines, quotes, principles. Never in buttons, forms or navigation. */
   --text-display-size: clamp(40px, 5vw + 16px, 56px);
   --text-display-line: 1.14;
   --text-title-size: clamp(32px, 2.5vw + 20px, 40px);
@@ -78,7 +78,7 @@
   --text-card-size: 24px; /* Voice/Card: editorial title inside a card (TeamCard name). Roman, never italic. */
   --text-card-line: 32px;
 
-  /* System — Geist Sans: interface, body, navigation, data. */
+  /* System — Host Grotesk: interface, body, navigation, data. */
   --text-heading-l-size: 32px;
   --text-heading-l-line: 40px;
   --text-heading-m-size: 24px;
@@ -96,13 +96,13 @@
   --text-label-s-size: 12px;
   --text-label-s-line: 16px;
 
-  /* Measure — Geist Mono: labels, metadata, numbers, the lab. */
+  /* Measure — Chivo Mono: labels, metadata, numbers, the lab. */
   --text-meta-size: 12px;
   --text-meta-line: 16px;
   --text-meta-tracking: 0.04em;
   --text-code-size: 14px; /* Measure/Code — code blocks */
   --text-code-line: 20px;
-  --text-figure-size: 32px; /* Measure/Figure — Stat figures (Geist Mono, --weight-medium) */
+  --text-figure-size: 32px; /* Measure/Figure — Stat figures (Chivo Mono, --weight-medium) */
   --text-figure-line: 40px;
 
   --weight-regular: 400;

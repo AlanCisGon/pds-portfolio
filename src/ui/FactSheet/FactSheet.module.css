@@ -29,6 +29,7 @@
 
 .value {
   margin: 0;
+  text-wrap: balance; /* "Q4 2024 – Q3 2025" breaks as a pair, not "…Q3 / 2025" (Clara, ADR 0005) */
   color: var(--color-text-primary);
   font-size: var(--text-body-m-size);
   line-height: var(--text-body-m-line);
