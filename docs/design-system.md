@@ -167,6 +167,8 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | `--radius-control` | 12 px | Botones, inputs, callouts |
 | `--radius-card` | 20 px | Tarjetas bento |
 | `--radius-pill` | 999 px | Tags, chips, badges, `NavItem`, el menú del `Header`, avatares y otras formas circulares |
+| `--radius-focus-inline` | 4 px | Anillo de foco sobre texto en línea: `Link` |
+| `--radius-focus-block` | 8 px | Anillo de foco sobre filas y controles chicos sin superficie propia: ítem de `TableOfContents` y ancla de `HeadingLink` |
 | `--page-padding` | 16 px → 24 px desde 768 | Padding de página |
 | `--bento-gap` | 16 px → 24 px desde 768 | Separación entre tarjetas |
 
@@ -234,7 +236,7 @@ Decisión de Alan del 2026-10-06 (ADR 0005). Cada familia se elige por su funci�
 - **Solo tokens:** color, espacio, radio, tipografía y movimiento con `var(--…)`. Sin hex ni px sueltos, salvo `0` y bordes de `1px`. Más adelante se automatiza con un lint (stylelint `declaration-strict-value`).
 - **Variantes con atributos `data-*`:** `data-variant="primary"`, `data-size="s"`. Los nombres y valores son los mismos que las propiedades del componente en Figma.
 - **Figma ↔ props:** en Figma la propiedad va con mayúscula (`Variant`, `Size`, `State`); lo que coincide 1:1 con el prop es el **valor** (`variant="primary"`). `State` no es un prop: en código es `:hover`, `:active`, `:focus-visible` o `disabled`.
-- **`FocusRing` en Figma:** su radio es el del control + 4, concéntrico con el `outline-offset` de 2 px más el trazo de 2 px. Es la única capa con radio sin variable; en código, `outline` sigue el `border-radius` del control.
+- **`FocusRing` en Figma:** su radio es el del control + 4, concéntrico con el `outline-offset` de 2 px más el trazo de 2 px. Es la única capa con radio sin variable; en código, `outline` sigue el `border-radius` del control. Donde no hay superficie propia, el anillo usa `--radius-focus-inline` (texto en línea) o `--radius-focus-block` (filas); los controles con superficie conservan su propio radio.
 - **Foco visible** en todo lo interactivo: `outline: 2px solid var(--color-focus-ring); outline-offset: 2px` en `:focus-visible`.
 - **Accesibilidad:** HTML semántico primero; `aria-label` en controles sin texto visible.
 - **Movimiento:** transiciones con tokens. Dentro de `@media (prefers-reduced-motion: reduce)` solo se anima `opacity`.

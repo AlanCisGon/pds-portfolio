@@ -60,6 +60,8 @@
   --radius-control: 12px;
   --radius-card: 20px;
   --radius-pill: 999px;
+  --radius-focus-inline: 4px; /* focus ring over inline text (Link) */
+  --radius-focus-block: 8px; /* focus ring over rows without a surface (TOC item, heading anchor) */
 
   /* ── Typography · families (next/font variables, with fallbacks) ── */
   --font-sans: var(--font-host-grotesk, "Host Grotesk"), system-ui, -apple-system, "Segoe UI", sans-serif;
