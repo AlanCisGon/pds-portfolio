@@ -29,7 +29,7 @@
   align-items: center;
   gap: var(--space-8);
   padding: var(--space-4) 0;
-  border-radius: 8px; /* focus ring corner (Figma r8) */
+  border-radius: var(--radius-focus-block);
   color: var(--color-text-secondary);
   font-family: var(--font-sans);
   font-size: var(--text-body-s-size);

@@ -20,7 +20,7 @@
   min-height: 24px;
   padding: 0;
   border: 0;
-  border-radius: 8px; /* focus ring corner (Figma r8) */
+  border-radius: var(--radius-focus-block);
   background: transparent;
   color: var(--color-accent);
   cursor: pointer;
