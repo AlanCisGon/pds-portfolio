@@ -1,10 +1,19 @@
-/* Header · Figma 02e Cards & Site (36:110). Height is fixed so it never causes layout shift. */
+/* Header · Figma 02e Cards & Site (36:110). Docked at the bottom center, over the content,
+   so the home hero can take the whole first viewport. Fixed, so it never causes layout shift. */
 .header {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  min-height: 80px;
-  padding: var(--space-16) var(--page-padding);
+  padding: var(--space-16) var(--page-padding) max(var(--space-24), env(safe-area-inset-bottom));
+  pointer-events: none; /* only the pill is interactive; content under the empty cells stays clickable */
+}
+
+.header > * {
+  pointer-events: auto;
 }
 
 .location,
@@ -31,16 +40,9 @@
   margin: 0;
   padding: var(--space-4);
   list-style: none;
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-pill);
-  background: var(--color-bg-surface);
-}
-
-@media (max-width: 767px) {
-  .header {
-    grid-template-columns: auto 1fr;
-  }
-
-  .location {
-    display: none;
-  }
+  background: color-mix(in srgb, var(--color-bg-surface) 80%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
