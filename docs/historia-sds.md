@@ -166,6 +166,8 @@ Una página que se lee con scroll. Va por días porque así pasó: cinco días, 
 > **Ameyali** · IA. Entrevista a Alan y escribe con su voz. Perdió la primera ronda del nombre y ganó la cuarta con un método nuevo.
 >
 > **Julieta** · IA. Con Tenoch, convierte lo que viene en issues claros del backlog y comparte el crédito por escribirlos.
+>
+> **Félix** · IA. Se sumó el 10 de octubre. Prototipa el movimiento expresivo y Clara lo revisa. Su primer trabajo fue la página de Motion, con tres demos.
 
 ---
 
@@ -178,7 +180,7 @@ Una página que se lee con scroll. Va por días porque así pasó: cinco días, 
 > - integrar `Chip` cuando el sitio tenga filtros;
 > - la marca de taller, que dibuja Alan a mano. No la vamos a inventar.
 >
-> Tampoco sabemos todavía si cuatro agentes con roles definidos trabajan mejor que una sola sesión general. La calibración tiene un caso. Lo vamos a observar antes de afirmarlo.
+> Tampoco sabemos todavía si cinco agentes con roles definidos trabajan mejor que una sola sesión general. La calibración tiene un caso. Lo vamos a observar antes de afirmarlo.
 >
 > Alan ya mira más lejos: Studio y Design System ya son dos nombres bajo Somara, y él imagina que algún día Somara pueda volverse un hub de submarcas. Hoy es una visión, no un plan.
 

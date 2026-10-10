@@ -83,7 +83,28 @@ function CopyButton() {
   );
 }
 
-/** C · Skeleton → content, with a spinner that only shows after 400 ms. Productive: for Clara. */
+/** D · FeaturedCase on touch: sinks while pressed, lifts on release. Navigation is never delayed. */
+function FeaturedPress() {
+  const [release, setRelease] = useState(0);
+  return (
+    <button
+      type="button"
+      className={styles.feature}
+      onPointerUp={() => setRelease((r) => r + 1)}
+      onKeyUp={(e) => {
+        if (e.key === "Enter" || e.key === " ") setRelease((r) => r + 1);
+      }}
+    >
+      <span key={release} className={release ? styles.featureLift : styles.featureInner}>
+        <span className={styles.featureMeta}>E-commerce · Coppel · 2024</span>
+        <span className={styles.cardTitle}>Project Helix</span>
+        <span className={styles.cardBody}>Toca la tarjeta: se hunde y, al soltar, sube.</span>
+      </span>
+    </button>
+  );
+}
+
+/** C · Skeleton → content, with a spinner that only shows after 400 ms. Postponed until there is a backend. */
 function SkeletonDemo() {
   const [loading, setLoading] = useState(false);
 
@@ -138,14 +159,23 @@ export function MotionDemo() {
           <p className={styles.label}>B · CodeBlock copy · expresivo</p>
           <CopyButton />
           <p className={styles.note}>
-            Sale con --ease-exit, entra 0.6 → 1.15 → 1 y 15° → 0°. Rebote: excepción propuesta.
+            Sale con --ease-exit, entra 0.6 → 1.15 → 1 y 15° → 0°. Rebote: excepción aprobada por
+            Alan.
           </p>
         </div>
         <div className={styles.demo}>
-          <p className={styles.label}>C · Skeleton y spinner · productivo, revisión de Clara</p>
+          <p className={styles.label}>C · Skeleton y spinner · pospuesto: cuando haya backend</p>
           <SkeletonDemo />
           <p className={styles.note}>
-            Pulso 1.2 s y giro 800 ms (tokens propuestos). Spinner solo si pasa de 400 ms.
+            Pulso 1.2 s y giro 800 ms (tokens en espera). Spinner solo si pasa de 400 ms.
+          </p>
+        </div>
+        <div className={styles.demo}>
+          <p className={styles.label}>D · FeaturedCase al tocar · expresivo</p>
+          <FeaturedPress />
+          <p className={styles.note}>
+            Presionado: 0.98 en --duration-fast. Al soltar: sube 4 px en --duration-base con
+            --ease-settle. La navegación no espera. Reducida: opacidad 0.85.
           </p>
         </div>
       </div>
