@@ -185,33 +185,99 @@ function CardFront() {
   );
 }
 
-/** F · Depth planes: four 2D layers on the Z axis follow touch or cursor, up to 4°. */
+/** F · Depth planes: four 2D layers on the Z axis follow touch, cursor or (opt-in) device tilt. */
+type OrientationPermission = { requestPermission?: () => Promise<"granted" | "denied"> };
+
+function setTilt(el: HTMLElement | null, x: number, y: number) {
+  el?.style.setProperty("--px", x.toFixed(3));
+  el?.style.setProperty("--py", y.toFixed(3));
+}
+
 function DepthPlanes() {
   const ref = useRef<HTMLDivElement>(null);
+  const [gyro, setGyro] = useState<"off" | "on" | "denied" | "unsupported">("off");
   const move = (e: PointerEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--px", String(((e.clientX - r.left) / r.width - 0.5) * 2));
-    el.style.setProperty("--py", String(((e.clientY - r.top) / r.height - 0.5) * 2));
+    if (gyro === "on" || !ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    setTilt(
+      ref.current,
+      ((e.clientX - r.left) / r.width - 0.5) * 2,
+      ((e.clientY - r.top) / r.height - 0.5) * 2,
+    );
   };
   const reset = () => {
-    ref.current?.style.setProperty("--px", "0");
-    ref.current?.style.setProperty("--py", "0");
+    if (gyro !== "on") setTilt(ref.current, 0, 0);
   };
+
+  // Device tilt: clamped to ±8°, eased toward the target each frame, relative to how it was held.
+  useEffect(() => {
+    if (gyro !== "on") return;
+    const el = ref.current;
+    let base: { beta: number; gamma: number } | null = null;
+    let target = { x: 0, y: 0 };
+    const cur = { x: 0, y: 0 };
+    let frame = 0;
+    const clamp = (v: number) => Math.max(-1, Math.min(1, v / 8));
+    const onTilt = (e: DeviceOrientationEvent) => {
+      if (e.beta == null || e.gamma == null) return;
+      base ??= { beta: e.beta, gamma: e.gamma };
+      target = { x: clamp(e.gamma - base.gamma), y: clamp(e.beta - base.beta) };
+    };
+    const tick = () => {
+      cur.x += (target.x - cur.x) * 0.12;
+      cur.y += (target.y - cur.y) * 0.12;
+      setTilt(el, cur.x, cur.y);
+      frame = requestAnimationFrame(tick);
+    };
+    window.addEventListener("deviceorientation", onTilt);
+    frame = requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener("deviceorientation", onTilt);
+      cancelAnimationFrame(frame);
+      setTilt(el, 0, 0);
+    };
+  }, [gyro]);
+
+  const toggleGyro = async () => {
+    if (gyro === "on") return setGyro("off");
+    if (typeof window === "undefined" || !("DeviceOrientationEvent" in window)) {
+      return setGyro("unsupported");
+    }
+    const DOE = window.DeviceOrientationEvent as unknown as OrientationPermission;
+    if (DOE.requestPermission) {
+      const answer = await DOE.requestPermission().catch(() => "denied" as const);
+      return setGyro(answer === "granted" ? "on" : "denied");
+    }
+    setGyro("on");
+  };
+
   return (
-    <div
-      ref={ref}
-      className={styles.scene}
-      onPointerMove={move}
-      onPointerLeave={reset}
-      onPointerUp={reset}
-      aria-hidden="true"
-    >
-      <span className={styles.p0}>P0 · Fondo</span>
-      <span className={styles.p1}>P1 · Contenido</span>
-      <span className={styles.p2}>P2 · Interactivo</span>
-      <span className={styles.p3}>P3 · Foco</span>
+    <div className={styles.stack}>
+      <div
+        ref={ref}
+        className={styles.scene}
+        onPointerMove={move}
+        onPointerLeave={reset}
+        onPointerUp={reset}
+        aria-hidden="true"
+      >
+        <span className={styles.p0}>P0 · Fondo</span>
+        <span className={styles.p1}>P1 · Contenido</span>
+        <span className={styles.p2}>P2 · Interactivo</span>
+        <span className={styles.p3}>P3 · Foco</span>
+      </div>
+      <button
+        type="button"
+        className={styles.trigger}
+        aria-pressed={gyro === "on"}
+        onClick={toggleGyro}
+      >
+        {gyro === "on" ? "Desactivar giro del teléfono" : "Activar giro del teléfono"}
+      </button>
+      {gyro === "denied" && <p className={styles.note}>Permiso negado: sigue con el dedo.</p>}
+      {gyro === "unsupported" && (
+        <p className={styles.note}>Este dispositivo no reporta el giro: sigue con el dedo.</p>
+      )}
     </div>
   );
 }
@@ -268,8 +334,8 @@ export function MotionDemo() {
           <p className={styles.label}>F · Planos de profundidad · CSS 3D</p>
           <DepthPlanes />
           <p className={styles.note}>
-            Mueve el dedo o el cursor: 4° como máximo, más cerca es más accionable. Sin giro del
-            teléfono por ahora. Reducida: todo en Z = 0.
+            Mueve el dedo o el cursor: 4° como máximo, más cerca es más accionable. Giro del
+            teléfono opcional, con permiso y ±8°. Reducida: todo en Z = 0.
           </p>
         </div>
       </div>
