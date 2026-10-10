@@ -30,6 +30,7 @@ import { SiClaude, SiFigma } from "@icons-pack/react-simple-icons";
 import { ArrowRight, Github, Home, Linkedin, Mail, User, ViewGrid } from "iconoir-react";
 import type { Metadata } from "next";
 import { ChipDemo } from "./ChipDemo";
+import { MotionDemo } from "./MotionDemo";
 import styles from "./page.module.css";
 
 // Private component catalog (behind /lab Basic Auth). Compare against Figma: SDS · Somara Design System.
@@ -301,6 +302,15 @@ export default function UiCatalog() {
             ]}
           />
         </div>
+      </section>
+
+      <section className={styles.section} id="motion">
+        <h2 className={styles.h2}>07 · Motion</h2>
+        <p className={styles.body}>
+          Prototipos de Félix (página 07 Motion de Figma). Propuestas en revisión de Clara: todavía
+          no viven en src/ui.
+        </p>
+        <MotionDemo />
       </section>
     </div>
   );
