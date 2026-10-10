@@ -1,5 +1,4 @@
-# LF everywhere, regardless of core.autocrlf: Biome formats with LF and would
-# flag every file on a Windows checkout otherwise.
+# LF everywhere: Biome formats with LF.
 * text=auto eol=lf
 
 # Binary assets
