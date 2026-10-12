@@ -62,6 +62,7 @@ const home: Home = {
       attention, and peace of mind.
     </>
   ),
+  scrollCue: { label: "Uncover the process", target: "featured" },
 };
 
 const about: About = {

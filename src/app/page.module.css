@@ -10,6 +10,7 @@
 /* Full-bleed hero: the whole first viewport, in two asymmetric columns (copy 45%, visual 55%).
    It breaks out of .page (max 1080px) and of the main's top padding. */
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: 45fr 55fr;
   width: 100vw;
@@ -25,7 +26,7 @@
   align-items: flex-start;
   gap: var(--space-24);
   min-width: 0;
-  padding: var(--space-64) var(--space-48) 112px var(--space-64); /* bottom clears the docked nav */
+  padding: var(--space-64) var(--space-48) var(--space-64) var(--space-64); /* the nav waits below the fold */
 }
 
 .visual {
@@ -54,7 +55,60 @@
   }
 
   .heroCopy {
-    padding: var(--space-24) var(--page-padding) 112px;
+    padding: var(--space-24) var(--page-padding) 136px; /* room for the scroll cue */
+  }
+}
+
+/* Scroll cue: bottom-right corner, a quiet box with room around it. */
+.cue {
+  position: absolute;
+  right: var(--space-48);
+  bottom: var(--space-48);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-16);
+  padding: var(--space-16) var(--space-24);
+  border-radius: var(--radius-control);
+  background: color-mix(in srgb, var(--color-bg-page) 72%, transparent);
+  color: var(--color-text-primary);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  text-decoration: none;
+}
+
+.cue:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.cueIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+  transition: transform var(--duration-base) var(--ease-settle);
+}
+
+.cue:hover .cueIcon {
+  transform: translateY(4px);
+}
+
+/* Lands below the hero without the margin collapsing into it. */
+.anchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: var(--space-32);
+}
+
+@media (max-width: 767px) {
+  .cue {
+    right: var(--page-padding);
+    bottom: var(--space-32);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cueIcon {
+    transition: none;
   }
 }
 

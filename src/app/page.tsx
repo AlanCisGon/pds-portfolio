@@ -4,6 +4,7 @@ import { home, work } from "@/resources";
 import { FeaturedCase } from "@/ui";
 import { getProject } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
+import { NavArrowDown } from "iconoir-react";
 import styles from "./page.module.css";
 
 export const metadata = pageMetadata({
@@ -33,7 +34,13 @@ export default function Home() {
           <p className={styles.subline}>{home.subline}</p>
         </div>
         <HeroVisual className={styles.visual} />
+        <a className={styles.cue} href={`#${home.scrollCue.target}`}>
+          <span>{home.scrollCue.label}</span>
+          <NavArrowDown aria-hidden="true" className={styles.cueIcon} />
+        </a>
       </section>
+
+      <span id={home.scrollCue.target} className={styles.anchor} aria-hidden="true" />
 
       {featured && (
         <FeaturedCase
