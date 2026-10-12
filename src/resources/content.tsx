@@ -62,7 +62,7 @@ const home: Home = {
       attention, and peace of mind.
     </>
   ),
-  scrollCue: { label: "Go down to know me", target: "featured" },
+  scrollCue: { label: "Discover the case studies", target: "featured" },
 };
 
 const about: About = {
