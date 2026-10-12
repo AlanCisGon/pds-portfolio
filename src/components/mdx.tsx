@@ -1,5 +1,5 @@
 import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
-import type { ComponentProps, ReactNode } from "react";
+import { Children, type ComponentProps, type ReactNode, isValidElement } from "react";
 
 import { CaseStats } from "@/components/work/CaseStats";
 import { TeamGrid } from "@/components/work/TeamGrid";
@@ -55,6 +55,21 @@ function MdxImage({ src, alt = "" }: { src?: string; alt?: string }) {
   return <Media src={src} alt={alt} />;
 }
 
+// A Markdown image on its own line arrives wrapped in <p>, but Media renders a <figure>,
+// which can't live inside a paragraph (invalid HTML and a hydration error), so unwrap it.
+function MdxParagraph({ children }: WithChildren) {
+  const parts = Children.toArray(children).filter(
+    (child) => !(typeof child === "string" && child.trim() === ""),
+  );
+  if (
+    parts.length > 0 &&
+    parts.every((child) => isValidElement(child) && child.type === MdxImage)
+  ) {
+    return <>{parts}</>;
+  }
+  return <p className={styles.paragraph}>{children}</p>;
+}
+
 function MdxPre({ children }: WithChildren) {
   // ```lang fences arrive as <pre><code className="language-lang">.
   if (children && typeof children === "object" && "props" in children) {
@@ -77,7 +92,7 @@ const components: MDXRemoteProps["components"] = {
   h2: createHeading("h2"),
   h3: createHeading("h3"),
   h4: createHeading("h4"),
-  p: ({ children }: WithChildren) => <p className={styles.paragraph}>{children}</p>,
+  p: MdxParagraph,
   strong: ({ children }: WithChildren) => <strong className={styles.strong}>{children}</strong>,
   a: MdxLink,
   img: MdxImage,
