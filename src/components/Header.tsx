@@ -12,6 +12,7 @@ export function Header() {
 
   return (
     // No location or clock: the place lives in the colophon (decision of Alan, 2026-10-06).
-    <SiteHeader items={items} />
+    // On Home the nav waits below the fold; the hero has its own cue (decision of Alan, 2026-10-12).
+    <SiteHeader items={items} revealAfterFoldOn={["/"]} />
   );
 }

@@ -63,6 +63,8 @@ export interface Home extends PageConfig {
     cover: { src: string; alt: string };
   };
   subline: ReactNode;
+  /** Cue in the hero corner; the nav stays hidden until the reader passes the first screen. */
+  scrollCue: { label: string; target: string };
 }
 
 export interface About extends PageConfig {
