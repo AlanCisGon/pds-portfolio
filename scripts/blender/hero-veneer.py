@@ -246,11 +246,12 @@ for r in range(-ROWS // 2, ROWS // 2 + 1):
         ob.location = (x, y, 0)
         # A triangle maps onto itself under 120° turns: rotate so the wood grain varies.
         ob.rotation_euler = (0, 0, math.radians(120 * (int(h * 30) % 3)))
-        # No two tiles quite alike: footprint only shrinks (never overlaps its neighbours),
-        # depth varies both ways. Mirrored like the materials.
-        size = 0.8 + 0.2 * hash01(mc, r + 101)
-        depth = 0.7 + 0.7 * hash01(mc, r + 211)
-        ob.scale = (size, size, depth)
+        # No two triangles alike: width and height shrink independently, so each footprint
+        # gets its own proportions (never overlapping its neighbours). Depth stays constant.
+        # Mirrored like the materials.
+        sx = 0.55 + 0.45 * hash01(mc, r + 101)
+        sy = 0.55 + 0.45 * hash01(mc, r + 211)
+        ob.scale = (sx, sy, 1.0)
         bev = ob.modifiers.new("edge", "BEVEL")
         bev.width = 0.012
         bev.segments = 2
