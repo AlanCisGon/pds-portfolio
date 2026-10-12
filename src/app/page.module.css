@@ -45,7 +45,8 @@
 @media (max-width: 767px) {
   .hero {
     grid-template-columns: 1fr;
-    grid-template-rows: 52svh auto;
+    /* Visual takes whatever the copy leaves, so the hero is exactly one screen. */
+    grid-template-rows: minmax(40svh, 1fr) auto;
   }
 
   .visual {
