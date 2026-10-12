@@ -1,8 +1,7 @@
-import { ArrowRight } from "iconoir-react";
-
+import { HeroVisual } from "@/components/hero/HeroVisual";
 import { Projects } from "@/components/work/Projects";
-import { about, home, person, work } from "@/resources";
-import { Avatar, Button, FeaturedCase } from "@/ui";
+import { home, work } from "@/resources";
+import { FeaturedCase } from "@/ui";
 import { getProject } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import styles from "./page.module.css";
@@ -29,20 +28,11 @@ export default function Home() {
 
       {/* Content first: no reveal animation, so the hero is the first paint. */}
       <section className={styles.hero}>
-        <h1 className={styles.headline}>{home.headline}</h1>
-        <p className={styles.subline}>{home.subline}</p>
-        <Button
-          href={about.path}
-          variant="secondary"
-          leadingIcon={
-            about.avatar.display ? (
-              <Avatar src={person.avatar} name={person.name} size="s" decorative />
-            ) : undefined
-          }
-          trailingIcon={<ArrowRight />}
-        >
-          {about.title}
-        </Button>
+        <div className={styles.heroCopy}>
+          <h1 className={styles.headline}>{home.headline}</h1>
+          <p className={styles.subline}>{home.subline}</p>
+        </div>
+        <HeroVisual className={styles.visual} />
       </section>
 
       {featured && (

@@ -42,7 +42,7 @@ const home: Home = {
   label: "Home",
   title: `${person.name} | ${person.role}`,
   description: `${person.role} in ${person.city}. Case studies in e-commerce, financial services and telecom: cart and checkout at Coppel, app redesign at Movistar MX.`,
-  headline: <>I design products that balance business, technology, product and design.</>,
+  headline: <>Minimizing the human cost of digital products.</>,
   featured: {
     display: true,
     slug: "building-this-portfolio",
@@ -57,10 +57,9 @@ const home: Home = {
   },
   subline: (
     <>
-      I’m {person.firstName}, a product designer with 8 years across{" "}
-      <strong>e-commerce, financial services and telecom</strong>. At <strong>Coppel</strong> I lead
-      UX for Purchase &amp; Payments. I start every project by understanding the real problem before
-      designing the solution.
+      I’m {person.firstName}, a product designer of eight years. By pairing early-stage research
+      with rapid iteration, I keep people at the center to protect what matters most: their time,
+      attention, and peace of mind.
     </>
   ),
 };
