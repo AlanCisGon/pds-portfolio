@@ -44,7 +44,7 @@ const home: Home = {
   description: `${person.role} in ${person.city}. Case studies in e-commerce, financial services and telecom: cart and checkout at Coppel, app redesign at Movistar MX.`,
   headline: (
     <>
-      I design for what a product costs the people who use it: their time, their attention, their
+      My design philosophy centers on a product’s true cost to the user: their time, attention, and
       patience.
     </>
   ),
