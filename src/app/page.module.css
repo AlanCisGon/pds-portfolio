@@ -7,15 +7,55 @@
   min-width: 0;
 }
 
+/* Full-bleed hero: the whole first viewport, in two asymmetric columns (copy 45%, visual 55%).
+   It breaks out of .page (max 1080px) and of the main's top padding. */
 .hero {
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  width: 100vw;
+  min-height: 100svh;
+  margin: calc(var(--space-32) * -1) calc(50% - 50vw) 0;
+  box-sizing: border-box;
+}
+
+.heroCopy {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   gap: var(--space-24);
-  max-width: 720px;
-  margin: 0 auto;
-  padding-top: var(--space-24);
-  text-align: center;
+  min-width: 0;
+  padding: var(--space-64) var(--space-48) 112px var(--space-64); /* bottom clears the docked nav */
+}
+
+.visual {
+  min-height: 100%;
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .heroCopy {
+    padding-inline: var(--page-padding) var(--space-24);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    grid-template-columns: 1fr;
+    /* Visual takes whatever the copy leaves, so the hero is exactly one screen. */
+    grid-template-rows: minmax(40svh, 1fr) auto;
+  }
+
+  .visual {
+    grid-row: 1;
+  }
+
+  .heroCopy {
+    padding: var(--space-24) var(--page-padding) 112px;
+  }
 }
 
 .headline {

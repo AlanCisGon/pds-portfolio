@@ -64,7 +64,8 @@
   --radius-focus-block: 8px; /* focus ring over rows without a surface (TOC item, heading anchor) */
 
   /* ── Typography · families (next/font variables, with fallbacks) ── */
-  --font-sans: var(--font-host-grotesk, "Host Grotesk"), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: var(--font-host-grotesk, "Host Grotesk"), system-ui, -apple-system, "Segoe UI",
+    sans-serif;
   --font-serif: var(--font-amstelvar, "Amstelvar"), Georgia, "Times New Roman", serif;
   --font-mono: var(--font-chivo-mono, "Chivo Mono"), ui-monospace, "SFMono-Regular", Menlo,
     monospace;

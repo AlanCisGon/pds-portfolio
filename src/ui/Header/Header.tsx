@@ -31,15 +31,33 @@ function useClock(timeZone?: string) {
   return time;
 }
 
+/** Hidden while the reader scrolls down, back as soon as they scroll up (or reach the top). */
+function useHideOnScroll() {
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - last) < 8) return; // ignore jitter
+      setHidden(y > last && y > 80);
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return hidden;
+}
+
 /** Site header: pill navigation, centered. Optional location and clock on the sides (empty cells keep the nav centered). */
 export function Header({ items, location, timeZone }: HeaderProps) {
   const pathname = usePathname();
   const time = useClock(timeZone);
+  const hidden = useHideOnScroll();
   const isCurrent = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-hidden={hidden || undefined}>
       <p className={styles.location}>{location ?? ""}</p>
       <nav aria-label="Main">
         <ul className={styles.nav}>
