@@ -1,6 +1,6 @@
 import { ArrowRight } from "iconoir-react";
 
-import { HeroScene } from "@/components/hero/HeroScene";
+import { HeroVisual } from "@/components/hero/HeroVisual";
 import { Projects } from "@/components/work/Projects";
 import { about, home, person, work } from "@/resources";
 import { Avatar, Button, FeaturedCase } from "@/ui";
@@ -30,7 +30,6 @@ export default function Home() {
 
       {/* Content first: no reveal animation, so the hero is the first paint. */}
       <section className={styles.hero}>
-        <HeroScene className={styles.scene} />
         <div className={styles.heroCopy}>
           <h1 className={styles.headline}>{home.headline}</h1>
           <p className={styles.subline}>{home.subline}</p>
@@ -47,6 +46,7 @@ export default function Home() {
             {about.title}
           </Button>
         </div>
+        <HeroVisual className={styles.visual} />
       </section>
 
       {featured && (

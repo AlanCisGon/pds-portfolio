@@ -7,37 +7,53 @@
   min-width: 0;
 }
 
-/* Full-bleed hero: the whole first viewport. It breaks out of .page (max 1080px) and of the
-   main's top padding; copy sits bottom-left, above the docked nav. */
+/* Full-bleed hero: the whole first viewport, in two asymmetric columns (copy 45%, visual 55%).
+   It breaks out of .page (max 1080px) and of the main's top padding. */
 .hero {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: 45fr 55fr;
   width: 100vw;
   min-height: 100svh;
   margin: calc(var(--space-32) * -1) calc(50% - 50vw) 0;
-  padding: var(--space-64) var(--page-padding) 112px;
   box-sizing: border-box;
-  overflow: hidden;
-}
-
-.scene {
-  position: absolute;
-  inset: 0;
 }
 
 .heroCopy {
-  position: relative; /* above the canvas */
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: flex-start;
   gap: var(--space-24);
-  max-width: 640px;
+  min-width: 0;
+  padding: var(--space-64) var(--space-48) 112px var(--space-64); /* bottom clears the docked nav */
 }
 
-@media (min-width: 768px) {
+.visual {
+  min-height: 100%;
+}
+
+@media (max-width: 1023px) {
   .hero {
-    padding-inline: var(--space-64);
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .heroCopy {
+    padding-inline: var(--page-padding) var(--space-24);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: 52svh auto;
+  }
+
+  .visual {
+    grid-row: 1;
+  }
+
+  .heroCopy {
+    padding: var(--space-24) var(--page-padding) 112px;
   }
 }
 
