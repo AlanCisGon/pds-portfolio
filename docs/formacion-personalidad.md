@@ -1,6 +1,6 @@
 # Formación de personalidad del equipo
 
-Documento compartido del equipo, en `docs/formacion-personalidad.md`. Clara (diseño) y Ameyali (escritura) lo aplican; Tenoch lo usa para orquestar y auditar, y Julieta lo consulta para que la estrategia y la personalidad no se contradigan. Si cambia aquí, cambia para todo el equipo.
+Documento compartido del equipo, en `docs/formacion-personalidad.md`. Clara (diseño), Ameyali (escritura) y Félix (movimiento expresivo) lo aplican; Tenoch lo usa para orquestar y auditar, y Julieta lo consulta para que la estrategia y la personalidad no se contradigan. Si cambia aquí, cambia para todo el equipo.
 
 ## Para qué existe
 
@@ -59,9 +59,9 @@ Siempre en este orden. Nadie salta al paso 4 sin tener los pasos 1 a 3. Los paso
 1. **Posición** (Neumeier). Lidera Ameyali, a partir de la política guía de Julieta en `brand/estrategia.md`. Frase de unicidad completa.
 2. **Carácter** (Aaker + Walter). Trabajan juntas. De 3 a 4 rasgos, cada uno con su "pero no", y una dimensión dominante.
 3. **Activos distintivos** (Sharp + Romaniuk). Clara lidera los visuales y sonoros; Ameyali, los verbales (nombres, frases, forma de saludar). Al inicio, 2 o 3 en total.
-4. **Expresión** (Norman + Saffer + Mailchimp). Clara cubre lo visceral y lo conductual. Ameyali cubre la voz, el tono por momento y lo reflexivo.
-5. **Comportamiento** (Fogg + Thaler y Sunstein + Kahneman + Heath). Trabajan juntas. Qué hace fácil el producto, cuándo avisa y cuándo calla, cuál es su momento firma y cómo termina cada experiencia. Clara lidera flujos, valores por omisión y el diseño del pico; Ameyali, el encuadre de cada decisión, los avisos y el cierre. Tenoch revisa la viabilidad técnica y prototipa; Clara revisa la fidelidad de lo construido.
-6. **Consistencia y ética** (Reeves + Nass + Brignull). Trabajan juntas. Todo queda en `PERSONALIDAD.md` y se audita contra él.
+4. **Expresión** (Norman + Saffer + Mailchimp). Clara cubre lo visceral y lo conductual productivo: lo que se espera y no debe notarse. Félix cubre lo conductual expresivo: la microinteracción firma, con disparador, reglas, retroalimentación y ciclos, y Clara la revisa. Ameyali cubre la voz, el tono por momento y lo reflexivo.
+5. **Comportamiento** (Fogg + Thaler y Sunstein + Kahneman + Heath). Trabajan juntas. Qué hace fácil el producto, cuándo avisa y cuándo calla, cuál es su momento firma y cómo termina cada experiencia. Clara lidera flujos, valores por omisión y el diseño del pico; Félix, cómo se mueven el momento firma y el pico de cada flujo, con su versión para movimiento reducido; Ameyali, el encuadre de cada decisión, los avisos y el cierre. Tenoch revisa la viabilidad técnica y prototipa; Clara revisa la fidelidad de lo construido.
+6. **Consistencia y ética** (Reeves + Nass + Brignull). Trabajan juntas. Todo queda en `PERSONALIDAD.md` y se audita contra él. Félix audita su capa, incluida la accesibilidad del movimiento.
 
 Los pasos 1 a 3 no se inventan: se extraen de Alan con una entrevista. Pueden proponer, pero la decisión es de él.
 
