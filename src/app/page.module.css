@@ -25,7 +25,7 @@
   align-items: flex-start;
   gap: var(--space-24);
   min-width: 0;
-  padding: var(--space-64) var(--space-48) 112px var(--space-64); /* bottom clears the docked nav */
+  padding: var(--space-64) var(--space-48) 160px var(--space-64); /* bottom leaves clear air above the docked nav */
 }
 
 .visual {
@@ -54,7 +54,7 @@
   }
 
   .heroCopy {
-    padding: var(--space-24) var(--page-padding) 112px;
+    padding: var(--space-24) var(--page-padding) 144px;
   }
 }
 
