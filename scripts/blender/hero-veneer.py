@@ -1,4 +1,5 @@
-"""Abstract hero loop: a relief of triangular prisms in cherry, titanium and honed aluminium,\npushed out and back by a radial wave.
+"""Abstract hero loop: a low-poly relief of irregular triangular facets in cherry, titanium and
+honed aluminium, each pulsing out at random.
 
 Run headless (Blender 4.2 LTS):
     blender -b --factory-startup --python scripts/blender/hero-veneer.py -- [--preview]
@@ -6,8 +7,7 @@ Run headless (Blender 4.2 LTS):
 Writes public/videos/hero-veneer.mp4 (seamless loop) and public/videos/hero-veneer-poster.webp.
 --preview renders only the poster frame, at low samples, to check the look quickly.
 
-The loop is exact: each tile's height follows sin(2π·frame/FRAMES − distance), which repeats
-every FRAMES frames.
+The loop is exact: every facet beats a whole number of times per FRAMES frames.
 """
 
 import math
@@ -164,43 +164,13 @@ def brushed_titanium():
 WOOD = cherry_veneer()
 TITANIUM = brushed_titanium()
 
-# ── Relief: a wall of truncated triangular prisms, mirrored about the centre ──
-SIDE = 0.62
-TRI_H = SIDE * math.sqrt(3) / 2
-ROWS, COLS = 15, 25
-GAP = 0.94  # tile scale inside its cell
-AMP = 0.22  # how far a tile pushes out at the crest of the wave
-WAVELENGTH = 2.6
-
-
-def prism(name, up, wall, chamfer, k):
-    """Triangle prism (centroid at origin): vertical walls, then a chamfer up to a smaller cap."""
-    sgn = 1 if up else -1
-    tri = [(-SIDE / 2, -sgn * TRI_H / 3), (SIDE / 2, -sgn * TRI_H / 3), (0, sgn * 2 * TRI_H / 3)]
-    tri = [(x * GAP, y * GAP) for x, y in tri]
-    rings = [(0.0, 1.0), (wall, 1.0), (wall + chamfer, k)]
-    verts = [(x * sc, y * sc, z) for z, sc in rings for x, y in tri]
-    faces = []
-    for r in range(len(rings) - 1):
-        for j in range(3):
-            a, b = r * 3 + j, r * 3 + (j + 1) % 3
-            faces.append((a, b, b + 3, a + 3) if up else (b, a, a + 3, b + 3))
-    top = (6, 7, 8) if up else (8, 7, 6)
-    faces.append(top)
-    me = bpy.data.meshes.new(name)
-    me.from_pydata(verts, [], faces)
-    me.update()
-    me.validate()
-    for poly in me.polygons:
-        poly.use_smooth = False
-    me.materials.append(WOOD)
-    return me
-
-
-VARIANTS = {}
-for up in (True, False):
-    for v, (wall, chamfer, k) in enumerate([(0.25, 0.10, 0.62), (0.32, 0.16, 0.4), (0.2, 0.06, 0.78)]):
-        VARIANTS[(up, v)] = prism(f"prism-{'up' if up else 'down'}-{v}", up, wall, chamfer, k)
+# ── Relief: an irregular triangulation (low-poly facets), mirrored about the centre ──
+SPACING = 0.78  # mean distance between triangulation points
+JITTER = 0.42  # fraction of SPACING each point wanders off its grid slot
+EXTENT_X, EXTENT_Y = 4.4, 4.2
+GAP = 0.022  # half the groove between neighbouring facets
+AMP = 0.26  # how far a tile pushes out at the peak of a beat
+SHARP = 6  # pulse exponent: higher = shorter, snappier beats
 
 ALUMINIUM = bpy.data.materials.new("Aluminium")
 ALUMINIUM.use_nodes = True
@@ -218,57 +188,107 @@ def hash01(a, b):
     return ((n ^ (n >> 16)) & 0xFFFF) / 0x10000
 
 
+def points():
+    """Jittered grid on the right half; points on the axis stay on it so the mirror is seamless."""
+    pts = []
+    nx, ny = int(EXTENT_X / SPACING) + 1, int(EXTENT_Y / SPACING) + 1
+    for j in range(-ny, ny + 1):
+        for i in range(0, nx + 1):
+            dy = (hash01(i, j + 500) - 0.5) * 2 * JITTER * SPACING
+            x = (i + (0.5 if j % 2 else 0)) * SPACING
+            if i == 0:
+                x = 0.0
+            else:
+                x += (hash01(i, j) - 0.5) * 2 * JITTER * SPACING
+            pts.append((x, j * SPACING * 0.87 + dy))
+    return pts + [(-x, y) for x, y in pts if x > 1e-6]
+
+
+def facet(name, tri, wall, chamfer, k):
+    """Prism on an arbitrary triangle (incentre at origin): walls, then a chamfer to a smaller cap.
+    Inset about the incentre so the groove is the same width on every edge."""
+    (ax, ay), (bx, by), (cx, cy) = tri
+    la, lb, lc = math.dist(tri[1], tri[2]), math.dist(tri[0], tri[2]), math.dist(tri[0], tri[1])
+    per = la + lb + lc
+    ix, iy = (la * ax + lb * bx + lc * cx) / per, (la * ay + lb * by + lc * cy) / per
+    area = abs((bx - ax) * (cy - ay) - (cx - ax) * (by - ay)) / 2
+    inr = 2 * area / per
+    base = max(inr - GAP, inr * 0.3) / inr
+    local = [(x - ix, y - iy) for x, y in tri]
+    if (bx - ax) * (cy - ay) - (cx - ax) * (by - ay) < 0:
+        local.reverse()  # counter-clockwise so normals face the camera
+    rings = [(0.0, base), (wall, base), (wall + chamfer, base * k)]
+    verts = [(x * sc, y * sc, z) for z, sc in rings for x, y in local]
+    faces = []
+    for r in range(len(rings) - 1):
+        for j in range(3):
+            a, b = r * 3 + j, r * 3 + (j + 1) % 3
+            faces.append((a, b, b + 3, a + 3))
+    faces.append((6, 7, 8))
+    me = bpy.data.meshes.new(name)
+    me.from_pydata(verts, [], faces)
+    me.update()
+    me.validate()
+    for poly in me.polygons:
+        poly.use_smooth = False
+    return me, (ix, iy), inr
+
+
+from mathutils import Vector
+from mathutils.geometry import delaunay_2d_cdt
+
+pts = points()
+vco, _, tris, *_ = delaunay_2d_cdt([Vector(p) for p in pts], [], [], 0, 1e-5)
+
 wall_rig = bpy.data.objects.new("Relief", None)
 scene.collection.objects.link(wall_rig)
 tiles = []
-for r in range(-ROWS // 2, ROWS // 2 + 1):
-    for c in range(-COLS // 2, COLS // 2 + 1):
-        up = (r + c) % 2 == 0
-        x = c * SIDE / 2
-        y = r * TRI_H + (TRI_H / 3 if not up else 0) - (TRI_H / 6)
-        mc = abs(c)  # mirror the pattern about the vertical axis
-        h = hash01(mc, r)
-        d = math.hypot(x, y)
-        # Chevrons of wood towards the centre, titanium and honed aluminium scattered around.
-        if mc <= 1 and r % 3 != 0:
-            mat, variant = WOOD, 1
-        elif h < 0.5:
-            mat, variant = WOOD, int(h * 6) % 3
-        elif h < 0.75:
-            mat, variant = ALUMINIUM, 2
-        else:
-            mat, variant = TITANIUM, 0
-        ob = bpy.data.objects.new(f"Tile {r}:{c}", VARIANTS[(up, variant)])
-        scene.collection.objects.link(ob)
-        ob.parent = wall_rig
-        ob.material_slots[0].link = "OBJECT"
-        ob.material_slots[0].material = mat
-        ob.location = (x, y, 0)
-        # A triangle maps onto itself under 120° turns: rotate so the wood grain varies.
-        ob.rotation_euler = (0, 0, math.radians(120 * (int(h * 30) % 3)))
-        # No two triangles alike: width and height shrink independently, so each footprint
-        # gets its own proportions (never overlapping its neighbours). Depth stays constant.
-        # Mirrored like the materials.
-        sx = 0.55 + 0.45 * hash01(mc, r + 101)
-        sy = 0.55 + 0.45 * hash01(mc, r + 211)
-        ob.scale = (sx, sy, 1.0)
-        bev = ob.modifiers.new("edge", "BEVEL")
-        bev.width = 0.012
-        bev.segments = 2
-        bev.limit_method = "ANGLE"
-        bev.harden_normals = True
-        tiles.append((ob, d))
+for n, t in enumerate(tris):
+    tri = [(vco[i].x, vco[i].y) for i in t]
+    cx = sum(p[0] for p in tri) / 3
+    cy = sum(p[1] for p in tri) / 3
+    # Mirrored seed: the facet and its reflection share material, profile and rhythm.
+    key = (int(round(abs(cx) * 100)), int(round(cy * 100)))
+    h = hash01(*key)
+    shape = [(0.22, 0.08, 0.66), (0.3, 0.14, 0.45), (0.18, 0.05, 0.8)][int(h * 9) % 3]
+    me, (ix, iy), inr = facet(f"facet-{n}", tri, *shape)
+    if inr < 0.04:
+        bpy.data.meshes.remove(me)  # slivers on the hull
+        continue
+    if abs(cx) < 0.5 and hash01(key[1], 7) < 0.6:
+        mat = WOOD
+    elif h < 0.5:
+        mat = WOOD
+    elif h < 0.75:
+        mat = ALUMINIUM
+    else:
+        mat = TITANIUM
+    me.materials.append(mat)
+    ob = bpy.data.objects.new(f"Facet {n}", me)
+    scene.collection.objects.link(ob)
+    ob.parent = wall_rig
+    ob.location = (ix, iy, 0)
+    bev = ob.modifiers.new("edge", "BEVEL")
+    bev.width = 0.012
+    bev.segments = 2
+    bev.limit_method = "ANGLE"
+    bev.harden_normals = True
+    tiles.append((ob, key))
 
-# Radial wave, sampled into keyframes. sin(2π·f/FRAMES − …) repeats exactly every FRAMES.
-STEP = 3
-for ob, d in tiles:
+# Random pulse: each facet beats 1-3 times per loop at its own phase and strength.
+# Integer beats per loop keep it seamless; the high power keeps facets at rest between beats.
+STEP = 2
+for ob, key in tiles:
+    beats = 1 + int(hash01(key[0] + 31, key[1]) * 3)
+    phase = hash01(key[0], key[1] + 77)
+    amp = AMP * (0.35 + 0.65 * hash01(key[0] + 13, key[1] + 5))
     for f in range(1, FRAMES + 2, STEP):
-        phase = 2 * math.pi * (f - 1) / FRAMES - d * 2 * math.pi / WAVELENGTH
-        ob.location.z = AMP * (0.5 + 0.5 * math.sin(phase)) ** 2
+        t = (f - 1) / FRAMES
+        ob.location.z = amp * (0.5 + 0.5 * math.cos(2 * math.pi * (beats * t + phase))) ** SHARP
         ob.keyframe_insert("location", index=2, frame=f)
     for fc in ob.animation_data.action.fcurves:
         for kp in fc.keyframe_points:
-            kp.interpolation = "LINEAR"
+            kp.interpolation = "BEZIER"
 
 wall_rig.rotation_euler = (math.radians(0), 0, 0)
 
