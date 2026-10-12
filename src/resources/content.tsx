@@ -42,12 +42,7 @@ const home: Home = {
   label: "Home",
   title: `${person.name} | ${person.role}`,
   description: `${person.role} in ${person.city}. Case studies in e-commerce, financial services and telecom: cart and checkout at Coppel, app redesign at Movistar MX.`,
-  headline: (
-    <>
-      My design philosophy centers on a product’s true cost to the user: their time, attention, and
-      patience.
-    </>
-  ),
+  headline: <>Minimizing the human cost of digital products.</>,
   featured: {
     display: true,
     slug: "building-this-portfolio",
@@ -62,8 +57,9 @@ const home: Home = {
   },
   subline: (
     <>
-      I’m {person.firstName}, a product designer for 8 years. I research early, prototype fast and
-      keep the people who use the product at the center, from the first question to launch.
+      I’m {person.firstName}, a product designer of eight years. By pairing early-stage research
+      with rapid iteration, I keep people at the center to protect what matters most: their time,
+      attention, and peace of mind.
     </>
   ),
 };
