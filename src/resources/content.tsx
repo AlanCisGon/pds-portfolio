@@ -62,10 +62,8 @@ const home: Home = {
   },
   subline: (
     <>
-      I’m {person.firstName}, a product designer with 8 years across{" "}
-      <strong>e-commerce, financial services and telecom</strong>. At <strong>Coppel</strong> I lead
-      UX for Purchase &amp; Payments, where we cut a checkout step and dynamic CVV rejections fell
-      60%.
+      I’m {person.firstName}, a product designer for 8 years. I research early, prototype fast and
+      keep the people who use the product at the center, from the first question to launch.
     </>
   ),
 };
