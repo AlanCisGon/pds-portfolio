@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy } from "iconoir-react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { type PointerEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./MotionDemo.module.css";
 
 // Lab-only prototypes of Félix's "07 Motion" page. Nothing here is part of src/ui yet:
@@ -138,6 +138,150 @@ function SkeletonDemo() {
   );
 }
 
+type Variant = "a" | "b" | "c";
+const variants: { id: Variant; label: string }[] = [
+  { id: "a", label: "A · Tono" },
+  { id: "b", label: "B · Tono y escala" },
+  { id: "c", label: "C · Desenfoque" },
+];
+
+/** E · Card al frente: the protagonist rises and the surroundings recede with it (Precisión). */
+function CardFront() {
+  const [variant, setVariant] = useState<Variant>("a");
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={styles.stack}>
+      <fieldset className={styles.segmented} aria-label="Variante del entorno">
+        {variants.map((v) => (
+          <button
+            key={v.id}
+            type="button"
+            aria-pressed={variant === v.id}
+            className={styles.segment}
+            onClick={() => setVariant(v.id)}
+          >
+            {v.label}
+          </button>
+        ))}
+      </fieldset>
+      <div className={styles.stage} data-variant={variant} data-open={open || undefined}>
+        <div className={styles.surroundings} aria-hidden="true">
+          <span className={styles.ghostCard} />
+          <span className={styles.ghostCard} />
+          <span className={styles.ghostLine} />
+        </div>
+        <button
+          type="button"
+          className={styles.hero}
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+        >
+          <span className={styles.featureMeta}>Toca para traerla al frente</span>
+          <span className={styles.cardTitle}>Project Helix</span>
+          <span className={styles.cardBody}>Carrito y checkout de Coppel.</span>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** F · Depth planes: four 2D layers on the Z axis follow touch, cursor or (opt-in) device tilt. */
+type OrientationPermission = { requestPermission?: () => Promise<"granted" | "denied"> };
+
+function setTilt(el: HTMLElement | null, x: number, y: number) {
+  el?.style.setProperty("--px", x.toFixed(3));
+  el?.style.setProperty("--py", y.toFixed(3));
+}
+
+function DepthPlanes() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [gyro, setGyro] = useState<"off" | "on" | "denied" | "unsupported">("off");
+  const move = (e: PointerEvent<HTMLDivElement>) => {
+    if (gyro === "on" || !ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    setTilt(
+      ref.current,
+      ((e.clientX - r.left) / r.width - 0.5) * 2,
+      ((e.clientY - r.top) / r.height - 0.5) * 2,
+    );
+  };
+  const reset = () => {
+    if (gyro !== "on") setTilt(ref.current, 0, 0);
+  };
+
+  // Device tilt: clamped to ±8°, eased toward the target each frame, relative to how it was held.
+  useEffect(() => {
+    if (gyro !== "on") return;
+    const el = ref.current;
+    let base: { beta: number; gamma: number } | null = null;
+    let target = { x: 0, y: 0 };
+    const cur = { x: 0, y: 0 };
+    let frame = 0;
+    const clamp = (v: number) => Math.max(-1, Math.min(1, v / 8));
+    const onTilt = (e: DeviceOrientationEvent) => {
+      if (e.beta == null || e.gamma == null) return;
+      base ??= { beta: e.beta, gamma: e.gamma };
+      target = { x: clamp(e.gamma - base.gamma), y: clamp(e.beta - base.beta) };
+    };
+    const tick = () => {
+      cur.x += (target.x - cur.x) * 0.12;
+      cur.y += (target.y - cur.y) * 0.12;
+      setTilt(el, cur.x, cur.y);
+      frame = requestAnimationFrame(tick);
+    };
+    window.addEventListener("deviceorientation", onTilt);
+    frame = requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener("deviceorientation", onTilt);
+      cancelAnimationFrame(frame);
+      setTilt(el, 0, 0);
+    };
+  }, [gyro]);
+
+  const toggleGyro = async () => {
+    if (gyro === "on") return setGyro("off");
+    if (typeof window === "undefined" || !("DeviceOrientationEvent" in window)) {
+      return setGyro("unsupported");
+    }
+    const DOE = window.DeviceOrientationEvent as unknown as OrientationPermission;
+    if (DOE.requestPermission) {
+      const answer = await DOE.requestPermission().catch(() => "denied" as const);
+      return setGyro(answer === "granted" ? "on" : "denied");
+    }
+    setGyro("on");
+  };
+
+  return (
+    <div className={styles.stack}>
+      <div
+        ref={ref}
+        className={styles.scene}
+        onPointerMove={move}
+        onPointerLeave={reset}
+        onPointerUp={reset}
+        aria-hidden="true"
+      >
+        <span className={styles.p0}>P0 · Fondo</span>
+        <span className={styles.p1}>P1 · Contenido</span>
+        <span className={styles.p2}>P2 · Interactivo</span>
+        <span className={styles.p3}>P3 · Foco</span>
+      </div>
+      <button
+        type="button"
+        className={styles.trigger}
+        aria-pressed={gyro === "on"}
+        onClick={toggleGyro}
+      >
+        {gyro === "on" ? "Desactivar giro del teléfono" : "Activar giro del teléfono"}
+      </button>
+      {gyro === "denied" && <p className={styles.note}>Permiso negado: sigue con el dedo.</p>}
+      {gyro === "unsupported" && (
+        <p className={styles.note}>Este dispositivo no reporta el giro: sigue con el dedo.</p>
+      )}
+    </div>
+  );
+}
+
 export function MotionDemo() {
   const [reduced, setReduced] = useState(false);
 
@@ -149,10 +293,10 @@ export function MotionDemo() {
       </label>
       <div className={styles.grid}>
         <div className={styles.demo}>
-          <p className={styles.label}>A · NavItem · expresivo</p>
+          <p className={styles.label}>A · NavItem · Material (lo toca la mano)</p>
           <NavIndicator />
           <p className={styles.note}>
-            --duration-base · --ease-settle · estiramiento 1.5 a los 100 ms. Reducida: crossfade.
+            Resorte k 260 · d 24 (propuesto) · estiramiento al arrancar. Reducida: crossfade.
           </p>
         </div>
         <div className={styles.demo}>
@@ -171,11 +315,27 @@ export function MotionDemo() {
           </p>
         </div>
         <div className={styles.demo}>
-          <p className={styles.label}>D · FeaturedCase al tocar · expresivo</p>
+          <p className={styles.label}>D · FeaturedCase al tocar · Material</p>
           <FeaturedPress />
           <p className={styles.note}>
-            Presionado: 0.98 en --duration-fast. Al soltar: sube 4 px en --duration-base con
-            --ease-settle. La navegación no espera. Reducida: opacidad 0.85.
+            Presionado: 0.97. Al soltar: sube 4 px con el resorte Material. La navegación no espera.
+            Reducida: opacidad 0.85.
+          </p>
+        </div>
+        <div className={styles.demo}>
+          <p className={styles.label}>E · Card al frente · Precisión</p>
+          <CardFront />
+          <p className={styles.note}>
+            --ease-settle en --duration-wide. La card sube a 1.04; el entorno se mueve menos. C es
+            una excepción a decidir por Alan. Reducida: solo tono.
+          </p>
+        </div>
+        <div className={styles.demo}>
+          <p className={styles.label}>F · Planos de profundidad · CSS 3D</p>
+          <DepthPlanes />
+          <p className={styles.note}>
+            Mueve el dedo o el cursor: 4° como máximo, más cerca es más accionable. Giro del
+            teléfono opcional, con permiso y ±8°. Reducida: todo en Z = 0.
           </p>
         </div>
       </div>

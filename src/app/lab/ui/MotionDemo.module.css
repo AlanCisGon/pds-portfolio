@@ -3,6 +3,27 @@
   /* Proposed for Clara: continuous cycles don't fit the one-shot durations. */
   --duration-pulse: 1200ms;
   --duration-spin: 800ms;
+  /* Proposed for Clara: "Material" dialect, spring k 260 · d 24 · m 1 sampled as linear(). */
+  --ease-material: linear(
+    0 0%,
+    0.099 6%,
+    0.304 13%,
+    0.522 19%,
+    0.709 25%,
+    0.848 31%,
+    0.94 38%,
+    0.994 44%,
+    1.021 50%,
+    1.029 56%,
+    1.028 62%,
+    1.023 69%,
+    1.016 75%,
+    1.01 81%,
+    1.006 87%,
+    1.003 94%,
+    1
+  );
+  --duration-material: 500ms;
 
   display: flex;
   flex-direction: column;
@@ -97,8 +118,8 @@
   left: 0;
   display: flex;
   justify-content: center;
-  transition: transform var(--duration-base) var(--ease-settle), width var(--duration-base)
-    var(--ease-settle);
+  transition: transform var(--duration-material) var(--ease-material), width
+    var(--duration-material) var(--ease-material);
 }
 
 .indicator,
@@ -328,18 +349,18 @@
 }
 
 .featureLift {
-  animation: lift var(--duration-base) var(--ease-settle);
+  animation: lift var(--duration-material) var(--ease-material);
 }
 
 .feature:active .featureInner,
 .feature:active .featureLift {
-  transform: scale(0.98);
+  transform: scale(0.97);
   animation: none;
 }
 
 @keyframes lift {
   0% {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
   50% {
     transform: scale(1) translateY(-4px);
@@ -355,6 +376,183 @@
   font-size: var(--text-meta-size);
   line-height: var(--text-meta-line);
   letter-spacing: var(--text-meta-tracking);
+}
+
+/* E · Card al frente (Precisión) */
+.segmented {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.segment {
+  padding: var(--space-4) var(--space-8);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  cursor: pointer;
+}
+
+.segment[aria-pressed="true"] {
+  background: var(--color-text-primary);
+  color: var(--color-bg-page);
+}
+
+.segment:focus-visible,
+.hero:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  min-height: 240px;
+  padding: var(--space-16);
+  border-radius: var(--radius-control);
+  background: var(--color-bg-elevated);
+  overflow: hidden;
+  transition: background-color var(--duration-wide) var(--ease-settle);
+}
+
+.surroundings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-content: start;
+  transition: transform var(--duration-wide) var(--ease-settle), filter var(--duration-wide)
+    var(--ease-settle), opacity var(--duration-wide) var(--ease-settle);
+}
+
+.ghostCard,
+.ghostLine {
+  display: block;
+  height: 48px;
+  border-radius: var(--radius-control);
+  background: var(--color-bg-surface);
+}
+
+.ghostLine {
+  grid-column: 1 / -1;
+  height: 12px;
+}
+
+.hero {
+  position: absolute;
+  right: var(--space-16);
+  bottom: var(--space-16);
+  left: var(--space-16);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-16);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-bg-surface);
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: transform var(--duration-wide) var(--ease-settle), background-color
+    var(--duration-wide) var(--ease-settle);
+}
+
+.stage[data-open] {
+  background: var(--color-bg-page);
+}
+
+.stage[data-open] .hero {
+  background: var(--color-bg-elevated);
+  transform: translateY(-8px) scale(1.04);
+}
+
+.stage[data-open] .surroundings {
+  opacity: 0.6;
+}
+
+.stage[data-variant="b"][data-open] .surroundings {
+  transform: scale(0.97);
+}
+
+.stage[data-variant="c"][data-open] .surroundings {
+  filter: blur(8px);
+}
+
+/* F · Depth planes (CSS 3D) */
+.scene {
+  --px: 0;
+  --py: 0;
+  position: relative;
+  height: 180px;
+  border-radius: var(--radius-control);
+  background: var(--color-bg-page);
+  perspective: 800px;
+  touch-action: none;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.p0,
+.p1,
+.p2,
+.p3 {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-8);
+  border-radius: var(--radius-control);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  transition: transform var(--duration-base) var(--ease-settle);
+  will-change: transform;
+}
+
+.p0 {
+  align-items: flex-start;
+  justify-content: flex-end;
+  inset: var(--space-8);
+  background: var(--color-bg-surface);
+  opacity: 0.5;
+  transform: translate3d(calc(var(--px) * -6px), calc(var(--py) * -6px), -48px) scale(0.94);
+}
+
+.p1 {
+  align-items: flex-start;
+  inset: var(--space-24) var(--space-48) var(--space-24) var(--space-24);
+  background: var(--color-bg-surface);
+  transform: translate3d(0, 0, 0) rotateX(calc(var(--py) * -4deg)) rotateY(calc(var(--px) * 4deg));
+}
+
+.p2 {
+  top: var(--space-48);
+  right: var(--space-24);
+  width: 45%;
+  height: 72px;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  transform: translate3d(calc(var(--px) * 6px), calc(var(--py) * 6px), 24px) scale(1.03)
+    rotateX(calc(var(--py) * -4deg)) rotateY(calc(var(--px) * 4deg));
+}
+
+.p3 {
+  bottom: var(--space-16);
+  left: var(--space-48);
+  width: 40%;
+  height: 48px;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  outline: 1px solid var(--color-accent);
+  transform: translate3d(calc(var(--px) * 12px), calc(var(--py) * 12px), 48px) scale(1.06)
+    rotateX(calc(var(--py) * -4deg)) rotateY(calc(var(--px) * 4deg));
 }
 
 /* Reduced motion: only opacity animates (toggle in the lab, or the OS setting). */
@@ -388,6 +586,21 @@
   animation: appear var(--duration-fast) linear forwards;
 }
 
+.root[data-reduced] .hero,
+.root[data-reduced] .surroundings {
+  transition: background-color var(--duration-fast) linear, opacity var(--duration-fast) linear;
+  transform: none !important;
+  filter: none !important;
+}
+
+.root[data-reduced] .p0,
+.root[data-reduced] .p1,
+.root[data-reduced] .p2,
+.root[data-reduced] .p3 {
+  transform: none;
+  transition: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .track {
     transition: none;
@@ -417,5 +630,20 @@
   .feature:active .featureLift {
     transform: none;
     opacity: 0.85;
+  }
+
+  .hero,
+  .surroundings {
+    transition: background-color var(--duration-fast) linear, opacity var(--duration-fast) linear;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .p0,
+  .p1,
+  .p2,
+  .p3 {
+    transform: none;
+    transition: none;
   }
 }
