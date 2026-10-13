@@ -7,7 +7,7 @@ Dejar de depender del fork de **Magic Portfolio** y de **Once UI**, y quedarse c
 
 1. Tiene una hipótesis Lean UX (ver `CLAUDE.md` → *Design Principles*).
 2. Si cambia algo visual, se diseña primero en Figma y se pasa a código con handoff vía el MCP de Figma.
-3. Va en su propia rama, con un PR y su preview de Vercel. Opcionalmente se prueba en `dev`, luego se hace squash a `main`.
+3. Va en su propia rama, con un PR contra `main` y su preview de Vercel como revisión; luego se hace squash a `main` (ADR 0007).
 4. Se mide después de salir a producción: Core Web Vitals, peso de JS, páginas vistas.
 
 **Fuentes de verdad**
