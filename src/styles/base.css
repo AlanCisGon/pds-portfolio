@@ -13,6 +13,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip; /* full-bleed blocks and a card scaled to front never open a horizontal scroll */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

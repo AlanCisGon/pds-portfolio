@@ -22,7 +22,11 @@ export type FeaturedCaseProps = {
   cover?: { src: string; alt: string };
   /** Load the cover with priority when the block is above the fold (LCP). */
   priority?: boolean;
+  /** Card-to-front treatment: a = tone, b = tone + scale, c = tone + blurred surroundings. */
+  front?: FeaturedCaseFront;
 };
+
+export type FeaturedCaseFront = "a" | "b" | "c";
 
 /**
  * Editorial featured case (Figma 05 Explorations, A2 · 105-260 / 105-341).
@@ -40,10 +44,11 @@ export function FeaturedCase({
   cta,
   cover,
   priority = false,
+  front = "a",
 }: FeaturedCaseProps) {
   const titleId = useId();
   return (
-    <section className={styles.featured} aria-labelledby={titleId}>
+    <section className={styles.featured} data-front={front} aria-labelledby={titleId}>
       <Divider />
       <div className={styles.row}>
         <div className={styles.column}>

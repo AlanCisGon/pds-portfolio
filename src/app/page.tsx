@@ -1,7 +1,7 @@
 import { HeroVisual } from "@/components/hero/HeroVisual";
 import { Projects } from "@/components/work/Projects";
 import { home, work } from "@/resources";
-import { FeaturedCase } from "@/ui";
+import { FeaturedCase, type FeaturedCaseFront } from "@/ui";
 import { getProject } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import { NavArrowDown } from "iconoir-react";
@@ -14,7 +14,16 @@ export const metadata = pageMetadata({
   image: home.image,
 });
 
-export default function Home() {
+const FRONTS: FeaturedCaseFront[] = ["a", "b", "c"];
+
+/** Card-to-front experiment: ?v=a|b|c picks the variant to try on a phone (default a). */
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const { v } = await searchParams;
+  const front = FRONTS.find((variant) => variant === v) ?? "a";
   const featured = home.featured.display ? getProject(home.featured.slug) : undefined;
   return (
     <div className={styles.page}>
@@ -56,6 +65,7 @@ export default function Home() {
           cta={home.featured.cta}
           cover={home.featured.cover}
           priority
+          front={front}
         />
       )}
       <Projects exclude={featured ? [featured.slug] : undefined} />

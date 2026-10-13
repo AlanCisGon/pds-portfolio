@@ -92,6 +92,30 @@
   transform: translateY(4px);
 }
 
+/* Featured case, front C: the surroundings soften while the card is in front.
+   They move less than the card (a light blur, no scale) and never react to keyboard focus. */
+.page > :not([data-front]) {
+  transition: filter var(--duration-wide) var(--ease-settle);
+}
+
+.page:has([data-front="c"] a:active) > :not([data-front]) {
+  filter: blur(2px);
+}
+
+@media (hover: hover) {
+  .page:has([data-front="c"]:hover) > :not([data-front]) {
+    filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page > :not([data-front]),
+  .page:has([data-front="c"]:hover) > :not([data-front]),
+  .page:has([data-front="c"] a:active) > :not([data-front]) {
+    filter: none;
+  }
+}
+
 /* Lands below the hero without the margin collapsing into it. */
 .anchor {
   display: block;

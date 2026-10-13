@@ -1,10 +1,70 @@
 /* FeaturedCase · Figma 05 Explorations, A2 editorial (105-260 / 105-341). No surface: separated by a divider. */
 .featured {
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   gap: var(--space-24);
   width: 100%;
+  transition: transform var(--duration-wide) var(--ease-settle);
+}
+
+/* Card to front: the surface is painted outside the box (negative inset), so the layout never shifts.
+   The inset stays inside --page-padding, scaled 1.04 included. */
+.featured::before {
+  position: absolute;
+  inset: calc(var(--space-8) * -1);
+  z-index: -1;
+  border-radius: var(--radius-card);
+  background-color: transparent;
+  content: "";
+  pointer-events: none;
+  transition: background-color var(--duration-wide) var(--ease-settle);
+}
+
+.featured > hr {
+  transition: opacity var(--duration-wide) var(--ease-settle);
+}
+
+/* Front state: hover (pointer devices only, so touch never sticks), press, or keyboard focus on the CTA. */
+.featured:has(.cta:active)::before,
+.featured:has(.cta:focus-visible)::before {
+  background-color: var(--color-bg-surface);
+}
+
+.featured:has(.cta:active) > hr,
+.featured:has(.cta:focus-visible) > hr {
+  opacity: 0;
+}
+
+.featured[data-front="b"]:has(.cta:active),
+.featured[data-front="b"]:has(.cta:focus-visible) {
+  transform: scale(1.04);
+}
+
+@media (hover: hover) {
+  .featured:hover::before {
+    background-color: var(--color-bg-surface);
+  }
+
+  .featured:hover > hr {
+    opacity: 0;
+  }
+
+  .featured[data-front="b"]:hover {
+    transform: scale(1.04);
+  }
+}
+
+/* Reduced motion: tone only. */
+@media (prefers-reduced-motion: reduce) {
+  .featured,
+  .featured[data-front="b"]:hover,
+  .featured[data-front="b"]:has(.cta:active),
+  .featured[data-front="b"]:has(.cta:focus-visible) {
+    transform: none;
+    transition: none;
+  }
 }
 
 .row {
@@ -90,6 +150,10 @@
 }
 
 @media (min-width: 1024px) {
+  .featured::before {
+    inset: calc(var(--space-24) * -1);
+  }
+
   .row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 400px;
