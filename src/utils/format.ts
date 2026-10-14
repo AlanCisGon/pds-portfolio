@@ -7,3 +7,13 @@ export function formatDate(isoDate: string, locale: "en-US" | "es-MX" = "en-US")
     day: "numeric",
   });
 }
+
+/** Short en-US date for cards: "Sep 3, 2026". */
+export function formatShortDate(isoDate: string): string {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}

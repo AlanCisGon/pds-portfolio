@@ -1,4 +1,4 @@
-import type { About, Home, Person, Social, Work } from "@/types";
+import type { About, Blog, Home, Person, Social, Work } from "@/types";
 
 const person: Person = {
   firstName: "Alan",
@@ -314,4 +314,35 @@ const work: Work = {
   // All projects will be listed on the /home and /work routes
 };
 
-export { person, social, home, about, work };
+const blog: Blog = {
+  path: "/blog",
+  label: "Writing",
+  title: `Writing – ${person.name}`,
+  description: "Field notes on product design and leading design teams.",
+  by: "By",
+  author: "Alan Cisneros Gonzalez",
+  minRead: "min read",
+  all: "All writing",
+  notesTitle: "Notes",
+  notesBack: "Back to reference",
+  copyeditedBy: "Copyedited by",
+  cta: {
+    contact: {
+      heading: "Thinking about this on your own product?",
+      body: "I'd like to hear how you handle it.",
+      label: "Write to me",
+    },
+    next: { heading: "Next note" },
+    share: "Share on LinkedIn",
+  },
+  section: {
+    title: "Writing",
+    subtitle: "Field notes on product design and leading design teams.",
+    cardEyebrow: "Field note",
+    cardCta: "Read the note",
+  },
+  launch: { lead: "A field note on design and load time:" },
+  indexTitle: "Writing",
+};
+
+export { person, social, home, about, work, blog };

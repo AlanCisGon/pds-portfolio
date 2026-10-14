@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { baseURL, routes } from "@/resources";
+import { getPosts } from "@/utils/posts";
 import { getProjects } from "@/utils/projects";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,5 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: project.metadata.publishedAt,
   }));
 
-  return [...pages, ...projects];
+  const posts = getPosts().map((post) => ({
+    url: `${baseURL}/blog/${post.slug}`,
+    lastModified: post.metadata.publishedAt,
+  }));
+
+  return [...pages, ...projects, ...posts];
 }
