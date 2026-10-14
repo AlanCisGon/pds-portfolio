@@ -95,4 +95,4 @@ With those numbers in hand, it's clear that an interface improvement, however sm
 
 *All figures in these scenarios are hypothetical and for illustration only; they don't describe any real company.*
 
-[^1]: Dynamic Yield, *eCommerce Conversion Rate Benchmarks*, Americas region, trailing twelve-month average; conversion = purchases ÷ visitors × 100. https://marketing.dynamicyield.com/benchmarks/conversion-rate/ (accessed October 14, 2026). [EVIDENCIA PENDIENTE: confirm Dynamic Yield's sample size and data source]
+[^1]: Dynamic Yield, *eCommerce Conversion Rate Benchmarks*, Americas region, trailing twelve-month average; conversion = purchases ÷ visitors × 100. https://marketing.dynamicyield.com/benchmarks/conversion-rate/ (accessed October 14, 2026).

@@ -93,4 +93,4 @@ Con estos números en la mano, queda claro que una mejora de interfaz, por peque
 
 *Todas las cifras de los escenarios son hipotéticas e ilustrativas; no corresponden a ninguna empresa.*
 
-[^1]: Dynamic Yield, *eCommerce Conversion Rate Benchmarks*, región Americas, promedio de los últimos doce meses; conversión = compras ÷ visitantes × 100. https://marketing.dynamicyield.com/benchmarks/conversion-rate/ (consultado el 14 de octubre de 2026). [EVIDENCIA PENDIENTE: confirmar tamaño de muestra y fuente de datos de Dynamic Yield]
+[^1]: Dynamic Yield, *eCommerce Conversion Rate Benchmarks*, región Americas, promedio de los últimos doce meses; conversión = compras ÷ visitantes × 100. https://marketing.dynamicyield.com/benchmarks/conversion-rate/ (consultado el 14 de octubre de 2026).
