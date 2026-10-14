@@ -1,0 +1,53 @@
+/* LaunchStrip · motion by Félix: arrow advances 4px and color shifts; underline is static. */
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--space-8);
+  padding: var(--space-16) 0;
+  border-block: 1px solid var(--color-border-subtle);
+  border-radius: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-exit);
+}
+
+.title {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color var(--duration-fast) var(--ease-exit);
+}
+
+.arrow {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  color: var(--color-accent);
+}
+
+.strip:is(:hover, :focus-visible) .title,
+.strip:is(:hover, :focus-visible) .arrow {
+  color: var(--color-accent-hover);
+  transition-timing-function: var(--ease-settle);
+}
+
+.strip:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-focus-block);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .arrow {
+    transition: transform var(--duration-fast) var(--ease-exit), color var(--duration-fast)
+      var(--ease-exit);
+  }
+
+  .strip:is(:hover, :focus-visible) .arrow {
+    transform: translateX(4px);
+    transition-timing-function: var(--ease-settle);
+  }
+}

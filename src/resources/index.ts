@@ -1,2 +1,2 @@
-export { person, social, home, about, work } from "./content";
+export { person, social, home, about, work, blog } from "./content";
 export { baseURL, routes } from "./site.config";

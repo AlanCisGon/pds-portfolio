@@ -1,0 +1,54 @@
+/* Blog note: one column at the prose measure, no TOC (notes under 8 min). */
+.page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--content-max);
+}
+
+.article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  width: 100%;
+  max-width: var(--measure-prose);
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+}
+
+.eyebrow,
+.meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-line);
+  text-wrap: balance;
+}
+
+.dek {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-l-size);
+  line-height: var(--text-body-l-line);
+}

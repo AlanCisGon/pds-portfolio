@@ -1,0 +1,76 @@
+/* Footnotes · Divider + Measure/Meta title + Body S secondary. */
+.footnotes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  font-weight: var(--weight-regular);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin: 0;
+  padding-left: var(--space-24);
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.item {
+  scroll-margin-top: var(--space-64);
+}
+
+/* The note the reader just jumped to: highlighted, then fades (reduced motion: stays). */
+.item:target {
+  animation: target-fade var(--duration-base) var(--ease-settle) 1s both;
+  border-radius: var(--radius-focus-block);
+  background: var(--color-bg-surface);
+}
+
+@keyframes target-fade {
+  to {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item:target {
+    animation: none;
+  }
+}
+
+.ref {
+  line-height: 0;
+}
+
+.refLink,
+.back {
+  border-radius: var(--radius-focus-inline);
+  color: var(--color-accent);
+  font-variant-emoji: text;
+  scroll-margin-top: var(--space-64);
+}
+
+.refLink:focus-visible,
+.back:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.credit {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}

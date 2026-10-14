@@ -112,3 +112,32 @@ export interface Work extends PageConfig {
     statDecrease: string;
   };
 }
+
+/** Blog copy (Ameyali). The blog is theory of the discipline only: never tied to a case. */
+export interface Blog extends PageConfig {
+  /** Byline prefix ("By"). */
+  by: string;
+  /** Byline name, as Alan signs his writing. */
+  author: string;
+  /** "min read". */
+  minRead: string;
+  /** Back link to the index ("All writing"). */
+  all: string;
+  /** Footnotes section title and back-link name. */
+  notesTitle: string;
+  notesBack: string;
+  /** Credit line before the copyeditor name ("Copyedited by"). */
+  copyeditedBy: string;
+  /** Closing CTA while there is one note (contact) and from two notes (next). */
+  cta: {
+    contact: { heading: string; body: string; label: string };
+    next: { heading: string };
+    share: string;
+  };
+  /** Home section. */
+  section: { title: string; subtitle: string; cardEyebrow: string; cardCta: string };
+  /** Launch strip under the Home hero, until the second note ships. */
+  launch: { lead: string };
+  /** Index page heading. */
+  indexTitle: string;
+}
