@@ -96,7 +96,10 @@
     align-items: start;
     gap: var(--space-48);
   }
+}
 
+/* The proof grows to title size only when its column is wide enough (xl). */
+@media (min-width: 1200px) {
   .proof {
     font-size: var(--text-title-size);
     line-height: var(--text-title-line);
