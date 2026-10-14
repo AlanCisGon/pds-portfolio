@@ -58,7 +58,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
       <article className={styles.article}>
         <header className={styles.header}>
-          <Link href={blog.path} kind="standalone">
+          <Link href={blog.path} kind="standalone" back>
             {blog.all}
           </Link>
           <p className={styles.eyebrow}>{metadata.eyebrow}</p>
@@ -111,7 +111,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           />
         )}
 
-        <Link href={blog.path} kind="standalone">
+        <Link href={blog.path} kind="standalone" back>
           {blog.all}
         </Link>
       </article>

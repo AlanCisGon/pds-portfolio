@@ -1,4 +1,4 @@
-import { ArrowRight, OpenNewWindow } from "iconoir-react";
+import { ArrowLeft, ArrowRight, OpenNewWindow } from "iconoir-react";
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 import { VisuallyHidden } from "../VisuallyHidden";
@@ -14,6 +14,8 @@ export type LinkProps = {
   external?: boolean;
   /** Figma: `TrailingIcon` (standalone only). Defaults to ArrowRight, or OpenNewWindow when external. */
   trailingIcon?: ReactNode;
+  /** standalone only: a back link ("← All writing") puts ArrowLeft before the label, and no trailing icon. */
+  back?: boolean;
   className?: string;
 };
 
@@ -24,6 +26,7 @@ export function Link({
   kind = "inline",
   external,
   trailingIcon,
+  back = false,
   className,
 }: LinkProps) {
   const isExternal = external ?? /^https?:/.test(href);
@@ -36,8 +39,13 @@ export function Link({
       data-kind={kind}
       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
+      {kind === "standalone" && back && (
+        <span className={styles.icon} aria-hidden="true">
+          <ArrowLeft />
+        </span>
+      )}
       {children}
-      {kind === "standalone" && (
+      {kind === "standalone" && !back && (
         <span className={styles.icon} aria-hidden="true">
           {icon}
         </span>

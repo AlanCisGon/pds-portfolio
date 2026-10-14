@@ -50,6 +50,7 @@ export default function Home() {
 
       {featured && (
         <FeaturedCase
+          divider={!launch}
           href={`${work.path}/${featured.slug}`}
           meta={home.featured.meta}
           badge={home.featured.badge}

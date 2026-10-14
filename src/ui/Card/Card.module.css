@@ -106,3 +106,23 @@
   width: 1em;
   height: 1em;
 }
+
+/* wide from md: text on the left, CTA on the right (stacked below md). */
+@media (min-width: 768px) {
+  .card[data-layout="wide"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-24);
+  }
+
+  .card[data-layout="wide"] > :not(.cta) {
+    grid-column: 1;
+  }
+
+  .card[data-layout="wide"] > .cta {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: center;
+    margin-top: 0;
+  }
+}

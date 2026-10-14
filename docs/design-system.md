@@ -318,3 +318,8 @@ Patrón aprobado por Alan el 2026-10-14 (diseño de Clara, movimiento de Félix)
 - **ArticleCTA** (molécula, `src/ui/ArticleCTA`): `contact` (correo, sin formulario) mientras haya un artículo, y `next` desde dos. Sus hijos suben 12 px y aparecen una sola vez (`--duration-base`, `--ease-settle`, `--stagger-step`, IntersectionObserver a 0.25). Se ve ya asentado sin JS, con movimiento reducido o cuando recibe el foco.
 - **WritingSection** (organismo, `src/ui/WritingSection`): 1 artículo = tarjeta wide; 2–3 = cuadrícula; más de 3 = los 3 más recientes y "All writing" (el enlace aparece desde 2). En `/blog` muestra todos, con h1.
 - La prosa del artículo nunca supera `--measure-prose`. No lleva TOC en notas de menos de 8 minutos.
+- **Card wide** desde `md`: el texto va a la izquierda y el CTA a la derecha (gap `--space-24`); por debajo de `md` se apila.
+- **ArticleCTA:** borde superior `--color-border-subtle` con `--space-32` arriba. "Share on LinkedIn" va en `--color-text-secondary` subrayado (Label M), para no competir con el CTA principal.
+- **Link `back`:** en los enlaces de retroceso ("← All writing") la flecha va antes de la etiqueta.
+- **FeaturedCase `divider`:** se apaga cuando una LaunchStrip va justo arriba. La franja es una unidad cerrada con sus dos bordes.
+- En el espaciado interno del blog no hay `space/12`: se usan 8 y 16.
