@@ -186,6 +186,13 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 - Para `max-width` se usa el límite menos 1 px (`max-width: 767px`, `max-width: 991px`).
 - **Anchos de revisión:** 390 (diseño mobile) y 1280 (desktop), sin cambio.
 - La retícula bento colapsa a **una columna** en mobile.
+- **Excepción documentada · aire del hero de Home** (Alan, 2026-10-14). El padding inferior del copy no tiene token propio: es una suma de tokens de `Spacing` usada en un solo lugar (`src/app/page.module.css`). No se abre una colección `Layout` para dos valores de una página.
+  - Escritorio: `calc(var(--space-64) + var(--space-32))` = 96 px.
+  - Mobile: `calc(var(--space-64) * 2 + var(--space-8) + var(--space-32))` = 168 px; los 136 dejan libre el scroll cue y los 32 son aire.
+  - En Figma va como anotación en los frames del hero, no como variable.
+- **Header en Home.** Overlay fijo, oculto con `translateY(-100%)` mientras `scrollY < 0.85 × viewport`; después queda fijo arriba. El foco de teclado siempre lo muestra. Movimiento productivo (`--duration-base`, `--ease-settle`); sin transición con movimiento reducido.
+- **Header en Figma (36:110):** expone `showLocation` y `showTime` (BOOLEAN, por omisión `false`), 1:1 con las props opcionales `location` y `timeZone`. El sitio no las pasa (PR #94); solo `/lab/ui` las enciende.
+- **FeaturedCase en Figma:** tres variantes por breakpoint: `mobile` (< 992), `lg` (992–1199, proof en `Voice/Card`) y `desktop` (≥ 1200, proof en `Voice/Title`).
 - En los *media queries* se escribe el número literal (`@media (min-width: 768px)`), porque las variables CSS no funcionan ahí.
 
 ## Tipografía
