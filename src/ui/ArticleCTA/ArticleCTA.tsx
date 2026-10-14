@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "../Link";
+import { VisuallyHidden } from "../VisuallyHidden";
 import styles from "./ArticleCTA.module.css";
 
 export type ArticleCTAProps = {
@@ -75,7 +76,10 @@ export function ArticleCTA({ variant, heading, body, href, label, share }: Artic
         <Link href={href} kind="standalone" external={false}>
           {label}
         </Link>
-        <Link href={share.href}>{share.label}</Link>
+        <a href={share.href} className={styles.share} target="_blank" rel="noopener noreferrer">
+          {share.label}
+          <VisuallyHidden> (opens in a new tab)</VisuallyHidden>
+        </a>
       </div>
     </section>
   );
