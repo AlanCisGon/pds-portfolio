@@ -62,6 +62,8 @@ La imagen principal (hero). El carrusel de ocho banners que sirvió para que nin
 
 El LCP no es una métrica de ingeniería que a nosotros nos toca esperar. Es la consecuencia acumulada de decisiones de diseño: cuántos banners, qué tan pesada la imagen, qué aparece primero, qué puede esperar, qué es lo mínimo que necesita estar en pantalla para que alguien entienda que la tienda está abierta.
 
+Nos tocó vivirlo. En alguna ocasión alguien nos pidió un rediseño radical de una home: quería que se pareciera a un escaparate publicitario, lleno de imágenes, alertas e información. El LCP nos ayudó a explicarle que en digital, si llenamos una página con miles de elementos visuales, todos compiten por ser renderizados. Y con el cálculo de impacto le mostramos algo más: Google nos da herramientas para auditarnos, y con ellas podemos decidir en función no solo del negocio, sino también del rendimiento del producto. [EVIDENCIA PENDIENTE: qué se decidió al final con esa home]
+
 Diseñar para esos segundos de espera significa hacernos responsables de lo que ven las personas mientras hacen fila en nuestro drive-thru, para hacerles saber que sí estamos abiertos. Es, por ejemplo, incluir estados de carga para que el cliente sepa que el contenido ya viene en camino, que lo estamos atendiendo. Es diseñar la transición con el mismo cuidado que el contenido final.
 
 Esa pantalla con bloques grises también es una decisión. Solo que normalmente no la tomamos a propósito.

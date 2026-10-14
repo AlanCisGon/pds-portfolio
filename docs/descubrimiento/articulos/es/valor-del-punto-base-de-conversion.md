@@ -14,7 +14,7 @@ En el mundo digital, a esas personas que entran a "pasear" por la página web o 
 
 ### **¿Qué es un "punto base" de conversión?**
 
-Como en internet el tráfico es gigantesco (hablamos de millones de visitas a la semana), las tasas de conversión suelen ser números chiquitos. Según Lucky Orange[^1], una empresa de software de analítica y optimización de conversión, la conversión promedio del e-commerce ronda entre 1.8% y 3%. Una tienda que vende muchas categorías distintas puede estar por debajo de ese rango. Para este artículo, imaginemos una que convierte **0.80%**. Trabajar con decimales tan pequeños como 0.81%, 0.82% o 0.75% puede ser confuso.
+Como en internet el tráfico es gigantesco (hablamos de millones de visitas a la semana), las tasas de conversión suelen ser números chiquitos. Según IRP Commerce[^1], que mide los datos reales de las tiendas en línea de Reino Unido e Irlanda que usan su plataforma, la conversión promedio fue de 2.23% en agosto de 2026. Una tienda que vende muchas categorías distintas puede estar por debajo de ese rango. Para este artículo, imaginemos una que convierte **0.80%**. Trabajar con decimales tan pequeños como 0.81%, 0.82% o 0.75% puede ser confuso.
 
 Por eso, en el análisis digital se usa el término **punto base** (en inglés lo vas a escuchar como *basis point* o *bps*).
 
@@ -80,7 +80,7 @@ Durante los eventos masivos, como el tráfico se duplica, **un solo punto base v
 
 A veces, cuando los equipos de diseño o tecnología proponen proyectos como *"vamos a hacer más rápida la app"*, *"vamos a rediseñar la pantalla de métodos de pago"* o *"vamos a sacar el simulador de crédito del checkout"*, los directores de finanzas dudan del gasto porque suena a mejoras puramente visuales.
 
-Saber cuánto vale un punto base cambia por completo la conversación:
+Saber cuánto vale un punto base cambia por completo la conversación. A nosotros nos pasó cuando alguien quiso convertir una home en un escaparate lleno de imágenes y alertas: la cuenta, junto con el LCP, nos ayudó a poner sobre la mesa el rendimiento del producto, no solo el negocio. (Lo contamos en "Nadie hace fila en la oscuridad".) Por ejemplo:
 
 * Si tu equipo logra que la pantalla de **métodos de pago** sea un poco más clara y fácil de entender, y con eso reduce el abandono del carrito lo suficiente para ganar apenas **10 puntos base** (de 0.80% a 0.90%)...
 * Esos 10 puntos base, en una semana típica como la del escenario 1, equivalen a **\$3 millones de pesos extra a la semana**: 2,000 compras adicionales × \$1,500. Sostenidos todo el año, son **\$156 millones de pesos**.
@@ -91,4 +91,4 @@ Con estos números en la mano, queda claro que una mejora de interfaz, por peque
 
 *Todas las cifras de los escenarios son hipotéticas e ilustrativas; no corresponden a ninguna empresa.*
 
-[^1]: Lucky Orange, "What is a good conversion rate?": https://www.luckyorange.com/blog/posts/good-conversion-rate (consultado el 14 de octubre de 2026).
+[^1]: IRP Commerce, *eCommerce Market Data*: tasa de conversión por sesión (transacciones ÷ sesiones × 100), B2C en Reino Unido e Irlanda, agosto de 2026. https://www.irpcommerce.com/en/gb/ecommercemarketdata.aspx (consultado el 14 de octubre de 2026).

@@ -16,7 +16,7 @@ Online, each of those visits to the website or the app is a **session**, and tog
 
 ### **What's a basis point of conversion?**
 
-Online traffic is enormous (we're talking millions of visits a week), so conversion rates tend to be small numbers. According to Lucky Orange[^1], a conversion analytics and optimization software company, average e-commerce conversion sits between 1.8% and 3%. A store that sells across many categories can fall below that range. For this article, let's imagine one that converts at **0.80%**. Working with decimals as small as 0.81%, 0.82%, or 0.75% gets confusing fast.
+Online traffic is enormous (we're talking millions of visits a week), so conversion rates tend to be small numbers. According to IRP Commerce[^1], which measures first-party data from online stores in the UK and Ireland on its platform, the average conversion rate was 2.23% in August 2026. A store that sells across many categories can fall below that range. For this article, let's imagine one that converts at **0.80%**. Working with decimals as small as 0.81%, 0.82%, or 0.75% gets confusing fast.
 
 That's why digital analytics uses the **basis point** (often written *bps*).
 
@@ -82,7 +82,7 @@ During big events, traffic doubles, so **a single basis point is worth almost tw
 
 When design or engineering teams pitch projects like *"let's make the app faster,"* *"let's redesign the payment methods screen,"* or *"let's move the credit calculator out of checkout,"* finance leaders sometimes hesitate, because it sounds like cosmetic work.
 
-Knowing what a basis point is worth changes the conversation:
+Knowing what a basis point is worth changes the conversation. We saw it when someone wanted to turn a home page into a window display packed with images and alerts: this math, together with LCP, helped us put the product's performance on the table, not just the business. (We tell that story in "Nobody waits in the dark.") For example:
 
 * Say your team makes the **payment methods** screen a little clearer and easier to understand, and that cuts cart abandonment just enough to gain **10 basis points** (from 0.80% to 0.90%)...
 * In a typical week like Scenario 1, those 10 basis points are worth **\$160,000 extra a week**: 2,000 extra orders × \$80. Held all year, that's **\$8.32 million**.
@@ -93,4 +93,4 @@ With those numbers in hand, it's clear that an interface improvement, however sm
 
 *All figures in these scenarios are hypothetical and for illustration only; they don't describe any real company.*
 
-[^1]: Lucky Orange, "What is a good conversion rate?": https://www.luckyorange.com/blog/posts/good-conversion-rate (accessed October 14, 2026).
+[^1]: IRP Commerce, *eCommerce Market Data*: session conversion rate (transactions ÷ sessions × 100), B2C in Great Britain, Northern Ireland, and Ireland, August 2026. https://www.irpcommerce.com/en/gb/ecommercemarketdata.aspx (accessed October 14, 2026).
