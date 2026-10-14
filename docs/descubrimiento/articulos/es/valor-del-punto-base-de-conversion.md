@@ -4,6 +4,8 @@
 Alan Cisneros Gonzalez  
 *Editado por Ameyali*
 
+Escribí este texto para las personas de mi equipo. Cuando inician un proyecto, llenan un one pager con métricas de experiencia, de conversión y de negocio, y la pregunta que me hacían era siempre la misma: ¿cómo sé si una métrica se está moviendo bien o mal? ¿Cuándo debería alarmarme y cuándo puedo declarar una tendencia ganadora? Para responder eso primero hay que entender qué significa un punto base. Este es el caso que les escribí.
+
 Como diseñadores de producto, muchas veces no sabemos demostrar, con números, cuánto aportamos al negocio. Pero no todo está perdido: tenemos un gran aliado. Solo tenemos que preguntarnos:
 
 **¿Qué es la tasa de conversión, qué rayos son los puntos base, cómo se traducen en dinero y por qué importan para el diseño de producto?**
@@ -80,7 +82,7 @@ Durante los eventos masivos, como el tráfico se duplica, **un solo punto base v
 
 A veces, cuando los equipos de diseño o tecnología proponen proyectos como *"vamos a hacer más rápida la app"*, *"vamos a rediseñar la pantalla de métodos de pago"* o *"vamos a sacar el simulador de crédito del checkout"*, los directores de finanzas dudan del gasto porque suena a mejoras puramente visuales.
 
-Saber cuánto vale un punto base cambia por completo la conversación. A nosotros nos pasó cuando alguien quiso convertir una home en un escaparate lleno de imágenes y alertas: la cuenta, junto con el LCP, nos ayudó a poner sobre la mesa el rendimiento del producto, no solo el negocio. (Lo contamos en "Nadie hace fila en la oscuridad".) Por ejemplo:
+Saber cuánto vale un punto base cambia por completo la conversación:
 
 * Si tu equipo logra que la pantalla de **métodos de pago** sea un poco más clara y fácil de entender, y con eso reduce el abandono del carrito lo suficiente para ganar apenas **10 puntos base** (de 0.80% a 0.90%)...
 * Esos 10 puntos base, en una semana típica como la del escenario 1, equivalen a **\$3 millones de pesos extra a la semana**: 2,000 compras adicionales × \$1,500. Sostenidos todo el año, son **\$156 millones de pesos**.

@@ -6,6 +6,8 @@ June 2, 2026
 Alan Cisneros Gonzalez  
 *Edited by Ameyali*
 
+I wrote this for the designers on my team. When they kick off a project, they fill out a one-pager with experience, conversion, and business metrics, and they kept asking me the same thing: how do I know if a metric is moving the right way or the wrong way? When should I worry, and when can I call a winning trend? To answer that, you first need to know what a basis point means. This is the example I wrote for them.
+
 As product designers, we often struggle to show, in actual numbers, how much we contribute to the business. But there's a tool on our side. We just have to ask:
 
 **What is a conversion rate, what on earth is a basis point, how does it turn into money, and why does it matter for product design?**
@@ -82,7 +84,7 @@ During big events, traffic doubles, so **a single basis point is worth almost tw
 
 When design or engineering teams pitch projects like *"let's make the app faster,"* *"let's redesign the payment methods screen,"* or *"let's move the credit calculator out of checkout,"* finance leaders sometimes hesitate, because it sounds like cosmetic work.
 
-Knowing what a basis point is worth changes the conversation. We saw it when someone wanted to turn a home page into a window display packed with images and alerts: this math, together with LCP, helped us put the product's performance on the table, not just the business. (We tell that story in "Nobody waits in the dark.") For example:
+Knowing what a basis point is worth changes the conversation:
 
 * Say your team makes the **payment methods** screen a little clearer and easier to understand, and that cuts cart abandonment just enough to gain **10 basis points** (from 0.80% to 0.90%)...
 * In a typical week like Scenario 1, those 10 basis points are worth **\$160,000 extra a week**: 2,000 extra orders × \$80. Held all year, that's **\$8.32 million**.

@@ -64,7 +64,7 @@ The hero image. The eight-banner carousel built so no category would feel left o
 
 LCP isn't an engineering metric we sit back and wait on. It's the sum of design decisions: how many banners, how heavy the image, what shows up first, what can wait, and the least that needs to be on screen for someone to know the store is open.
 
-We've been there. Someone once asked us for a radical home page redesign: they wanted it to look like an advertising window display, full of images, alerts, and information. LCP helped us explain that online, when you fill a page with countless visual elements, they all compete to be rendered. And the impact calculation helped us show something more: Google gives us tools to audit ourselves, so we can make decisions based not only on the business, but also on how the product performs. [EVIDENCIA PENDIENTE: what was finally decided for that home page]
+We've been there. Someone once asked us for a radical home page redesign: they wanted it to look like an advertising window display, full of images, alerts, and information. LCP helped us explain that online, when you fill a page with countless visual elements, they all compete to be rendered, and that Google gives us tools to audit ourselves and make decisions based not only on the business, but also on how the product performs. [EVIDENCIA PENDIENTE: what was finally decided for that home page]
 
 Designing for those seconds means owning what people see while they wait in our drive-thru line, and letting them know we're open. It means, for example, adding loading states so the customer knows their content is on the way and that someone is taking care of them. It means designing the transition with the same care as the final content.
 
