@@ -8,6 +8,8 @@ import { VisuallyHidden } from "../VisuallyHidden";
 import styles from "./FeaturedCase.module.css";
 
 export type FeaturedCaseProps = {
+  /** Top divider. Off when a LaunchStrip sits right above (its own borders close the unit). */
+  divider?: boolean;
   href: string;
   /** Meta line, e.g. "Case study · Somara Studio". */
   meta: string;
@@ -30,6 +32,7 @@ export type FeaturedCaseProps = {
  * Only the CTA is a link, stretched over the block so the whole piece is clickable.
  */
 export function FeaturedCase({
+  divider = true,
   href,
   meta,
   badge,
@@ -44,7 +47,7 @@ export function FeaturedCase({
   const titleId = useId();
   return (
     <section className={styles.featured} aria-labelledby={titleId}>
-      <Divider />
+      {divider && <Divider />}
       <div className={styles.row}>
         <div className={styles.column}>
           <div className={styles.group}>

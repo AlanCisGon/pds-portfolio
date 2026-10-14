@@ -55,3 +55,74 @@
 .body > :last-child {
   margin-bottom: 0;
 }
+
+/* Article card (layout=wide|grid): no image, editorial title in Voice/Card, meta and a text CTA. */
+.card[data-layout] {
+  gap: var(--space-16);
+}
+
+.card[data-layout] .title {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-card-size);
+  line-height: var(--text-card-line);
+}
+
+.card[data-layout] .body {
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+}
+
+.card[data-layout="wide"] .body {
+  max-width: var(--measure-prose);
+}
+
+.meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+}
+
+/* Cerezo on bg-surface is 5.19:1. On hover the card rises to bg-elevated (4.58:1), so the CTA turns accent-hover. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: auto;
+  color: var(--color-accent);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  transition: color var(--duration-fast) var(--ease-settle);
+}
+
+.card[data-kind="link"]:hover .cta {
+  color: var(--color-accent-hover);
+}
+
+.ctaIcon {
+  width: 1em;
+  height: 1em;
+}
+
+/* wide from md: text on the left, CTA on the right (stacked below md). */
+@media (min-width: 768px) {
+  .card[data-layout="wide"] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-24);
+  }
+
+  .card[data-layout="wide"] > :not(.cta) {
+    grid-column: 1;
+  }
+
+  .card[data-layout="wide"] > .cta {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    align-self: center;
+    margin-top: 0;
+  }
+}

@@ -1,7 +1,8 @@
 import { HeroVisual } from "@/components/hero/HeroVisual";
 import { Projects } from "@/components/work/Projects";
-import { home, work } from "@/resources";
-import { FeaturedCase } from "@/ui";
+import { blog, home, work } from "@/resources";
+import { FeaturedCase, LaunchStrip, WritingSection } from "@/ui";
+import { writingArticles } from "@/utils/blog";
 import { getProject } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import { NavArrowDown } from "iconoir-react";
@@ -16,6 +17,9 @@ export const metadata = pageMetadata({
 
 export default function Home() {
   const featured = home.featured.display ? getProject(home.featured.slug) : undefined;
+  const articles = writingArticles();
+  // Launch strip: only while there is exactly one note (Alan: until the second one ships).
+  const launch = articles.length === 1 ? articles[0] : undefined;
   return (
     <div className={styles.page}>
       <JsonLd
@@ -42,8 +46,11 @@ export default function Home() {
 
       <span id={home.scrollCue.target} className={styles.anchor} aria-hidden="true" />
 
+      {launch && <LaunchStrip href={launch.href} lead={blog.launch.lead} title={launch.title} />}
+
       {featured && (
         <FeaturedCase
+          divider={!launch}
           href={`${work.path}/${featured.slug}`}
           meta={home.featured.meta}
           badge={home.featured.badge}
@@ -59,6 +66,13 @@ export default function Home() {
         />
       )}
       <Projects exclude={featured ? [featured.slug] : undefined} />
+      <WritingSection
+        title={blog.section.title}
+        subtitle={blog.section.subtitle}
+        articles={articles}
+        cta={blog.section.cardCta}
+        all={{ href: blog.path, label: blog.all }}
+      />
     </div>
   );
 }

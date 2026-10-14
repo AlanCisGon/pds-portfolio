@@ -1,0 +1,64 @@
+/* ArticleCTA · motion by Félix: children rise 12px and fade in once, staggered (stagger-step). */
+.cta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-top: var(--space-32);
+  border-top: 1px solid var(--color-border-subtle); /* separates the notes from the close */
+}
+
+/* Secondary: never competes with the primary link. */
+.share {
+  border-radius: var(--radius-focus-inline);
+  color: var(--color-text-secondary);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+  text-decoration: underline;
+  text-decoration-thickness: from-font;
+  transition: color var(--duration-fast) var(--ease-settle);
+}
+
+.share:hover {
+  color: var(--color-text-primary);
+}
+
+.share:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.heading {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-line);
+}
+
+.body {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-l-size);
+  line-height: var(--text-body-l-line);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8) var(--space-24);
+  margin-top: var(--space-8);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cta[data-reveal="pending"] > * {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  .cta[data-reveal="done"] > * {
+    transition: opacity var(--duration-base) var(--ease-settle), transform var(--duration-base)
+      var(--ease-settle);
+    transition-delay: calc(var(--i, 0) * var(--stagger-step));
+  }
+}

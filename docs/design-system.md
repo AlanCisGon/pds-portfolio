@@ -306,3 +306,20 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 - Los tokens con `color-mix` (`accent/hover`, `accent/pressed`, `state/*`) tienen hex estático en Figma: si cambia un primitivo, hay que recalcularlos a mano.
 - Figma (#68): `Header` con reloj y navegación en español, `Footer` "México", `TableOfContents` con 6 ítems fijos, label por omisión del `Badge` en español, `AvatarGroup` solo con `Count=2|3` y `Link` inline sin ligar a `Label`.
 - Figma: radios sin variable en `Avatar`, el `Dot` del `Carousel` y el `PlayButton` de `Media`, y `Tag` con `Size=Medium/Small` en lugar de `m/s` (S2).
+
+## Blog
+
+Patrón aprobado por Alan el 2026-10-14 (diseño de Clara, movimiento de Félix). El blog es solo de teoría de la disciplina: nunca se relaciona con casos ni clientes.
+
+- **PullQuote** (átomo, `src/ui/PullQuote`): Voice/Quote con regla izquierda de 2 px `--color-border-subtle` y padding-left `--space-24`. Sin atribución; nunca decorativo.
+- **Footnotes** y **FootnoteRef** (molécula, `src/ui/Footnotes`): Divider + título Measure/Meta + Body S secundario. Referencias bidireccionales `n` ↔ ↩ con foco visible. La nota de destino se resalta y se desvanece; con movimiento reducido el resalte queda fijo. Al final va el crédito de corrección de estilo. Sin `remark-gfm`: en el MDX se escribe `<FootnoteRef n={1} />` y los textos van en el front matter (`notes`).
+- **LaunchStrip** (molécula, `src/ui/LaunchStrip`): una línea, un solo enlace, entre bordes `--color-border-subtle`. El título siempre lleva subrayado (WCAG 1.4.1). Al hover o al focus, la flecha avanza 4 px y el color pasa a `--color-accent-hover` (`--duration-fast`, `--ease-settle` al entrar y `--ease-exit` al salir); con movimiento reducido solo cambia el color. Sin badge, contador ni botón de cerrar, y solo una a la vez. En Home se muestra solo mientras haya un artículo.
+- **Card `layout=wide|grid`** (`src/ui/Card`): tarjeta de artículo sin imagen, con título en Voice/Card, meta y CTA de texto. El cerezo sobre `bg-surface` da 5.19:1; en hover pasa a `--color-accent-hover`.
+- **ArticleCTA** (molécula, `src/ui/ArticleCTA`): `contact` (correo, sin formulario) mientras haya un artículo, y `next` desde dos. Sus hijos suben 12 px y aparecen una sola vez (`--duration-base`, `--ease-settle`, `--stagger-step`, IntersectionObserver a 0.25). Se ve ya asentado sin JS, con movimiento reducido o cuando recibe el foco.
+- **WritingSection** (organismo, `src/ui/WritingSection`): 1 artículo = tarjeta wide; 2–3 = cuadrícula; más de 3 = los 3 más recientes y "All writing" (el enlace aparece desde 2). En `/blog` muestra todos, con h1.
+- La prosa del artículo nunca supera `--measure-prose`. No lleva TOC en notas de menos de 8 minutos.
+- **Card wide** desde `md`: el texto va a la izquierda y el CTA a la derecha (gap `--space-24`); por debajo de `md` se apila.
+- **ArticleCTA:** borde superior `--color-border-subtle` con `--space-32` arriba. "Share on LinkedIn" va en `--color-text-secondary` subrayado (Label M), para no competir con el CTA principal.
+- **Link `back`:** en los enlaces de retroceso ("← All writing") la flecha va antes de la etiqueta.
+- **FeaturedCase `divider`:** se apaga cuando una LaunchStrip va justo arriba. La franja es una unidad cerrada con sus dos bordes.
+- En el espaciado interno del blog no hay `space/12`: se usan 8 y 16.

@@ -14,6 +14,8 @@ export * from "./Badge";
 export * from "./Callout";
 export * from "./List";
 export * from "./Stat";
+export * from "./PullQuote";
+export * from "./Footnotes";
 export * from "./FactSheet";
 // 02c Data & Media
 export * from "./Table";
@@ -31,5 +33,8 @@ export * from "./Header";
 export * from "./Footer";
 export * from "./TeamCard";
 export * from "./FeaturedCase";
+export * from "./LaunchStrip";
+export * from "./ArticleCTA";
+export * from "./WritingSection";
 // Utilities
 export * from "./VisuallyHidden";

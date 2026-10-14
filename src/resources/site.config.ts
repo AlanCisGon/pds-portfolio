@@ -8,6 +8,7 @@ const routes: RoutesConfig = {
   "/": true,
   "/about": true,
   "/work": true,
+  "/blog": true,
 };
 
 export { baseURL, routes };
