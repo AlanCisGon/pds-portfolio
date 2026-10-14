@@ -184,7 +184,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
   | `xxl` | ≥ 1400 px | `--breakpoint-xxl` |
 
 - Para `max-width` se usa el límite menos 1 px (`max-width: 767px`, `max-width: 991px`).
-- **Pantallas grandes (ADR 0009):** hasta 1440 todo es fijo. Por encima, el tipo de lectura, el padding, `--hero-inset` y `--content-max` crecen con el viewport hasta ×1.75 (~2520). La prosa se limita con `--measure-prose` (40 × body-l). Label, meta, código, cifras, controles y Header no escalan.
+- **Pantallas grandes (ADR 0009):** hasta 1440 todo es fijo. Por encima, el tipo de lectura, el padding, `--hero-inset` y `--content-max` crecen con el viewport hasta ×1.75 (~2520). La prosa se limita con `--measure-prose` (40 × body-l). Label y meta crecen hasta ×1.25. Código, cifras, controles y Header no escalan: Header y `Button` fijan sus tokens de label y meta.
 - **Anchos de revisión:** 390 (diseño mobile) y 1280 (desktop), sin cambio.
 - La retícula bento colapsa a **una columna** en mobile.
 - En los *media queries* se escribe el número literal (`@media (min-width: 768px)`), porque las variables CSS no funcionan ahí.

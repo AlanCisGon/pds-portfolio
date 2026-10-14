@@ -97,14 +97,14 @@
   --text-body-m-line: calc(var(--text-body-m-size) * 1.5);
   --text-body-s-size: 14px;
   --text-body-s-line: 20px;
-  --text-label-m-size: 14px;
-  --text-label-m-line: 20px;
-  --text-label-s-size: 12px;
-  --text-label-s-line: 16px;
+  --text-label-m-size: clamp(14px, 0.972vw, 17.5px); /* ×1.25 above 1440 (ADR 0009); Header and Button pin it */
+  --text-label-m-line: calc(var(--text-label-m-size) * 20 / 14);
+  --text-label-s-size: clamp(12px, 0.833vw, 15px);
+  --text-label-s-line: calc(var(--text-label-s-size) * 4 / 3);
 
   /* Measure — Chivo Mono: labels, metadata, numbers, the lab. */
-  --text-meta-size: 12px;
-  --text-meta-line: 16px;
+  --text-meta-size: clamp(12px, 0.833vw, 15px);
+  --text-meta-line: calc(var(--text-meta-size) * 4 / 3);
   --text-meta-tracking: 0.04em;
   --text-code-size: 14px; /* Measure/Code — code blocks */
   --text-code-line: 20px;

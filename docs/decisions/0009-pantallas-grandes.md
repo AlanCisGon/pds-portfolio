@@ -16,7 +16,8 @@
 - Por encima, el tipo de lectura (display, title, heading, body), el padding de página, el inset del hero y el ancho de contenido crecen con el viewport (base × vw/1440), hasta ×1.75 (~2520 px).
 - Tokens nuevos: `--content-max`, `--measure-prose` (40 × body-l: 720 px hasta 1440) y `--hero-inset`.
 - La prosa nunca supera `--measure-prose`, así que los caracteres por línea no cambian al crecer.
-- Lo que no escala: label, meta, código, cifras, quote, card, controles y Header (Alan: "menú fijo").
+- Label y meta crecen hasta ×1.25 (meta 15 px, label M 17.5 px), para leerse a distancia de sala (Alan, a propuesta de Clara).
+- Lo que no escala: código, cifras, quote, card, controles y Header. Header y `Button` fijan localmente sus tokens de label y meta (Alan: "menú fijo").
 - En 4K al 100% el contenido llega a la mitad del ancho; Alan decidió que basta. Escalar la raíz queda como plan B.
 - `xl` y `xxl` siguen como referencia: la regla no necesita cortes nuevos.
 
