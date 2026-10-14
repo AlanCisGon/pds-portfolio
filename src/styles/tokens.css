@@ -56,6 +56,9 @@
   --space-48: 48px;
   --space-64: 64px;
 
+  /* Alto del Header fijo arriba (padding 16 + píldora 50 + padding 16); los anclajes lo compensan. */
+  --header-height: 82px;
+
   /* ── Radius · concentric: inner = outer − padding ── */
   --radius-control: 12px;
   --radius-card: 20px;

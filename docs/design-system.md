@@ -261,6 +261,7 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 - **Solo es cliente lo que tiene estado** (`"use client"`): `CodeBlock`, `Carousel`, `TableOfContents`, `HeadingLink`, `Header` y el video de `Media`. Lo demás es server component. Los íconos de `iconoir-react` son client components.
 - **Foco:** `outline: 2px solid var(--color-focus-ring); outline-offset: 2px` en todo lo interactivo. Es la capa `FocusRing` de Figma.
 - **Sin layout shift:** `Media`, `ProjectCard` y `Carousel` reservan el *aspect-ratio*. `Header` tiene alto fijo y reserva el ancho del reloj antes de hidratar.
+- **Header arriba (decisión de Alan, 2026-10-14).** Una sola regla: en páginas con hero a sangre (`revealAfterFoldOn`), el Header está oculto mientras `scrollY` < 85 % del viewport y flota encima del contenido (`position: fixed`). En el resto, y en Home después del fold, queda fijo arriba (`position: sticky; top: 0`) y siempre visible; no se oculta según la dirección del scroll. Se oculta con `translateY(-100%)`, `--duration-base` y `--ease-settle`, sin transición con `prefers-reduced-motion`. El foco del teclado (`:focus-within`) siempre lo muestra, y oculto sigue en el árbol de accesibilidad a propósito. Los anclajes compensan su alto con `scroll-padding-top: var(--header-height)` en `html`.
 - **Accesibilidad:**
   - `Accordion` usa `<details>/<summary>` nativo;
   - `Chip` filtro es `<button aria-pressed>`, y el `Chip` removible deja la X como único botón;

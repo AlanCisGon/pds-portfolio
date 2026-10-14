@@ -6,6 +6,7 @@
 }
 
 html {
+  scroll-padding-top: var(--header-height); /* un título al que se navega no queda bajo el Header */
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
