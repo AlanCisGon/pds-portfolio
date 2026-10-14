@@ -33,25 +33,6 @@ function useClock(timeZone?: string) {
   return time;
 }
 
-/** Hidden while the reader scrolls down, back as soon as they scroll up (or reach the top).
- *  With a fold-gated nav, it first stays visible for a stretch after the fold, so passing it reveals the nav. */
-function useHideOnScroll(foldGated: boolean) {
-  const [hidden, setHidden] = useState(false);
-  useEffect(() => {
-    let last = window.scrollY;
-    const onScroll = () => {
-      const y = window.scrollY;
-      if (Math.abs(y - last) < 8) return; // ignore jitter
-      const start = foldGated ? window.innerHeight * 0.85 + 480 : 80;
-      setHidden(y > last && y > start);
-      last = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [foldGated]);
-  return hidden;
-}
-
 /** True while the page is still on its first screen (above the fold). */
 function useAboveFold(enabled: boolean) {
   // Starts true so a fold-hidden nav never flashes on first paint.
@@ -75,14 +56,17 @@ export function Header({ items, location, timeZone, revealAfterFoldOn }: HeaderP
   const pathname = usePathname();
   const time = useClock(timeZone);
   const foldGated = !!pathname && !!revealAfterFoldOn?.includes(pathname);
-  const hiddenOnScroll = useHideOnScroll(foldGated);
-  const aboveFold = useAboveFold(foldGated);
-  const hidden = hiddenOnScroll || aboveFold;
+  // Una sola regla: oculto mientras el hero ocupa la pantalla; después, fijo arriba y siempre visible.
+  const hidden = useAboveFold(foldGated);
   const isCurrent = (href: string) =>
     href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
   return (
-    <header className={styles.header} data-hidden={hidden || undefined}>
+    <header
+      className={styles.header}
+      data-overlay={foldGated || undefined}
+      data-hidden={hidden || undefined}
+    >
       <p className={styles.location}>{location ?? ""}</p>
       <nav aria-label="Main">
         <ul className={styles.nav}>
