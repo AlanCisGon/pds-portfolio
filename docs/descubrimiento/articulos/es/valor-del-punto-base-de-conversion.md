@@ -16,7 +16,7 @@ En el mundo digital, a esas personas que entran a "pasear" por la página web o 
 
 ### **¿Qué es un "punto base" de conversión?**
 
-Como en internet el tráfico es gigantesco (hablamos de millones de visitas a la semana), las tasas de conversión suelen ser números chiquitos. Según IRP Commerce[^1], que mide los datos reales de las tiendas en línea de Reino Unido e Irlanda que usan su plataforma, la conversión promedio fue de 2.23% en agosto de 2026. Una tienda que vende muchas categorías distintas puede estar por debajo de ese rango. Para este artículo, imaginemos una que convierte **0.80%**. Trabajar con decimales tan pequeños como 0.81%, 0.82% o 0.75% puede ser confuso.
+Como en internet el tráfico es gigantesco (hablamos de millones de visitas a la semana), las tasas de conversión suelen ser números chiquitos. Según el benchmark de Dynamic Yield[^1], en el continente americano la conversión promedio del e-commerce es de 2.59% en los últimos doce meses. Una tienda que vende muchas categorías distintas puede estar por debajo de ese promedio. Para este artículo, imaginemos una que convierte **0.80%**. Trabajar con decimales tan pequeños como 0.81%, 0.82% o 0.75% puede ser confuso.
 
 Por eso, en el análisis digital se usa el término **punto base** (en inglés lo vas a escuchar como *basis point* o *bps*).
 
@@ -93,4 +93,4 @@ Con estos números en la mano, queda claro que una mejora de interfaz, por peque
 
 *Todas las cifras de los escenarios son hipotéticas e ilustrativas; no corresponden a ninguna empresa.*
 
-[^1]: IRP Commerce, *eCommerce Market Data*: tasa de conversión por sesión (transacciones ÷ sesiones × 100), B2C en Reino Unido e Irlanda, agosto de 2026. https://www.irpcommerce.com/en/gb/ecommercemarketdata.aspx (consultado el 14 de octubre de 2026).
+[^1]: Dynamic Yield, *eCommerce Conversion Rate Benchmarks*, región Americas, promedio de los últimos doce meses; conversión = compras ÷ visitantes × 100. https://marketing.dynamicyield.com/benchmarks/conversion-rate/ (consultado el 14 de octubre de 2026). [EVIDENCIA PENDIENTE: confirmar tamaño de muestra y fuente de datos de Dynamic Yield]

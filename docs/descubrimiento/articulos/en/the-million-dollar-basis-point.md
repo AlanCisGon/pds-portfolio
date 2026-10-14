@@ -18,7 +18,7 @@ Online, each of those visits to the website or the app is a **session**, and tog
 
 ### **What's a basis point of conversion?**
 
-Online traffic is enormous (we're talking millions of visits a week), so conversion rates tend to be small numbers. According to IRP Commerce[^1], which measures first-party data from online stores in the UK and Ireland on its platform, the average conversion rate was 2.23% in August 2026. A store that sells across many categories can fall below that range. For this article, let's imagine one that converts at **0.80%**. Working with decimals as small as 0.81%, 0.82%, or 0.75% gets confusing fast.
+Online traffic is enormous (we're talking millions of visits a week), so conversion rates tend to be small numbers. According to Dynamic Yield's benchmark[^1], the average e-commerce conversion rate in the Americas is 2.59% over the past twelve months. A store that sells across many categories can fall below that average. For this article, let's imagine one that converts at **0.80%**. Working with decimals as small as 0.81%, 0.82%, or 0.75% gets confusing fast.
 
 That's why digital analytics uses the **basis point** (often written *bps*).
 
@@ -95,4 +95,4 @@ With those numbers in hand, it's clear that an interface improvement, however sm
 
 *All figures in these scenarios are hypothetical and for illustration only; they don't describe any real company.*
 
-[^1]: IRP Commerce, *eCommerce Market Data*: session conversion rate (transactions ÷ sessions × 100), B2C in Great Britain, Northern Ireland, and Ireland, August 2026. https://www.irpcommerce.com/en/gb/ecommercemarketdata.aspx (accessed October 14, 2026).
+[^1]: Dynamic Yield, *eCommerce Conversion Rate Benchmarks*, Americas region, trailing twelve-month average; conversion = purchases ÷ visitors × 100. https://marketing.dynamicyield.com/benchmarks/conversion-rate/ (accessed October 14, 2026). [EVIDENCIA PENDIENTE: confirm Dynamic Yield's sample size and data source]
