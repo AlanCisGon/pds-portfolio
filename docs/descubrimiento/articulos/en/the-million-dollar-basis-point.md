@@ -89,6 +89,21 @@ Knowing what a basis point is worth changes the conversation:
 * Say your team makes the **payment methods** screen a little clearer and easier to understand, and that cuts cart abandonment just enough to gain **10 basis points** (from 0.80% to 0.90%)...
 * In a typical week like Scenario 1, those 10 basis points are worth **\$160,000 extra a week**: 2,000 extra orders × \$80. Held all year, that's **\$8.32 million**.
 
+## When to worry and when to celebrate
+
+Back to the question we started with. Knowing what a basis point is worth does more than help you defend a project. It helps you design the thresholds you'll use to read your metrics. Here's the approach I use:
+
+1. **Before launch, set an expected minimum.** Decide how many basis points you expect to gain, based on data from previous weeks or on studies with a similar methodology.
+2. **Winning trend.** The lift has to hold for at least one week, compared against the control group or the baseline.
+3. **Alarm.** If the metric drops steadily for at least a week, or falls suddenly by at least 20% from the baseline, you pause or roll back.
+4. **The middle ground.** If neither happens, keep measuring. Account for seasonality and for major industry or geopolitical shifts, with weekly check-ins to separate signal from noise.
+
+Let's bring it back to our imaginary store (the numbers are still hypothetical), converting at 0.80% with 2 million sessions a week:
+
+- **An example expected minimum: +5 basis points**, from 0.80% to 0.85%. That's 2,000,000 × 0.0005 = **1,000 extra orders**, × \$80 = **\$80,000 a week**. If you get there and it holds for a week against the control group, you can call it a winning trend.
+- **The 20% alarm:** a sudden 20% drop from 0.80% leaves conversion at 0.64%, or **−16 basis points**. That's 2,000,000 × 0.0016 = **3,200 fewer orders**, × \$80 = **\$256,000 a week**. You don't wait on that one: you pause or roll back.
+- **Between those two points** is the middle ground: keep measuring, week by week.
+
 With those numbers in hand, it's clear that an interface improvement, however small it looks, isn't a decorative expense. It can be one of the most profitable investments a company makes in its digital channel.
 
 ---

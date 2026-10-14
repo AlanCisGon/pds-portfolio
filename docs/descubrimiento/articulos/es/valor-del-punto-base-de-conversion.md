@@ -87,6 +87,21 @@ Saber cuánto vale un punto base cambia por completo la conversación:
 * Si tu equipo logra que la pantalla de **métodos de pago** sea un poco más clara y fácil de entender, y con eso reduce el abandono del carrito lo suficiente para ganar apenas **10 puntos base** (de 0.80% a 0.90%)...
 * Esos 10 puntos base, en una semana típica como la del escenario 1, equivalen a **\$3 millones de pesos extra a la semana**: 2,000 compras adicionales × \$1,500. Sostenidos todo el año, son **\$156 millones de pesos**.
 
+## ¿Cuándo alarmarme y cuándo celebrar?
+
+Volvamos a la pregunta del principio. Saber cuánto vale un punto base sirve para algo más que defender un proyecto: sirve para diseñar los umbrales con los que vas a leer tus métricas. Este es el criterio que uso:
+
+1. **Antes de lanzar, define un mínimo esperado.** Fija cuántos puntos base esperas ganar, a partir del análisis de semanas anteriores o de estudios con una metodología similar.
+2. **Tendencia ganadora.** El aumento tiene que sostenerse al menos una semana, comparado contra el grupo control o contra el parámetro base.
+3. **Alarma.** Si la métrica cae de forma sostenida durante al menos una semana, o cae de golpe al menos un 20% respecto a la base, se pausa o se revierte.
+4. **Zona intermedia.** Si no pasa ninguna de las dos cosas, se sigue midiendo. Hay que considerar la temporada y los cambios grandes de la industria o del contexto geopolítico, con revisiones semanales para separar la señal del ruido.
+
+Llevémoslo a nuestra tienda imaginaria (las cifras siguen siendo hipotéticas), que convierte 0.80% con 2 millones de sesiones a la semana:
+
+- **Un mínimo esperado de ejemplo: +5 puntos base**, de 0.80% a 0.85%. Son 2,000,000 × 0.0005 = **1,000 compras adicionales**, × \$1,500 = **\$1,500,000 pesos a la semana**. Si llegas ahí y se sostiene una semana frente al grupo control, ya puedes hablar de tendencia ganadora.
+- **La alarma del 20%:** una caída de golpe del 20% sobre 0.80% deja la conversión en 0.64%, es decir, **−16 puntos base**. Son 2,000,000 × 0.0016 = **3,200 compras menos**, × \$1,500 = **\$4,800,000 pesos a la semana**. Ahí no se espera: se pausa o se revierte.
+- **Entre esos dos puntos** está la zona intermedia: seguimos midiendo, semana a semana.
+
 Con estos números en la mano, queda claro que una mejora de interfaz, por pequeña que parezca, no es un gasto decorativo: puede ser una de las inversiones más rentables que una empresa hace en su canal digital.
 
 ---
