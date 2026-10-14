@@ -94,15 +94,15 @@ Knowing what a basis point is worth changes the conversation:
 Back to the question we started with. Knowing what a basis point is worth does more than help you defend a project. It helps you design the thresholds you'll use to read your metrics. Here's the approach I use:
 
 1. **Before launch, set an expected minimum.** Decide how many basis points you expect to gain, based on data from previous weeks or on studies with a similar methodology.
-2. **Winning trend.** All it takes is a lift that holds over time against the control group or the baseline: seven straight days up, or an exponential rise. You don't need to have hit the expected minimum.
-3. **Alarm.** It goes off if the metric drops by 20% of the expected minimum and stays down for three days, or if the drop is exponential. Then you pause or roll back.
+2. **Winning trend.** All it takes is a lift that holds over time against the control group or the baseline: seven straight days up, or a sharp, accelerating rise. You don't need to have hit the expected minimum.
+3. **Alarm.** It goes off if the metric drops by 20% of the expected minimum and stays down for three days, or if there's a sharp, accelerating drop. Then you pause or roll back.
 4. **The middle ground.** If neither happens, keep measuring. Account for seasonality and for major industry or geopolitical shifts, with weekly check-ins to separate signal from noise.
 
 Let's bring it back to our imaginary store (the numbers are still hypothetical), converting at 0.80% with 2 million sessions a week:
 
 - **An example expected minimum: +5 basis points**, from 0.80% to 0.85%. That's 2,000,000 × 0.0005 = **1,000 extra orders**, × \$80 = **\$80,000 a week**. That's the goal, not the condition for celebrating.
 - **Winning trend:** if conversion rises seven days in a row against the control group, it's a winning trend, even before it reaches 0.85%.
-- **The alarm:** 20% of that example minimum is 1 basis point. If conversion slips from 0.80% to 0.79% and stays there for three days, the alarm goes off. That **−1 basis point** means 2,000,000 × 0.0001 = **200 fewer orders**, × \$80 = **\$16,000 a week**. You don't wait on that one: you pause or roll back.
+- **The alarm:** 20% of that example minimum is 1 basis point. If conversion slips from 0.80% to 0.79% and stays there for three days, the alarm goes off. If it lasted a full week, that **−1 basis point** would mean 2,000,000 × 0.0001 = **200 fewer orders**, × \$80 = **\$16,000 a week**. You don't wait on that one: you pause or roll back.
 - **Between those two points** is the middle ground: keep measuring, week by week.
 
 Notice the asymmetry: the alarm reacts sooner (three days versus seven) and to less (a single basis point). That's how to read the approach: losing costs more than waiting.

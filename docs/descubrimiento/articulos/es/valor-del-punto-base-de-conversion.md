@@ -100,7 +100,7 @@ Llevémoslo a nuestra tienda imaginaria (las cifras siguen siendo hipotéticas),
 
 - **Un mínimo esperado de ejemplo: +5 puntos base**, de 0.80% a 0.85%. Son 2,000,000 × 0.0005 = **1,000 compras adicionales**, × \$1,500 = **\$1,500,000 pesos a la semana**. Es la meta, no la condición para celebrar.
 - **Tendencia ganadora:** si la conversión sube siete días seguidos frente al grupo control, aunque todavía no llegue a 0.85%, ya es una tendencia ganadora.
-- **La alarma:** el 20% de ese mínimo de ejemplo es 1 punto base. Si la conversión baja de 0.80% a 0.79% y se sostiene tres días, se enciende. Ese **−1 punto base** equivale a 2,000,000 × 0.0001 = **200 compras menos**, × \$1,500 = **\$300,000 pesos a la semana**. Ahí no se espera: se pausa o se revierte.
+- **La alarma:** el 20% de ese mínimo de ejemplo es 1 punto base. Si la conversión baja de 0.80% a 0.79% y se sostiene tres días, se enciende. Si durara una semana entera, ese **−1 punto base** equivaldría a 2,000,000 × 0.0001 = **200 compras menos**, × \$1,500 = **\$300,000 pesos a la semana**. Ahí no se espera: se pausa o se revierte.
 - **Entre esos dos puntos** está la zona intermedia: seguimos midiendo, semana a semana.
 
 Fíjate en la asimetría: la alarma reacciona antes (tres días contra siete) y con menos (un punto base). Así se lee el criterio: perder cuesta más que esperar.
