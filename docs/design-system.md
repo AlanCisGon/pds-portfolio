@@ -172,7 +172,19 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
 | `--page-padding` | 16 px → 24 px desde 768 | Padding de página |
 | `--bento-gap` | 16 px → 24 px desde 768 | Separación entre tarjetas |
 
-- **Breakpoints:** 390 (diseño mobile), 768 (tablet) y 1280 (desktop).
+- **Breakpoints** (mobile first, [ADR 0008](decisions/0008-breakpoints.md)):
+
+  | Nombre | Rango | Token |
+  |---|---|---|
+  | `xs` | < 576 px | (base, sin media query) |
+  | `sm` | ≥ 576 px | `--breakpoint-sm` |
+  | `md` | ≥ 768 px | `--breakpoint-md` |
+  | `lg` | ≥ 992 px | `--breakpoint-lg` |
+  | `xl` | ≥ 1200 px | `--breakpoint-xl` |
+  | `xxl` | ≥ 1400 px | `--breakpoint-xxl` |
+
+- Para `max-width` se usa el límite menos 1 px (`max-width: 767px`, `max-width: 991px`).
+- **Anchos de revisión:** 390 (diseño mobile) y 1280 (desktop), sin cambio.
 - La retícula bento colapsa a **una columna** en mobile.
 - En los *media queries* se escribe el número literal (`@media (min-width: 768px)`), porque las variables CSS no funcionan ahí.
 

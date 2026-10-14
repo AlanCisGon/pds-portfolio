@@ -186,8 +186,13 @@
   /* ── Layout ── */
   --page-padding: var(--space-16); /* mobile */
   --bento-gap: var(--space-16);
-  --breakpoint-tablet: 768px; /* reference only: CSS vars can't be used in media queries */
-  --breakpoint-desktop: 1280px;
+  /* Breakpoints, mobile first (ADR 0008). Reference only: CSS vars can't be used in media queries.
+     xs is everything below sm (< 576px). */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
 }
 
 @media (min-width: 768px) {

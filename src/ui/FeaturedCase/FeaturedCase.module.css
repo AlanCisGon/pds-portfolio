@@ -89,14 +89,17 @@
   min-width: 0;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 992px) {
   .row {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 400px;
     align-items: start;
     gap: var(--space-48);
   }
+}
 
+/* The proof grows to title size only when its column is wide enough (xl). */
+@media (min-width: 1200px) {
   .proof {
     font-size: var(--text-title-size);
     line-height: var(--text-title-line);

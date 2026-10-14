@@ -9,6 +9,7 @@
 }
 
 .main {
+  container-type: inline-size; /* the full-bleed hero measures against main, not 100vw (which counts a classic scrollbar) */
   display: flex;
   flex: 1;
   justify-content: center;

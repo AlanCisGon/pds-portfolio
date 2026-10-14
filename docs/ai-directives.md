@@ -43,7 +43,7 @@ Reglas cortas para cualquier asistente (Claude, Copilot, v0…) que genere UI en
 - Con `prefers-reduced-motion: reduce`, solo se anima `opacity`.
 
 ## 6. Layout y rendimiento
-- Mobile first. Breakpoints: 390, 768 y 1280. Padding de página `--page-padding` (16 → 24 desde 768) y separación `--bento-gap`.
+- Mobile first. Breakpoints (`min-width`): 576, 768, 992, 1200 y 1400; `max-width` con el límite menos 1 px. Se revisa en 390 y 1280. Padding de página `--page-padding` (16 → 24 desde 768) y separación `--bento-gap`.
 - Reservar espacio para media (`aspect-ratio`, `width`/`height`). Cero layout shift (CLS < 0.1).
 - Ningún texto de página va escrito en el componente; sale de `src/resources/content.tsx`.
 - Server components por defecto. `"use client"` solo si hay estado o efectos.

@@ -137,7 +137,7 @@ export default function About() {
                     src={image.src}
                     alt={image.alt}
                     ratio={toRatio(image.width, image.height)}
-                    sizes="(min-width: 1024px) 720px, 100vw"
+                    sizes="(min-width: 992px) 720px, 100vw"
                   />
                 ))}
               </article>
@@ -185,7 +185,7 @@ export default function About() {
                     src={image.src}
                     alt={image.alt}
                     ratio={toRatio(image.width, image.height)}
-                    sizes="(min-width: 1024px) 720px, 100vw"
+                    sizes="(min-width: 992px) 720px, 100vw"
                   />
                 ))}
               </article>

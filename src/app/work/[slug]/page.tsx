@@ -138,7 +138,7 @@ export default async function Project({
 
       {cover && (
         <div className={styles.cover}>
-          <Media src={cover} alt="" priority sizes="(min-width: 1024px) 960px, 100vw" />
+          <Media src={cover} alt="" priority sizes="(min-width: 992px) 960px, 100vw" />
         </div>
       )}
 
