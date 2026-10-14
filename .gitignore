@@ -47,3 +47,6 @@ scripts/blender/.cache/
 
 # Originales con datos internos de Coppel (solo local)
 docs/descubrimiento/originales-privados/
+
+# Article drafts live in the private somara-studio repo (brand/drafts/articulos)
+docs/descubrimiento/articulos/
