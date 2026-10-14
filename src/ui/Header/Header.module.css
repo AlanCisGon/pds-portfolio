@@ -2,6 +2,13 @@
    Where the page opens with a full-bleed hero (data-overlay) it floats over the content instead,
    so the hero keeps the whole first viewport and nothing shifts when the nav appears. */
 .header {
+  /* Menu and controls stay fixed on large screens (Alan, ADR 0009). */
+  --text-label-m-size: 14px;
+  --text-label-m-line: 20px;
+  --text-label-s-size: 12px;
+  --text-label-s-line: 16px;
+  --text-meta-size: 12px;
+  --text-meta-line: 16px;
   position: sticky;
   top: 0;
   z-index: 10;

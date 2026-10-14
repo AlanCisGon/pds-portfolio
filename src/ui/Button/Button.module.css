@@ -1,5 +1,12 @@
 /* Button · Figma 02a Actions (27:365). */
 .button {
+  /* Menu and controls stay fixed on large screens (Alan, ADR 0009). */
+  --text-label-m-size: 14px;
+  --text-label-m-line: 20px;
+  --text-label-s-size: 12px;
+  --text-label-s-line: 16px;
+  --text-meta-size: 12px;
+  --text-meta-line: 16px;
   --button-height: 40px;
   --button-icon-size: 20px;
 

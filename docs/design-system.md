@@ -184,6 +184,7 @@ Son 12 tonos cada 30° aproximadamente, todos con **la misma luminosidad (OKLCH 
   | `xxl` | ≥ 1400 px | `--breakpoint-xxl` |
 
 - Para `max-width` se usa el límite menos 1 px (`max-width: 767px`, `max-width: 991px`).
+- **Pantallas grandes (ADR 0009):** hasta 1440 todo es fijo. Por encima, el tipo de lectura, el padding, `--hero-inset` y `--content-max` crecen con el viewport hasta ×1.75 (~2520). La prosa se limita con `--measure-prose` (40 × body-l). Label y meta crecen hasta ×1.25. Código, cifras, controles y Header no escalan: Header y `Button` fijan sus tokens de label y meta.
 - **Anchos de revisión:** 390 (diseño mobile) y 1280 (desktop), sin cambio.
 - La retícula bento colapsa a **una columna** en mobile.
 - **Excepción documentada · aire del hero de Home** (Alan, 2026-10-14). El padding inferior del copy no tiene token propio: es una suma de tokens de `Spacing` usada en un solo lugar (`src/app/page.module.css`). No se abre una colección `Layout` para dos valores de una página.
