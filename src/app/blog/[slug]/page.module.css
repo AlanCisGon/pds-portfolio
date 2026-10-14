@@ -36,6 +36,10 @@
   text-transform: uppercase;
 }
 
+.meta {
+  text-wrap: pretty; /* the byline wraps on mobile: no orphan word */
+}
+
 .title {
   margin: 0;
   color: var(--color-text-primary);

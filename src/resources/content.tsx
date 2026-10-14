@@ -325,7 +325,7 @@ const blog: Blog = {
   all: "All writing",
   notesTitle: "Notes",
   notesBack: "Back to reference",
-  copyeditedBy: "Copyedited by",
+  editedBy: "edited by",
   cta: {
     contact: {
       heading: "Thinking about this on your own product?",

@@ -65,7 +65,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           <h1 className={styles.title}>{metadata.title}</h1>
           <p className={styles.dek}>{metadata.summary}</p>
           <p className={styles.meta}>
-            {blog.by} {blog.author} ·{" "}
+            {blog.by} {blog.author}
+            {metadata.copyeditor && `, ${blog.editedBy} ${metadata.copyeditor}`} ·{" "}
             <time dateTime={metadata.publishedAt}>{formatDate(metadata.publishedAt)}</time> ·{" "}
             {post.minutes} {blog.minRead}
           </p>
@@ -88,7 +89,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 note.text
               ),
             }))}
-            credit={metadata.copyeditor && `${blog.copyeditedBy} ${metadata.copyeditor}.`}
           />
         )}
 
