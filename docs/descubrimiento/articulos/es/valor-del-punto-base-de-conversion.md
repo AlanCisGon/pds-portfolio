@@ -92,15 +92,18 @@ Saber cuánto vale un punto base cambia por completo la conversación:
 Volvamos a la pregunta del principio. Saber cuánto vale un punto base sirve para algo más que defender un proyecto: sirve para diseñar los umbrales con los que vas a leer tus métricas. Este es el criterio que uso:
 
 1. **Antes de lanzar, define un mínimo esperado.** Fija cuántos puntos base esperas ganar, a partir del análisis de semanas anteriores o de estudios con una metodología similar.
-2. **Tendencia ganadora.** El aumento tiene que sostenerse al menos una semana, comparado contra el grupo control o contra el parámetro base.
-3. **Alarma.** Si la métrica cae de forma sostenida durante al menos una semana, o cae de golpe al menos un 20% respecto a la base, se pausa o se revierte.
+2. **Tendencia ganadora.** Basta con que el aumento se sostenga en el tiempo frente al grupo control o el parámetro base: siete días seguidos al alza, o un alza exponencial. No hace falta haber llegado al mínimo esperado.
+3. **Alarma.** Se enciende si la métrica cae un 20% del mínimo esperado y la caída se sostiene tres días, o si la caída es exponencial. Entonces se pausa o se revierte.
 4. **Zona intermedia.** Si no pasa ninguna de las dos cosas, se sigue midiendo. Hay que considerar la temporada y los cambios grandes de la industria o del contexto geopolítico, con revisiones semanales para separar la señal del ruido.
 
 Llevémoslo a nuestra tienda imaginaria (las cifras siguen siendo hipotéticas), que convierte 0.80% con 2 millones de sesiones a la semana:
 
-- **Un mínimo esperado de ejemplo: +5 puntos base**, de 0.80% a 0.85%. Son 2,000,000 × 0.0005 = **1,000 compras adicionales**, × \$1,500 = **\$1,500,000 pesos a la semana**. Si llegas ahí y se sostiene una semana frente al grupo control, ya puedes hablar de tendencia ganadora.
-- **La alarma del 20%:** una caída de golpe del 20% sobre 0.80% deja la conversión en 0.64%, es decir, **−16 puntos base**. Son 2,000,000 × 0.0016 = **3,200 compras menos**, × \$1,500 = **\$4,800,000 pesos a la semana**. Ahí no se espera: se pausa o se revierte.
+- **Un mínimo esperado de ejemplo: +5 puntos base**, de 0.80% a 0.85%. Son 2,000,000 × 0.0005 = **1,000 compras adicionales**, × \$1,500 = **\$1,500,000 pesos a la semana**. Es la meta, no la condición para celebrar.
+- **Tendencia ganadora:** si la conversión sube siete días seguidos frente al grupo control, aunque todavía no llegue a 0.85%, ya es una tendencia ganadora.
+- **La alarma:** el 20% de ese mínimo de ejemplo es 1 punto base. Si la conversión baja de 0.80% a 0.79% y se sostiene tres días, se enciende. Ese **−1 punto base** equivale a 2,000,000 × 0.0001 = **200 compras menos**, × \$1,500 = **\$300,000 pesos a la semana**. Ahí no se espera: se pausa o se revierte.
 - **Entre esos dos puntos** está la zona intermedia: seguimos midiendo, semana a semana.
+
+Fíjate en la asimetría: la alarma reacciona antes (tres días contra siete) y con menos (un punto base). Así se lee el criterio: perder cuesta más que esperar.
 
 Con estos números en la mano, queda claro que una mejora de interfaz, por pequeña que parezca, no es un gasto decorativo: puede ser una de las inversiones más rentables que una empresa hace en su canal digital.
 
