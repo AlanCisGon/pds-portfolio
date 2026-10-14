@@ -75,9 +75,9 @@
 
   /* ── Typography · scale (proposal v0.1, line heights on a 4-pt grid) ── */
   /* Voice — Amstelvar: editorial headlines, quotes, principles. Never in buttons, forms or navigation. */
-  --text-display-size: clamp(40px, 5vw + 16px, 56px);
+  --text-display-size: max(clamp(40px, 5vw + 16px, 56px), min(3.889vw, 98px)); /* above 1440 grows with the viewport, cap ×1.75 (ADR 0009) */
   --text-display-line: 1.14;
-  --text-title-size: clamp(32px, 2.5vw + 20px, 40px);
+  --text-title-size: max(clamp(32px, 2.5vw + 20px, 40px), min(2.778vw, 70px));
   --text-title-line: 1.2;
   --text-quote-size: 24px;
   --text-quote-line: 32px;
@@ -85,16 +85,16 @@
   --text-card-line: 32px;
 
   /* System — Host Grotesk: interface, body, navigation, data. */
-  --text-heading-l-size: 32px;
-  --text-heading-l-line: 40px;
-  --text-heading-m-size: 24px;
-  --text-heading-m-line: 32px;
-  --text-heading-s-size: 20px;
-  --text-heading-s-line: 28px;
-  --text-body-l-size: 18px;
-  --text-body-l-line: 28px;
-  --text-body-m-size: 16px;
-  --text-body-m-line: 24px;
+  --text-heading-l-size: clamp(32px, 2.222vw, 56px);
+  --text-heading-l-line: calc(var(--text-heading-l-size) * 1.25);
+  --text-heading-m-size: clamp(24px, 1.667vw, 42px);
+  --text-heading-m-line: calc(var(--text-heading-m-size) * 4 / 3);
+  --text-heading-s-size: clamp(20px, 1.389vw, 35px);
+  --text-heading-s-line: calc(var(--text-heading-s-size) * 1.4);
+  --text-body-l-size: clamp(18px, 1.25vw, 31.5px);
+  --text-body-l-line: calc(var(--text-body-l-size) * 28 / 18);
+  --text-body-m-size: clamp(16px, 1.111vw, 28px);
+  --text-body-m-line: calc(var(--text-body-m-size) * 1.5);
   --text-body-s-size: 14px;
   --text-body-s-line: 20px;
   --text-label-m-size: 14px;
@@ -185,6 +185,10 @@
 
   /* ── Layout ── */
   --page-padding: var(--space-16); /* mobile */
+  /* Large screens (ADR 0009): fixed up to 1440, then grow with the viewport, cap ×1.75 (~2520). */
+  --content-max: clamp(1080px, 75vw, 1890px);
+  --measure-prose: calc(var(--text-body-l-size) * 40); /* 720 at ≤1440; grows with the type, so chars per line stay fixed */
+  --hero-inset: clamp(64px, 4.444vw, 112px);
   --bento-gap: var(--space-16);
   /* Breakpoints, mobile first (ADR 0008). Reference only: CSS vars can't be used in media queries.
      xs is everything below sm (< 576px). */
@@ -197,7 +201,7 @@
 
 @media (min-width: 768px) {
   :root {
-    --page-padding: var(--space-24);
+    --page-padding: clamp(24px, 1.667vw, 48px); /* 24 up to 1440, then grows (ADR 0009) */
     --bento-gap: var(--space-24);
   }
 }
