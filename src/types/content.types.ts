@@ -126,8 +126,8 @@ export interface Blog extends PageConfig {
   /** Footnotes section title and back-link name. */
   notesTitle: string;
   notesBack: string;
-  /** Credit line before the copyeditor name ("Copyedited by"). */
-  copyeditedBy: string;
+  /** Byline credit before the editor's name ("edited by"): credited up front (Alan, 2026-10-14). */
+  editedBy: string;
   /** Closing CTA while there is one note (contact) and from two notes (next). */
   cta: {
     contact: { heading: string; body: string; label: string };
