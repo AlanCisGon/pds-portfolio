@@ -110,7 +110,7 @@
   font-weight: var(--weight-semibold);
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 992px) {
   .body {
     grid-template-columns: 220px minmax(0, 720px);
     gap: var(--space-64);

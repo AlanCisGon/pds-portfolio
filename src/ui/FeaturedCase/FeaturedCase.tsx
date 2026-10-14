@@ -79,7 +79,7 @@ export function FeaturedCase({
               alt={cover.alt}
               ratio="4:3"
               priority={priority}
-              sizes="(min-width: 1024px) 400px, 100vw"
+              sizes="(min-width: 992px) 400px, 100vw"
             />
           </div>
         )}
