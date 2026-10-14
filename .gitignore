@@ -44,3 +44,6 @@ CLAUDE.local.md
 .claude/worktrees/
 .claude/settings.local.json
 scripts/blender/.cache/
+
+# Originales con datos internos de Coppel (solo local)
+docs/descubrimiento/originales-privados/
