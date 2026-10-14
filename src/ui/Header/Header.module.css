@@ -8,7 +8,7 @@
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: max(var(--space-16), env(safe-area-inset-top)) var(--page-padding) var(--space-16);
+  padding: var(--space-16) var(--page-padding);
   pointer-events: none; /* only the pill is interactive; content under the empty cells stays clickable */
   transition: transform var(--duration-base) var(--ease-settle);
 }
