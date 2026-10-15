@@ -7,6 +7,12 @@ const nextConfig = {
         destination: "/lab/ux-strategy",
         permanent: false,
       },
+      // Field note retitled; keep links to the old slug working.
+      {
+        source: "/blog/nobody-waits-in-the-dark",
+        destination: "/blog/nobody-stays-in-the-dark",
+        permanent: true,
+      },
     ];
   },
   // Private lab artifacts live outside public/; ship them with the route.
