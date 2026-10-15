@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Un pago, diez lenguajes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600&family=Chivo+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Tokens: copia de src/styles/tokens.css (SDS). Solo modo oscuro. Tipografía: ADR 0005.
+   Las siete capas usan la capa de contexto categórica (--ctx-*-fg) y neutral para infraestructura;
+   la acción (botones, selección, foco) sigue siendo Cerezo. */
+@font-face { font-family: "Amstelvar"; src: url("/fonts/amstelvar-roman.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Amstelvar"; src: url("/fonts/amstelvar-italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; font-display: swap; }
+:root {
+  color-scheme: dark;
+  --bg: #0e1114;
+  --surface: #171b20;
+  --code-bg: #0e1114;
+  --ink: #e8ecf1;
+  --muted: #8c96a3;
+  --line: color-mix(in srgb, #8c96a3 16%, transparent);
+  --line-strong: color-mix(in srgb, #8c96a3 34%, transparent);
+  --accent: #d2734e;
+  --accent-hover: color-mix(in oklab, #d2734e 85%, #e8ecf1);
+  --on-accent: #0e1114;
+  --on-ink: #0e1114;
+
+  --l-front: #c9acff;  /* ctx-violet */
+  --l-proto: #e6b55d;  /* ctx-amber */
+  --l-back:  #89c3fe;  /* ctx-blue */
+  --l-comm:  #52d7c1;  /* ctx-teal */
+  --l-ia:    #f19fd6;  /* ctx-magenta */
+  --l-data:  #83d494;  /* ctx-green */
+  --l-infra: #8c96a3;  /* status-neutral */
+
+  --f-display: "Amstelvar", Georgia, "Times New Roman", serif;
+  --f-body: "Host Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "Chivo Mono", ui-monospace, Menlo, monospace;
+  --duration-fast: 150ms;
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; display: flex; flex-direction: column; gap: 72px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(40px, 5vw + 16px, 56px); line-height: 1.14; }
+h2 { font-size: clamp(32px, 2.5vw + 20px, 40px); line-height: 1.2; }
+h3 { font-family: var(--f-body); font-size: 1.25rem; line-height: 1.3; font-weight: 600; }
+p { margin: 0; }
+.eyebrow { font-family: var(--f-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lede { font-size: 1.15rem; max-width: 62ch; color: var(--ink); }
+.sub { max-width: 66ch; color: var(--muted); }
+code, pre, .mono { font-family: var(--f-mono); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- hero ---------- */
+.hero { display: flex; flex-direction: column; gap: 20px; }
+.answer { font-family: var(--f-display); font-style: italic; font-size: clamp(1.3rem, 2.4vw, 1.6rem); font-weight: 400; line-height: 1.25; max-width: 30ch; }
+.reasons { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 12px; }
+.reason { background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.reason h3 { font-size: 1.08rem; }
+.reason p { color: var(--muted); font-size: 0.95rem; }
+.reason .ex { font-family: var(--f-mono); font-size: 0.78rem; color: var(--ink); }
+
+.ladder-box { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.ladder-scroll { overflow-x: auto; padding-bottom: 4px; }
+.ladder { min-width: 640px; display: grid; grid-template-columns: repeat(8, 1fr); position: relative; padding-top: 18px; }
+.ladder::before { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 2px; background: linear-gradient(90deg, var(--line-strong), var(--ink)); }
+.rung { display: flex; flex-direction: column; gap: 2px; padding-right: 8px; position: relative; }
+.rung::before { content: ""; position: absolute; top: -16px; left: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink); }
+.rung b { font-family: var(--f-mono); font-weight: 500; font-size: 0.85rem; }
+.rung span { font-size: 0.78rem; color: var(--muted); line-height: 1.3; }
+.ladder-ends { display: flex; justify-content: space-between; gap: 12px; font-size: 0.8rem; color: var(--muted); }
+
+/* ---------- section headers ---------- */
+.sec-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+
+/* ---------- simulator ---------- */
+.sim { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+@media (max-width: 860px) { .sim { grid-template-columns: minmax(0, 1fr); } }
+.sim-left { padding: 20px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+@media (max-width: 860px) { .sim-left { border-right: 0; border-bottom: 1px solid var(--line); } }
+.lanes-scroll { overflow-x: auto; }
+.lanes { display: grid; grid-template-columns: 104px repeat(10, minmax(24px, 1fr)); min-width: 380px; row-gap: 4px; }
+.lane-label { font-size: 0.78rem; font-weight: 500; display: flex; align-items: center; gap: 6px; padding-right: 6px; height: 34px; white-space: nowrap; }
+.lane-label i { width: 8px; height: 8px; border-radius: 2px; background: var(--c); flex: none; }
+.cell { height: 34px; position: relative; display: flex; align-items: center; justify-content: center; }
+.cell::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--line); }
+.cell.col-active { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.node { transition: transform var(--duration-fast) var(--ease-settle); position: relative; z-index: 1; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--c); background: var(--surface); color: var(--c); font-family: var(--f-mono); font-size: 0.7rem; font-weight: 500; cursor: pointer; padding: 0; display: grid; place-items: center; transition: transform .15s ease; }
+.node.done { background: var(--c); color: var(--surface); }
+.node.active { background: var(--c); color: var(--surface); transform: scale(1.22); box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--accent); }
+.infra-bar { grid-column: 2 / -1; min-height: 26px; padding-block: 4px; line-height: 1.3; margin-top: 4px; border-radius: 6px; border: 1px dashed var(--l-infra); color: var(--l-infra); font-family: var(--f-mono); font-size: 0.7rem; display: flex; align-items: center; justify-content: center; text-align: center; padding-inline: 6px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { font: inherit; font-size: 0.9rem; font-weight: 500; border-radius: 8px; padding: 8px 14px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink); cursor: pointer; }
+.btn:hover { border-color: var(--ink); background: #2d333a; }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.btn:disabled { opacity: .4; cursor: default; }
+.tally { font-size: 0.88rem; color: var(--muted); }
+.tally strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+.tally-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tchip { font-family: var(--f-mono); font-size: 0.72rem; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--c); color: var(--c); }
+
+.sim-right { padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.step-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.pill { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--c); }
+.pill.lang { font-family: var(--f-mono); font-weight: 500; background: transparent; border: 1px solid var(--c); }
+.why { font-size: 0.92rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+.why b { color: var(--ink); font-weight: 600; }
+
+pre.code { margin: 0; background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; font-size: 0.8rem; line-height: 1.6; overflow-x: auto; white-space: pre; tab-size: 4; color: var(--ink); }
+
+/* ---------- explorer ---------- */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.tab { font: inherit; font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+.tab i { width: 9px; height: 9px; border-radius: 2px; background: var(--c); }
+.tab small { font-family: var(--f-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.tab:hover { background: #2d333a; }
+.tab[aria-selected="true"] { background: var(--surface); border-color: var(--line-strong); box-shadow: inset 0 -3px 0 var(--accent); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 18px; }
+.panel-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+@media (max-width: 760px) { .panel-head { grid-template-columns: minmax(0, 1fr); gap: 12px; } }
+.panel-head p { color: var(--muted); }
+.task { font-size: 0.95rem; }
+.task b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c); margin-bottom: 4px; }
+.langs { display: flex; flex-wrap: wrap; gap: 6px; }
+.lang-btn { font-family: var(--f-mono); font-size: 0.82rem; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink); cursor: pointer; }
+.lang-btn:hover { border-color: var(--ink); }
+.lang-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.lang-view { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 860px) { .lang-view { grid-template-columns: minmax(0, 1fr); } }
+.facts { display: grid; gap: 14px; margin: 0; }
+.facts div { display: flex; flex-direction: column; gap: 2px; }
+.facts dt { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.facts dd { margin: 0; font-size: 0.93rem; }
+
+/* ---------- matrix ---------- */
+.table-scroll { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 0.9rem; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+tbody tr:last-child td { border-bottom: 0; }
+thead th { font-family: var(--f-mono); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+thead th span { display: inline-flex; align-items: center; gap: 6px; }
+thead th i { width: 8px; height: 8px; border-radius: 2px; background: var(--c); }
+td.lang { font-family: var(--f-mono); font-weight: 500; white-space: nowrap; }
+td.m { text-align: center; }
+th.m { text-align: center; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--c); vertical-align: middle; }
+.dot.full { background: var(--c); }
+td.note { color: var(--muted); font-size: 0.84rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.84rem; color: var(--muted); margin-top: 10px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; --c: var(--ink); }
+
+/* ---------- choose ---------- */
+.questions { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; list-style: none; padding: 0; margin: 0; }
+.questions li { border-top: 1px solid var(--line-strong); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.questions h3 { font-size: 1.05rem; }
+.questions p { color: var(--muted); font-size: 0.93rem; }
+.closing { font-family: var(--f-display); font-size: clamp(24px, 2vw + 12px, 32px); font-weight: 400; max-width: 34ch; line-height: 1.25; margin-top: 28px; }
+footer { font-size: 0.8rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Lab · Lenguajes de programación</p>
+    <h1>¿Por qué existen tantos lenguajes?</h1>
+    <p class="answer">Porque cada lenguaje es una respuesta a un problema distinto, y ninguno puede ser el mejor en todo a la vez.</p>
+    <p class="lede">Un lenguaje es un acuerdo entre personas y máquinas. Cuando cambia dónde corre el código, qué tan caro es un error o quién lo va a mantener, cambia también el acuerdo que conviene. Hay cuatro fuerzas que explican casi toda la variedad:</p>
+
+    <div class="reasons">
+      <article class="reason">
+        <h3>1. Dónde corre</h3>
+        <p>El navegador sólo ejecuta JavaScript (y WebAssembly). iOS favorece Swift, Android Kotlin. Una base de datos entiende SQL. El entorno decide antes que tú.</p>
+        <p class="ex">navegador → JS · iPhone → Swift · chip → C</p>
+      </article>
+      <article class="reason">
+        <h3>2. Qué optimiza</h3>
+        <p>Velocidad de la máquina, velocidad del equipo o seguridad ante errores. Mejorar una casi siempre cuesta otra: Rust es rápido y seguro, pero lento de aprender; Python es rápido de escribir, pero más lento al ejecutar.</p>
+        <p class="ex">rendimiento ↔ productividad ↔ seguridad</p>
+      </article>
+      <article class="reason">
+        <h3>3. Qué describe</h3>
+        <p>No todos dan órdenes paso a paso. SQL pregunta por datos, HTML describe estructura, YAML describe infraestructura, Protobuf describe un contrato. Son lenguajes declarativos: dices <em>qué</em> quieres, no <em>cómo</em> lograrlo.</p>
+        <p class="ex">imperativo: “haz esto” · declarativo: “quiero esto”</p>
+      </article>
+      <article class="reason">
+        <h3>4. Historia y ecosistema</h3>
+        <p>Reescribir cuesta. COBOL todavía procesa operaciones bancarias, Java domina sistemas empresariales por sus librerías y talento disponible, y Python ganó la IA porque ahí estaban las herramientas.</p>
+        <p class="ex">librerías + comunidad + gente contratable</p>
+      </article>
+    </div>
+
+    <div class="ladder-box">
+      <p class="eyebrow">La escalera de abstracción</p>
+      <div class="ladder-scroll">
+        <div class="ladder">
+          <div class="rung"><b>Ensamblador</b><span>instrucciones del procesador</span></div>
+          <div class="rung"><b>C</b><span>sistemas operativos, firmware</span></div>
+          <div class="rung"><b>Rust</b><span>rendimiento con memoria segura</span></div>
+          <div class="rung"><b>Go</b><span>servicios de red simples</span></div>
+          <div class="rung"><b>Java · C#</b><span>sistemas empresariales</span></div>
+          <div class="rung"><b>TypeScript</b><span>apps web con tipos</span></div>
+          <div class="rung"><b>Python</b><span>datos, IA, automatización</span></div>
+          <div class="rung"><b>SQL</b><span>sólo describes el resultado</span></div>
+        </div>
+      </div>
+      <div class="ladder-ends"><span>← Más control y velocidad de ejecución</span><span>Más productividad y menos detalle →</span></div>
+    </div>
+  </header>
+
+  <section id="caso" aria-labelledby="caso-t">
+    <div class="sec-head">
+      <p class="eyebrow">Caso práctico</p>
+      <h2 id="caso-t">Una clienta paga $1,299 MXN por una licuadora</h2>
+      <p class="sub">Para ella es un solo toque. Por dentro, la orden <span class="mono">A-1042</span> cruza siete capas y se traduce a una decena de lenguajes, formatos y protocolos. Recorre el pago paso a paso o toca cualquier punto del diagrama.</p>
+    </div>
+
+    <div class="sim">
+      <div class="sim-left">
+        <div class="lanes-scroll"><div class="lanes" id="lanes" role="group" aria-label="Diagrama de capas por paso"></div></div>
+        <div class="controls">
+          <button class="btn" id="prev" type="button">← Anterior</button>
+          <button class="btn primary" id="play" type="button">▶ Reproducir</button>
+          <button class="btn" id="next" type="button">Siguiente →</button>
+          <button class="btn" id="reset" type="button">Reiniciar</button>
+        </div>
+        <div>
+          <p class="tally">Lenguajes, formatos y protocolos usados hasta aquí: <strong id="tally-n">1</strong> <span id="tally-plus"></span></p>
+          <div class="tally-chips" id="tally-chips"></div>
+        </div>
+      </div>
+      <article class="sim-right" id="detail" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section id="explorador" aria-labelledby="exp-t">
+    <div class="sec-head">
+      <p class="eyebrow">Explorador por dimensión</p>
+      <h2 id="exp-t">La misma tarea, escrita en lenguajes distintos</h2>
+      <p class="sub">Las cuatro primeras dimensiones son las que pediste. Las tres marcadas como <em>propuesta</em> completan el mapa: dónde viven los datos, cómo se levanta la infraestructura y cómo se analizan los datos o se entrena un modelo.</p>
+    </div>
+    <div class="tabs" role="tablist" id="tabs" aria-label="Dimensiones"></div>
+    <div class="panel" id="panel" role="tabpanel"></div>
+  </section>
+
+  <section id="mapa" aria-labelledby="mapa-t">
+    <div class="sec-head">
+      <p class="eyebrow">Mapa</p>
+      <h2 id="mapa-t">Algunos lenguajes cruzan capas</h2>
+      <p class="sub">TypeScript corre en el navegador y en el servidor. Python sirve APIs y entrena modelos. Go escribe microservicios y también las herramientas de infraestructura (Docker y Kubernetes están hechos en Go). Saber dónde se traslapan ayuda a reducir el número de lenguajes que un equipo necesita dominar.</p>
+    </div>
+    <div class="table-scroll"><table id="matrix"></table></div>
+    <div class="legend"><span><i class="dot full"></i> uso principal</span><span><i class="dot"></i> también se usa</span></div>
+  </section>
+
+  <section id="elegir" aria-labelledby="elegir-t">
+    <div class="sec-head">
+      <p class="eyebrow">Cómo elegir</p>
+      <h2 id="elegir-t">Seis preguntas antes de escoger un lenguaje</h2>
+    </div>
+    <ul class="questions">
+      <li><h3>¿Dónde va a correr?</h3><p>Navegador, teléfono, servidor, base de datos o un chip. Muchas veces esta respuesta ya elige por ti.</p></li>
+      <li><h3>¿Qué es más caro: la máquina o el equipo?</h3><p>Si pagas mucho cómputo, Go o Rust ahorran dinero. Si el cuello de botella es entregar rápido, Python o TypeScript ganan.</p></li>
+      <li><h3>¿Cuánto cuesta un error?</h3><p>En pagos, un error es dinero. Ahí convienen tipos estrictos, transacciones y compiladores que se quejan antes de producción.</p></li>
+      <li><h3>¿Qué sabe tu equipo y a quién puedes contratar?</h3><p>El mejor lenguaje en papel pierde frente al que tu equipo domina y el mercado ofrece.</p></li>
+      <li><h3>¿Qué ecosistema ya existe?</h3><p>Librerías, integraciones y contrapartes. Si el banco sólo habla SOAP, hablarás SOAP.</p></li>
+      <li><h3>¿Cuánto tiempo va a vivir?</h3><p>Un prototipo de dos semanas y un sistema que operará quince años piden decisiones distintas.</p></li>
+    </ul>
+    <p class="closing">No necesitamos tantos lenguajes porque sí. Los necesitamos porque un producto real tiene muchas capas, y cada capa tiene un problema distinto que resolver.</p>
+  </section>
+
+  <footer>Los fragmentos de código están simplificados con fines didácticos. La tienda, la clienta y los datos del caso son ficticios.</footer>
+</div>
+
+<script>
+const LAYERS = {
+  front: { name: 'Front-end' },
+  proto: { name: 'Protocolos' },
+  back:  { name: 'Back-end' },
+  comm:  { name: 'Comunicación' },
+  ia:    { name: 'Datos e IA' },
+  data:  { name: 'Bases de datos' },
+  infra: { name: 'Infraestructura' }
+};
+const LANE_ORDER = ['front', 'proto', 'back', 'comm', 'ia', 'data'];
+const cvar = k => 'var(--l-' + k + ')';
+
+/* ---------------- case study steps ---------------- */
+const STEPS = [
+  { layer: 'front', lang: 'TypeScript · React', tag: 'TypeScript',
+    title: 'La clienta toca «Pagar»',
+    desc: 'El navegador ejecuta JavaScript compilado desde TypeScript y arma la petición con el pedido y el monto.',
+    why: 'El navegador sólo ejecuta JavaScript (y WebAssembly). TypeScript agrega tipos para que nadie mande el monto como texto.',
+    code: `await api.post('/api/pagos', {
+  pedidoId: 'A-1042',
+  monto: 1299        // number, no "1,299"
+});` },
+  { layer: 'proto', lang: 'HTTPS · HTTP/2 + TLS 1.3', tag: 'HTTP/2 + TLS',
+    title: 'La petición viaja cifrada',
+    desc: 'TLS cifra el contenido. HTTP/2 define cómo se ve la petición: método, ruta, encabezados y cuerpo.',
+    why: 'Todo navegador y servidor lo entiende. Sin TLS, cualquiera en la red podría leer o alterar el pago.',
+    code: `:method        POST
+:path          /api/pagos
+content-type   application/json
+authorization  Bearer eyJhbGciOi…
+
+{"pedidoId":"A-1042","monto":1299}` },
+  { layer: 'back', lang: 'Java · Spring Boot', tag: 'Java',
+    title: 'El servicio de pagos valida',
+    desc: 'Comprueba la sesión, que el monto coincida con el pedido y que no se esté cobrando dos veces.',
+    why: 'El núcleo de pagos vive muchos años y necesita transacciones, auditoría y librerías bancarias maduras. Es terreno histórico de Java.',
+    code: `@PostMapping("/api/pagos")
+@Transactional
+public PagoResponse pagar(@Valid @RequestBody PagoRequest req) {
+    pedidos.verificarMonto(req.pedidoId(), req.monto());
+    candados.evitarDobleCobro(req.pedidoId());
+    return pagos.procesar(req);
+}` },
+  { layer: 'comm', lang: 'gRPC · Protocol Buffers', tag: 'gRPC/Protobuf',
+    title: 'Le pregunta al servicio antifraude',
+    desc: 'Llamada interna en formato binario. Un mismo archivo .proto genera el cliente en Java y el servidor en Python.',
+    why: 'Entre servicios internos importa la latencia y un contrato estricto que funcione entre lenguajes distintos.',
+    code: `EvaluacionRequest {
+  pedido_id:      "A-1042"
+  monto_centavos: 129900     // el dinero viaja en enteros
+  moneda:         "MXN"
+  cliente_id:     "C-88231"
+}` },
+  { layer: 'ia', lang: 'Python · scikit-learn', tag: 'Python',
+    title: 'Un modelo calcula el riesgo',
+    desc: 'Con el historial de la clienta, el modelo estima 7 % de probabilidad de fraude. Se aprueba.',
+    why: 'El ecosistema de ciencia de datos vive en Python, así que el equipo que entrena el modelo también lo puede servir.',
+    code: `riesgo = modelo.predict_proba(caracteristicas)[0, 1]
+# 0.07
+decision = "aprobar" if riesgo < 0.35 else "revisar"` },
+  { layer: 'comm', lang: 'ISO 8583', tag: 'ISO 8583',
+    title: 'Se pide autorización al banco',
+    desc: 'El procesador traduce el cargo al formato que hablan las redes de tarjetas desde 1987: campos numerados y compactos.',
+    why: 'Este no se elige. Es el idioma de la red de tarjetas, y quien procesa pagos con tarjeta lo tiene que hablar.',
+    code: `MTI  0100            solicitud de autorización
+DE4  000000129900    importe en centavos
+DE49 484             MXN (código ISO 4217)
+←    0110  DE39=00   respuesta: aprobada` },
+  { layer: 'data', lang: 'SQL · PostgreSQL', tag: 'SQL',
+    title: 'Se guarda el pago: todo o nada',
+    desc: 'Una transacción registra el pago y marca el pedido como pagado. Si algo falla a la mitad, no se guarda nada.',
+    why: 'Con dinero no se negocia la consistencia. Las bases relacionales garantizan transacciones ACID.',
+    code: `BEGIN;
+INSERT INTO pagos (pedido_id, monto, moneda, estado)
+  VALUES ('A-1042', 1299.00, 'MXN', 'aprobado');
+UPDATE pedidos SET estado = 'pagado' WHERE id = 'A-1042';
+COMMIT;` },
+  { layer: 'comm', lang: 'Kafka · evento JSON', tag: 'Evento JSON',
+    title: 'Se anuncia: «pago aprobado»',
+    desc: 'Inventario, facturación (CFDI), notificaciones y analítica escuchan el evento y reaccionan cada uno a su ritmo.',
+    why: 'El pago no debe esperar a que se timbre la factura o salga el correo. Un evento desacopla a los sistemas.',
+    code: `tema: pagos.aprobados
+{
+  "tipo": "PagoAprobado",
+  "pedidoId": "A-1042",
+  "monto": 129900,
+  "moneda": "MXN"
+}` },
+  { layer: 'proto', lang: 'WebSocket', tag: 'WebSocket',
+    title: 'El servidor avisa a la pantalla',
+    desc: 'Una conexión abierta permite que el servidor empuje el resultado sin que el navegador pregunte una y otra vez.',
+    why: 'HTTP funciona como pregunta y respuesta. Para avisos en vivo conviene un canal abierto en ambos sentidos.',
+    code: `◀ {"evento":"pago.aprobado","pedidoId":"A-1042"}` },
+  { layer: 'front', lang: 'TypeScript · React', tag: 'TypeScript',
+    title: 'Ella ve «¡Pago aprobado!»',
+    desc: 'La interfaz pasa de «procesando» a «aprobado». Todo ocurrió en menos de dos segundos.',
+    why: 'Las interfaces modernas se describen como estados. El framework se encarga de redibujar la pantalla cuando el estado cambia.',
+    code: `socket.on('pago.aprobado', () => setEstado('aprobado'));` }
+];
+const INFRA_TAGS = ['Dockerfile', 'YAML (Kubernetes)', 'HCL (Terraform)'];
+
+let cur = 0, timer = null;
+const lanesEl = document.getElementById('lanes');
+const detailEl = document.getElementById('detail');
+
+function buildLanes() {
+  const frag = document.createDocumentFragment();
+  LANE_ORDER.forEach(layer => {
+    const lab = document.createElement('div');
+    lab.className = 'lane-label';
+    lab.style.setProperty('--c', cvar(layer));
+    lab.innerHTML = '<i></i>' + LAYERS[layer].name;
+    frag.appendChild(lab);
+    STEPS.forEach((s, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.col = i;
+      if (s.layer === layer) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'node';
+        b.style.setProperty('--c', cvar(layer));
+        b.textContent = i + 1;
+        b.setAttribute('aria-label', 'Paso ' + (i + 1) + ': ' + s.title);
+        b.addEventListener('click', () => { stop(); go(i); });
+        cell.appendChild(b);
+      }
+      frag.appendChild(cell);
+    });
+  });
+  const lab = document.createElement('div');
+  lab.className = 'lane-label';
+  lab.style.setProperty('--c', cvar('infra'));
+  lab.innerHTML = '<i></i>' + LAYERS.infra.name;
+  frag.appendChild(lab);
+  const bar = document.createElement('div');
+  bar.className = 'infra-bar';
+  bar.textContent = 'Docker · Kubernetes YAML · Terraform HCL';
+  frag.appendChild(bar);
+  lanesEl.appendChild(frag);
+}
+
+function go(i) {
+  cur = Math.max(0, Math.min(STEPS.length - 1, i));
+  const s = STEPS[cur];
+  lanesEl.querySelectorAll('.cell').forEach(c => c.classList.toggle('col-active', +c.dataset.col === cur));
+  lanesEl.querySelectorAll('.node').forEach(n => {
+    const k = +n.textContent - 1;
+    n.classList.toggle('active', k === cur);
+    n.classList.toggle('done', k < cur);
+  });
+  detailEl.style.setProperty('--c', cvar(s.layer));
+  detailEl.innerHTML = '';
+  const meta = document.createElement('div');
+  meta.className = 'step-meta';
+  meta.innerHTML = '<span class="eyebrow">Paso ' + (cur + 1) + ' de ' + STEPS.length + '</span>' +
+    '<span class="pill">' + LAYERS[s.layer].name + '</span>' +
+    '<span class="pill lang">' + s.lang + '</span>';
+  const h = document.createElement('h3'); h.textContent = s.title;
+  const p = document.createElement('p'); p.textContent = s.desc;
+  const pre = document.createElement('pre'); pre.className = 'code'; pre.textContent = s.code;
+  const why = document.createElement('p'); why.className = 'why';
+  why.innerHTML = '<b>¿Por qué este lenguaje aquí?</b> ';
+  why.appendChild(document.createTextNode(s.why));
+  detailEl.append(meta, h, p, pre, why);
+
+  const seen = [];
+  STEPS.slice(0, cur + 1).forEach(x => { if (!seen.find(y => y.tag === x.tag)) seen.push(x); });
+  document.getElementById('tally-n').textContent = seen.length;
+  document.getElementById('tally-plus').textContent = '+ ' + INFRA_TAGS.length + ' de infraestructura';
+  const chips = document.getElementById('tally-chips');
+  chips.innerHTML = '';
+  seen.forEach(x => {
+    const c = document.createElement('span');
+    c.className = 'tchip'; c.style.setProperty('--c', cvar(x.layer)); c.textContent = x.tag;
+    chips.appendChild(c);
+  });
+  INFRA_TAGS.forEach(t => {
+    const c = document.createElement('span');
+    c.className = 'tchip'; c.style.setProperty('--c', cvar('infra')); c.textContent = t;
+    chips.appendChild(c);
+  });
+
+  document.getElementById('prev').disabled = cur === 0;
+  document.getElementById('next').disabled = cur === STEPS.length - 1;
+}
+function stop() { clearInterval(timer); timer = null; document.getElementById('play').textContent = '▶ Reproducir'; }
+function play() {
+  if (timer) { stop(); return; }
+  if (cur === STEPS.length - 1) go(0);
+  document.getElementById('play').textContent = '❚❚ Pausa';
+  timer = setInterval(() => { if (cur >= STEPS.length - 1) { stop(); return; } go(cur + 1); }, 2600);
+}
+document.getElementById('prev').addEventListener('click', () => { stop(); go(cur - 1); });
+document.getElementById('next').addEventListener('click', () => { stop(); go(cur + 1); });
+document.getElementById('reset').addEventListener('click', () => { stop(); go(0); });
+document.getElementById('play').addEventListener('click', play);
+
+/* ---------------- explorer ---------------- */
+const DIMS = [
+  { key: 'front', name: 'Front-end', layer: 'front',
+    what: 'Lo que la persona ve y toca: pantallas, botones, estados. Corre en el dispositivo de la clienta, así que el dispositivo decide gran parte del lenguaje.',
+    task: 'Mostrar el total y un botón «Pagar» que envía el pedido al servidor.',
+    langs: [
+      { n: 'HTML + CSS + JS', where: 'Cualquier navegador, sin instalar nada.',
+        pro: 'Es lo único que el navegador entiende de forma nativa. No requiere compilar.',
+        con: 'Sin tipos ni componentes, un proyecto grande se vuelve difícil de mantener.',
+        when: 'Páginas simples, prototipos, o para entender la base de todo lo demás.',
+        code: `<p class="total">Total: $1,299.00 MXN</p>
+<button id="pagar">Pagar</button>
+
+<script>
+  const boton = document.querySelector('#pagar');
+  boton.addEventListener('click', async () => {
+    const res = await fetch('/api/pagos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pedidoId: 'A-1042', monto: 1299 })
+    });
+    const { estado } = await res.json();
+    boton.textContent = estado === 'aprobado' ? 'Pagado ✓' : 'Reintentar';
+  });
+<\/script>` },
+      { n: 'TypeScript + React', where: 'Navegador (se compila a JavaScript).',
+        pro: 'Los tipos detectan errores antes de ejecutar. Los componentes se reutilizan entre pantallas y equipos.',
+        con: 'Más herramientas que configurar: compilador, empaquetador, framework.',
+        when: 'Aplicaciones web grandes en las que trabajan varios equipos.',
+        code: `type Estado = 'listo' | 'procesando' | 'aprobado' | 'rechazado';
+
+export function BotonPagar({ pedido }: { pedido: Pedido }) {
+  const [estado, setEstado] = useState<Estado>('listo');
+
+  async function pagar() {
+    setEstado('procesando');
+    const res = await api.post('/api/pagos', {
+      pedidoId: pedido.id,
+      monto: pedido.total,      // si fuera texto, no compila
+    });
+    setEstado(res.estado);
+  }
+
+  return (
+    <button onClick={pagar} disabled={estado !== 'listo'}>
+      {estado === 'procesando' ? 'Procesando…' : 'Pagar ' + mxn(pedido.total)}
+    </button>
+  );
+}` },
+      { n: 'Swift (SwiftUI)', where: 'iPhone, iPad, Mac.',
+        pro: 'Acceso completo al dispositivo: Face ID, Apple Pay, animaciones nativas y mejor rendimiento.',
+        con: 'Sólo funciona en el ecosistema de Apple. Android necesita otro código.',
+        when: 'Apps de iOS donde la experiencia y el hardware importan mucho.',
+        code: `struct BotonPagar: View {
+    let pedido: Pedido
+    @State private var estado: Estado = .listo
+
+    var body: some View {
+        Button(estado == .procesando ? "Procesando…" : "Pagar") {
+            Task {
+                estado = .procesando
+                estado = try await API.pagar(pedidoId: pedido.id,
+                                             monto: pedido.total)
+            }
+        }
+        .disabled(estado != .listo)
+        .buttonStyle(.borderedProminent)
+    }
+}` },
+      { n: 'Kotlin (Compose)', where: 'Teléfonos y tabletas Android.',
+        pro: 'Lenguaje oficial de Android. Acceso a biometría y NFC para pagos sin contacto.',
+        con: 'La interfaz sólo sirve en Android (Kotlin Multiplatform comparte lógica, no siempre pantallas).',
+        when: 'Apps nativas de Android.',
+        code: `@Composable
+fun BotonPagar(pedido: Pedido, vm: PagoViewModel = viewModel()) {
+    val estado by vm.estado.collectAsState()
+
+    Button(
+        onClick = { vm.pagar(pedido.id, pedido.total) },
+        enabled = estado == Estado.LISTO
+    ) {
+        Text(
+            if (estado == Estado.PROCESANDO) "Procesando…"
+            else "Pagar " + pedido.totalMxn()
+        )
+    }
+}` },
+      { n: 'Dart (Flutter)', where: 'iOS, Android y web desde un mismo código.',
+        pro: 'Un equipo, una base de código, varias plataformas.',
+        con: 'Hay una capa extra entre tu app y el sistema; las funciones nativas requieren puentes.',
+        when: 'Equipos pequeños que necesitan estar en ambas tiendas de apps.',
+        code: `class BotonPagar extends StatelessWidget {
+  const BotonPagar({super.key, required this.pedido});
+  final Pedido pedido;
+
+  @override
+  Widget build(BuildContext context) {
+    final estado = context.watch<PagoCubit>().state;
+    return FilledButton(
+      onPressed: estado == Estado.listo
+          ? () => context.read<PagoCubit>().pagar(pedido.id, pedido.total)
+          : null,
+      child: Text(estado == Estado.procesando ? 'Procesando…' : 'Pagar'),
+    );
+  }
+}` }
+    ] },
+
+  { key: 'back', name: 'Back-end', layer: 'back',
+    what: 'La lógica que no puede vivir en el teléfono de la clienta: validar, cobrar, aplicar reglas de negocio y proteger datos. Aquí el entorno lo controlas tú, así que hay mucha más libertad para elegir.',
+    task: 'Recibir POST /api/pagos, validar que el monto coincida con el pedido, cobrar y responder.',
+    langs: [
+      { n: 'TypeScript (Node.js)', where: 'Servidor, contenedores, funciones serverless.',
+        pro: 'El mismo lenguaje que el front. Muy bueno para muchas peticiones que pasan el tiempo esperando la red.',
+        con: 'Un solo hilo principal: un cálculo pesado frena a todas las peticiones.',
+        when: 'APIs y backends para el front (BFF) con equipos full-stack.',
+        code: `app.post('/api/pagos', async (req, reply) => {
+  const { pedidoId, monto } = PagoSchema.parse(req.body);
+
+  const pedido = await db.pedidos.find(pedidoId);
+  if (!pedido || pedido.total !== monto) {
+    return reply.code(422).send({ error: 'El monto no coincide con el pedido' });
+  }
+
+  const resultado = await pasarela.cobrar({ pedidoId, monto, moneda: 'MXN' });
+  return { estado: resultado.aprobado ? 'aprobado' : 'rechazado' };
+});` },
+      { n: 'Java (Spring Boot)', where: 'Servidores, máquina virtual de Java (JVM).',
+        pro: 'Décadas en bancos y retail: transacciones, seguridad, librerías maduras y mucho talento disponible.',
+        con: 'Más código ceremonial y más consumo de memoria.',
+        when: 'Sistemas centrales de larga vida y entornos regulados.',
+        code: `@RestController
+@RequestMapping("/api/pagos")
+public class PagoController {
+
+    private final PagoService pagos;
+
+    public PagoController(PagoService pagos) { this.pagos = pagos; }
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity<PagoResponse> pagar(@Valid @RequestBody PagoRequest req) {
+        Pago pago = pagos.cobrar(req.pedidoId(), req.monto(), Moneda.MXN);
+        return ResponseEntity.ok(new PagoResponse(pago.estado()));
+    }
+}` },
+      { n: 'Go', where: 'Servidores; compila a un solo binario.',
+        pro: 'Arranca en milisegundos, usa poca memoria y la concurrencia es sencilla.',
+        con: 'Deliberadamente minimalista: más código repetido, menos abstracciones.',
+        when: 'Microservicios con mucho tráfico y herramientas de infraestructura.',
+        code: `func pagar(w http.ResponseWriter, r *http.Request) {
+	var req PagoRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "cuerpo inválido", http.StatusBadRequest)
+		return
+	}
+
+	ctx, cancel := context.WithTimeout(r.Context(), 3*time.Second)
+	defer cancel()
+
+	res, err := pasarela.Cobrar(ctx, req.PedidoID, req.Monto, "MXN")
+	if err != nil {
+		http.Error(w, "pasarela no disponible", http.StatusBadGateway)
+		return
+	}
+	json.NewEncoder(w).Encode(PagoResponse{Estado: res.Estado})
+}` },
+      { n: 'Python (FastAPI)', where: 'Servidores, contenedores, notebooks.',
+        pro: 'Se escribe y se lee rápido. Es el mismo lenguaje de los modelos de datos e IA.',
+        con: 'Más lento en cómputo puro; necesita más servidores para el mismo tráfico.',
+        when: 'APIs internas, servicios cercanos a datos o IA, prototipos.',
+        code: `class PagoRequest(BaseModel):
+    pedido_id: str
+    monto: Decimal = Field(gt=0)
+
+@app.post("/api/pagos")
+async def pagar(req: PagoRequest) -> PagoResponse:
+    pedido = await pedidos.obtener(req.pedido_id)
+    if pedido.total != req.monto:
+        raise HTTPException(422, "El monto no coincide con el pedido")
+
+    resultado = await pasarela.cobrar(req.pedido_id, req.monto, moneda="MXN")
+    return PagoResponse(estado=resultado.estado)` },
+      { n: 'Rust (Axum)', where: 'Servidores, sistemas embebidos, WebAssembly.',
+        pro: 'Velocidad similar a C sin errores de memoria. El compilador te obliga a manejar cada error.',
+        con: 'Curva de aprendizaje empinada y compilación lenta.',
+        when: 'Piezas donde el rendimiento y la seguridad son críticos.',
+        code: `async fn pagar(
+    State(app): State<AppState>,
+    Json(req): Json<PagoRequest>,
+) -> Result<Json<PagoResponse>, ApiError> {
+    let pedido = app.pedidos.obtener(&req.pedido_id).await?;
+    if pedido.total != req.monto {
+        return Err(ApiError::MontoNoCoincide);
+    }
+    let res = app.pasarela.cobrar(&req.pedido_id, req.monto, Moneda::Mxn).await?;
+    Ok(Json(PagoResponse { estado: res.estado }))
+}` }
+    ] },
+
+  { key: 'comm', name: 'Comunicación entre sistemas', layer: 'comm',
+    what: 'Cuando dos sistemas hablan, el lenguaje importante es el contrato: la forma del mensaje. Ambos lados pueden estar escritos en lenguajes distintos mientras respeten ese acuerdo.',
+    task: 'El servicio de pagos le pregunta al servicio antifraude si el cargo es riesgoso, o avisa a otros sistemas que ya se pagó.',
+    langs: [
+      { n: 'REST + JSON', where: 'Cualquier cliente HTTP: navegador, móvil, servidor.',
+        pro: 'Lo entiende cualquiera. Es legible y se puede probar con curl.',
+        con: 'Texto más pesado. El contrato no se valida solo; necesitas documentarlo (OpenAPI).',
+        when: 'APIs públicas e integraciones con terceros.',
+        code: `POST /v1/evaluaciones
+Content-Type: application/json
+
+{
+  "pedidoId": "A-1042",
+  "monto": 1299.00,
+  "moneda": "MXN",
+  "cliente": { "id": "C-88231", "antiguedadDias": 412 }
+}
+
+← 200 OK
+{ "riesgo": 0.07, "decision": "aprobar" }` },
+      { n: 'gRPC + Protobuf', where: 'Entre servicios internos (sobre HTTP/2).',
+        pro: 'Binario y compacto. Del mismo archivo se genera código para Java, Go, Python y más.',
+        con: 'No se lee a simple vista y el navegador no lo habla directamente.',
+        when: 'Microservicios internos que necesitan baja latencia.',
+        code: `syntax = "proto3";
+
+service Antifraude {
+  rpc Evaluar (EvaluacionRequest) returns (EvaluacionResponse);
+}
+
+message EvaluacionRequest {
+  string pedido_id      = 1;
+  int64  monto_centavos = 2;   // 129900
+  string moneda         = 3;
+  string cliente_id     = 4;
+}
+
+message EvaluacionResponse {
+  double riesgo  = 1;
+  bool   aprobar = 2;
+}` },
+      { n: 'GraphQL', where: 'Entre el front y una capa de APIs.',
+        pro: 'El front pide exactamente los datos que necesita en una sola llamada. Esquema tipado.',
+        con: 'Caché y control del costo de cada consulta son más complejos en el servidor.',
+        when: 'Pantallas ricas que combinan datos de muchas fuentes.',
+        code: `# El checkout pide todo lo que muestra en una sola llamada
+query ResumenCheckout {
+  pedido(id: "A-1042") {
+    total
+    articulos { nombre cantidad }
+    cliente {
+      nombre
+      metodosDePago { tipo ultimos4 }
+    }
+  }
+}
+
+mutation {
+  pagar(pedidoId: "A-1042", monto: 1299) { estado }
+}` },
+      { n: 'SOAP + XML', where: 'Sistemas bancarios, gubernamentales y heredados.',
+        pro: 'Contratos estrictos (WSDL) y estándares de firma y seguridad muy establecidos.',
+        con: 'Muy verboso y con herramientas pesadas.',
+        when: 'Cuando la otra parte sólo habla así.',
+        code: `<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:pag="http://banco.ejemplo/pagos">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <pag:AutorizarCargo>
+      <pag:Referencia>A-1042</pag:Referencia>
+      <pag:Importe moneda="MXN">1299.00</pag:Importe>
+    </pag:AutorizarCargo>
+  </soapenv:Body>
+</soapenv:Envelope>` },
+      { n: 'Eventos (Kafka)', where: 'Un bus de mensajes entre muchos servicios.',
+        pro: 'Quien emite no espera a nadie. Se agregan consumidores nuevos sin tocar al emisor.',
+        con: 'Consistencia eventual: los sistemas se ponen al día en segundos, no al instante. Depurar es más difícil.',
+        when: 'Cuando una acción dispara varias reacciones independientes.',
+        code: `// tema: pagos.aprobados    clave: A-1042
+{
+  "tipo": "PagoAprobado",
+  "version": 2,
+  "ocurrioEn": "2026-10-14T18:32:05Z",
+  "pedidoId": "A-1042",
+  "monto": 129900,
+  "moneda": "MXN"
+}
+// Lo escuchan sin conocerse entre sí:
+// inventario · facturación (CFDI) · notificaciones · analítica` },
+      { n: 'ISO 8583', where: 'Redes de tarjetas y procesadores de pago.',
+        pro: 'Idioma común de las redes de tarjetas desde 1987. Mensajes muy compactos.',
+        con: 'Campos posicionales con mapas de bits; cada red tiene sus variantes.',
+        when: 'No se elige: si procesas tarjetas, lo hablas (casi siempre a través de un procesador).',
+        code: `MTI   0100                 solicitud de autorización
+DE 2  4152 31•• •••• 0042  número de tarjeta (enmascarado)
+DE 3  000000               código de proceso: compra
+DE 4  000000129900         importe: 1,299.00
+DE 49 484                  moneda: MXN (ISO 4217)
+DE 41 TDA00017             terminal
+
+← MTI 0110   DE 39 = 00    respuesta: aprobada` }
+    ] },
+
+  { key: 'proto', name: 'Protocolos', layer: 'proto',
+    what: 'El protocolo es la gramática del viaje; el formato es el contenido. Un mismo JSON puede viajar por HTTP, por WebSocket o por MQTT, y cada protocolo resuelve distinto la conexión, la entrega y la seguridad.',
+    task: 'Llevar el mensaje «pago aprobado» de un punto a otro. Esto es lo que viaja por la red.',
+    langs: [
+      { n: 'HTTP/1.1', where: 'La web clásica: navegadores y servidores.',
+        pro: 'Texto plano, fácil de leer y universal.',
+        con: 'Una petición a la vez por conexión; los encabezados se repiten en cada llamada.',
+        when: 'La base de la web. Casi siempre lo usas sin elegirlo.',
+        code: `POST /api/pagos HTTP/1.1
+Host: tienda.ejemplo
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOi…
+Content-Length: 34
+
+{"pedidoId":"A-1042","monto":1299}
+
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{"estado":"aprobado"}` },
+      { n: 'HTTP/2 + TLS', where: 'Todo el tráfico web moderno (HTTPS).',
+        pro: 'Cifrado, varias peticiones en paralelo por una sola conexión y encabezados comprimidos.',
+        con: 'Es binario: necesitas herramientas para inspeccionarlo.',
+        when: 'Cualquier tráfico web actual. gRPC viaja sobre él.',
+        code: `Cliente ── ClientHello (TLS 1.3, ALPN: h2) ──▶ Servidor
+Cliente ◀── ServerHello + certificado ─────── Servidor
+        (a partir de aquí todo va cifrado)
+
+Stream 1  HEADERS  :method POST  :path /api/pagos
+Stream 1  DATA     {"pedidoId":"A-1042","monto":1299}
+Stream 3  HEADERS  :method GET   :path /api/pedidos/A-1042/envio
+Stream 1  ◀ HEADERS :status 201
+Stream 1  ◀ DATA    {"estado":"aprobado"}` },
+      { n: 'WebSocket', where: 'Navegador ↔ servidor, conexión persistente.',
+        pro: 'Canal abierto en ambos sentidos: el servidor avisa sin que le pregunten.',
+        con: 'Mantener conexiones abiertas cuesta memoria y complica el balanceo de carga.',
+        when: 'Estados en vivo: chats, seguimiento de pedidos, precios que cambian.',
+        code: `GET /ws/pedidos/A-1042 HTTP/1.1
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==
+
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+
+◀ {"evento":"pago.aprobado","pedidoId":"A-1042"}
+◀ {"evento":"envio.preparando","eta":"2 días"}` },
+      { n: 'MQTT', where: 'Dispositivos: terminales, sensores, IoT.',
+        pro: 'Diminuto y tolerante a redes inestables.',
+        con: 'Necesita un broker intermedio y es menos expresivo que HTTP.',
+        when: 'Terminales punto de venta, sensores, dispositivos con mala señal.',
+        code: `CONNECT    client-id=terminal-tda017  keep-alive=60s
+PUBLISH    topic=tiendas/017/terminal/pagos  QoS=1
+           {"pedidoId":"A-1042","estado":"aprobado"}
+PUBACK     (el broker confirma la entrega)
+SUBSCRIBE  topic=tiendas/017/terminal/comandos` },
+      { n: 'TCP/IP', where: 'Debajo de casi todo lo anterior.',
+        pro: 'Garantiza que los bytes lleguen completos y en orden.',
+        con: 'El saludo inicial cuesta un viaje de ida y vuelta. Por eso existe HTTP/3, que usa QUIC sobre UDP.',
+        when: 'Casi nunca lo programas directamente. Es el piso sobre el que se construye todo.',
+        code: `Cliente  → Servidor   SYN       seq=1000
+Servidor → Cliente   SYN-ACK   seq=5000 ack=1001
+Cliente  → Servidor   ACK       ack=5001
+
+      … aquí viaja TLS, luego HTTP, luego tu JSON …
+
+Cliente  → Servidor   FIN` }
+    ] },
+
+  { key: 'data', name: 'Bases de datos', layer: 'data', proposed: true,
+    what: 'Cada tipo de base de datos tiene su propio lenguaje porque organiza la información de forma distinta: tablas, documentos, llaves en memoria o grafos de relaciones.',
+    task: 'Guardar el pago de forma segura y responder: ¿cuáles fueron las últimas compras de esta clienta?',
+    langs: [
+      { n: 'SQL (PostgreSQL)', where: 'Bases relacionales: PostgreSQL, MySQL, SQL Server, Oracle.',
+        pro: 'Transacciones ACID y 50 años de madurez. Describes el resultado y el motor decide cómo buscarlo.',
+        con: 'Esquema rígido. Escalar escrituras en muchos servidores es más difícil.',
+        when: 'Dinero, inventario y todo lo que no puede quedar a medias.',
+        code: `BEGIN;
+INSERT INTO pagos (pedido_id, monto, moneda, estado)
+VALUES ('A-1042', 1299.00, 'MXN', 'aprobado');
+
+UPDATE pedidos SET estado = 'pagado' WHERE id = 'A-1042';
+COMMIT;   -- se guardan los dos cambios, o ninguno
+
+SELECT id, total, creado_en
+FROM pedidos
+WHERE cliente_id = 'C-88231'
+ORDER BY creado_en DESC
+LIMIT 5;` },
+      { n: 'MongoDB', where: 'Bases de documentos.',
+        pro: 'Documentos flexibles que se leen igual que los objetos de la app.',
+        con: 'Las relaciones y transacciones entre colecciones son más costosas.',
+        when: 'Catálogos de productos y contenido con forma variable.',
+        code: `db.pedidos.insertOne({
+  _id: "A-1042",
+  clienteId: "C-88231",
+  total: NumberDecimal("1299.00"),
+  articulos: [
+    { sku: "LIC-15L", nombre: "Licuadora 1.5 L", cantidad: 1 }
+  ],
+  pago: { estado: "aprobado", metodo: "tarjeta" },
+  creadoEn: new Date()
+});
+
+db.pedidos.find({ clienteId: "C-88231" })
+  .sort({ creadoEn: -1 })
+  .limit(5);` },
+      { n: 'Redis', where: 'Almacén clave-valor en memoria.',
+        pro: 'Responde en microsegundos.',
+        con: 'No debe ser tu fuente de verdad y la memoria es cara.',
+        when: 'Caché, sesiones, candados para evitar dobles cobros, contadores.',
+        code: `SET    sesion:9f3a  "C-88231"  EX 1800     # la sesión expira en 30 min
+SET    pago:lock:A-1042  1  NX  EX 30      # evita cobrar dos veces
+INCR   intentos:C-88231                    # cuenta reintentos
+LPUSH  ultimos:C-88231  "A-1042"
+LRANGE ultimos:C-88231  0  4` },
+      { n: 'Cypher (grafos)', where: 'Bases de grafos como Neo4j.',
+        pro: 'Consultas de relaciones a varios saltos que en SQL requerirían muchos JOIN.',
+        con: 'Herramienta de nicho, con menos gente que la domine.',
+        when: 'Detección de fraude, recomendaciones, redes de relaciones.',
+        code: `// ¿La clienta está conectada con cuentas con fraude confirmado?
+MATCH (t:Tarjeta {ultimos4: "0042"})<-[:USA]-(c:Cliente)
+MATCH (c)-[:COMPARTE_DISPOSITIVO|COMPARTE_DIRECCION*1..3]-(otro:Cliente)
+WHERE otro.fraudeConfirmado = true
+RETURN c.id, collect(DISTINCT otro.id) AS conexiones` }
+    ] },
+
+  { key: 'infra', name: 'Infraestructura', layer: 'infra', proposed: true,
+    what: 'Los servidores, redes y bases de datos también se describen con código. Son lenguajes declarativos: escribes el estado que quieres y una herramienta se encarga de llegar a él.',
+    task: 'Empaquetar el servicio de pagos y ponerlo en producción con cuatro copias y una base de datos cifrada.',
+    langs: [
+      { n: 'Dockerfile', where: 'Cualquier máquina con un motor de contenedores.',
+        pro: 'El servicio corre igual en tu laptop y en producción.',
+        con: 'Describe una sola pieza; no cómo se conectan entre sí.',
+        when: 'Cualquier servicio que vaya a vivir en un servidor.',
+        code: `FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY build/libs/pagos.jar app.jar
+USER 1001
+EXPOSE 8080
+HEALTHCHECK CMD curl -f http://localhost:8080/salud || exit 1
+ENTRYPOINT ["java", "-jar", "app.jar"]` },
+      { n: 'YAML (Kubernetes)', where: 'Clústeres de Kubernetes.',
+        pro: 'Declaras «quiero 4 copias» y el sistema lo mantiene aunque una falle.',
+        con: 'La indentación es parte de la sintaxis y es fácil romperla.',
+        when: 'Orquestar muchos servicios en producción.',
+        code: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pagos
+spec:
+  replicas: 4
+  selector:
+    matchLabels: { app: pagos }
+  template:
+    metadata:
+      labels: { app: pagos }
+    spec:
+      containers:
+        - name: pagos
+          image: registro.ejemplo/pagos:2.8.1
+          ports: [{ containerPort: 8080 }]
+          resources:
+            limits: { cpu: "1", memory: 1Gi }` },
+      { n: 'HCL (Terraform)', where: 'Proveedores de nube: AWS, Azure, Google Cloud.',
+        pro: 'La nube completa como código, revisable en un pull request.',
+        con: 'Hay que cuidar el archivo de estado; un cambio mal revisado puede borrar recursos.',
+        when: 'Crear redes, bases de datos y permisos de forma repetible.',
+        code: `resource "aws_db_instance" "pagos" {
+  identifier          = "pagos-prod"
+  engine              = "postgres"
+  engine_version      = "16"
+  instance_class      = "db.r6g.large"
+  allocated_storage   = 200
+  multi_az            = true
+  storage_encrypted   = true
+  deletion_protection = true
+}` },
+      { n: 'Bash', where: 'Prácticamente cualquier servidor Linux o Mac.',
+        pro: 'Une herramientas que ya existen con muy poco código.',
+        con: 'Sin tipos, y los errores pasan en silencio si no lo configuras bien.',
+        when: 'Scripts cortos de automatización y despliegue.',
+        code: `#!/usr/bin/env bash
+set -euo pipefail
+
+VERSION="$(git describe --tags)"
+IMAGEN="registro.ejemplo/pagos:$VERSION"
+
+docker build -t "$IMAGEN" .
+docker push "$IMAGEN"
+kubectl set image deployment/pagos pagos="$IMAGEN"
+kubectl rollout status deployment/pagos --timeout=120s` }
+    ] },
+
+  { key: 'ia', name: 'Datos e IA', layer: 'ia', proposed: true,
+    what: 'Una vez que el pago ocurrió, los datos sirven para decidir mejor: detectar fraude, medir ventas, entrenar modelos. Aquí manda la capacidad de explorar y experimentar rápido.',
+    task: 'Estimar el riesgo de fraude de un pago nuevo y medir cómo se comportan los rechazos semana a semana.',
+    langs: [
+      { n: 'Python', where: 'Notebooks, servidores, plataformas de datos.',
+        pro: 'Aquí vive el ecosistema de datos e IA: pandas, scikit-learn, PyTorch. Sus núcleos están escritos en C y C++.',
+        con: 'Llevar modelos a producción a gran escala requiere cuidado y otras piezas.',
+        when: 'Análisis, modelos predictivos, IA generativa.',
+        code: `import pandas as pd
+from sklearn.ensemble import GradientBoostingClassifier
+
+pagos = pd.read_parquet("pagos_2026.parquet")
+X = pagos[["monto", "hora", "antiguedad_dias", "intentos_24h", "distancia_km"]]
+y = pagos["fue_fraude"]
+
+modelo = GradientBoostingClassifier().fit(X, y)
+
+nuevo = pd.DataFrame([{"monto": 1299, "hora": 12, "antiguedad_dias": 412,
+                       "intentos_24h": 1, "distancia_km": 3}])
+riesgo = modelo.predict_proba(nuevo)[0, 1]   # 0.07 → aprobar` },
+      { n: 'SQL analítico', where: 'Almacenes de datos: BigQuery, Snowflake, PostgreSQL.',
+        pro: 'El lenguaje que más comparten negocio e ingeniería.',
+        con: 'No sirve para modelos complejos ni para lógica con muchos pasos.',
+        when: 'Reportes, tableros y preguntas sobre lo que ya pasó.',
+        code: `SELECT
+  date_trunc('week', creado_en)                      AS semana,
+  sum(monto)                                         AS ventas,
+  sum(monto) FILTER (WHERE estado = 'rechazado')
+    / sum(monto)                                     AS tasa_rechazo,
+  avg(sum(monto)) OVER (ORDER BY date_trunc('week', creado_en)
+                        ROWS 3 PRECEDING)            AS promedio_movil
+FROM pagos
+WHERE creado_en >= '2026-01-01'
+GROUP BY 1
+ORDER BY 1;` },
+      { n: 'R', where: 'Análisis estadístico, investigación.',
+        pro: 'Estadística y visualización de primer nivel; muy usado en academia.',
+        con: 'Menos común para construir servicios en producción.',
+        when: 'Análisis estadístico profundo e investigación.',
+        code: `library(dplyr)
+library(ggplot2)
+
+pagos |>
+  group_by(metodo, mes = lubridate::floor_date(fecha, "month")) |>
+  summarise(tasa_rechazo = mean(estado == "rechazado")) |>
+  ggplot(aes(mes, tasa_rechazo, colour = metodo)) +
+  geom_line() +
+  labs(title = "Tasa de rechazo por método de pago")` }
+    ] }
+];
+
+const tabsEl = document.getElementById('tabs');
+const panelEl = document.getElementById('panel');
+const pick = {};
+let curDim = 0;
+
+DIMS.forEach((d, i) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'tab'; b.id = 'tab-' + d.key;
+  b.setAttribute('role', 'tab');
+  b.style.setProperty('--c', cvar(d.layer));
+  b.innerHTML = '<i></i>' + d.name + (d.proposed ? ' <small>propuesta</small>' : '');
+  b.addEventListener('click', () => showDim(i));
+  b.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const n = (i + (e.key === 'ArrowRight' ? 1 : -1) + DIMS.length) % DIMS.length;
+      showDim(n); tabsEl.children[n].focus();
+    }
+  });
+  tabsEl.appendChild(b);
+});
+
+function showDim(i) {
+  curDim = i;
+  const d = DIMS[i];
+  [...tabsEl.children].forEach((t, k) => {
+    t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+    t.tabIndex = k === i ? 0 : -1;
+  });
+  panelEl.setAttribute('aria-labelledby', 'tab-' + d.key);
+  panelEl.style.setProperty('--c', cvar(d.layer));
+  const li = pick[d.key] || 0;
+  const L = d.langs[li];
+  panelEl.innerHTML = '';
+
+  const head = document.createElement('div'); head.className = 'panel-head';
+  const left = document.createElement('div');
+  left.style.cssText = 'display:flex;flex-direction:column;gap:8px';
+  const h = document.createElement('h3'); h.textContent = d.name;
+  const p = document.createElement('p'); p.textContent = d.what;
+  left.append(h, p);
+  const task = document.createElement('p'); task.className = 'task';
+  task.innerHTML = '<b>La tarea</b>'; task.appendChild(document.createTextNode(d.task));
+  head.append(left, task);
+
+  const langs = document.createElement('div'); langs.className = 'langs';
+  langs.setAttribute('role', 'group'); langs.setAttribute('aria-label', 'Lenguajes');
+  d.langs.forEach((l, k) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'lang-btn';
+    b.textContent = l.n; b.setAttribute('aria-pressed', k === li ? 'true' : 'false');
+    b.addEventListener('click', () => { pick[d.key] = k; showDim(curDim); });
+    langs.appendChild(b);
+  });
+
+  const view = document.createElement('div'); view.className = 'lang-view';
+  const pre = document.createElement('pre'); pre.className = 'code'; pre.textContent = L.code;
+  const dl = document.createElement('dl'); dl.className = 'facts';
+  [['Dónde corre', L.where], ['Su fortaleza', L.pro], ['Lo que cuesta', L.con], ['Elígelo cuando', L.when]].forEach(([t, v]) => {
+    const w = document.createElement('div');
+    const dt = document.createElement('dt'); dt.textContent = t;
+    const dd = document.createElement('dd'); dd.textContent = v;
+    w.append(dt, dd); dl.appendChild(w);
+  });
+  view.append(pre, dl);
+  panelEl.append(head, langs, view);
+}
+
+/* ---------------- matrix ---------------- */
+const COLS = [['front', 'Front / móvil'], ['back', 'Back-end'], ['data', 'Bases de datos'], ['infra', 'Infraestructura'], ['ia', 'Datos e IA']];
+const ROWS = [
+  ['JavaScript / TypeScript', { front: 2, back: 2, infra: 1, ia: 1 }, 'El único nativo del navegador; Node.js lo llevó al servidor.'],
+  ['Python', { back: 2, ia: 2, infra: 1, data: 1 }, 'Rey de datos e IA; muy usado para automatizar.'],
+  ['Java', { back: 2, front: 1, ia: 1 }, 'Núcleo bancario y empresarial; base histórica de Android.'],
+  ['Kotlin', { front: 2, back: 1 }, 'Android moderno; también corre en la JVM del servidor.'],
+  ['Swift', { front: 2 }, 'Apps de Apple.'],
+  ['Dart', { front: 2 }, 'Flutter: una base de código, varias plataformas.'],
+  ['C#', { back: 2, front: 1 }, '.NET empresarial; videojuegos con Unity.'],
+  ['Go', { back: 2, infra: 2 }, 'Microservicios; Docker y Kubernetes están escritos en Go.'],
+  ['Rust', { back: 2, infra: 1, front: 1 }, 'Sistemas críticos; WebAssembly en el navegador.'],
+  ['SQL', { data: 2, ia: 2 }, 'Cincuenta años y sigue siendo indispensable.'],
+  ['YAML / HCL / Bash', { infra: 2 }, 'Describen y automatizan la infraestructura.']
+];
+(function buildMatrix() {
+  const t = document.getElementById('matrix');
+  let html = '<thead><tr><th>Lenguaje</th>';
+  COLS.forEach(([k, n]) => { html += '<th class="m" style="--c:' + cvar(k) + '"><span><i></i>' + n + '</span></th>'; });
+  html += '<th>Nota</th></tr></thead><tbody>';
+  ROWS.forEach(([n, m, note]) => {
+    html += '<tr><td class="lang">' + n + '</td>';
+    COLS.forEach(([k]) => {
+      const v = m[k] || 0;
+      html += '<td class="m" style="--c:' + cvar(k) + '">' +
+        (v ? '<span class="dot' + (v === 2 ? ' full' : '') + '" aria-label="' + (v === 2 ? 'uso principal' : 'también se usa') + '"></span>' : '') + '</td>';
+    });
+    html += '<td class="note">' + note + '</td></tr>';
+  });
+  t.innerHTML = html + '</tbody>';
+})();
+
+buildLanes();
+go(0);
+showDim(0);
+</script>
+</body>
+</html>
