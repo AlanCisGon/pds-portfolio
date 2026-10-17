@@ -1,0 +1,137 @@
+/* SearchField · Figma 02a Actions (444:169), spec 06 Specs (445:2095). */
+.search {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.search[data-show-label] {
+  gap: var(--space-8);
+}
+
+.label {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+}
+
+.field {
+  --search-field-height: calc(var(--space-32) + var(--space-8));
+  --search-field-icon-size: calc(var(--space-16) + var(--space-4));
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  height: var(--search-field-height);
+  padding: 0 var(--space-8) 0 var(--space-16);
+  border-radius: var(--radius-control);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  transition: background-color var(--duration-fast) var(--ease-settle);
+}
+
+.field[data-size="s"] {
+  --search-field-height: var(--space-32);
+  --search-field-icon-size: var(--space-16);
+
+  padding-right: var(--space-4);
+}
+
+.field:hover:not([data-disabled]),
+:where([data-sds-state="hover"]) .field:not([data-disabled]) {
+  background: var(--state-hover-surface);
+}
+
+.field:has(.input:focus-visible),
+:where([data-sds-state="focus"]) .field:has(.input) {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.field[data-disabled] {
+  background: var(--state-disabled-bg);
+  color: var(--state-disabled-fg);
+}
+
+.icon,
+.clearIcon {
+  display: inline-flex;
+  flex: none;
+  width: var(--search-field-icon-size);
+  height: var(--search-field-icon-size);
+}
+
+.clearIcon {
+  width: var(--space-16);
+  height: var(--space-16);
+}
+
+.icon > svg,
+.clearIcon > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  /* 16 px también en s: debajo de 16, iOS hace zoom al enfocar (spec 445:2095). */
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+  outline: none; /* el anillo se dibuja en todo el campo */
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 1;
+}
+
+.input:disabled,
+.input:disabled::placeholder {
+  color: var(--state-disabled-fg);
+}
+
+/* Se oculta la X nativa: el botón limpiar es el único control. */
+.input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.clear {
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  width: var(--space-24);
+  height: var(--space-24);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.clear:hover,
+:where([data-sds-state="clear-hover"]) .clear {
+  color: var(--color-text-primary);
+}
+
+.clear:focus-visible,
+:where([data-sds-state="clear-focus"]) .clear {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field {
+    transition: none;
+  }
+}

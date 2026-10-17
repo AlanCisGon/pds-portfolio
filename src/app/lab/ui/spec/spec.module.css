@@ -77,6 +77,9 @@
 .specimen :global(.w240) {
   width: 240px;
 }
+.specimen :global(.w320) {
+  width: 320px;
+}
 .specimen :global(.w360) {
   width: 360px;
 }

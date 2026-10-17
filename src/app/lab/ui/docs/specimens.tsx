@@ -36,6 +36,7 @@ import { SiClaude } from "@icons-pack/react-simple-icons";
 import { ArrowRight, Github, Home, Linkedin, Mail, User, ViewGrid } from "iconoir-react";
 import type { ReactNode } from "react";
 import { ChipRemovable } from "../spec/ChipRemovable";
+import { SearchFieldDemo } from "../spec/SearchFieldDemo";
 import type { Specimen } from "../spec/States";
 
 // Ejemplos con los que se dibuja cada spec: el de anatomía (mismas props que el ejemplo de Figma)
@@ -146,6 +147,22 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
     anatomy: <ChipRemovable label="E-commerce" />,
     specimen: (row, state) => (
       <Chip label="E-commerce" selected={row === "seleccionado"} disabled={state === "Disabled"} />
+    ),
+  },
+  "search-field": {
+    anatomy: (
+      <div className="w320">
+        <SearchFieldDemo initial="filtrar" showLabel />
+      </div>
+    ),
+    specimen: (row, state) => (
+      <div className="fill">
+        <SearchFieldDemo
+          size={row as "s"}
+          disabled={state === "Disabled"}
+          initial={state === "Filled" ? "filtrar" : ""}
+        />
+      </div>
     ),
   },
   tag: {
