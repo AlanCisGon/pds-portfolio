@@ -11,6 +11,8 @@ export type IndexItem = {
   level: string;
   summary: string;
   unused: boolean;
+  /** Patrón: combina otros componentes del SDS (se lee de sus imports, no a mano). */
+  pattern: boolean;
   /** Código y título del grupo de Figma ("02a · Actions"). */
   group: string;
   /** Texto donde se busca: nombre, resumen, cuándo usarlo y cuándo no. */
@@ -23,6 +25,7 @@ const LEVELS = [
   { value: "molécula", label: "Molécula" },
   { value: "organismo", label: "Organismo" },
   { value: "utilidad", label: "Utilidad" },
+  { value: "patrón", label: "Patrón" },
 ];
 
 /** Índice de /lab/ui: filtro por nivel (Chip) y búsqueda por nombre o caso de uso (SearchField). */
@@ -33,7 +36,9 @@ export function IndexFilters({ items, groups }: { items: IndexItem[]; groups: st
   const shown = useMemo(() => {
     const terms = fold(query).split(/\s+/).filter(Boolean);
     return items.filter(
-      (i) => (!level || i.level === level) && terms.every((t) => i.haystack.includes(t)),
+      (i) =>
+        (!level || (level === "patrón" ? i.pattern : i.level === level)) &&
+        terms.every((t) => i.haystack.includes(t)),
     );
   }, [items, query, level]);
 

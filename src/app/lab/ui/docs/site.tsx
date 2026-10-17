@@ -333,11 +333,11 @@ export const site: ComponentDoc[] = [
     demo: (
       <ArticleCTA
         variant="contact"
-        heading={blog.cta.contact.heading}
-        body={blog.cta.contact.body}
+        heading="¿Piensas en esto para tu propio producto?"
+        body="Me gustaría saber cómo lo resuelves."
         href="mailto:alancisgon@gmail.com"
-        label={blog.cta.contact.label}
-        share={{ href: "https://www.linkedin.com", label: "Share on LinkedIn" }}
+        label="Escríbeme"
+        share={{ href: "https://www.linkedin.com", label: "Compartir en LinkedIn" }}
       />
     ),
     usage: `<ArticleCTA variant="next" heading="Next note" href="/blog/y" label="…" share={{ href, label }} />`,
