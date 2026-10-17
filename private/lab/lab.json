@@ -1,5 +1,11 @@
 [
   {
+    "slug": "lenguajes",
+    "title": "Un pago, diez lenguajes",
+    "description": "Por qué existen tantos lenguajes de programación: un pago de $1,299 MXN cruza siete capas, y la misma tarea se ve escrita en 32 lenguajes, formatos y protocolos.",
+    "createdAt": "2026-10-15"
+  },
+  {
     "slug": "como-trabajamos",
     "title": "Cómo trabajamos cuando les hablo",
     "description": "La historia de Somara Studio en cinco escenas: de lo que Alan dice al cambio en el sitio.",
