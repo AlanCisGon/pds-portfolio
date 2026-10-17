@@ -269,6 +269,10 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - **Fuente:** `src/app/lab/ui/docs/` (un archivo por grupo). Al agregar o cambiar un componente en `src/ui`, se actualiza su entrada en el mismo PR.
   - **Tokens y `"use client"`** se leen del código en cada build (`registry.ts`); no se escriben a mano.
   - **Plantilla de 06 Specs (ADR 0010):** cada página sigue el frame de Figma: anatomía con marcadores sobre el render vivo, medidas, tokens por parte, props, matriz de estados forzados, 390 y 1280 px, y accesibilidad. Los textos de Figma están en `docs/figma-specs.ts`; si cambia la spec, se vuelve a extraer.
+  - **Diferencias aceptadas con el frame de Figma** (Alan, 2026-10-17):
+    - El panel de anatomía ocupa todo el ancho y la leyenda va en cuadrícula.
+    - La tabla de props agrega "Por omisión" y "Descripción".
+    - En 390 px, las tablas pasan a tarjetas y la matriz de estados a una columna.
   - **Estados forzados:** toda regla con `:hover`, `:active` o `:focus-visible` en `src/ui` lleva su gemelo `:where([data-sds-state="…"])`. `npm run lint` lo verifica.
   - Los textos son internos y en español. Si la doc se publica, Ameyali los escribe en inglés (ADR 0001) y pasan por §15.
 - **Página de Figma:** cada grupo vive en su propia página del archivo *SDS · Somara Design System*.
