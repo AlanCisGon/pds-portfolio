@@ -5,11 +5,13 @@
   transition: background-color var(--duration-fast) var(--ease-settle);
 }
 
-.accordion:hover {
+.accordion:hover,
+:where([data-sds-state="hover"]) .accordion {
   background: var(--state-hover-surface);
 }
 
-.accordion:has(.trigger:focus-visible) {
+.accordion:has(.trigger:focus-visible),
+:where([data-sds-state="focus"]) .accordion:has(.trigger) {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
@@ -33,7 +35,8 @@
   display: none;
 }
 
-.trigger:focus-visible {
+.trigger:focus-visible,
+:where([data-sds-state="focus"]) .trigger {
   outline: none; /* the ring is drawn on the whole accordion */
 }
 

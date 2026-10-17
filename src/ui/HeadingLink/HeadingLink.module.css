@@ -29,11 +29,14 @@
 }
 
 .heading:hover .anchor,
-.anchor:focus-visible {
+.anchor:focus-visible,
+:where([data-sds-state="hover"]) .heading .anchor,
+:where([data-sds-state="focus"]) .anchor {
   opacity: 1;
 }
 
-.anchor:focus-visible {
+.anchor:focus-visible,
+:where([data-sds-state="focus"]) .anchor {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }

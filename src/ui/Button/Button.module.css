@@ -48,7 +48,8 @@
   height: 100%;
 }
 
-.button:focus-visible {
+.button:focus-visible,
+:where([data-sds-state="focus"]) .button {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
@@ -58,10 +59,14 @@
   background: var(--color-accent);
   color: var(--color-on-accent);
 }
-.button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]) {
+.button[data-variant="primary"]:hover:not(:disabled, [aria-disabled="true"]),
+:where([data-sds-state="hover"])
+  .button[data-variant="primary"]:not(:disabled, [aria-disabled="true"]) {
   background: var(--color-accent-hover);
 }
-.button[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"]) {
+.button[data-variant="primary"]:active:not(:disabled, [aria-disabled="true"]),
+:where([data-sds-state="pressed"])
+  .button[data-variant="primary"]:not(:disabled, [aria-disabled="true"]) {
   background: var(--color-accent-pressed);
 }
 
@@ -78,11 +83,19 @@
 }
 
 .button[data-variant="secondary"]:hover:not(:disabled, [aria-disabled="true"]),
-.button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]) {
+.button[data-variant="ghost"]:hover:not(:disabled, [aria-disabled="true"]),
+:where([data-sds-state="hover"])
+  .button[data-variant="secondary"]:not(:disabled, [aria-disabled="true"]),
+:where([data-sds-state="hover"])
+  .button[data-variant="ghost"]:not(:disabled, [aria-disabled="true"]) {
   background: var(--state-hover-surface);
 }
 .button[data-variant="secondary"]:active:not(:disabled, [aria-disabled="true"]),
-.button[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"]) {
+.button[data-variant="ghost"]:active:not(:disabled, [aria-disabled="true"]),
+:where([data-sds-state="pressed"])
+  .button[data-variant="secondary"]:not(:disabled, [aria-disabled="true"]),
+:where([data-sds-state="pressed"])
+  .button[data-variant="ghost"]:not(:disabled, [aria-disabled="true"]) {
   background: var(--state-pressed-surface);
 }
 

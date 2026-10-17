@@ -15,7 +15,8 @@
   aspect-ratio: 16 / 9;
 }
 
-.viewport:focus-visible {
+.viewport:focus-visible,
+:where([data-sds-state="focus"]) .viewport {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
@@ -77,7 +78,8 @@
   background: var(--color-accent);
 }
 
-.dot:focus-visible {
+.dot:focus-visible,
+:where([data-sds-state="focus"]) .dot {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: var(--radius-pill);

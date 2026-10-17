@@ -45,15 +45,19 @@
 }
 
 .copy:hover,
-.copy:focus-visible {
+.copy:focus-visible,
+:where([data-sds-state="hover"]) .copy,
+:where([data-sds-state="focus"]) .copy {
   color: var(--color-text-primary);
 }
 
-.copy:hover {
+.copy:hover,
+:where([data-sds-state="hover"]) .copy {
   background: var(--state-hover-surface);
 }
 
-.copy:focus-visible {
+.copy:focus-visible,
+:where([data-sds-state="focus"]) .copy {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }

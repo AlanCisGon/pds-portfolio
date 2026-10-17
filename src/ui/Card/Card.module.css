@@ -13,11 +13,13 @@
   transition: background-color var(--duration-fast) var(--ease-settle);
 }
 
-.card[data-kind="link"]:hover {
+.card[data-kind="link"]:hover,
+:where([data-sds-state="hover"]) .card[data-kind="link"] {
   background: var(--color-bg-elevated);
 }
 
-.card[data-kind="link"]:focus-visible {
+.card[data-kind="link"]:focus-visible,
+:where([data-sds-state="focus"]) .card[data-kind="link"] {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
@@ -98,7 +100,8 @@
   transition: color var(--duration-fast) var(--ease-settle);
 }
 
-.card[data-kind="link"]:hover .cta {
+.card[data-kind="link"]:hover .cta,
+:where([data-sds-state="hover"]) .card[data-kind="link"] .cta {
   color: var(--color-accent-hover);
 }
 

@@ -55,15 +55,19 @@
 }
 
 .item:hover,
-.item:focus-visible {
+.item:focus-visible,
+:where([data-sds-state="hover"]) .item,
+:where([data-sds-state="focus"]) .item {
   color: var(--color-text-primary);
 }
 
-.item:hover .indicator {
+.item:hover .indicator,
+:where([data-sds-state="hover"]) .item .indicator {
   opacity: 1;
 }
 
-.item:focus-visible {
+.item:focus-visible,
+:where([data-sds-state="focus"]) .item {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }

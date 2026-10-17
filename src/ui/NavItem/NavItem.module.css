@@ -29,15 +29,19 @@
 }
 
 .navItem:hover,
-.navItem:focus-visible {
+.navItem:focus-visible,
+:where([data-sds-state="hover"]) .navItem,
+:where([data-sds-state="focus"]) .navItem {
   color: var(--color-text-primary);
 }
 
-.navItem:hover:not([data-selected]) {
+.navItem:hover:not([data-selected]),
+:where([data-sds-state="hover"]) .navItem:not([data-selected]) {
   background: var(--state-hover-surface);
 }
 
-.navItem:focus-visible {
+.navItem:focus-visible,
+:where([data-sds-state="focus"]) .navItem {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }

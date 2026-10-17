@@ -34,7 +34,8 @@
   height: 100%;
 }
 
-.iconButton:focus-visible {
+.iconButton:focus-visible,
+:where([data-sds-state="focus"]) .iconButton {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
@@ -51,13 +52,17 @@
 }
 
 .iconButton:hover:not(:disabled),
-.iconButton:focus-visible {
+.iconButton:focus-visible,
+:where([data-sds-state="hover"]) .iconButton:not(:disabled),
+:where([data-sds-state="focus"]) .iconButton {
   color: var(--color-text-primary);
 }
-.iconButton:hover:not(:disabled) {
+.iconButton:hover:not(:disabled),
+:where([data-sds-state="hover"]) .iconButton:not(:disabled) {
   background: var(--state-hover-surface);
 }
-.iconButton:active:not(:disabled) {
+.iconButton:active:not(:disabled),
+:where([data-sds-state="pressed"]) .iconButton:not(:disabled) {
   background: var(--state-pressed-surface);
 }
 
