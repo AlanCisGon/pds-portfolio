@@ -1,5 +1,7 @@
+import { blog } from "@/resources";
 import {
   Accordion,
+  ArticleCTA,
   Avatar,
   AvatarGroup,
   Badge,
@@ -13,6 +15,7 @@ import {
   FactSheet,
   FeaturedCase,
   Footer,
+  FootnoteRef,
   Header,
   HeadingLink,
   IconButton,
@@ -73,7 +76,23 @@ const facts = [
   { label: "Industry", value: "E-commerce" },
 ];
 const wide = (node: ReactNode) => <div className="wide">{node}</div>;
+const share = { href: "https://www.linkedin.com", label: "Share on LinkedIn" };
 
+// El ejemplo de la spec de Figma (277:1164), tal cual: título, resumen, 3 tags y CTA.
+const helixCard = (layout: "vertical" | "horizontal") => (
+  <ProjectCard
+    layout={layout}
+    href="/work/project-helix"
+    meta="E-commerce · Coppel · 2024"
+    title="Project Helix: carrito y checkout"
+    summary="Rediseño del fondo del embudo con implementación en Salesforce Commerce Cloud."
+    tags={["Service Design", "Research", "UX Lead"]}
+    cover={{ src: `${helix}/cart-cover.webp`, alt: "" }}
+    cta="Ver caso de estudio"
+  />
+);
+
+/** anatomy null = sin escenario de anatomía (specs del blog, solo texto). */
 export type SpecSpecimens = { anatomy: ReactNode; specimen?: Specimen };
 
 export const SPECIMENS: Record<string, SpecSpecimens> = {
@@ -139,7 +158,12 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
   },
   badge: {
     anatomy: <Badge tone="info">Publicado</Badge>,
-    specimen: (row) => <Badge tone={row as "info"}>Publicado</Badge>,
+    specimen: (row) =>
+      row === "sin ícono" ? (
+        <Badge showIcon={false}>Publicado</Badge>
+      ) : (
+        <Badge tone={row as "info"}>Publicado</Badge>
+      ),
   },
   avatar: {
     anatomy: <Avatar name="Alan Cisneros" size="xl" />,
@@ -301,27 +325,8 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
     ),
   },
   "project-card": {
-    anatomy: (
-      <div className="w400">
-        <ProjectCard
-          href="/work/project-helix"
-          meta="E-commerce · Coppel · 2024"
-          title="Project Helix"
-          summary="Rediseño del fondo del embudo."
-          tags={["Research"]}
-          cover={{ src: `${helix}/cart-cover.webp`, alt: "" }}
-        />
-      </div>
-    ),
-    specimen: (row) => (
-      <ProjectCard
-        layout={row as "vertical"}
-        href="/work/project-helix"
-        meta="E-commerce · Coppel · 2024"
-        title="Project Helix"
-        cover={{ src: `${helix}/cart-cover.webp`, alt: "" }}
-      />
-    ),
+    anatomy: <div className="w400">{helixCard("vertical")}</div>,
+    specimen: (row) => helixCard(row as "vertical"),
   },
   header: {
     anatomy: wide(<Header items={nav} location="Culiacán" timeZone="America/Mazatlan" />),
@@ -363,10 +368,65 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
   },
   "launch-strip": {
     anatomy: wide(
-      <LaunchStrip href="/blog" lead="A field note:" title="Nobody waits in the dark" />,
+      <LaunchStrip
+        href="/blog"
+        lead="A field note on design and load time:"
+        title="Nobody waits in the dark"
+      />,
     ),
     specimen: () => (
-      <LaunchStrip href="/blog" lead="A field note:" title="Nobody waits in the dark" />
+      <LaunchStrip
+        href="/blog"
+        lead="A field note on design and load time:"
+        title="Nobody waits in the dark"
+      />
+    ),
+  },
+  footnotes: {
+    anatomy: null,
+    specimen: () => (
+      <p>
+        Una afirmación con fuente.
+        <FootnoteRef n={1} />
+      </p>
+    ),
+  },
+  "article-cta": {
+    anatomy: null,
+    // Copy real del sitio (blog.cta en content.tsx), no de muestra.
+    specimen: (row) =>
+      row === "next" ? (
+        <ArticleCTA
+          variant="next"
+          heading={blog.cta.next.heading}
+          href="/blog"
+          label="Nobody waits in the dark"
+          share={share}
+        />
+      ) : (
+        <ArticleCTA
+          variant="contact"
+          heading={blog.cta.contact.heading}
+          body={blog.cta.contact.body}
+          href="mailto:alancisgon@gmail.com"
+          label={blog.cta.contact.label}
+          share={share}
+        />
+      ),
+  },
+  "card-wide": {
+    anatomy: null,
+    specimen: (row) => (
+      <Card
+        href="/blog"
+        layout={row as "wide"}
+        eyebrow="Field note"
+        title="Nobody waits in the dark"
+        meta="Oct 14, 2026 · 6 min read"
+        cta="Read the note"
+      >
+        Load time is a design decision.
+      </Card>
     ),
   },
 };

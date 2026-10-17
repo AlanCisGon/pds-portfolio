@@ -62,6 +62,14 @@
   scroll-margin-top: var(--space-64);
 }
 
+/* Hover del enlace y del ↩: spec 408:1705 (color/accent/hover). */
+.refLink:hover,
+.back:hover,
+:where([data-sds-state="hover"]) .refLink,
+:where([data-sds-state="hover"]) .back {
+  color: var(--color-accent-hover);
+}
+
 .refLink:focus-visible,
 .back:focus-visible,
 :where([data-sds-state="focus"]) .refLink,

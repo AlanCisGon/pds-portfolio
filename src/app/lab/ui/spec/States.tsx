@@ -13,7 +13,16 @@ const FORCED: Record<string, string> = { Hover: "hover", Pressed: "pressed", Foc
  * Hover, Pressed y Focus se fuerzan con data-sds-state (ADR 0010); Disabled lo da la prop.
  * Las etiquetas sin " · " son variantes, no estados (Tag, Badge, Avatar…).
  */
-export function States({ labels, specimen }: { labels: string[]; specimen: Specimen }) {
+export function States({
+  labels,
+  specimen,
+  columns: fixed,
+}: {
+  labels: string[];
+  specimen: Specimen;
+  /** Columnas fijas cuando la celda necesita ancho (ProjectCard horizontal, LaunchStrip…). */
+  columns?: number;
+}) {
   const cells = labels.map((label) => {
     const [row, state = "Default"] = label.split(" · ");
     return { label, row, state };
@@ -24,8 +33,10 @@ export function States({ labels, specimen }: { labels: string[]; specimen: Speci
   return (
     <div
       className={styles.states}
-      style={isMatrix ? ({ "--cols": columns.length } as CSSProperties) : undefined}
-      data-matrix={isMatrix || undefined}
+      style={
+        isMatrix || fixed ? ({ "--cols": fixed ?? columns.length } as CSSProperties) : undefined
+      }
+      data-matrix={isMatrix || fixed ? true : undefined}
     >
       {cells.map(({ label, row, state }) => (
         <figure key={label} className={styles.cell}>

@@ -65,6 +65,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  display: flex;
   width: max-content;
   transform-origin: 0 0;
 }

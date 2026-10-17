@@ -108,7 +108,12 @@ export default async function ComponentSpec({ params }: Props) {
     (t) =>
       !facts.tokens.includes(t) && !Object.values(facts.childTokens).some((l) => l.includes(t)),
   );
-  const statesTitle = fig?.states?.some((s) => s.includes(" · ")) ? "5 · Estados" : "5 · Variantes";
+  const statesTitle = fig?.states?.some((s) => s.includes(" · ")) ? "Estados" : "Variantes";
+  const forced = (labels?: string[]) => labels?.some((l) => /· (Hover|Pressed|Focus)$/.test(l));
+  // Numeración corrida, sin huecos: las specs cortas del blog no tienen todas las secciones (Clara).
+  let n = 0;
+  const num = (title: string) => `${++n} · ${title}`;
+  const wideCard = doc.slug === "card" ? FIGMA_SPECS["card-wide"] : undefined;
 
   return (
     <div className={styles.page} lang="es">
@@ -138,8 +143,8 @@ export default async function ComponentSpec({ params }: Props) {
       </header>
 
       <div className={spec.spec}>
-        <Section id="s-anatomy" title="1 · Anatomía">
-          {fig?.parts && sp ? (
+        <Section id="s-anatomy" title={num("Anatomía")}>
+          {fig?.parts && sp?.anatomy ? (
             <Anatomy parts={fig.parts} scale={fig.anatomyScale}>
               {sp.anatomy}
             </Anatomy>
@@ -152,7 +157,7 @@ export default async function ComponentSpec({ params }: Props) {
         </Section>
 
         {(fig?.measures || fig?.short) && (
-          <Section id="s-measures" title={fig.measures ? "2 · Medidas" : "2 · Medidas y tokens"}>
+          <Section id="s-measures" title={num(fig.measures ? "Medidas" : "Medidas y tokens")}>
             {fig.measures ? (
               <SpecTable rows={fig.measures} />
             ) : (
@@ -162,12 +167,12 @@ export default async function ComponentSpec({ params }: Props) {
         )}
 
         {fig?.tokens && (
-          <Section id="s-tokens" title="3 · Tokens por parte">
+          <Section id="s-tokens" title={num("Tokens por parte")}>
             <SpecTable rows={fig.tokens} />
           </Section>
         )}
 
-        <Section id="s-props" title="4 · Variantes y props">
+        <Section id="s-props" title={num("Variantes y props")}>
           <div className={styles.propTable}>
             <SpecTable
               rows={[
@@ -202,21 +207,25 @@ export default async function ComponentSpec({ params }: Props) {
           </dl>
         </Section>
 
-        <Section id="s-states" title={statesTitle}>
+        <Section id="s-states" title={num(statesTitle)}>
           {fig?.states && sp?.specimen ? (
-            <States labels={fig.states} specimen={sp.specimen} />
+            <States labels={fig.states} specimen={sp.specimen} columns={fig.columns} />
           ) : (
             <div className={styles.demo}>{doc.demo}</div>
           )}
           {fig?.short && <p className={spec.prose}>{withTokens(fig.short.states)}</p>}
-          <p className={styles.body}>
-            Render vivo del código. Hover, pressed y focus se fuerzan con{" "}
-            <code>data-sds-state</code> (ADR 0010); la sección En vivo sigue siendo interactiva.
-          </p>
+          {forced(fig?.states) ? (
+            <p className={styles.body}>
+              Render vivo del código. Hover, pressed y focus se fuerzan con{" "}
+              <code>data-sds-state</code> (ADR 0010); la sección En vivo sigue siendo interactiva.
+            </p>
+          ) : (
+            !fig?.short && <p className={styles.body}>Sin estados interactivos: es informativo.</p>
+          )}
         </Section>
 
         {fig?.responsive && (
-          <Section id="s-responsive" title="6 · 390 y 1280 px">
+          <Section id="s-responsive" title={num("390 y 1280 px")}>
             {fig.responsive.map((t) => (
               <p key={t} className={spec.prose}>
                 {t}
@@ -225,7 +234,7 @@ export default async function ComponentSpec({ params }: Props) {
           </Section>
         )}
 
-        <Section id="s-a11y" title="7 · Accesibilidad">
+        <Section id="s-a11y" title={num("Accesibilidad")}>
           {fig?.accessibility && (
             <ul className={spec.a11y}>
               {fig.accessibility.map((t) => (
@@ -248,6 +257,35 @@ export default async function ComponentSpec({ params }: Props) {
                 {withTokens(t)}
               </p>
             ))}
+          </Section>
+        )}
+
+        {wideCard && SPECIMENS["card-wide"]?.specimen && (
+          <Section id="s-card-wide" title="Layout wide | grid · tarjeta de artículo">
+            <p className={spec.crumb}>
+              {wideCard.crumb} · <Link href={figmaUrl(wideCard.frame)}>Spec 408:1841</Link>
+            </p>
+            {wideCard.short && (
+              <>
+                <p className={spec.prose}>{withTokens(wideCard.short.anatomy)}</p>
+                <p className={spec.prose}>{withTokens(wideCard.short.tokens)}</p>
+              </>
+            )}
+            <States
+              labels={wideCard.states ?? []}
+              specimen={SPECIMENS["card-wide"].specimen}
+              columns={wideCard.columns}
+            />
+            {[...(wideCard.responsive ?? []), ...(wideCard.motion ?? [])].map((t) => (
+              <p key={t} className={spec.prose}>
+                {t}
+              </p>
+            ))}
+            <ul className={spec.a11y}>
+              {(wideCard.accessibility ?? []).map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
           </Section>
         )}
 

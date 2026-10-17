@@ -23,6 +23,8 @@ export type FigmaSpec = {
   responsive?: string[];
   accessibility?: string[];
   motion?: string[];
+  /** Columnas fijas de la matriz cuando la celda necesita ancho (p. ej. ProjectCard horizontal). */
+  columns?: number;
   /** Specs del blog: formato corto, solo texto. */
   short?: { anatomy: string; tokens: string; states: string };
 };
@@ -92,7 +94,7 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
     accessibility: [
       "<button> para acciones; con href se vuelve <a>.",
       "Contraste del label sobre primary: 5.68:1 default, 6.76:1 hover, 4.90:1 pressed.",
-      "Disabled usa aria-disabled y pierde el cerezo; no anima.",
+      "Disabled nativo si el motivo es evidente; aria-disabled + motivo junto al control si no lo es (design-system §Estados). Pierde el cerezo y no anima.",
       "Foco visible siempre en focus-visible.",
     ],
   },
@@ -320,7 +322,7 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
       ["Label e ícono", "por tono", "--status-{tone}-fg"],
       ["Tipografía", "—", "System/Label S"],
     ],
-    states: ["neutral", "info", "success", "warning", "danger"],
+    states: ["neutral", "info", "success", "warning", "danger", "sin ícono"],
     responsive: ["Sin cambio entre 390 y 1280 px."],
     accessibility: [
       "Cada tono lleva ícono distinto: no depende del color (WCAG 1.4.1).",
@@ -788,6 +790,13 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
     states: states(["link"], ["Default", "Hover", "Focus"]),
     responsive: ["Ancho del grid en 390 y 1280 px."],
     accessibility: ["Con href, toda la tarjeta es un solo enlace (nombre = título)."],
+  },
+  "card-wide": {
+    frame: "408:1841",
+    set: "408:1841",
+    crumb: "SDS / Specs / Blog",
+    description: "Card con Layout wide | grid: la tarjeta de artículo del blog.",
+    status: BLOG,
     short: {
       anatomy:
         'Layout=wide|grid, Kind=link: Text (Eyebrow categoría Meta · Title Voice/Card · Body Body M · Meta fecha y lectura) + Cta "Read the note →" (Label M). Props nuevas: Layout (bento|wide|grid), Meta, Cta. bento sin cambios.',
@@ -795,9 +804,23 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
         "fill color/bg/surface → hover color/bg/elevated · radius/card · padding space/32 · gap space/24 · Text gap space/8 · CTA color/accent/default → hover color/accent/hover · FocusRing color/focus-ring 2 px.",
       states: "Default · Hover · Focus (idénticos a Kind=link bento).",
     },
-    motion: [
-      "Layout wide|grid (408:1841): hover de fondo duration/fast, ease/settle (como Card link).",
+    states: [
+      "wide · Default",
+      "wide · Hover",
+      "wide · Focus",
+      "grid · Default",
+      "grid · Hover",
+      "grid · Focus",
     ],
+    columns: 1,
+    responsive: [
+      "wide (Text + CTA en fila) ≥ md; < md se usa grid (apilada). grid también para listados /blog.",
+    ],
+    accessibility: [
+      "Toda la tarjeta es un solo <a>; el Cta es texto, no un segundo enlace.",
+      "Hover: cerezo sobre bg/elevated 4.58:1 → por eso el CTA usa accent/hover.",
+    ],
+    motion: ["Hover de fondo duration/fast, ease/settle (como Card link)."],
   },
   "project-card": {
     frame: "277:1164",
@@ -829,6 +852,7 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
       ["Anillo de foco", "focus-visible", "--color-focus-ring · 2px · offset 2px"],
     ],
     states: states(["vertical", "horizontal"], ["Default", "Hover", "Focus"]),
+    columns: 2,
     responsive: ["390 px: siempre vertical. ≥ 768 px: horizontal pone la portada al lado."],
     accessibility: [
       "Un solo enlace por tarjeta; el CTA no es un segundo enlace.",
@@ -1002,6 +1026,7 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
         "border-top color/border/subtle 1 px · padding-top space/24 · gap space/16 · entre notas space/8 · Item gap space/4 · texto color/text/secondary · backlink color/accent/default → hover color/accent/hover · focus color/focus-ring 2 px radius/focus-inline.",
       states: "Backlink: Default · Hover · Focus (ver Footnotes/Item).",
     },
+    states: ["backlink · Default", "backlink · Hover", "backlink · Focus"],
     responsive: [
       "Ancho measure-prose; en 390 el texto envuelve y el ↩ queda al final de la última línea.",
     ],
@@ -1026,6 +1051,7 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
         "Default · Hover (título y flecha color/accent/hover, flecha +4 px) · Focus (anillo alrededor del enlace).",
     },
     states: ["Default", "Hover", "Focus"],
+    columns: 1,
     responsive: ["≥ sm una línea; en 390 envuelve: Lead arriba, Link abajo. Ancho content-max."],
     accessibility: [
       "WCAG 1.4.1: el subrayado es estático, el enlace no depende solo del color.",
@@ -1050,6 +1076,15 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
       states:
         "Default · Hover · Focus sobre CallToAction, en ambas variantes. Copy de next: [COPY PENDIENTE] Ameyali.",
     },
+    states: [
+      "contact · Default",
+      "contact · Hover",
+      "contact · Focus",
+      "next · Default",
+      "next · Hover",
+      "next · Focus",
+    ],
+    columns: 1,
     responsive: [
       "Ancho measure-prose; Description envuelve. Sin cambios de layout entre 390, 1280 y 1920.",
     ],

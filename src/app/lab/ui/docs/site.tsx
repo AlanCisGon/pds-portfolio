@@ -1,3 +1,4 @@
+import { blog } from "@/resources";
 import {
   ArticleCTA,
   Card,
@@ -137,19 +138,32 @@ export const site: ComponentDoc[] = [
     ),
     usage: `<ProjectCard href="/work/x" meta="Industry · Client · Year" title="…" tags={["Research"]} cover={{ src, alt: "" }} />`,
     props: [
-      { name: "href", type: "string", required: true, description: "El caso." },
+      { name: "href", type: "string", required: true, figma: "Body", description: "El caso." },
       {
         name: "meta",
         type: "string",
         required: true,
+        figma: "Body",
         description: "Industria · cliente · año, en Chivo Mono.",
       },
-      { name: "title", type: "string", required: true, description: "Título del caso." },
-      { name: "summary", type: "string", description: "Una línea." },
-      { name: "tags", type: "string[]", description: "Tags informativos, sin íconos." },
+      {
+        name: "title",
+        type: "string",
+        required: true,
+        figma: "Body",
+        description: "Título del caso.",
+      },
+      { name: "summary", type: "string", figma: "Body", description: "Una línea." },
+      {
+        name: "tags",
+        type: "string[]",
+        figma: "Body",
+        description: "Tags informativos, sin íconos.",
+      },
       {
         name: "cover",
         type: "{ src: string; alt: string }",
+        figma: "Cover",
         description: "Portada; sin ella, placeholder tonal.",
       },
       {
@@ -160,7 +174,7 @@ export const site: ComponentDoc[] = [
         description: "horizontal = destacado en escritorio.",
       },
       { name: "priority", type: "boolean", description: "Primera tarjeta de la página (LCP)." },
-      { name: "cta", type: "string", description: "Texto del CTA." },
+      { name: "cta", type: "string", figma: "Body", description: "Texto del CTA." },
     ],
     use: ["Lista de trabajo y casos relacionados."],
     avoid: ["El caso destacado de Home: usa FeaturedCase."],
@@ -319,10 +333,10 @@ export const site: ComponentDoc[] = [
     demo: (
       <ArticleCTA
         variant="contact"
-        heading="¿Lo ves distinto?"
-        body="Escríbeme; respondo en la semana."
+        heading={blog.cta.contact.heading}
+        body={blog.cta.contact.body}
         href="mailto:alancisgon@gmail.com"
-        label="Write to me"
+        label={blog.cta.contact.label}
         share={{ href: "https://www.linkedin.com", label: "Share on LinkedIn" }}
       />
     ),
