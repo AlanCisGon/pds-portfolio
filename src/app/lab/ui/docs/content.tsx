@@ -446,7 +446,7 @@ export const content: ComponentDoc[] = [
     level: "átomo",
     summary: "Una línea sacada de la prosa para subrayarla. Sin atribución.",
     demo: <PullQuote>Nadie hace fila en la oscuridad: la espera se diseña.</PullQuote>,
-    usage: "<PullQuote>Nobody waits in the dark.</PullQuote>",
+    usage: "<PullQuote>Nobody stays in the dark.</PullQuote>",
     props: [
       {
         name: "children",

@@ -371,14 +371,14 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
       <LaunchStrip
         href="/blog"
         lead="A field note on design and load time:"
-        title="Nobody waits in the dark"
+        title="Nobody stays in the dark"
       />,
     ),
     specimen: () => (
       <LaunchStrip
         href="/blog"
         lead="A field note on design and load time:"
-        title="Nobody waits in the dark"
+        title="Nobody stays in the dark"
       />
     ),
   },
@@ -402,7 +402,7 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
           variant="next"
           heading={blog.cta.next.heading}
           href="/blog"
-          label="Nobody waits in the dark"
+          label="Nobody stays in the dark"
         />
       ) : (
         <ArticleCTA
@@ -422,7 +422,7 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
         href="/blog"
         layout={row as "wide"}
         eyebrow="Field note"
-        title="Nobody waits in the dark"
+        title="Nobody stays in the dark"
         meta="Oct 14, 2026 · 6 min read"
         cta="Read the note"
       >

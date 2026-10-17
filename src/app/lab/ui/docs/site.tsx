@@ -21,7 +21,7 @@ const articles = [
   {
     href: "/blog",
     eyebrow: "Field note",
-    title: "Nobody waits in the dark",
+    title: "Nobody stays in the dark",
     dek: "Load time is a design decision.",
     meta: "Oct 14, 2026 · 6 min read",
   },
@@ -56,7 +56,7 @@ export const site: ComponentDoc[] = [
           href="/blog"
           layout="wide"
           eyebrow="Field note"
-          title="Nobody waits in the dark"
+          title="Nobody stays in the dark"
           meta="Oct 14, 2026 · 6 min read"
           cta="Read the note"
         >
@@ -302,7 +302,7 @@ export const site: ComponentDoc[] = [
       <LaunchStrip
         href="/blog"
         lead="A field note on design and load time:"
-        title="Nobody waits in the dark"
+        title="Nobody stays in the dark"
       />
     ),
     usage: `<LaunchStrip href="/blog/x" lead="A field note on…:" title="…" />`,
