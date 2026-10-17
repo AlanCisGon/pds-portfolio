@@ -27,7 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: `Lab · ${doc?.name ?? "UI"}`, robots: { index: false, follow: false } };
 }
 
-const TOKEN = /--[a-z0-9-]+/g;
+// Tokens completos; "--status-{tone}-bg" es una plantilla de la spec, no un token (Clara).
+const TOKEN = /--[a-z0-9-]*[a-z0-9](?![a-z0-9{-])/g;
 
 /** Texto de Figma con los tokens en mono. */
 function withTokens(text: string) {

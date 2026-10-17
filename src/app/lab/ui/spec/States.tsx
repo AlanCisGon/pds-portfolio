@@ -37,6 +37,7 @@ export function States({
         isMatrix || fixed ? ({ "--cols": fixed ?? columns.length } as CSSProperties) : undefined
       }
       data-matrix={isMatrix || fixed ? true : undefined}
+      data-stack={fixed === 1 || undefined}
     >
       {cells.map(({ label, row, state }) => (
         <figure key={label} className={styles.cell}>

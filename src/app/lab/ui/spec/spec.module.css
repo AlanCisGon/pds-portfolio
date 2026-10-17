@@ -302,6 +302,11 @@
   overflow: hidden;
 }
 
+/* Matriz apilada (LaunchStrip, ArticleCTA, Card wide): el ejemplo ocupa el ancho, como en Figma. */
+.states[data-stack] .cellStage > * {
+  flex: 1;
+}
+
 .cellLabel {
   color: var(--color-text-secondary);
   font-family: var(--font-mono);

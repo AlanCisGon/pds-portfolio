@@ -1021,7 +1021,7 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
     status: BLOG,
     short: {
       anatomy:
-        'Label "NOTES" (Measure/Meta) · List <ol> de Footnotes/Item (Text Body S + backlink ↩) · Credit opcional (showCredit). Props: Label, Credit, showCredit; Item: Text, State.',
+        'Label "NOTES" (Measure/Meta) · List <ol> de Footnotes/Item (Text Body S + backlink ↩). El crédito de edición va en el byline del artículo. Props: Label; Item: Text, State.',
       tokens:
         "border-top color/border/subtle 1 px · padding-top space/24 · gap space/16 · entre notas space/8 · Item gap space/4 · texto color/text/secondary · backlink color/accent/default → hover color/accent/hover · focus color/focus-ring 2 px radius/focus-inline.",
       states: "Backlink: Default · Hover · Focus (ver Footnotes/Item).",
@@ -1050,7 +1050,7 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
       states:
         "Default · Hover (título y flecha color/accent/hover, flecha +4 px) · Focus (anillo alrededor del enlace).",
     },
-    states: ["Default", "Hover", "Focus"],
+    states: ["enlace · Default", "enlace · Hover", "enlace · Focus"],
     columns: 1,
     responsive: ["≥ sm una línea; en 390 envuelve: Lead arriba, Link abajo. Ancho content-max."],
     accessibility: [

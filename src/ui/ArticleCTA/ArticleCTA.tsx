@@ -16,8 +16,8 @@ export type ArticleCTAProps = {
   href: string;
   /** Primary link label ("Write to me" or the next title). */
   label: string;
-  /** Secondary link: share on LinkedIn. */
-  share: { href: string; label: string };
+  /** Secondary link: share on LinkedIn. Only in contact (spec 408:1787: ShareLink solo contact). */
+  share?: { href: string; label: string };
 };
 
 type Reveal = "idle" | "pending" | "done";
@@ -76,10 +76,12 @@ export function ArticleCTA({ variant, heading, body, href, label, share }: Artic
         <Link href={href} kind="standalone" external={false}>
           {label}
         </Link>
-        <a href={share.href} className={styles.share} target="_blank" rel="noopener noreferrer">
-          {share.label}
-          <VisuallyHidden> (opens in a new tab)</VisuallyHidden>
-        </a>
+        {variant === "contact" && share && (
+          <a href={share.href} className={styles.share} target="_blank" rel="noopener noreferrer">
+            {share.label}
+            <VisuallyHidden> (opens in a new tab)</VisuallyHidden>
+          </a>
+        )}
       </div>
     </section>
   );

@@ -19,12 +19,12 @@
 }
 
 .share:hover,
-:where([data-sds-state="hover"]) .share {
+:where([data-sds-state="share-hover"]) .share {
   color: var(--color-text-primary);
 }
 
 .share:focus-visible,
-:where([data-sds-state="focus"]) .share {
+:where([data-sds-state="share-focus"]) .share {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }

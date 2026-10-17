@@ -15,7 +15,7 @@ import {
   FactSheet,
   FeaturedCase,
   Footer,
-  FootnoteRef,
+  Footnotes,
   Header,
   HeadingLink,
   IconButton,
@@ -384,11 +384,13 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
   },
   footnotes: {
     anatomy: null,
+    // El bloque de notas: el ↩ es el backlink que nombra la spec (no la llamada ¹ de la prosa).
     specimen: () => (
-      <p>
-        Una afirmación con fuente.
-        <FootnoteRef n={1} />
-      </p>
+      <Footnotes
+        title="Notes"
+        backLabel="Back to reference"
+        items={[{ text: "La fuente, con autor y año." }]}
+      />
     ),
   },
   "article-cta": {
@@ -401,7 +403,6 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
           heading={blog.cta.next.heading}
           href="/blog"
           label="Nobody waits in the dark"
-          share={share}
         />
       ) : (
         <ArticleCTA
