@@ -265,7 +265,10 @@ Decisión de Alan del 2026-10-06 (ADR 0005). Cada familia se elige por su funci�
 
 Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
 
-- **Catálogo privado:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. Muestra cada componente con sus variantes, para compararlo con Figma.
+- **Documentación privada:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. El índice agrupa los componentes por grupo de Figma y cada uno tiene su spec en `/lab/ui/<slug>`: demo, uso, props (con su propiedad de Figma), cuándo usarlo, cuándo no, accesibilidad, tokens y relacionados.
+  - **Fuente:** `src/app/lab/ui/docs/` (un archivo por grupo). Al agregar o cambiar un componente en `src/ui`, se actualiza su entrada en el mismo PR.
+  - **Tokens y `"use client"`** se leen del código en cada build (`registry.ts`); no se escriben a mano.
+  - Los textos son internos y en español. Si la doc se publica, Ameyali los escribe en inglés (ADR 0001) y pasan por §15.
 - **Página de Figma:** cada grupo vive en su propia página del archivo *SDS · Somara Design System*.
 
 | Grupo (Figma) | Componentes | Sin uso público |
