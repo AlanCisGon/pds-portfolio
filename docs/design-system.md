@@ -273,6 +273,7 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
     - El panel de anatomía ocupa todo el ancho y la leyenda va en cuadrícula.
     - La tabla de props agrega "Por omisión" y "Descripción".
     - En 390 px, las tablas pasan a tarjetas y la matriz de estados a una columna.
+  - **Idioma de los ejemplos (Alan, 2026-10-17):** los ejemplos de las specs, en Figma y en el lab, van en español. No es copy del sitio, así que no aplica el inglés del ADR 0001. La excepción es el copy real que el lab importa de `@/resources` (p. ej. el ArticleCTA).
   - **Estados forzados:** toda regla con `:hover`, `:active` o `:focus-visible` en `src/ui` lleva su gemelo `:where([data-sds-state="…"])`. `npm run lint` lo verifica.
   - Los textos son internos y en español. Si la doc se publica, Ameyali los escribe en inglés (ADR 0001) y pasan por §15.
 - **Página de Figma:** cada grupo vive en su propia página del archivo *SDS · Somara Design System*.
