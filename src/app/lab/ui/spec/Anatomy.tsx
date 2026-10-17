@@ -40,8 +40,9 @@ export function Anatomy({
     return () => ro.disconnect();
   }, []);
 
-  // Escala visual como en Figma, sin pasar del ancho disponible del escenario (en 390 puede bajar de 1).
-  const s = box ? Math.min(scale, box.room / Math.max(box.w, 1)) : 1;
+  // Escala visual como en Figma sin pasar del ancho disponible, pero nunca por debajo de 1: un
+  // organismo ancho se desplaza en horizontal en lugar de volverse ilegible (Clara, D3).
+  const s = box ? Math.max(1, Math.min(scale, box.room / Math.max(box.w, 1))) : 1;
   const w = box ? box.w * s : 0;
   const h = box ? box.h * s : 0;
 

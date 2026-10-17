@@ -147,7 +147,7 @@
   bottom: 0;
   display: flex;
   align-items: center;
-  border-right: 1px solid var(--ctx-teal-border);
+  border-right: 1px solid var(--ctx-teal-fg);
   padding-right: var(--space-8);
 }
 
@@ -158,8 +158,40 @@
   left: 0;
   display: flex;
   justify-content: center;
-  border-top: 1px solid var(--ctx-teal-border);
+  border-top: 1px solid var(--ctx-teal-fg);
   padding-top: var(--space-8);
+}
+
+/* Remates de 1 px en los extremos de cada cota, como en el redline de Figma. */
+.dimH::before,
+.dimH::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--space-4) * -1);
+  width: 1px;
+  height: var(--space-8);
+  background: var(--ctx-teal-fg);
+}
+.dimH::before {
+  left: 0;
+}
+.dimH::after {
+  right: 0;
+}
+.dimV::before,
+.dimV::after {
+  content: "";
+  position: absolute;
+  right: calc(var(--space-4) * -1);
+  width: var(--space-8);
+  height: 1px;
+  background: var(--ctx-teal-fg);
+}
+.dimV::before {
+  top: 0;
+}
+.dimV::after {
+  bottom: 0;
 }
 
 .legend {
@@ -310,16 +342,58 @@
   }
 
   /* La matriz no cabe en 390: cada celda lleva su etiqueta, así que se apila en 2 columnas. */
+  /* D4 (Clara): una columna para que ninguna celda ni su anillo de foco se recorten. */
   .states[data-matrix] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .cellStage {
-    padding: var(--space-4) 0;
+    padding: var(--space-8);
     overflow: visible;
   }
 
+  /* D3 (Clara): los organismos no se encogen hasta ser ilegibles; el escenario se desplaza. */
   .stage {
-    overflow-x: hidden;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  /* D5 (Clara): en 390 cada fila de tabla es una tarjeta, como en Variantes y props. */
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+  }
+
+  .table tr {
+    margin-bottom: var(--space-8);
+    padding: var(--space-16);
+    border-radius: var(--radius-card);
+    background: var(--color-bg-surface);
+  }
+
+  .table td {
+    padding: 0;
+    border: 0;
+  }
+
+  .table td:first-child {
+    color: var(--color-text-primary);
+    font-weight: var(--weight-medium);
+  }
+
+  .table td + td {
+    margin-top: var(--space-4);
+    color: var(--color-text-secondary);
+  }
+
+  .token {
+    overflow-wrap: normal;
+    word-break: keep-all;
   }
 }

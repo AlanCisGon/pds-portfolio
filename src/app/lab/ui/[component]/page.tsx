@@ -99,7 +99,15 @@ export default async function ComponentSpec({ params }: Props) {
   const named = new Set(
     [...(fig?.measures ?? []), ...(fig?.tokens ?? [])].flat().flatMap((c) => c.match(TOKEN) ?? []),
   );
-  const missing = [...named].filter((t) => !facts.tokens.includes(t));
+  const viaChild = [...named].flatMap((t) => {
+    if (facts.tokens.includes(t)) return [];
+    const child = Object.entries(facts.childTokens).find(([, list]) => list.includes(t));
+    return child ? [`${t} (vía ${child[0]})`] : [];
+  });
+  const missing = [...named].filter(
+    (t) =>
+      !facts.tokens.includes(t) && !Object.values(facts.childTokens).some((l) => l.includes(t)),
+  );
   const statesTitle = fig?.states?.some((s) => s.includes(" · ")) ? "5 · Estados" : "5 · Variantes";
 
   return (
@@ -279,6 +287,9 @@ export default async function ComponentSpec({ params }: Props) {
               {missing.join(", ")}. Puede venir de un componente hijo o ser deriva; lo confirma
               Clara.
             </p>
+          )}
+          {viaChild.length > 0 && (
+            <p className={styles.body}>Vía componentes hijos: {viaChild.join(", ")}.</p>
           )}
           <ul className={styles.tokens}>
             {facts.tokens.map((t) => (
