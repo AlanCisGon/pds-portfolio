@@ -64,15 +64,18 @@
   transition: background-color var(--duration-fast) var(--ease-settle);
 }
 
-.play:hover {
+.play:hover,
+:where([data-sds-state="hover"]) .play {
   background: var(--color-accent-hover);
 }
 
-.play:active {
+.play:active,
+:where([data-sds-state="pressed"]) .play {
   background: var(--color-accent-pressed);
 }
 
-.play:focus-visible {
+.play:focus-visible,
+:where([data-sds-state="focus"]) .play {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }

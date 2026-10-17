@@ -18,11 +18,13 @@
   transition: color var(--duration-fast) var(--ease-settle);
 }
 
-.share:hover {
+.share:hover,
+:where([data-sds-state="hover"]) .share {
   color: var(--color-text-primary);
 }
 
-.share:focus-visible {
+.share:focus-visible,
+:where([data-sds-state="focus"]) .share {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }

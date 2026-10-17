@@ -29,12 +29,17 @@
 }
 
 .strip:is(:hover, :focus-visible) .title,
-.strip:is(:hover, :focus-visible) .arrow {
+.strip:is(:hover, :focus-visible) .arrow,
+:where([data-sds-state="hover"]) .strip .title,
+:where([data-sds-state="focus"]) .strip .title,
+:where([data-sds-state="hover"]) .strip .arrow,
+:where([data-sds-state="focus"]) .strip .arrow {
   color: var(--color-accent-hover);
   transition-timing-function: var(--ease-settle);
 }
 
-.strip:focus-visible {
+.strip:focus-visible,
+:where([data-sds-state="focus"]) .strip {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
   border-radius: var(--radius-focus-block);
@@ -46,7 +51,9 @@
       var(--ease-exit);
   }
 
-  .strip:is(:hover, :focus-visible) .arrow {
+  .strip:is(:hover, :focus-visible) .arrow,
+  :where([data-sds-state="hover"]) .strip .arrow,
+  :where([data-sds-state="focus"]) .strip .arrow {
     transform: translateX(4px);
     transition-timing-function: var(--ease-settle);
   }

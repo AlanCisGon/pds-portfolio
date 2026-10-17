@@ -13,11 +13,13 @@
   transition: background-color var(--duration-fast) var(--ease-settle);
 }
 
-.card:hover {
+.card:hover,
+:where([data-sds-state="hover"]) .card {
   background: var(--color-bg-elevated);
 }
 
-.card:focus-visible {
+.card:focus-visible,
+:where([data-sds-state="focus"]) .card {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
@@ -99,7 +101,8 @@
   transition: color var(--duration-fast) var(--ease-settle);
 }
 
-.card:hover .cta {
+.card:hover .cta,
+:where([data-sds-state="hover"]) .card .cta {
   color: var(--color-accent-hover);
 }
 

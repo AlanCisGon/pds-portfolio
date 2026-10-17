@@ -1,0 +1,325 @@
+/* Plantilla de spec de /lab/ui/[component], 1:1 con los frames de "06 Specs" en Figma.
+   Es layout del lab, no del design system: los anchos fijos (560, 24) imitan el escenario de Figma. */
+
+.spec {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-48);
+}
+
+.crumb {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+}
+
+.sectionTitle {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-line);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  min-width: 0;
+  scroll-margin-top: var(--space-64);
+}
+
+.status {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+}
+
+/* 1 · Anatomía */
+.anatomy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.stage {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding: calc(var(--space-64) + var(--space-24)) var(--space-48) var(--space-48);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-surface);
+}
+
+.canvas {
+  position: relative;
+  flex: none;
+}
+
+.specimen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  transform-origin: 0 0;
+}
+
+/* Anchos del ejemplo en Figma (06 Specs): 560 para bloques, y el ancho propio de cada tarjeta. */
+.specimen :global(.wide) {
+  width: 560px;
+}
+.specimen :global(.w240) {
+  width: 240px;
+}
+.specimen :global(.w360) {
+  width: 360px;
+}
+.specimen :global(.w400) {
+  width: 400px;
+}
+.specimen :global(.w1080) {
+  width: 1080px;
+}
+
+.cellStage :global(.vrule) {
+  display: flex;
+  height: var(--space-48);
+}
+
+.cellStage :global(.fill) {
+  width: 100%;
+}
+
+.marker {
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  width: var(--space-24);
+  height: var(--space-24);
+  border: 1px solid var(--ctx-blue-border);
+  border-radius: var(--radius-pill);
+  background: var(--ctx-blue-bg);
+  color: var(--ctx-blue-fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: 1;
+}
+
+.marker[data-kind="measure"] {
+  border-color: var(--ctx-teal-border);
+  background: var(--ctx-teal-bg);
+  color: var(--ctx-teal-fg);
+}
+
+/* Marcador de parte: círculo arriba y línea guía hasta el borde superior del componente. */
+.pin {
+  position: absolute;
+  bottom: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: var(--space-64);
+  transform: translateX(-50%);
+}
+
+.pin[data-row="1"] {
+  height: var(--space-48);
+}
+
+.pin::after {
+  content: "";
+  flex: 1;
+  width: 1px;
+  background: var(--ctx-blue-border);
+}
+
+/* Cotas: alto a la izquierda, ancho abajo. */
+.dimV {
+  position: absolute;
+  top: 0;
+  right: calc(100% + var(--space-16));
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--ctx-teal-border);
+  padding-right: var(--space-8);
+}
+
+.dimH {
+  position: absolute;
+  top: calc(100% + var(--space-16));
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--ctx-teal-border);
+  padding-top: var(--space-8);
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: var(--space-16) var(--space-24);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend li {
+  display: flex;
+  gap: var(--space-8);
+  align-items: flex-start;
+}
+
+.partName {
+  display: block;
+  color: var(--ctx-blue-fg);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-label-m-size);
+  line-height: var(--text-label-m-line);
+}
+
+.legend li:has([data-kind="measure"]) .partName {
+  color: var(--ctx-teal-fg);
+}
+
+.partDesc {
+  display: block;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+/* 2–4 · Tablas con el formato de Figma: encabezado en Meta, filas con línea sutil. */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table th {
+  padding: var(--space-8) var(--space-16) var(--space-8) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-regular);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  text-align: left;
+}
+
+.table td {
+  padding: var(--space-8) var(--space-16) var(--space-8) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-text-primary);
+  vertical-align: top;
+}
+
+.table td:first-child {
+  min-width: 140px;
+}
+
+.token {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  overflow-wrap: anywhere;
+}
+
+.drift {
+  color: var(--status-warning-fg);
+}
+
+/* 5 · Estados */
+.states {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: var(--space-16);
+  overflow-x: auto;
+}
+
+.states[data-matrix] {
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-width: 0;
+  margin: 0;
+}
+
+.cellStage {
+  display: flex;
+  align-items: center;
+  min-height: var(--space-64);
+  padding: var(--space-8);
+  overflow: hidden;
+}
+
+.cellLabel {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+}
+
+/* 7 · Accesibilidad: recuadro como en Figma. */
+.a11y {
+  margin: 0;
+  padding: var(--space-24);
+  border: 1px solid var(--ctx-blue-border);
+  border-radius: var(--radius-card);
+  background: var(--ctx-blue-bg);
+  color: var(--ctx-blue-fg);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+  list-style: none;
+}
+
+.a11y li + li {
+  margin-top: var(--space-4);
+}
+
+.a11y li::before {
+  content: "· ";
+}
+
+.prose {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+}
+
+@media (max-width: 767px) {
+  .stage {
+    padding: calc(var(--space-64) + var(--space-24)) var(--space-16) var(--space-48) var(--space-64);
+  }
+
+  /* La matriz no cabe en 390: cada celda lleva su etiqueta, así que se apila en 2 columnas. */
+  .states[data-matrix] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cellStage {
+    padding: var(--space-4) 0;
+    overflow: visible;
+  }
+
+  .stage {
+    overflow-x: hidden;
+  }
+}

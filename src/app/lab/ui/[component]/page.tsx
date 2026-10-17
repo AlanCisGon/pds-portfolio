@@ -1,11 +1,19 @@
-import { Badge, CodeBlock, HeadingLink, Link, List, ListItem, Table, Tag } from "@/ui";
+import { Badge, CodeBlock, Link, List, ListItem, Tag } from "@/ui";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
+import { FIGMA_SPECS } from "../docs/figma-specs";
 import { DOCS, getDoc, getSourceFacts } from "../docs/registry";
-import { GROUPS, figmaUrl } from "../docs/types";
+import { SPECIMENS } from "../docs/specimens";
+import { figmaUrl } from "../docs/types";
 import styles from "../page.module.css";
+import { Anatomy } from "../spec/Anatomy";
+import { States } from "../spec/States";
+import spec from "../spec/spec.module.css";
 
-// Spec de un componente del SDS. Privada: detrás del Basic Auth de /lab (proxy.ts) y con noindex.
+// Spec de un componente del SDS con la plantilla de "06 Specs" de Figma (secciones 1–7), seguida de
+// lo que solo sabe el código (uso, cuándo sí y cuándo no, tokens leídos del CSS). Privada: Basic Auth
+// de /lab (proxy.ts) y noindex.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -16,10 +24,63 @@ type Props = { params: Promise<{ component: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const doc = getDoc((await params).component);
-  return {
-    title: `Lab · ${doc?.name ?? "UI"}`,
-    robots: { index: false, follow: false },
-  };
+  return { title: `Lab · ${doc?.name ?? "UI"}`, robots: { index: false, follow: false } };
+}
+
+const TOKEN = /--[a-z0-9-]+/g;
+
+/** Texto de Figma con los tokens en mono. */
+function withTokens(text: string) {
+  return text.split(/(--[a-z0-9-]+)/g).map((p, i) =>
+    p.startsWith("--") ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: texto estático
+      <code key={i} className={spec.token}>
+        {p}
+      </code>
+    ) : (
+      p
+    ),
+  );
+}
+
+function SpecTable({ rows }: { rows: string[][] }) {
+  const [header, ...body] = rows;
+  return (
+    <div className={spec.tableWrap}>
+      <table className={spec.table}>
+        <thead>
+          <tr>
+            {header.map((h) => (
+              <th key={h} scope="col">
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {body.map((r) => (
+            <tr key={r.join("|")}>
+              {r.map((c, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: columnas fijas
+                <td key={i}>{withTokens(c)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
+  return (
+    <section className={spec.section} aria-labelledby={id}>
+      <h2 id={id} className={spec.sectionTitle}>
+        {title}
+      </h2>
+      {children}
+    </section>
+  );
 }
 
 export default async function ComponentSpec({ params }: Props) {
@@ -27,24 +88,29 @@ export default async function ComponentSpec({ params }: Props) {
   if (!doc) notFound();
 
   const facts = await getSourceFacts(doc.name);
-  const group = GROUPS[doc.group];
+  const fig = FIGMA_SPECS[doc.slug];
+  const sp = SPECIMENS[doc.slug];
   const index = DOCS.indexOf(doc);
   const prev = DOCS[index - 1];
   const next = DOCS[index + 1];
   const related = (doc.related ?? []).map(getDoc).filter((d) => d !== undefined);
 
+  // Deriva: tokens que la spec de Figma nombra y que el CSS del componente no usa.
+  const named = new Set(
+    [...(fig?.measures ?? []), ...(fig?.tokens ?? [])].flat().flatMap((c) => c.match(TOKEN) ?? []),
+  );
+  const missing = [...named].filter((t) => !facts.tokens.includes(t));
+  const statesTitle = fig?.states?.some((s) => s.includes(" · ")) ? "5 · Estados" : "5 · Variantes";
+
   return (
     <div className={styles.page} lang="es">
       <header className={styles.intro}>
         <Link href="/lab/ui" kind="standalone" back>
-          Catálogo
+          Componentes
         </Link>
-        <p className={styles.eyebrow}>
-          {group.code} · {group.title.toUpperCase()}
-          {doc.level ? ` · ${doc.level.toUpperCase()}` : ""}
-        </p>
+        <p className={spec.crumb}>{fig?.crumb ?? "SDS / Specs / Utilidades"}</p>
         <h1 className={styles.title}>{doc.name}</h1>
-        <p className={styles.lead}>{doc.summary}</p>
+        <p className={styles.lead}>{fig?.description ?? doc.summary}</p>
         <div className={styles.row}>
           {doc.unused ? (
             <Badge tone="warning">Sin uso público</Badge>
@@ -52,103 +118,168 @@ export default async function ComponentSpec({ params }: Props) {
             <Badge tone="success">En producción</Badge>
           )}
           <Tag size="small">{facts.client ? "Client component" : "Server component"}</Tag>
-          {doc.figmaNode ? (
-            <Link href={figmaUrl(doc.figmaNode)}>Figma {doc.figmaNode}</Link>
+          {fig ? (
+            <>
+              <Link href={figmaUrl(fig.frame)}>Spec en Figma</Link>
+              <Link href={figmaUrl(fig.set)}>Componente {fig.set}</Link>
+            </>
           ) : (
-            <Badge tone="neutral">node-id de Figma pendiente</Badge>
+            <Badge tone="neutral">Sin spec en Figma</Badge>
           )}
         </div>
       </header>
 
-      <section className={styles.section} aria-label="Demo">
-        <div className={styles.demo}>{doc.demo}</div>
-      </section>
+      <div className={spec.spec}>
+        <Section id="s-anatomy" title="1 · Anatomía">
+          {fig?.parts && sp ? (
+            <Anatomy parts={fig.parts} scale={fig.anatomyScale}>
+              {sp.anatomy}
+            </Anatomy>
+          ) : (
+            <>
+              <div className={styles.demo}>{doc.demo}</div>
+              {fig?.short && <p className={spec.prose}>{withTokens(fig.short.anatomy)}</p>}
+            </>
+          )}
+        </Section>
 
-      <section className={styles.section}>
-        <HeadingLink id="spec-usage">Uso</HeadingLink>
-        <CodeBlock language="TSX" code={`import { ${doc.name} } from "@/ui";\n\n${doc.usage}`} />
-      </section>
+        {(fig?.measures || fig?.short) && (
+          <Section id="s-measures" title={fig.measures ? "2 · Medidas" : "2 · Medidas y tokens"}>
+            {fig.measures ? (
+              <SpecTable rows={fig.measures} />
+            ) : (
+              fig.short && <p className={spec.prose}>{withTokens(fig.short.tokens)}</p>
+            )}
+          </Section>
+        )}
 
-      <section className={styles.section}>
-        <HeadingLink id="spec-props">Props</HeadingLink>
-        <div className={styles.propTable}>
-          <Table
-            caption={`Props de ${doc.name}`}
-            data={{
-              headers: [
-                { key: "name", content: "Prop" },
-                { key: "type", content: "Tipo" },
-                { key: "default", content: "Por omisión" },
-                { key: "figma", content: "Figma" },
-                { key: "description", content: "Descripción" },
-              ],
-              rows: doc.props.map((p) => ({
-                name: (
+        {fig?.tokens && (
+          <Section id="s-tokens" title="3 · Tokens por parte">
+            <SpecTable rows={fig.tokens} />
+          </Section>
+        )}
+
+        <Section id="s-props" title="4 · Variantes y props">
+          <div className={styles.propTable}>
+            <SpecTable
+              rows={[
+                ["Prop en código", "Valores", "Por omisión", "Propiedad en Figma", "Descripción"],
+                ...doc.props.map((p) => [
+                  `${p.name}${p.required ? "" : "?"}`,
+                  p.type,
+                  p.default ?? "—",
+                  p.figma ?? "—",
+                  p.description,
+                ]),
+              ]}
+            />
+          </div>
+          <dl className={styles.propList}>
+            {doc.props.map((p) => (
+              <div key={p.name} className={styles.propItem}>
+                <dt>
                   <code className={styles.code}>
                     {p.name}
                     {p.required ? "" : "?"}
                   </code>
-                ),
-                type: <code className={styles.code}>{p.type}</code>,
-                default: p.default ? <code className={styles.code}>{p.default}</code> : "—",
-                figma: p.figma ?? "—",
-                description: p.description,
-              })),
-            }}
-          />
+                </dt>
+                <dd className={styles.code}>
+                  {p.type}
+                  {p.default ? ` = ${p.default}` : ""}
+                  {p.figma ? ` · Figma: ${p.figma}` : ""}
+                </dd>
+                <dd className={styles.body}>{p.description}</dd>
+              </div>
+            ))}
+          </dl>
+        </Section>
+
+        <Section id="s-states" title={statesTitle}>
+          {fig?.states && sp?.specimen ? (
+            <States labels={fig.states} specimen={sp.specimen} />
+          ) : (
+            <div className={styles.demo}>{doc.demo}</div>
+          )}
+          {fig?.short && <p className={spec.prose}>{withTokens(fig.short.states)}</p>}
+          <p className={styles.body}>
+            Render vivo del código. Hover, pressed y focus se fuerzan con{" "}
+            <code>data-sds-state</code> (ADR 0010); la sección En vivo sigue siendo interactiva.
+          </p>
+        </Section>
+
+        {fig?.responsive && (
+          <Section id="s-responsive" title="6 · 390 y 1280 px">
+            {fig.responsive.map((t) => (
+              <p key={t} className={spec.prose}>
+                {t}
+              </p>
+            ))}
+          </Section>
+        )}
+
+        <Section id="s-a11y" title="7 · Accesibilidad">
+          {fig?.accessibility && (
+            <ul className={spec.a11y}>
+              {fig.accessibility.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+          )}
+          <p className={styles.body}>Notas del código:</p>
+          <List>
+            {doc.accessibility.map((t) => (
+              <ListItem key={t}>{t}</ListItem>
+            ))}
+          </List>
+        </Section>
+
+        {fig?.motion && (
+          <Section id="s-motion" title="Movimiento">
+            {fig.motion.map((t) => (
+              <p key={t} className={spec.prose}>
+                {withTokens(t)}
+              </p>
+            ))}
+          </Section>
+        )}
+
+        {fig && <p className={spec.status}>{`${fig.status} · Set de Figma ${fig.set}`}</p>}
+
+        <Section id="s-demo" title="En vivo">
+          <div className={styles.demo}>{doc.demo}</div>
+        </Section>
+
+        <Section id="s-usage" title="Uso en código">
+          <CodeBlock language="TSX" code={`import { ${doc.name} } from "@/ui";\n\n${doc.usage}`} />
+        </Section>
+
+        <div className={styles.columns}>
+          <Section id="s-use" title="Cuándo usarlo">
+            <List>
+              {doc.use.map((t) => (
+                <ListItem key={t}>{t}</ListItem>
+              ))}
+            </List>
+          </Section>
+          <Section id="s-avoid" title="Cuándo no">
+            <List>
+              {doc.avoid.map((t) => (
+                <ListItem key={t}>{t}</ListItem>
+              ))}
+            </List>
+          </Section>
         </div>
-        <dl className={styles.propList}>
-          {doc.props.map((p) => (
-            <div key={p.name} className={styles.propItem}>
-              <dt>
-                <code className={styles.code}>
-                  {p.name}
-                  {p.required ? "" : "?"}
-                </code>
-              </dt>
-              <dd className={styles.code}>
-                {p.type}
-                {p.default ? ` = ${p.default}` : ""}
-                {p.figma ? ` · Figma: ${p.figma}` : ""}
-              </dd>
-              <dd className={styles.body}>{p.description}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
 
-      <div className={styles.columns}>
-        <section className={styles.section}>
-          <HeadingLink id="spec-use">Cuándo usarlo</HeadingLink>
-          <List>
-            {doc.use.map((t) => (
-              <ListItem key={t}>{t}</ListItem>
-            ))}
-          </List>
-        </section>
-        <section className={styles.section}>
-          <HeadingLink id="spec-avoid">Cuándo no</HeadingLink>
-          <List>
-            {doc.avoid.map((t) => (
-              <ListItem key={t}>{t}</ListItem>
-            ))}
-          </List>
-        </section>
-      </div>
-
-      <section className={styles.section}>
-        <HeadingLink id="spec-a11y">Accesibilidad</HeadingLink>
-        <List>
-          {doc.accessibility.map((t) => (
-            <ListItem key={t}>{t}</ListItem>
-          ))}
-        </List>
-      </section>
-
-      <section className={styles.section}>
-        <HeadingLink id="spec-tokens">Tokens</HeadingLink>
-        <p className={styles.body}>Leídos de su CSS en cada build.</p>
-        {facts.tokens.length > 0 ? (
+        <Section id="s-code-tokens" title="Tokens leídos del código">
+          <p className={styles.body}>Del CSS del componente, en cada build.</p>
+          {missing.length > 0 && (
+            <p className={`${styles.body} ${spec.drift}`}>
+              La spec de Figma nombra{" "}
+              {missing.length === 1 ? "un token" : `${missing.length} tokens`} que este CSS no usa:{" "}
+              {missing.join(", ")}. Puede venir de un componente hijo o ser deriva; lo confirma
+              Clara.
+            </p>
+          )}
           <ul className={styles.tokens}>
             {facts.tokens.map((t) => (
               <li key={t}>
@@ -156,30 +287,27 @@ export default async function ComponentSpec({ params }: Props) {
               </li>
             ))}
           </ul>
-        ) : (
-          <p className={styles.body}>No usa tokens propios: hereda de sus hijos.</p>
-        )}
-        <ul className={styles.tokens}>
-          {facts.files.map((f) => (
-            <li key={f}>
-              <code className={styles.code}>{f}</code>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {related.length > 0 && (
-        <section className={styles.section}>
-          <HeadingLink id="spec-related">Relacionados</HeadingLink>
-          <div className={styles.row}>
-            {related.map((r) => (
-              <Link key={r.slug} href={`/lab/ui/${r.slug}`} kind="standalone">
-                {r.name}
-              </Link>
+          <ul className={styles.tokens}>
+            {facts.files.map((f) => (
+              <li key={f}>
+                <code className={styles.code}>{f}</code>
+              </li>
             ))}
-          </div>
-        </section>
-      )}
+          </ul>
+        </Section>
+
+        {related.length > 0 && (
+          <Section id="s-related" title="Relacionados">
+            <div className={styles.row}>
+              {related.map((r) => (
+                <Link key={r.slug} href={`/lab/ui/${r.slug}`} kind="standalone">
+                  {r.name}
+                </Link>
+              ))}
+            </div>
+          </Section>
+        )}
+      </div>
 
       <nav className={styles.pager} aria-label="Componentes">
         {prev ? (

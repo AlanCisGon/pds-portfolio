@@ -44,14 +44,18 @@
 button.chip {
   cursor: pointer;
 }
-button.chip:hover:not(:disabled) {
+button.chip:hover:not(:disabled),
+:where([data-sds-state="hover"]) button.chip:not(:disabled) {
   background: var(--state-hover-surface);
 }
-button.chip:active:not(:disabled) {
+button.chip:active:not(:disabled),
+:where([data-sds-state="pressed"]) button.chip:not(:disabled) {
   background: var(--state-pressed-surface);
 }
 button.chip:focus-visible,
-.remove:focus-visible {
+.remove:focus-visible,
+:where([data-sds-state="focus"]) button.chip,
+:where([data-sds-state="focus"]) .remove {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
@@ -61,10 +65,12 @@ button.chip:focus-visible,
   background: var(--color-accent);
   color: var(--color-on-accent);
 }
-.chip[data-selected]:hover:not(:disabled) {
+.chip[data-selected]:hover:not(:disabled),
+:where([data-sds-state="hover"]) .chip[data-selected]:not(:disabled) {
   background: var(--color-accent-hover);
 }
-.chip[data-selected]:active:not(:disabled) {
+.chip[data-selected]:active:not(:disabled),
+:where([data-sds-state="pressed"]) .chip[data-selected]:not(:disabled) {
   background: var(--color-accent-pressed);
 }
 
@@ -87,7 +93,8 @@ button.chip:focus-visible,
   color: inherit;
   cursor: pointer;
 }
-.remove:hover:not(:disabled) {
+.remove:hover:not(:disabled),
+:where([data-sds-state="hover"]) .remove:not(:disabled) {
   background: var(--state-hover-surface);
 }
 

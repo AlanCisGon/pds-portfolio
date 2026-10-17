@@ -6,11 +6,13 @@
   transition: color var(--duration-fast) var(--ease-settle);
 }
 
-.link:hover {
+.link:hover,
+:where([data-sds-state="hover"]) .link {
   color: var(--color-accent-hover);
 }
 
-.link:focus-visible {
+.link:focus-visible,
+:where([data-sds-state="focus"]) .link {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
