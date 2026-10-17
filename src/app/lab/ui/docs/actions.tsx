@@ -2,6 +2,7 @@ import { Button, IconButton, Link, NavItem } from "@/ui";
 import { ArrowRight, Github, Home, User, ViewGrid } from "iconoir-react";
 import { ChipDemo } from "../ChipDemo";
 import styles from "../page.module.css";
+import { SearchFieldDemo } from "../spec/SearchFieldDemo";
 import type { ComponentDoc } from "./types";
 
 export const actions: ComponentDoc[] = [
@@ -336,5 +337,93 @@ export const actions: ComponentDoc[] = [
       'El removible no es toggle: solo la X es botón, con aria-label "Remove <label>".',
     ],
     related: ["tag", "badge"],
+  },
+  {
+    slug: "search-field",
+    name: "SearchField",
+    group: "actions",
+    level: "molécula",
+    unused: true,
+    summary:
+      "Campo de búsqueda que filtra una lista en sitio por nombre o caso de uso. No es un campo de formulario.",
+    demo: (
+      <div className={styles.stack}>
+        <SearchFieldDemo />
+        <SearchFieldDemo initial="filtrar" showLabel />
+        <SearchFieldDemo size="s" />
+        <SearchFieldDemo disabled />
+      </div>
+    ),
+    usage: `const [query, setQuery] = useState("");
+<SearchField label="Search components" placeholder="Search by name or use" value={query} onChange={setQuery} />`,
+    props: [
+      {
+        name: "label",
+        type: "string",
+        required: true,
+        figma: "Label",
+        description: "Nombre accesible. Oculto salvo con showLabel.",
+      },
+      {
+        name: "showLabel",
+        type: "boolean",
+        default: "false",
+        figma: "showLabel",
+        description: "Muestra el label cuando el contexto no basta.",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        figma: "Placeholder",
+        description: "Pista; nunca reemplaza al label.",
+      },
+      {
+        name: "value",
+        type: "string",
+        required: true,
+        figma: "Value · State=Filled",
+        description: "Controlado; con texto pasa a filled (data-filled).",
+      },
+      {
+        name: "onChange",
+        type: "(value: string) => void",
+        required: true,
+        description: 'Recibe el texto; limpiar y Esc mandan "".',
+      },
+      {
+        name: "size",
+        type: '"m" | "s"',
+        default: '"m"',
+        figma: "Size",
+        description: "40 o 32 de alto; el texto es 16 px en ambos.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        figma: "State=Disabled",
+        description: "Sin hover ni foco.",
+      },
+      {
+        name: "clearLabel",
+        type: "string",
+        default: '"Clear search"',
+        description: "Nombre accesible del botón limpiar.",
+      },
+    ],
+    use: [
+      "Filtrar una lista en la misma página por texto libre: nombre o caso de uso.",
+      "Junto a Chip cuando además hay categorías fijas.",
+    ],
+    avoid: [
+      "Formularios con envío o validación: no tiene error ni submit.",
+      "Filtrar por categoría cerrada: usa Chip.",
+    ],
+    accessibility: [
+      '<search> con <label> siempre presente e <input type="search">.',
+      "Limpiar devuelve el foco al input; Esc también limpia.",
+      "El conteo de resultados lo anuncia la página con aria-live, no el componente.",
+    ],
+    related: ["chip"],
   },
 ];

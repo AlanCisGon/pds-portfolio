@@ -280,7 +280,7 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 
 | Grupo (Figma) | Componentes | Sin uso público |
 |---|---|---|
-| 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip` | `Chip` |
+| 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip`, `SearchField` | `Chip`, `SearchField` |
 | 02b Content | `Tag`, `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem`, `Stat`, `FactSheet` | `Badge` |
 | 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | `Carousel` |
 | 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | — |
@@ -298,6 +298,17 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - `IconButton` requiere `label`;
   - los `Link` externos anuncian "opens in a new tab" (los textos accesibles van en inglés, como la página);
   - `CodeBlock` y `HeadingLink` confirman con `aria-live`, sin Toast.
+- **`SearchField` (02a, `444:169`; spec `445:2095`):** campo de búsqueda que filtra una lista en la misma página por nombre o caso de uso. Lo usa primero el índice de `/lab/ui` (Alan, 2026-10-17), junto a los `Chip` de nivel.
+  - **No es un campo de formulario:** no tiene error ni envío.
+  - **Medidas:** `Size` m 40 / s 32, igual que `Button`, `Chip` e `IconButton`. Radio `--radius-control`: es un input, no un chip.
+  - **Superficies:** fondo `--color-bg-elevated`, hover `--state-hover-surface`, disabled `--state-disabled-*`.
+  - **Texto:** siempre `body-m` de 16 px, también en `s`, para evitar el zoom de iOS.
+  - **Nombre accesible:** siempre existe. El `<label>` es visually-hidden por omisión y visible con `showLabel`; el placeholder nunca lo reemplaza. La lupa (`Search` de Iconoir) es decorativa.
+  - **Botón limpiar:** 24 × 24 (WCAG 2.5.8). Solo aparece con texto, vacía el campo y devuelve el foco. Esc también limpia. La X nativa se oculta. Su estado forzado es `clear-hover`/`clear-focus`, para no forzarse junto con el campo.
+  - **Figma ↔ código:** `State=Filled` en Figma corresponde a `data-filled` en código.
+  - **Conteo de resultados:** lo anuncia la página con `aria-live="polite"`, no el componente.
+  - **Ancho:** 100 % en móvil; 320 px (`calc(var(--space-64) * 5)`) junto a los chips en escritorio.
+  - **≠ `Chip`:** el Chip filtra por categoría con `aria-pressed`; el SearchField filtra por texto libre.
 - **`TeamCard` (02e, `83:152`):** tarjeta estática de integrante (avatar `xl`, nombre en `Voice/Card`, rol y descripción), con `layout` horizontal o vertical. El rol nunca va en Cerezo. Su patrón `TeamGrid` (03 Patterns, `84:87`) vive en `src/components/work/TeamGrid.tsx` y se usa desde el MDX.
 - **`Badge` (02b, `30:35`):** `showIcon` es un eje de variante en Figma (`true`/`false`), igual que el prop. Sin ícono, el padding horizontal es `--space-8` (`.badge[data-icon="false"]`); con ícono, `--space-4`. Sin ícono, el texto debe nombrar el estatus: nunca solo el color.
 - **`Avatar` (02b, `29:13`):** en Figma, la propiedad booleana `Src` corresponde al prop `src`. Activada, la capa `Photo` muestra la foto como relleno de imagen (override por instancia, nunca desligada); apagada (por omisión), se ven las iniciales (`Initials` ↔ `initials`, que por omisión salen de `name`). En código, la foto lleva `alt` con el nombre, o `decorative` (`alt=""`) cuando el nombre ya se ve al lado.
