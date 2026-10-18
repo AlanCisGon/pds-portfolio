@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, Chip, SearchField } from "@/ui";
+import { Card, Chip, SearchField } from "@/sds";
 import { useMemo, useState } from "react";
 import { fold } from "./docs/fold";
 import styles from "./page.module.css";

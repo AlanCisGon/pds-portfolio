@@ -1,11 +1,11 @@
-// Cada regla de src/ui con :hover, :active o :focus-visible debe tener su gemelo forzado
+// Cada regla de src/sds con :hover, :active o :focus-visible debe tener su gemelo forzado
 // `:where([data-sds-state="…"]) …` en la misma lista de selectores (ADR 0010). Sin él, la matriz
 // de estados de /lab/ui mostraría un estado que no coincide con producción. Una parte secundaria
 // (p. ej. el ShareLink de ArticleCTA) usa "<parte>-<estado>" para no forzarse junto con la principal.
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
-const root = path.join(import.meta.dirname, "..", "src", "ui");
+const root = path.join(import.meta.dirname, "..", "src", "sds");
 const PSEUDO = { ":hover": "hover", ":active": "pressed", ":focus-visible": "focus" };
 const errors = [];
 

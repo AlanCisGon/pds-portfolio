@@ -20,7 +20,7 @@ export type PropSpec = {
 export type ComponentDoc = {
   /** Segmento de la URL: /lab/ui/<slug>. */
   slug: string;
-  /** Nombre exportado desde @/ui. */
+  /** Nombre exportado desde @/sds. */
   name: string;
   group: ComponentGroup;
   /** Nivel atómico declarado en la doc o en el código. */

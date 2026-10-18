@@ -12,8 +12,8 @@ Reglas cortas para cualquier asistente (Claude, Copilot, v0…) que genere UI en
   - **Tipo:** `--font-{sans,serif,mono}`, `--text-<rol>-{size,line}` (display, title, quote, heading-l/m/s, body-l/m/s, label-m/s, meta, code), `--weight-{regular,medium,semibold}`.
   - **Movimiento:** `--duration-{fast,base,wide}`, `--ease-{settle,exit}`, `--stagger-step`.
 
-## 2. Usar las primitivas de `src/ui`
-- Antes de crear algo nuevo, componer con lo que ya existe (`@/ui`):
+## 2. Usar las primitivas de `src/sds`
+- Antes de crear algo nuevo, componer con lo que ya existe (`@/sds`):
   - **Acciones:** `Button`, `IconButton`, `Link`, `NavItem`, `Chip`
   - **Contenido:** `Tag`, `Badge`, `Avatar`, `AvatarGroup`, `Callout`, `Divider`, `List`
   - **Datos y media:** `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel`
@@ -22,7 +22,7 @@ Reglas cortas para cualquier asistente (Claude, Copilot, v0…) que genere UI en
   - **Utilidades:** `VisuallyHidden`
 - Para revisar las variantes de cada componente está el catálogo privado en `/lab/ui`.
 - Las variantes se expresan con props que mapean a `data-variant` / `data-size`, con los mismos nombres que en Figma.
-- Un componente nuevo va en `src/ui/<Nombre>/` (`.tsx` + `.module.css` + `index.ts`), no importa código de la app y **primero se diseña en Figma** o se marca como propuesta.
+- Un componente nuevo va en `src/sds/<Nombre>/` (`.tsx` + `.module.css` + `index.ts`), no importa código de la app y **primero se diseña en Figma** o se marca como propuesta.
 - Las páginas solo componen y llevan el CSS de layout.
 
 ## 3. Solo modo oscuro
@@ -52,10 +52,10 @@ Reglas cortas para cualquier asistente (Claude, Copilot, v0…) que genere UI en
 ```tsx
 // src/components/work/Highlight.tsx
 import { home } from "@/resources";
-import { Button, Card } from "@/ui";
+import { Button, Card } from "@/sds";
 import styles from "./Highlight.module.css";
 
-// The copy comes from content.tsx; the component only composes src/ui.
+// The copy comes from content.tsx; the component only composes src/sds.
 export function Highlight() {
   return (
     <section className={styles.grid}>

@@ -3,7 +3,7 @@
 Sistema de diseño de Somara Studio (ADR 0004), **solo para alancisneros.design** por ahora. No es un producto aparte: vive en este repo y crece al ritmo de la migración (`docs/migration-plan.md`).
 
 - **Fuente de verdad:** `alan-brand-guidelines.md` §14, "Identidad visual" (v1.1, 2 de octubre de 2026). Si este documento y la guía de marca difieren, manda la guía.
-- **En código:** `src/styles/tokens.css` (variables CSS) y `src/ui/` (componentes con **CSS Modules**).
+- **En código:** `src/styles/tokens.css` (variables CSS) y `src/sds/` (componentes con **CSS Modules**).
 - **En Figma:** archivo *SDS · Somara Design System*, página `01 Foundations`. Cada variable lleva su nombre CSS en *Code syntax → Web*, con el formato `var(--nombre)` que Figma muestra en Dev Mode.
 
 ## Decisiones v0.1
@@ -252,7 +252,7 @@ Decisión de Alan del 2026-10-06 (ADR 0005). Cada familia se elige por su funci�
 
 ## Convenciones de componentes (CSS Modules)
 
-- **Ubicación:** `src/ui/<Nombre>/<Nombre>.tsx` + `<Nombre>.module.css` + `index.ts`. `src/ui` **no importa nada de la app** ni de Once UI.
+- **Ubicación:** `src/sds/<Nombre>/<Nombre>.tsx` + `<Nombre>.module.css` + `index.ts`. `src/sds` **no importa nada de la app** ni de Once UI.
 - **Solo tokens:** color, espacio, radio, tipografía y movimiento con `var(--…)`. Sin hex ni px sueltos, salvo `0` y bordes de `1px`. Más adelante se automatiza con un lint (stylelint `declaration-strict-value`).
 - **Variantes con atributos `data-*`:** `data-variant="primary"`, `data-size="s"`. Los nombres y valores son los mismos que las propiedades del componente en Figma.
 - **Figma ↔ props:** en Figma la propiedad va con mayúscula (`Variant`, `Size`, `State`); lo que coincide 1:1 con el prop es el **valor** (`variant="primary"`). `State` no es un prop: en código es `:hover`, `:active`, `:focus-visible` o `disabled`.
@@ -263,10 +263,10 @@ Decisión de Alan del 2026-10-06 (ADR 0005). Cada familia se elige por su funci�
 
 ## Componentes del portafolio
 
-Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/ui/`, importables desde `@/ui`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
+Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (`src/sds/`, importables desde `@/sds`), y casi todos ya están **en producción**. Sin uso público todavía: `Badge`, `Card`, `Carousel` y `Chip` (este último entra cuando haya filtros).
 
 - **Documentación privada:** `/lab/ui`, detrás del Basic Auth del lab y con `noindex`. El índice agrupa los componentes por grupo de Figma y cada uno tiene su spec en `/lab/ui/<slug>`: demo, uso, props (con su propiedad de Figma), cuándo usarlo, cuándo no, accesibilidad, tokens y relacionados.
-  - **Fuente:** `src/app/lab/ui/docs/` (un archivo por grupo). Al agregar o cambiar un componente en `src/ui`, se actualiza su entrada en el mismo PR.
+  - **Fuente:** `src/app/lab/ui/docs/` (un archivo por grupo). Al agregar o cambiar un componente en `src/sds`, se actualiza su entrada en el mismo PR.
   - **Tokens y `"use client"`** se leen del código en cada build (`registry.ts`); no se escriben a mano.
   - **Plantilla de 06 Specs (ADR 0010):** cada página sigue el frame de Figma: anatomía con marcadores sobre el render vivo, medidas, tokens por parte, props, matriz de estados forzados, 390 y 1280 px, y accesibilidad. Los textos de Figma están en `docs/figma-specs.ts`; si cambia la spec, se vuelve a extraer.
   - **Diferencias aceptadas con el frame de Figma** (Alan, 2026-10-17):
@@ -274,7 +274,7 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
     - La tabla de props agrega "Por omisión" y "Descripción".
     - En 390 px, las tablas pasan a tarjetas y la matriz de estados a una columna.
   - **Idioma de los ejemplos (Alan, 2026-10-17):** los ejemplos de las specs, en Figma y en el lab, van en español. No es copy del sitio, así que no aplica el inglés del ADR 0001. La excepción es el copy real que el lab importa de `@/resources` (p. ej. el ArticleCTA).
-  - **Estados forzados:** toda regla con `:hover`, `:active` o `:focus-visible` en `src/ui` lleva su gemelo `:where([data-sds-state="…"])`. `npm run lint` lo verifica.
+  - **Estados forzados:** toda regla con `:hover`, `:active` o `:focus-visible` en `src/sds` lleva su gemelo `:where([data-sds-state="…"])`. `npm run lint` lo verifica.
   - Los textos son internos y en español. Si la doc se publica, Ameyali los escribe en inglés (ADR 0001) y pasan por §15.
 - **Página de Figma:** cada grupo vive en su propia página del archivo *SDS · Somara Design System*.
 
@@ -332,12 +332,12 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 
 Patrón aprobado por Alan el 2026-10-14 (diseño de Clara, movimiento de Félix). El blog es solo de teoría de la disciplina: nunca se relaciona con casos ni clientes.
 
-- **PullQuote** (átomo, `src/ui/PullQuote`): Voice/Quote con regla izquierda de 2 px `--color-border-subtle` y padding-left `--space-24`. Sin atribución; nunca decorativo.
-- **Footnotes** y **FootnoteRef** (molécula, `src/ui/Footnotes`): Divider + título Measure/Meta + Body S secundario. Referencias bidireccionales `n` ↔ ↩ con foco visible. La nota de destino se resalta y se desvanece; con movimiento reducido el resalte queda fijo. El crédito de edición ya no va aquí: va en el byline, desde el inicio (Alan, 2026-10-14). Sin `remark-gfm`: en el MDX se escribe `<FootnoteRef n={1} />` y los textos van en el front matter (`notes`).
-- **LaunchStrip** (molécula, `src/ui/LaunchStrip`): una línea, un solo enlace, entre bordes `--color-border-subtle`. El título siempre lleva subrayado (WCAG 1.4.1). Al hover o al focus, la flecha avanza 4 px y el color pasa a `--color-accent-hover` (`--duration-fast`, `--ease-settle` al entrar y `--ease-exit` al salir); con movimiento reducido solo cambia el color. Sin badge, contador ni botón de cerrar, y solo una a la vez. En Home se muestra solo mientras haya un artículo.
-- **Card `layout=wide|grid`** (`src/ui/Card`): tarjeta de artículo sin imagen, con título en Voice/Card, meta y CTA de texto. El cerezo sobre `bg-surface` da 5.19:1; en hover pasa a `--color-accent-hover`.
-- **ArticleCTA** (molécula, `src/ui/ArticleCTA`): `contact` (correo, sin formulario) mientras haya un artículo, y `next` desde dos. Sus hijos suben 12 px y aparecen una sola vez (`--duration-base`, `--ease-settle`, `--stagger-step`, IntersectionObserver a 0.25). Se ve ya asentado sin JS, con movimiento reducido o cuando recibe el foco.
-- **WritingSection** (organismo, `src/ui/WritingSection`): 1 artículo = tarjeta wide; 2–3 = cuadrícula; más de 3 = los 3 más recientes y "All writing" (el enlace aparece desde 2). En `/blog` muestra todos, con h1.
+- **PullQuote** (átomo, `src/sds/PullQuote`): Voice/Quote con regla izquierda de 2 px `--color-border-subtle` y padding-left `--space-24`. Sin atribución; nunca decorativo.
+- **Footnotes** y **FootnoteRef** (molécula, `src/sds/Footnotes`): Divider + título Measure/Meta + Body S secundario. Referencias bidireccionales `n` ↔ ↩ con foco visible. La nota de destino se resalta y se desvanece; con movimiento reducido el resalte queda fijo. El crédito de edición ya no va aquí: va en el byline, desde el inicio (Alan, 2026-10-14). Sin `remark-gfm`: en el MDX se escribe `<FootnoteRef n={1} />` y los textos van en el front matter (`notes`).
+- **LaunchStrip** (molécula, `src/sds/LaunchStrip`): una línea, un solo enlace, entre bordes `--color-border-subtle`. El título siempre lleva subrayado (WCAG 1.4.1). Al hover o al focus, la flecha avanza 4 px y el color pasa a `--color-accent-hover` (`--duration-fast`, `--ease-settle` al entrar y `--ease-exit` al salir); con movimiento reducido solo cambia el color. Sin badge, contador ni botón de cerrar, y solo una a la vez. En Home se muestra solo mientras haya un artículo.
+- **Card `layout=wide|grid`** (`src/sds/Card`): tarjeta de artículo sin imagen, con título en Voice/Card, meta y CTA de texto. El cerezo sobre `bg-surface` da 5.19:1; en hover pasa a `--color-accent-hover`.
+- **ArticleCTA** (molécula, `src/sds/ArticleCTA`): `contact` (correo, sin formulario) mientras haya un artículo, y `next` desde dos. Sus hijos suben 12 px y aparecen una sola vez (`--duration-base`, `--ease-settle`, `--stagger-step`, IntersectionObserver a 0.25). Se ve ya asentado sin JS, con movimiento reducido o cuando recibe el foco.
+- **WritingSection** (organismo, `src/sds/WritingSection`): 1 artículo = tarjeta wide; 2–3 = cuadrícula; más de 3 = los 3 más recientes y "All writing" (el enlace aparece desde 2). En `/blog` muestra todos, con h1.
 - La prosa del artículo nunca supera `--measure-prose`. No lleva TOC en notas de menos de 8 minutos.
 - **Card wide** desde `md`: el texto va a la izquierda y el CTA a la derecha (gap `--space-24`); por debajo de `md` se apila.
 - **ArticleCTA:** borde superior `--color-border-subtle` con `--space-32` arriba. "Share on LinkedIn" va en `--color-text-secondary` subrayado (Label M), para no competir con el CTA principal.

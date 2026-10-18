@@ -5,7 +5,7 @@ import { CustomMDX } from "@/components";
 import { getHeadings } from "@/components/mdx";
 import { Projects } from "@/components/work/Projects";
 import { work } from "@/resources";
-import { AvatarGroup, FactSheet, Link, Media, TableOfContents, Tag } from "@/ui";
+import { AvatarGroup, FactSheet, Link, Media, TableOfContents, Tag } from "@/sds";
 import { formatDate } from "@/utils/format";
 import { getProject, getProjects } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";

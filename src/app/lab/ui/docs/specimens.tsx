@@ -30,7 +30,7 @@ import {
   Tag,
   TeamCard,
   TocItem,
-} from "@/ui";
+} from "@/sds";
 import { SiClaude } from "@icons-pack/react-simple-icons";
 import { ArrowRight, Github, Home, Linkedin, Mail, User, ViewGrid } from "iconoir-react";
 import type { ReactNode } from "react";
@@ -266,7 +266,7 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
     specimen: () => <Table caption="Métricas" data={tableData} />,
   },
   "code-block": {
-    anatomy: wide(<CodeBlock language="TSX" code={'import { Tag } from "@/ui";'} />),
+    anatomy: wide(<CodeBlock language="TSX" code={'import { Tag } from "@/sds";'} />),
     specimen: () => <CodeBlock language="TSX" code={"<Tag>Claude</Tag>"} />,
   },
   accordion: {

@@ -14,7 +14,7 @@ import {
   ListItem,
   Media,
   Table,
-} from "@/ui";
+} from "@/sds";
 import { slugify } from "@/utils/slugify";
 import styles from "./mdx.module.css";
 

@@ -1,7 +1,7 @@
 import { HeroVisual } from "@/components/hero/HeroVisual";
 import { Projects } from "@/components/work/Projects";
 import { blog, home, work } from "@/resources";
-import { FeaturedCase, LaunchStrip, WritingSection } from "@/ui";
+import { FeaturedCase, LaunchStrip, WritingSection } from "@/sds";
 import { writingArticles } from "@/utils/blog";
 import { getProject } from "@/utils/projects";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";

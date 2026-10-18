@@ -1,5 +1,5 @@
 import { blog } from "@/resources";
-import { WritingSection } from "@/ui";
+import { WritingSection } from "@/sds";
 import { writingArticles } from "@/utils/blog";
 import { pageMetadata } from "@/utils/seo";
 import styles from "./page.module.css";

@@ -28,7 +28,7 @@ export function getDoc(slug: string) {
   return DOCS.find((d) => d.slug === slug);
 }
 
-const UI_DIR = path.join(process.cwd(), "src", "ui");
+const SDS_DIR = path.join(process.cwd(), "src", "sds");
 
 export type SourceFacts = {
   /** Tokens de tokens.css que usa su CSS, leídos del código (no a mano). */
@@ -43,7 +43,7 @@ export type SourceFacts = {
 
 /** Lee el código del componente en build: así la doc no se desfasa del CSS. */
 export async function getSourceFacts(name: string, depth = 1): Promise<SourceFacts> {
-  const dir = path.join(UI_DIR, name);
+  const dir = path.join(SDS_DIR, name);
   const files = (await readdir(dir)).filter((f) => /\.(tsx|css)$/.test(f));
   const tokens = new Set<string>();
   const children = new Set<string>();
@@ -65,7 +65,7 @@ export async function getSourceFacts(name: string, depth = 1): Promise<SourceFac
   return {
     tokens: [...tokens].sort(),
     client,
-    files: files.map((f) => `src/ui/${name}/${f}`),
+    files: files.map((f) => `src/sds/${name}/${f}`),
     childTokens,
   };
 }

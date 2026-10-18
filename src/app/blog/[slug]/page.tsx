@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { CustomMDX } from "@/components";
 import { baseURL, blog, person } from "@/resources";
-import { ArticleCTA, Callout, FootnoteRef, Footnotes, Link, PullQuote } from "@/ui";
+import { ArticleCTA, Callout, FootnoteRef, Footnotes, Link, PullQuote } from "@/sds";
 import { formatDate } from "@/utils/format";
 import { getPost, getPosts } from "@/utils/posts";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";

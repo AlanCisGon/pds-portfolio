@@ -1,4 +1,4 @@
-import { Button, IconButton, Link, NavItem } from "@/ui";
+import { Button, IconButton, Link, NavItem } from "@/sds";
 import { ArrowRight, Github, Home, User, ViewGrid } from "iconoir-react";
 import { ChipDemo } from "../ChipDemo";
 import styles from "../page.module.css";

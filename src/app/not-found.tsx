@@ -1,6 +1,6 @@
 import { ArrowRight } from "iconoir-react";
 
-import { Button } from "@/ui";
+import { Button } from "@/sds";
 import styles from "./not-found.module.css";
 
 export default function NotFound() {

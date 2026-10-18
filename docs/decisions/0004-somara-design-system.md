@@ -22,7 +22,7 @@ El design system se llama **Somara Design System**, abreviado **SDS**.
 - **Lo que no cambia:**
   - el repositorio `pds-portfolio` y el proyecto de Vercel. Renombrarlos rompe enlaces, previews e integraciones, y quien visita el sitio no los ve: no vale el costo;
   - los nombres de tokens (`--color-*`, `--space-*`…), que no llevan prefijo;
-  - `src/ui` como carpeta.
+  - `src/ui` como carpeta (enmendado el 2026-10-17, ver abajo).
 
 ## Consecuencias
 
@@ -30,3 +30,7 @@ El design system se llama **Somara Design System**, abreviado **SDS**.
 - Si el SDS se usa algún día en otros productos, el nombre ya no lo ata al portafolio.
 - **Riesgo aceptado:** "SDS" también es la sigla de *Safety Data Sheet*. En contexto de diseño no se confunde, y la primera mención siempre lleva el nombre completo.
 - **Pendiente:** la misma revisión formal de marca que el ADR 0003 deja abierta (IMPI y USPTO), si el nombre llega a usarse como servicio.
+
+## Enmienda (2026-10-17)
+
+Alan pidió renombrar la carpeta: `src/ui` pasa a `src/sds` y el alias `@/ui` a `@/sds`, para que el código diga el nombre del sistema igual que Figma y `docs/`. Costo: un cambio mecánico de imports (38 archivos) sin efecto en quien visita el sitio; se revierte con otro renombre. El repositorio y el proyecto de Vercel siguen sin cambiar.

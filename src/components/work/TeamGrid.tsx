@@ -1,4 +1,4 @@
-import { TeamCard } from "@/ui";
+import { TeamCard } from "@/sds";
 import { slugify } from "@/utils/slugify";
 import styles from "./TeamGrid.module.css";
 

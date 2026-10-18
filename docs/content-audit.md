@@ -23,7 +23,7 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
 - **Alta · `content.tsx` `person.role`:** `" Product Experience Strategist"` lleva un espacio al inicio, que provoca dobles espacios en el SEO, y no es el rol de §1. → Definir un título canónico.
 - **Alta · el rol cambia entre páginas:** "Product Designer & Strategist" (home.title), "product designer" (subline), "Strategic UX & Service Design Leader" (intro), "UX Design Lead", "UX Team Lead" (MDX) y "Product Experience Strategist". → Un título canónico para todo el sitio; el cargo de cada empresa va solo en Experience.
 - **Alta · ubicación:** `America/Mazatlan` es la zona horaria, no la ciudad (§1: Culiacán, Sinaloa). → Separar `timeZone` de una etiqueta visible "Culiacán, Mexico".
-- **Media · `src/ui/*`:** los textos de accesibilidad están en español y la página en inglés (`lang="en"`). → Pasarlos a inglés o hacerlos props.
+- **Media · `src/sds/*`:** los textos de accesibilidad están en español y la página en inglés (`lang="en"`). → Pasarlos a inglés o hacerlos props.
 - **Media · idioma:** §16.1 pide español de México "salvo que se pida otro idioma". → Confirmar el inglés para el portafolio.
 - **Media · marca ausente:** no aparecen la bandera (§9), la forma de trabajar (§6: investigar pronto, prototipar rápido, probar en pequeño) ni el vocabulario propio (§13).
 
@@ -139,7 +139,7 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
    - mayúsculas;
    - "View project";
    - "@" en los títulos;
-   - textos de accesibilidad de `src/ui` en inglés.
+   - textos de accesibilidad de `src/sds` en inglés.
 
 ## Respuestas de la entrevista (2026-10-04)
 
@@ -170,4 +170,4 @@ El sitio refleja la marca **a medias**. El fondo sí coincide: la evidencia de H
 - **SUM:** es la Single Usability Metric (Sauro y Kindlund). Se explica una vez en Results; la etiqueta del `Stat` queda corta: "Usability (SUM)".
 - **Fechas de Helix en la ficha:** en trimestres, "Q4 2024 – Q3 2025" (antes "Q4 2024 – Sep 2025"). El lanzamiento de sep 2025 cae dentro de Q3.
 
-**Pendiente:** los textos de accesibilidad de `src/ui` ya están en inglés (F2, #28), pero varios siguen escritos dentro del componente (`AvatarGroup`, `Header`, `HeadingLink`, `CodeBlock`, `Carousel`, `Chip`, `MediaVideo`). Según el ADR 0001 deben exponerse como props para que Ameyali los revise.
+**Pendiente:** los textos de accesibilidad de `src/sds` ya están en inglés (F2, #28), pero varios siguen escritos dentro del componente (`AvatarGroup`, `Header`, `HeadingLink`, `CodeBlock`, `Carousel`, `Chip`, `MediaVideo`). Según el ADR 0001 deben exponerse como props para que Ameyali los revise.
