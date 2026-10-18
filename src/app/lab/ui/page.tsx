@@ -1,7 +1,8 @@
-import { Card } from "@/ui";
 import type { Metadata } from "next";
+import { IndexFilters, type IndexItem } from "./IndexFilters";
 import { MotionDemo } from "./MotionDemo";
-import { DOCS, GROUP_ORDER } from "./docs/registry";
+import { fold } from "./docs/fold";
+import { DOCS, GROUP_ORDER, getSourceFacts } from "./docs/registry";
 import { GROUPS } from "./docs/types";
 import styles from "./page.module.css";
 
@@ -9,8 +10,31 @@ import styles from "./page.module.css";
 // /lab/ui/<slug>. Se compara contra Figma: SDS · Somara Design System.
 export const metadata: Metadata = { title: "Lab · UI", robots: { index: false, follow: false } };
 
-export default function UiDocs() {
+export default async function UiDocs() {
   const unused = DOCS.filter((d) => d.unused).length;
+  const label = (g: (typeof GROUP_ORDER)[number]) => `${GROUPS[g].code} · ${GROUPS[g].title}`;
+  const groups = GROUP_ORDER.map(label);
+  // Solo datos planos al cliente: las demos (ReactNode) se quedan en el servidor.
+  // Patrón = combina otros componentes visibles de src/ui (VisuallyHidden es utilidad, no cuenta).
+  const composes = async (name: string) => {
+    try {
+      const kids = Object.keys((await getSourceFacts(name)).childTokens);
+      return kids.some((k) => k !== "VisuallyHidden");
+    } catch {
+      return false;
+    }
+  };
+  const patterns = await Promise.all(DOCS.map((d) => composes(d.name)));
+  const items: IndexItem[] = DOCS.map((d, i) => ({
+    slug: d.slug,
+    name: d.name,
+    level: d.level ?? "utilidad",
+    summary: d.summary,
+    unused: Boolean(d.unused),
+    pattern: patterns[i],
+    group: label(d.group),
+    haystack: fold([d.name, d.summary, ...d.use, ...d.avoid].join(" ")),
+  }));
 
   return (
     <div className={styles.page} lang="es">
@@ -23,33 +47,7 @@ export default function UiDocs() {
         </p>
       </header>
 
-      {GROUP_ORDER.map((g) => {
-        const group = GROUPS[g];
-        const docs = DOCS.filter((d) => d.group === g);
-        return (
-          <section className={styles.section} id={g} key={g}>
-            <div className={styles.stack}>
-              <h2 className={styles.h2}>
-                {group.code} · {group.title}
-              </h2>
-              <p className={styles.body}>{group.description}</p>
-            </div>
-            <ul className={styles.cards}>
-              {docs.map((d) => (
-                <li key={d.slug}>
-                  <Card
-                    href={`/lab/ui/${d.slug}`}
-                    eyebrow={d.unused ? `${d.level ?? ""} · sin uso público` : d.level}
-                    title={d.name}
-                  >
-                    {d.summary}
-                  </Card>
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      })}
+      <IndexFilters items={items} groups={groups} />
 
       <section className={styles.section} id="motion">
         <h2 className={styles.h2}>07 · Motion</h2>

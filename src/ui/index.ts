@@ -5,6 +5,7 @@ export * from "./IconButton";
 export * from "./Link";
 export * from "./NavItem";
 export * from "./Chip";
+export * from "./SearchField";
 // 02b Content
 export * from "./Tag";
 export * from "./Divider";

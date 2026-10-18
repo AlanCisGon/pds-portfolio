@@ -1,4 +1,3 @@
-import { blog } from "@/resources";
 import {
   Accordion,
   ArticleCTA,
@@ -36,6 +35,7 @@ import { SiClaude } from "@icons-pack/react-simple-icons";
 import { ArrowRight, Github, Home, Linkedin, Mail, User, ViewGrid } from "iconoir-react";
 import type { ReactNode } from "react";
 import { ChipRemovable } from "../spec/ChipRemovable";
+import { SearchFieldDemo } from "../spec/SearchFieldDemo";
 import type { Specimen } from "../spec/States";
 
 // Ejemplos con los que se dibuja cada spec: el de anatomía (mismas props que el ejemplo de Figma)
@@ -76,7 +76,7 @@ const facts = [
   { label: "Industry", value: "E-commerce" },
 ];
 const wide = (node: ReactNode) => <div className="wide">{node}</div>;
-const share = { href: "https://www.linkedin.com", label: "Share on LinkedIn" };
+const share = { href: "https://www.linkedin.com", label: "Compartir en LinkedIn" };
 
 // El ejemplo de la spec de Figma (277:1164), tal cual: título, resumen, 3 tags y CTA.
 const helixCard = (layout: "vertical" | "horizontal") => (
@@ -146,6 +146,22 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
     anatomy: <ChipRemovable label="E-commerce" />,
     specimen: (row, state) => (
       <Chip label="E-commerce" selected={row === "seleccionado"} disabled={state === "Disabled"} />
+    ),
+  },
+  "search-field": {
+    anatomy: (
+      <div className="w320">
+        <SearchFieldDemo initial="filtrar" showLabel />
+      </div>
+    ),
+    specimen: (row, state) => (
+      <div className="fill">
+        <SearchFieldDemo
+          size={row as "s"}
+          disabled={state === "Disabled"}
+          initial={state === "Filled" ? "filtrar" : ""}
+        />
+      </div>
     ),
   },
   tag: {
@@ -395,22 +411,22 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
   },
   "article-cta": {
     anatomy: null,
-    // Copy real del sitio (blog.cta en content.tsx), no de muestra.
+    // Ejemplos en español, como el resto de la spec (decisión de Alan). Copy de muestra: Ameyali lo revisa.
     specimen: (row) =>
       row === "next" ? (
         <ArticleCTA
           variant="next"
-          heading={blog.cta.next.heading}
+          heading="Siguiente nota"
           href="/blog"
-          label="Nobody stays in the dark"
+          label="Nadie se queda a oscuras"
         />
       ) : (
         <ArticleCTA
           variant="contact"
-          heading={blog.cta.contact.heading}
-          body={blog.cta.contact.body}
+          heading="¿Piensas en esto para tu propio producto?"
+          body="Me gustaría saber cómo lo resuelves."
           href="mailto:alancisgon@gmail.com"
-          label={blog.cta.contact.label}
+          label="Escríbeme"
           share={share}
         />
       ),
