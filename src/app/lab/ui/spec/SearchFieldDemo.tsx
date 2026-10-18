@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchField, type SearchFieldProps } from "@/ui";
+import { SearchField, type SearchFieldProps } from "@/sds";
 import { useState } from "react";
 
 /** SearchField con estado propio para el lab (el componente es controlado). */

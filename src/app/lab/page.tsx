@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { Card } from "@/ui";
+import { Card } from "@/sds";
 import { formatDate } from "@/utils/format";
 import { labManifest } from "@/utils/labAuth";
 import styles from "./page.module.css";
@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "Lab", robots: { index: false, follow
 // Access is checked in proxy.ts; render per request so nothing is cached as a static page.
 export const dynamic = "force-dynamic";
 
-/** Private index (proposal on src/ui): app pages and single-file artifacts, newest first. */
+/** Private index (proposal on src/sds): app pages and single-file artifacts, newest first. */
 export default function LabIndex() {
   const entries = [...labManifest].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 

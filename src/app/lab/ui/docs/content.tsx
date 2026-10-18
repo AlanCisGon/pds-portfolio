@@ -13,7 +13,7 @@ import {
   Stat,
   StatGrid,
   Tag,
-} from "@/ui";
+} from "@/sds";
 import { SiClaude, SiFigma } from "@icons-pack/react-simple-icons";
 import styles from "../page.module.css";
 import type { ComponentDoc } from "./types";

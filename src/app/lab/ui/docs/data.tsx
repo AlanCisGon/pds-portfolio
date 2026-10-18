@@ -1,4 +1,4 @@
-import { Accordion, Carousel, CodeBlock, HeadingLink, Media, Table, TableOfContents } from "@/ui";
+import { Accordion, Carousel, CodeBlock, HeadingLink, Media, Table, TableOfContents } from "@/sds";
 import styles from "../page.module.css";
 import type { ComponentDoc } from "./types";
 
@@ -56,7 +56,7 @@ export const data: ComponentDoc[] = [
     group: "data",
     level: "molécula",
     summary: "Código en casos y en el lab, con botón de copiar.",
-    demo: <CodeBlock language="TSX" code={'import { Tag } from "@/ui";\n\n<Tag>Claude</Tag>'} />,
+    demo: <CodeBlock language="TSX" code={'import { Tag } from "@/sds";\n\n<Tag>Claude</Tag>'} />,
     usage: `<CodeBlock language="TSX" code={source} />`,
     props: [
       { name: "code", type: "string", required: true, description: "El código, tal cual." },

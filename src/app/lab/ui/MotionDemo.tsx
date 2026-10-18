@@ -4,7 +4,7 @@ import { Check, Copy } from "iconoir-react";
 import { type PointerEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./MotionDemo.module.css";
 
-// Lab-only prototypes of Félix's "07 Motion" page. Nothing here is part of src/ui yet:
+// Lab-only prototypes of Félix's "07 Motion" page. Nothing here is part of src/sds yet:
 // Clara reviews coherence and tokens before any of it moves into a component.
 
 const sections = ["Inicio", "Trabajo", "Sobre mí"];

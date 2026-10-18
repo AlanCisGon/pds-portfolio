@@ -1,4 +1,4 @@
-import { Badge, CodeBlock, Link, List, ListItem, Tag } from "@/ui";
+import { Badge, CodeBlock, Link, List, ListItem, Tag } from "@/sds";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
@@ -297,7 +297,7 @@ export default async function ComponentSpec({ params }: Props) {
         </Section>
 
         <Section id="s-usage" title="Uso en código">
-          <CodeBlock language="TSX" code={`import { ${doc.name} } from "@/ui";\n\n${doc.usage}`} />
+          <CodeBlock language="TSX" code={`import { ${doc.name} } from "@/sds";\n\n${doc.usage}`} />
         </Section>
 
         <div className={styles.columns}>

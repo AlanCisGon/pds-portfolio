@@ -1,5 +1,5 @@
 import { blog } from "@/resources";
-import type { WritingArticle } from "@/ui";
+import type { WritingArticle } from "@/sds";
 import { formatShortDate } from "@/utils/format";
 import { getPosts } from "@/utils/posts";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Chip } from "@/ui";
+import { Chip } from "@/sds";
 import { useState } from "react";
 
 /** Interactive Chip demo for the catalog (filters + removable tokens). */

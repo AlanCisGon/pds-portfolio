@@ -1,5 +1,5 @@
 import { work } from "@/resources";
-import { Stat, StatGrid, type StatUnit } from "@/ui";
+import { Stat, StatGrid, type StatUnit } from "@/sds";
 
 export type CaseStat = {
   value?: string;

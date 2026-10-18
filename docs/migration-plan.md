@@ -15,19 +15,19 @@ Dejar de depender del fork de **Magic Portfolio** y de **Once UI**, y quedarse c
 - **Somara Design System (SDS, ADR 0004):** `docs/design-system.md` (v0.1), con los tokens, las reglas de uso y las convenciones de CSS Modules. No es un producto aparte; vive aquí y crece con la migración.
 
 **Reglas durante la migración**
-- El código nuevo va en `src/ui/` y usa los tokens de `src/styles/tokens.css`.
+- El código nuevo va en `src/sds/` y usa los tokens de `src/styles/tokens.css`.
 - No se agregan nuevos usos de Once UI.
 - Un componente se considera migrado cuando ya no queda ningún import suyo desde `@once-ui-system/core`.
 
 ## Estado (2026-10-03): migración cerrada
 
-I2 a I7 se reemplazaron por una ruta de cuatro PRs, una vez que los 25 componentes de `src/ui` estuvieron en código:
+I2 a I7 se reemplazaron por una ruta de cuatro PRs, una vez que los 25 componentes de `src/sds` estuvieron en código:
 
 | Paso | PR | Qué cambió |
 |---|---|---|
-| A · Shell | #21 | Layout propio solo oscuro, `Header`/`Footer` de `src/ui`, Geist, íconos de Iconoir. Sin `ThemeToggle`. |
-| B · Work | #22 | Listado con `ProjectCard`, plantilla de caso de estudio, bloques MDX de `src/ui`. |
-| C · Home, About y 404 | #23 | Páginas sobre `src/ui`, sin `RevealFx`; se eliminan `Providers` e `icons.ts`. |
+| A · Shell | #21 | Layout propio solo oscuro, `Header`/`Footer` de `src/sds`, Geist, íconos de Iconoir. Sin `ThemeToggle`. |
+| B · Work | #22 | Listado con `ProjectCard`, plantilla de caso de estudio, bloques MDX de `src/sds`. |
+| C · Home, About y 404 | #23 | Páginas sobre `src/sds`, sin `RevealFx`; se eliminan `Providers` e `icons.ts`. |
 | D · Cierre | este PR | Sin CSS ni dependencia de Once UI; Metadata API y JSON-LD propios; `site.config.ts`; paquete renombrado. |
 
 `grep -r "@once-ui-system" src` ya no devuelve nada. El puente de colores de I3 nunca se hizo (habría sido trabajo descartable).
@@ -61,7 +61,7 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - [x] Crear el archivo de Figma (ver [Setup de Figma](#setup-de-figma)).
   - [x] Crear `src/styles/tokens.css` con los tokens **de la marca**. Se importa en `layout.tsx`, pero nada los usa todavía, así que no cambia nada visible.
   - [x] Crear las variables y estilos de texto en Figma con los mismos nombres: colecciones `Primitives`, `Semantic` (modo `Dark`), `Spacing`, `Radius` y `Motion`, más 12 estilos de texto.
-  - [x] Crear la carpeta `src/ui/` (piloto T0).
+  - [x] Crear la carpeta `src/sds/` (piloto T0).
   - [x] Registrar la línea base: Lighthouse móvil de `/`, `/about` y `/work/project-helix` y peso de JS (ver [Línea base](#línea-base-y-resultados)). Las CWV de usuarios reales se revisan en Speed Insights.
 - **Listo cuando:** la línea base está anotada al final de este documento.
 
@@ -91,7 +91,7 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
 ### I2 · Primitivas de layout y tipografía (M)
 - **Hipótesis:** reemplazar los componentes más usados elimina la mayoría de los imports de Once UI sin cambiar la apariencia.
 - **Pasos:**
-  - Crear en `src/ui/`: `Stack` (sustituye a `Column`, `Row` y `Flex`), `Grid`, `Divider` (sustituye a `Line`), `Text`, `Heading` y `Code`. Usan CSS Modules y tokens.
+  - Crear en `src/sds/`: `Stack` (sustituye a `Column`, `Row` y `Flex`), `Grid`, `Divider` (sustituye a `Line`), `Text`, `Heading` y `Code`. Usan CSS Modules y tokens.
   - Migrar todos los usos.
 - **Listo cuando:** no queda ningún import de esos componentes y no hay regresiones visuales en el preview (comparar capturas).
 
@@ -101,7 +101,7 @@ Tamaño estimado: **S** es menos de un día de trabajo conjunto, **M** son 1 a 3
   - Sitio **solo oscuro**: quitar `ThemeToggle` y fijar el tema. Los visitantes ya no podrán elegir el modo claro.
   - Mapear las variables de color de Once UI (`--page-background`, `--neutral-*`, `--brand-*`, `--accent-*`) a los tokens de marca en un solo archivo de puente, que se borra en I7.
   - Cargar las fuentes de la marca en lugar de Figtree y Azeret Mono:
-    - [x] **Geist Sans y Geist Mono con el paquete oficial `geist`** (adelantado el 2026-10-03 junto con los componentes; hoy solo los usan `src/ui`) (`geist/font/sans` y `geist/font/mono`), que las carga como archivo local: el build ya no las descarga de Google Fonts ni depende de la caché de Vercel. Reemplaza el `next/font/google` que agregó T0 en `src/styles/fonts.ts`, manteniendo las variables `--font-geist-sans` y `--font-geist-mono`.
+    - [x] **Geist Sans y Geist Mono con el paquete oficial `geist`** (adelantado el 2026-10-03 junto con los componentes; hoy solo los usan `src/sds`) (`geist/font/sans` y `geist/font/mono`), que las carga como archivo local: el build ya no las descarga de Google Fonts ni depende de la caché de Vercel. Reemplaza el `next/font/google` que agregó T0 en `src/styles/fonts.ts`, manteniendo las variables `--font-geist-sans` y `--font-geist-mono`.
     - **Newsreader** sigue con `next/font/google` (`--font-newsreader`), porque `geist` no la incluye.
     - **Aprendizaje de T0 (2026-10-02):** el primer deploy de producción con Geist vía `next/font/google` falló con `next/font/google queries have exactly one entry`. Vercel restauró una caché de build anterior que no tenía la fuente nueva, y Turbopack no pudo resolverla. El mismo commit compiló bien en el preview y en `dev`, y un redeploy lo resolvió. Si se repite con Newsreader u otra fuente de Google, **se vuelve a desplegar el mismo commit**, sin cambiar código.
   - Reemplazar `react-icons` por **Iconoir** en la interfaz y **Simple Icons** en los logos (ver `docs/design-system.md` → *Iconografía*), y desinstalar `react-icons`.
@@ -146,7 +146,7 @@ Antes de diseñar todas las foundations, probamos el ciclo completo **Figma → 
   - todos los valores salgan de variables existentes, sin valores sueltos;
   - el ciclo completo tome una sesión o menos.
 
-**Resultado (2026-10-02) · implementado en `src/ui/Tag`**
+**Resultado (2026-10-02) · implementado en `src/sds/Tag`**
 - **Lectura vía MCP:** `get_design_context` + `get_variable_defs` sobre el set `Tag` (19:29) devolvieron los nombres de variables idénticos a `tokens.css` (`--color-bg-elevated`, `--color-text-secondary`, `--space-4`, `--space-8`, `--radius-pill`). No hubo traducción.
 - **Fidelidad:** medida en el navegador sobre la build, alto 32/28, padding 4/8, gap 8, radio 999, Geist Medium 14/20 y 12/16, ícono 22 y 20 y colores `#20262D` / `#8C96A3`. Todo coincide con Figma.
 - **Valores fuera de tokens:** solo las dimensiones propias del componente (alto 32/28 e ícono 22/20), declaradas como variables locales (`--tag-height`, `--tag-icon-size`).
@@ -167,7 +167,7 @@ Antes de diseñar todas las foundations, probamos el ciclo completo **Figma → 
 
 **Lo que hago yo**
 - Leer el frame y las variables con el MCP.
-- Crear `src/ui/Tag/` con CSS Modules y los tokens que ya existen.
+- Crear `src/sds/Tag/` con CSS Modules y los tokens que ya existen.
 - Conectar con `next/font` las fuentes que use el tag.
 - Reemplazar el `Tag` de Once UI en About.
 - Abrir un PR con su preview y comparar con Figma.
@@ -272,15 +272,15 @@ No hay página `05 Handoff`: *Ready for dev* se marca sobre la sección, en la p
 
 | Componente en Figma | Código | Reemplaza a | Incremento | Estado |
 |---|---|---|---|---|
-| `Tag` (19:29) | `src/ui/Tag` | `Tag` | T0 | **hecho** |
-| `Chip` (41:197) | `src/ui/Chip` | — | Cuando haya filtros | en código · sin integrar |
+| `Tag` (19:29) | `src/sds/Tag` | `Tag` | T0 | **hecho** |
+| `Chip` (41:197) | `src/sds/Chip` | — | Cuando haya filtros | en código · sin integrar |
 | `Icon/*` · `Logo/*` | `iconoir-react` · `@icons-pack/react-simple-icons` (`src/resources/tagIcons.tsx`, `socialIcons.tsx`) | `react-icons` | T0 · A · C | **hecho** |
 | `Stack` · `Text` / `Heading` | CSS Modules por página con tokens | `Column`, `Row`, `Flex`, `Text`, `Heading` | B · C | **hecho** (sin componente: decisión de la ruta A–D) |
-| `Button` · `IconButton` · `Link` · `NavItem` | `src/ui/*` | `Button`, `IconButton`, `SmartLink`, `ToggleButton` | A · C | **hecho** |
-| `Header` / `Footer` | `src/ui/Header`, `src/ui/Footer` | `Header`, `Footer` de la plantilla | A | **hecho** |
-| `ProjectCard` · `Card` | `src/ui/ProjectCard`, `src/ui/Card` | `ProjectCard` de la plantilla | B | **hecho** (`Card` sin integrar) |
-| Bloques MDX: `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel`, `Callout`, `List`, `TableOfContents`, `HeadingLink` | `src/ui/*` | componentes MDX de Once UI | B | **hecho** |
-| `Divider` · `Avatar` · `AvatarGroup` · `Badge` | `src/ui/*` | `Line`, `Avatar`, `AvatarGroup`, `Badge` | B · C | **hecho** (`Badge` sin integrar) |
+| `Button` · `IconButton` · `Link` · `NavItem` | `src/sds/*` | `Button`, `IconButton`, `SmartLink`, `ToggleButton` | A · C | **hecho** |
+| `Header` / `Footer` | `src/sds/Header`, `src/sds/Footer` | `Header`, `Footer` de la plantilla | A | **hecho** |
+| `ProjectCard` · `Card` | `src/sds/ProjectCard`, `src/sds/Card` | `ProjectCard` de la plantilla | B | **hecho** (`Card` sin integrar) |
+| Bloques MDX: `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel`, `Callout`, `List`, `TableOfContents`, `HeadingLink` | `src/sds/*` | componentes MDX de Once UI | B | **hecho** |
+| `Divider` · `Avatar` · `AvatarGroup` · `Badge` | `src/sds/*` | `Line`, `Avatar`, `AvatarGroup`, `Badge` | B · C | **hecho** (`Badge` sin integrar) |
 
 ## Línea base y resultados
 

@@ -15,7 +15,7 @@ export default async function UiDocs() {
   const label = (g: (typeof GROUP_ORDER)[number]) => `${GROUPS[g].code} · ${GROUPS[g].title}`;
   const groups = GROUP_ORDER.map(label);
   // Solo datos planos al cliente: las demos (ReactNode) se quedan en el servidor.
-  // Patrón = combina otros componentes visibles de src/ui (VisuallyHidden es utilidad, no cuenta).
+  // Patrón = combina otros componentes visibles de src/sds (VisuallyHidden es utilidad, no cuenta).
   const composes = async (name: string) => {
     try {
       const kids = Object.keys((await getSourceFacts(name)).childTokens);
@@ -42,7 +42,7 @@ export default async function UiDocs() {
         <p className={styles.eyebrow}>LAB · SOMARA DESIGN SYSTEM</p>
         <h1 className={styles.title}>Componentes</h1>
         <p className={styles.lead}>
-          Specs y casos de uso de los {DOCS.length} componentes de <code>@/ui</code>: props, cuándo
+          Specs y casos de uso de los {DOCS.length} componentes de <code>@/sds</code>: props, cuándo
           usarlos, accesibilidad y los tokens que leen. {DOCS.length - unused} están en producción.
         </p>
       </header>
@@ -53,7 +53,7 @@ export default async function UiDocs() {
         <h2 className={styles.h2}>07 · Motion</h2>
         <p className={styles.body}>
           Prototipos de Félix (página 07 Motion de Figma). Propuestas en revisión de Clara: todavía
-          no viven en src/ui.
+          no viven en src/sds.
         </p>
         <MotionDemo />
       </section>

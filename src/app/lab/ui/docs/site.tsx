@@ -10,7 +10,7 @@ import {
   TeamCard,
   VisuallyHidden,
   WritingSection,
-} from "@/ui";
+} from "@/sds";
 import { Github, Home, Linkedin, Mail, User, ViewGrid } from "iconoir-react";
 import styles from "../page.module.css";
 import type { ComponentDoc } from "./types";

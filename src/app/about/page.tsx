@@ -3,7 +3,16 @@ import { Calendar, Globe } from "iconoir-react";
 import { about, person, social } from "@/resources";
 import { socialIcons } from "@/resources/socialIcons";
 import { tagIcons } from "@/resources/tagIcons";
-import { Avatar, Button, List, ListItem, Media, type MediaRatio, TableOfContents, Tag } from "@/ui";
+import {
+  Avatar,
+  Button,
+  List,
+  ListItem,
+  Media,
+  type MediaRatio,
+  TableOfContents,
+  Tag,
+} from "@/sds";
 import { JsonLd, pageMetadata, pageSchema } from "@/utils/seo";
 import { slugify } from "@/utils/slugify";
 import styles from "./page.module.css";

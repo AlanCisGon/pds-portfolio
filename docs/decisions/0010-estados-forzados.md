@@ -10,12 +10,12 @@
 - La matriz de estados de Figma (variante × Default/Hover/Pressed/Focus/Disabled) no se puede dibujar con el código vivo: `:hover`, `:active` y `:focus-visible` no se fuerzan desde HTML.
 - Había dos caminos:
   - **A:** imágenes exportadas de Figma. Es barato, pero muestra Figma, no el código.
-  - **B:** forzar los estados en el código. Es la verdad de producción y toca `src/ui`.
+  - **B:** forzar los estados en el código. Es la verdad de producción y toca `src/sds`.
 - Alan eligió B (2026-10-17).
 
 ## Decisión
 
-- Cada regla de `src/ui` con `:hover`, `:active` o `:focus-visible` lleva un gemelo en la misma lista de selectores: `:where([data-sds-state="hover|pressed|focus"]) .clase`.
+- Cada regla de `src/sds` con `:hover`, `:active` o `:focus-visible` lleva un gemelo en la misma lista de selectores: `:where([data-sds-state="hover|pressed|focus"]) .clase`.
   - `:where()` no suma especificidad.
   - El atributo solo existe en el lab, dentro de las celdas de la matriz, así que en producción el selector nunca coincide.
 - Disabled no se fuerza: es una prop.

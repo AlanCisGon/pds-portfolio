@@ -1,4 +1,4 @@
-import { ProjectCard } from "@/ui";
+import { ProjectCard } from "@/sds";
 import { getProjects } from "@/utils/projects";
 import styles from "./Projects.module.css";
 
