@@ -1,5 +1,12 @@
 [
   {
+    "slug": "afinador",
+    "title": "Afinador",
+    "description": "Afinador de guitarra clásica con el SDS: escucha por el micrófono, marca cuántos cents te faltan en cada cuerda y toca la nota de referencia.",
+    "createdAt": "2026-10-25",
+    "href": "/lab/afinador"
+  },
+  {
     "slug": "lenguajes",
     "title": "Un pago, diez lenguajes",
     "description": "Por qué existen tantos lenguajes de programación: un pago de $1,299 MXN cruza siete capas, y la misma tarea se ve escrita en 32 lenguajes, formatos y protocolos.",

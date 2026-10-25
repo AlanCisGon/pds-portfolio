@@ -1,0 +1,73 @@
+/* Gauge · 02c Data & Media (sin Figma todavía). Display only: tone is status (context layer), never Cerezo. */
+.gauge {
+  --gauge-fg: var(--status-neutral-fg);
+
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--space-64) * 6);
+  margin-inline: auto;
+}
+
+.gauge[data-tone="success"] {
+  --gauge-fg: var(--status-success-fg);
+}
+.gauge[data-tone="danger"] {
+  --gauge-fg: var(--status-danger-fg);
+}
+
+.dial {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.track {
+  fill: none;
+  stroke: var(--color-border-subtle);
+}
+
+.zone {
+  fill: none;
+  stroke: var(--status-success-border);
+}
+
+.tick {
+  stroke: var(--color-text-secondary);
+  stroke-linecap: round;
+}
+
+.label {
+  fill: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+}
+
+/* The needle reads the status; with no reading it rests at the center in secondary text. */
+.needle {
+  stroke: var(--color-text-primary);
+  stroke-linecap: round;
+  transition: stroke var(--duration-base) var(--ease-settle);
+}
+.gauge[data-tone="success"] .needle,
+.gauge[data-tone="danger"] .needle {
+  stroke: var(--gauge-fg);
+}
+.gauge[data-idle] .needle {
+  stroke: var(--color-text-secondary);
+}
+
+.readout {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .needle {
+    transition: none;
+  }
+}
