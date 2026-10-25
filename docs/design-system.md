@@ -282,7 +282,7 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
 |---|---|---|
 | 02a Actions | `Button`, `IconButton`, `Link`, `NavItem`, `Chip`, `SearchField` | `Chip`, `SearchField` |
 | 02b Content | `Tag`, `Divider`, `Avatar`, `AvatarGroup`, `Badge`, `Callout`, `List`/`ListItem`, `Stat`, `FactSheet` | `Badge` |
-| 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel` | `Carousel` |
+| 02c Data & Media | `Table`, `CodeBlock`, `Accordion`, `Media`, `Carousel`, `Gauge` | `Carousel`, `Gauge` |
 | 02d Navigation | `TableOfContents`/`TocItem`, `HeadingLink` | — |
 | 02e Cards & Site | `Card`, `ProjectCard`, `Header`, `Footer`, `TeamCard` | `Card` |
 
@@ -309,6 +309,12 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - **Conteo de resultados:** lo anuncia la página con `aria-live="polite"`, no el componente.
   - **Ancho:** 100 % en móvil; 320 px (`calc(var(--space-64) * 5)`) junto a los chips en escritorio.
   - **≠ `Chip`:** el Chip filtra por categoría con `aria-pressed`; el SearchField filtra por texto libre.
+- **`Gauge` (02c, sin Figma todavía; Alan, 2026-10-25):** medidor semicircular centrado en un objetivo. Nace con el afinador del lab (`/lab/afinador`). Solo muestra: `role="meter"`, SVG decorativo y lectura en `aria-valuetext`.
+  - **Sin Cerezo:** no es interactivo. La aguja va en `--color-text-primary`, y su `tone` (`neutral`, `success`, `danger`) sale de la capa de estatus. Sin lectura (`value={null}`) descansa al centro en `--color-text-secondary`. La banda objetivo (`zone`) usa `--status-success-border`.
+  - **Nunca solo color:** la página dice el estado en texto con `aria-live`.
+  - **Movimiento:** la aguja no tiene transición propia; quien la usa la suaviza (el afinador, con rAF) y con movimiento reducido salta.
+  - **Pendiente:** dibujarlo en Figma (02c) y su spec en 06.
+- **`Chip` · `trailingIcon` (2026-10-25):** marca de estado decorativa después del texto en el chip filtro, como el `Check` de una cuerda afinada. El estado también se dice en texto cerca del chip. Falta la propiedad `TrailingIcon` en Figma.
 - **`TeamCard` (02e, `83:152`):** tarjeta estática de integrante (avatar `xl`, nombre en `Voice/Card`, rol y descripción), con `layout` horizontal o vertical. El rol nunca va en Cerezo. Su patrón `TeamGrid` (03 Patterns, `84:87`) vive en `src/components/work/TeamGrid.tsx` y se usa desde el MDX.
 - **`Badge` (02b, `30:35`):** `showIcon` es un eje de variante en Figma (`true`/`false`), igual que el prop. Sin ícono, el padding horizontal es `--space-8` (`.badge[data-icon="false"]`); con ícono, `--space-4`. Sin ícono, el texto debe nombrar el estatus: nunca solo el color.
 - **`Avatar` (02b, `29:13`):** en Figma, la propiedad booleana `Src` corresponde al prop `src`. Activada, la capa `Photo` muestra la foto como relleno de imagen (override por instancia, nunca desligada); apagada (por omisión), se ven las iniciales (`Initials` ↔ `initials`, que por omisión salen de `name`). En código, la foto lleva `alt` con el nombre, o `decorative` (`alt=""`) cuando el nombre ya se ve al lado.

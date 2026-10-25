@@ -9,6 +9,8 @@ type BaseProps = {
   size?: "m" | "s";
   /** Figma: `LeadingIcon` (omit to hide). */
   leadingIcon?: ReactNode;
+  /** Figma: `TrailingIcon` (omit to hide). A state mark after the label, e.g. a check. */
+  trailingIcon?: ReactNode;
   disabled?: boolean;
   className?: string;
 };
@@ -31,7 +33,7 @@ export type ChipProps = BaseProps &
 
 /** Interactive chip. For non-interactive information use Tag. */
 export function Chip(props: ChipProps) {
-  const { label, size = "m", leadingIcon, disabled, className } = props;
+  const { label, size = "m", leadingIcon, trailingIcon, disabled, className } = props;
   const cls = className ? `${styles.chip} ${className}` : styles.chip;
   const lead = leadingIcon && (
     <span className={styles.icon} aria-hidden="true">
@@ -77,6 +79,11 @@ export function Chip(props: ChipProps) {
     >
       {lead}
       <span>{label}</span>
+      {trailingIcon && (
+        <span className={styles.icon} aria-hidden="true">
+          {trailingIcon}
+        </span>
+      )}
     </button>
   );
 }

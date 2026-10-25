@@ -24,6 +24,7 @@ export * from "./CodeBlock";
 export * from "./Accordion";
 export * from "./Media";
 export * from "./Carousel";
+export * from "./Gauge";
 // 02d Navigation
 export * from "./TableOfContents";
 export * from "./HeadingLink";

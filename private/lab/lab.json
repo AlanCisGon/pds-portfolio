@@ -2,8 +2,9 @@
   {
     "slug": "afinador",
     "title": "Afinador",
-    "description": "Afinador de guitarra en el navegador: escucha por el micrófono, detecta la nota y una aguja marca cuántos cents te faltan.",
-    "createdAt": "2026-10-25"
+    "description": "Afinador de guitarra clásica con el SDS: escucha por el micrófono, marca cuántos cents te faltan en cada cuerda y toca la nota de referencia.",
+    "createdAt": "2026-10-25",
+    "href": "/lab/afinador"
   },
   {
     "slug": "lenguajes",

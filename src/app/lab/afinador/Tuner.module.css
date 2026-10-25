@@ -1,0 +1,155 @@
+/* Afinador · lab page built on SDS (Gauge, Button, Chip, Callout). Tones are status, never Cerezo. */
+.tuner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-16);
+  width: 100%;
+}
+
+.note {
+  color: var(--color-text-primary);
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-line);
+  transition: color var(--duration-base) var(--ease-settle);
+}
+.tuner[data-tone="ok"] .note {
+  color: var(--status-success-fg);
+}
+
+.sub {
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.status {
+  margin: 0;
+  min-height: var(--text-heading-s-line);
+  color: var(--color-text-primary);
+  font-size: var(--text-heading-s-size);
+  line-height: var(--text-heading-s-line);
+  font-weight: var(--weight-semibold);
+  text-align: center;
+  transition: color var(--duration-base) var(--ease-settle);
+}
+.tuner[data-tone="ok"] .status {
+  color: var(--status-success-fg);
+}
+.tuner[data-tone="far"] .status {
+  color: var(--status-danger-fg);
+}
+
+.detail {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-16);
+  min-height: var(--text-meta-line);
+  margin: calc(-1 * var(--space-8)) 0 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  font-variant-numeric: tabular-nums;
+}
+
+.main {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+/* Headstock: the pegs sit where they are on the guitar, around a plain plate (no wood texture: brand §6). */
+.head {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-8);
+  width: 100%;
+  min-width: 0;
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Visually hidden: the fieldset keeps its accessible name. */
+.legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.pegs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: var(--space-8);
+}
+.pegs[data-side="left"] {
+  align-items: flex-end;
+}
+.pegs[data-side="right"] {
+  align-items: flex-start;
+}
+
+.peg {
+  min-width: calc(var(--space-64) + var(--space-24));
+  justify-content: center;
+}
+
+.plate {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-24) var(--space-16) var(--space-16);
+  border-radius: var(--radius-card) var(--radius-card) var(--space-4) var(--space-4);
+  background: var(--color-bg-surface);
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: var(--space-16);
+  padding: var(--space-8) 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-page);
+}
+
+/* The string being tuned: an active state, so Cerezo. */
+.roller {
+  height: var(--space-8);
+  border-radius: var(--radius-pill);
+  background: var(--color-text-secondary);
+  transition: background-color var(--duration-fast) var(--ease-settle);
+}
+.roller[data-active] {
+  background: var(--color-accent);
+}
+
+.hint {
+  max-width: 36ch;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note,
+  .status,
+  .roller {
+    transition: none;
+  }
+}

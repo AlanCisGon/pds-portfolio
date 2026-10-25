@@ -317,6 +317,13 @@ export const actions: ComponentDoc[] = [
         description: "Ícono antes del texto.",
       },
       {
+        name: "trailingIcon",
+        type: "ReactNode",
+        figma: "TrailingIcon",
+        description:
+          "Filtro: marca de estado después del texto, decorativa (p. ej. Check en una cuerda afinada). El estado también va en texto cerca del chip.",
+      },
+      {
         name: "selected",
         type: "boolean",
         default: "false",
@@ -330,7 +337,10 @@ export const actions: ComponentDoc[] = [
       },
       { name: "disabled", type: "boolean", description: "Sin interacción." },
     ],
-    use: ["Filtros de la lista de trabajo (todavía no existen: entra cuando haya filtros)."],
+    use: [
+      "Filtros de la lista de trabajo (todavía no existen: entra cuando haya filtros).",
+      "Elegir una opción que se alterna, como la cuerda o el modo Automático del afinador del lab.",
+    ],
     avoid: ["Para información que no se toca: usa Tag.", "Para un estatus: usa Badge."],
     accessibility: [
       "El filtro es <button aria-pressed>.",

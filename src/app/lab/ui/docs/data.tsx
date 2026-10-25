@@ -1,4 +1,13 @@
-import { Accordion, Carousel, CodeBlock, HeadingLink, Media, Table, TableOfContents } from "@/sds";
+import {
+  Accordion,
+  Carousel,
+  CodeBlock,
+  Gauge,
+  HeadingLink,
+  Media,
+  Table,
+  TableOfContents,
+} from "@/sds";
 import styles from "../page.module.css";
 import type { ComponentDoc } from "./types";
 
@@ -214,6 +223,86 @@ export const data: ComponentDoc[] = [
       "Con movimiento reducido cambia por fundido.",
     ],
     related: ["media", "icon-button"],
+  },
+  {
+    slug: "gauge",
+    name: "Gauge",
+    group: "data",
+    level: "molécula",
+    unused: true,
+    summary:
+      "Medidor semicircular centrado en un objetivo: cuánto se desvía una lectura y hacia qué lado. Solo muestra; no se toca.",
+    demo: (
+      <div className={styles.stack}>
+        <Gauge value={null} zone={5} label="Sin lectura" valueText="Sin lectura">
+          <span>Sin lectura</span>
+        </Gauge>
+        <Gauge value={-18} zone={5} label="Desviación" valueText="18 cents grave">
+          <span>−18 cents</span>
+        </Gauge>
+        <Gauge value={2} zone={5} tone="success" label="Desviación" valueText="2 cents, afinada">
+          <span>Afinada</span>
+        </Gauge>
+      </div>
+    ),
+    usage: `<Gauge value={cents} zone={5} tone={inTune ? "success" : "neutral"} label="Desviación, en cents" valueText="12 cents grave">
+  <span>La</span>
+</Gauge>`,
+    props: [
+      {
+        name: "value",
+        type: "number | null",
+        required: true,
+        description: "Lectura actual; se recorta a min/max. null deja la aguja al centro, en gris.",
+      },
+      { name: "min", type: "number", default: "-50", description: "Extremo izquierdo." },
+      { name: "max", type: "number", default: "50", description: "Extremo derecho." },
+      {
+        name: "zone",
+        type: "number",
+        default: "0",
+        figma: "Zone",
+        description:
+          "Medio ancho de la banda objetivo alrededor del centro, en las unidades de value.",
+      },
+      {
+        name: "tone",
+        type: '"neutral" | "success" | "danger"',
+        default: '"neutral"',
+        figma: "Tone",
+        description:
+          "Estatus de la aguja (capa contextual). Nunca Cerezo: el medidor no es interactivo.",
+      },
+      {
+        name: "label",
+        type: "string",
+        required: true,
+        description: "Nombre accesible del medidor.",
+      },
+      {
+        name: "valueText",
+        type: "string",
+        description: 'La lectura en palabras (aria-valuetext), p. ej. "12 cents grave".',
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "Lectura dentro del arco: la cifra o nota a la que apunta la aguja.",
+      },
+    ],
+    use: [
+      "Una desviación continua respecto a un objetivo, como la afinación del afinador del lab.",
+    ],
+    avoid: [
+      "Para una cifra con fuente: usa Stat.",
+      "Para un avance de 0 a 100: hace falta una barra de progreso, no un medidor centrado.",
+    ],
+    accessibility: [
+      'role="meter" con aria-valuemin/max/now y aria-valuetext; el SVG es decorativo.',
+      "El tono nunca va solo: la página dice el estado en texto, con aria-live si cambia en vivo.",
+      "Sin transición propia de la aguja: quien la usa la suaviza, y con movimiento reducido salta.",
+    ],
+    related: ["stat", "badge"],
   },
 ];
 
