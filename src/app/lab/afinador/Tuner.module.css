@@ -7,6 +7,16 @@
   width: 100%;
 }
 
+/* Held: the string stopped; the last clear reading stays, dimmed, until the next pluck. */
+.reading {
+  width: 100%;
+  transition: opacity var(--duration-base) var(--ease-settle);
+}
+.tuner[data-held] .reading,
+.tuner[data-held] .detail {
+  opacity: 0.6;
+}
+
 .note {
   color: var(--color-text-primary);
   font-family: var(--font-serif);
@@ -53,6 +63,16 @@
   font-size: var(--text-meta-size);
   line-height: var(--text-meta-line);
   font-variant-numeric: tabular-nums;
+}
+
+.progress {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
 }
 
 .main {
@@ -147,6 +167,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reading,
   .note,
   .status,
   .roller {

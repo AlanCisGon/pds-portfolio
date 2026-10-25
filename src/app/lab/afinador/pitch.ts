@@ -82,14 +82,23 @@ function yin(x: Float32Array, sampleRate: number, d: Float32Array) {
   return { freq: sampleRate / (tau + Math.max(-1, Math.min(1, shift))), confidence: 1 - b };
 }
 
+// Below this level a fading string reads up to 25 cents off, so it is not measured (the tuner
+// holds the last clear reading instead). Above room noise × NOISE_GATE, whichever is higher.
+const MIN_RMS = 0.004;
+const NOISE_GATE = 4;
+
 /** Creates a detector with its buffers allocated once. Returns Hz, or null for silence or noise. */
 export function createDetector(size: number, sampleRate: number) {
   const decimated = new Float32Array(size / 2);
   const work = new Float32Array(Math.floor(sampleRate / 2 / 70) + 2);
+  // Room noise, learned on the fly: drops at once to a quieter frame, creeps up slowly otherwise.
+  let floor = 0;
   return (buf: Float32Array) => {
-    let rms = 0;
-    for (let i = 0; i < buf.length; i++) rms += buf[i] * buf[i];
-    if (Math.sqrt(rms / buf.length) < 0.006) return null;
+    let sum = 0;
+    for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+    const rms = Math.sqrt(sum / buf.length);
+    floor = floor === 0 || rms < floor ? rms : floor * 1.003;
+    if (rms < Math.max(MIN_RMS, floor * NOISE_GATE)) return null;
     for (let i = 0; i < decimated.length; i++) decimated[i] = (buf[2 * i] + buf[2 * i + 1]) * 0.5;
     const r = yin(decimated, sampleRate / 2, work);
     return r && r.confidence > 0.8 ? r.freq : null;
