@@ -1,5 +1,11 @@
 [
   {
+    "slug": "afinador",
+    "title": "Afinador",
+    "description": "Afinador de guitarra en el navegador: escucha por el micrófono, detecta la nota y una aguja marca cuántos cents te faltan.",
+    "createdAt": "2026-10-25"
+  },
+  {
     "slug": "lenguajes",
     "title": "Un pago, diez lenguajes",
     "description": "Por qué existen tantos lenguajes de programación: un pago de $1,299 MXN cruza siete capas, y la misma tarea se ve escrita en 32 lenguajes, formatos y protocolos.",
