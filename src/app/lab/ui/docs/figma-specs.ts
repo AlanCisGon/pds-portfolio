@@ -1,5 +1,5 @@
 // Contenido de la página "06 Specs" de Figma (SDS · Somara Design System, 273:2), extraído con un
-// script de solo lectura el 2026-10-17. Figma es la fuente: si cambia la spec, se vuelve a extraer;
+// script de solo lectura el 2026-10-17 (Gauge: 2026-10-25). Figma es la fuente: si cambia la spec, se vuelve a extraer;
 // no se edita a mano para "arreglar" una deriva (la deriva se le reporta a Clara).
 //
 // anatomy.parts: [número, x como fracción del ancho del ejemplo (0–1), fila (0 arriba, 1 abajo), parte, descripción]
@@ -766,6 +766,56 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
       'Región con aria-roledescription="carousel" y label.',
       "Punto en reposo 6.32:1 (≥ 3:1).",
       "Sin autoplay; reduced motion quita la transición.",
+    ],
+  },
+  gauge: {
+    frame: "469:2024",
+    set: "467:127",
+    crumb: "SDS / Specs / Datos y media",
+    description:
+      "Medidor centrado en un objetivo: cuánto se desvía una lectura y hacia qué lado. Solo muestra; nunca lleva Cerezo.",
+    status: READY,
+    anatomyScale: 1,
+    parts: [
+      ["1", 0.22, 0, "Arco", "Recorrido de −50 a +50 en ±60°."],
+      [
+        "2",
+        0.53,
+        0,
+        "Banda objetivo",
+        "Opcional (zone): dónde la lectura cuenta como en objetivo.",
+      ],
+      ["3", 0.71, 0, "Marcas y etiquetas", "Cada 10; mayores y con etiqueta en −50, 0 y +50."],
+      ["4", 0.37, 0, "Aguja", "Apunta a la lectura; su color es el Tone."],
+      ["5", 0.45, 1, "Lectura", "children: la cifra o nota a la que apunta."],
+    ],
+    measures: [
+      head,
+      ["Alto", "230 (proporción 300 × 180)", "viewBox del SVG"],
+      ["Ancho máximo", "384", "calc(var(--space-64) * 6)"],
+      ["Recorrido", "±50 en ±60°", "min · max"],
+      ["Banda objetivo", "±zone (afinador: 5 cents)", "zone"],
+      ["Trazos (unidades del SVG)", "arco 2 · marcas 1.5 / 2.5 · aguja 5", "atributo strokeWidth"],
+    ],
+    tokens: [
+      thead,
+      ["Arco", "—", "--color-border-subtle"],
+      ["Banda objetivo", "showZone", "--status-success-border"],
+      ["Marcas y etiquetas", "—", "--color-text-secondary · Measure/Meta"],
+      ["Aguja", "neutral", "--color-text-primary"],
+      ["Aguja", "sin lectura (Reading=false)", "--color-text-secondary"],
+      ["Aguja", "success / danger", "--status-success-fg / --status-danger-fg"],
+      ["Movimiento", "color de la aguja", "--duration-base · --ease-settle"],
+    ],
+    states: ["sin lectura", "neutral", "success", "danger"],
+    responsive: [
+      "Hasta 384 px de ancho, centrado. En 390 px ocupa la columna (358 px) y escala en proporción; sin cambio en 1280 px.",
+    ],
+    accessibility: [
+      'role="meter" con aria-valuemin/max/now y aria-valuetext ("18 cents grave"); el SVG es decorativo.',
+      "Nunca solo color: la página dice el estado en texto, con aria-live si cambia en vivo.",
+      "Aguja sobre page: text/primary 15.96:1, success 12.17:1, danger 7.07:1; sin lectura, text/secondary 6.32:1 (≥ 3:1).",
+      "Sin transición propia de la aguja: quien la usa la suaviza, y con movimiento reducido salta.",
     ],
   },
   "table-of-contents": {
