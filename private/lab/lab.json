@@ -1,5 +1,12 @@
 [
   {
+    "slug": "acordes",
+    "title": "Acordes",
+    "description": "Rasgueas un acorde y te dice cuál es (mayor, menor, séptimas, suspendidos, inversiones) y cómo se toca en tu afinación, con diagrama y tablatura.",
+    "createdAt": "2026-10-25",
+    "href": "/lab/acordes"
+  },
+  {
     "slug": "afinador",
     "title": "Afinador",
     "description": "Afinador de guitarra clásica con el SDS: escucha por el micrófono, marca cuántos cents te faltan en cada cuerda y toca la nota de referencia.",

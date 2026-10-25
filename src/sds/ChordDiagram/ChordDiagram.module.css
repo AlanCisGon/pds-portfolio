@@ -1,0 +1,46 @@
+/* ChordDiagram · 02c Data & Media (sin Figma todavía). Display only: no Cerezo, nothing to press. */
+.diagram {
+  width: 100%;
+  max-width: calc(var(--space-64) * 3);
+  margin: 0;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.nut {
+  stroke: var(--color-text-primary);
+  stroke-linecap: round;
+}
+
+.fret,
+.string {
+  stroke: var(--color-text-secondary);
+}
+
+.mark {
+  stroke: var(--color-text-secondary);
+  stroke-linecap: round;
+}
+
+.dot {
+  fill: var(--color-text-primary);
+}
+
+.finger {
+  fill: var(--color-bg-page);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  font-weight: var(--weight-medium);
+}
+
+.base,
+.name {
+  fill: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+}

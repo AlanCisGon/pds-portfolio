@@ -1,0 +1,47 @@
+/* Tab · 02c Data & Media (sin Figma todavía). One chord in tablature; display only. */
+.tab {
+  /* The fret masks the line: set this to the surface the tab sits on. */
+  --tab-bg: var(--color-bg-page);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: calc(var(--space-64) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-code-size);
+  line-height: var(--text-code-line);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.name {
+  min-width: var(--space-32);
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+
+/* The string: a hairline through the middle, the fret sitting on it. */
+.line {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(var(--color-text-secondary), var(--color-text-secondary)) center /
+    100% 1px no-repeat;
+}
+
+.fret {
+  min-width: var(--space-24);
+  padding: 0 var(--space-4);
+  background: var(--tab-bg);
+  color: var(--color-text-primary);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.fret[data-muted] {
+  color: var(--color-text-secondary);
+}
