@@ -15,6 +15,7 @@ import {
   FeaturedCase,
   Footer,
   Footnotes,
+  Gauge,
   Header,
   HeadingLink,
   IconButton,
@@ -307,6 +308,25 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
           { src: `${helix}/checkout-flow.webp`, alt: "" },
         ]}
       />,
+    ),
+  },
+  gauge: {
+    anatomy: (
+      <div className="w384">
+        <Gauge value={-18} zone={5} label="Desviación" valueText="18 cents grave">
+          <span>La</span>
+        </Gauge>
+      </div>
+    ),
+    specimen: (row) => (
+      <Gauge
+        value={row === "sin lectura" ? null : row === "success" ? 2 : row === "danger" ? -50 : -18}
+        zone={5}
+        tone={row === "success" ? "success" : row === "danger" ? "danger" : "neutral"}
+        label="Desviación"
+      >
+        <span>{row === "sin lectura" ? "–" : row === "danger" ? "Sol" : "La"}</span>
+      </Gauge>
     ),
   },
   "table-of-contents": {

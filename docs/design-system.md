@@ -315,7 +315,7 @@ Los 27 componentes v0.1 están **diseñados en Figma, auditados y en código** (
   - **Movimiento:** la aguja no tiene transición propia; quien la usa la suaviza (el afinador, con rAF) y con movimiento reducido salta.
   - **Figma ↔ código:** `Tone` (`neutral`/`success`/`danger`) = `tone`; `Reading=false` = `value={null}`; `showZone` = `zone > 0`; `Readout`/`showReadout` = `children`. La variante sin lectura existe solo con `Tone=neutral`.
   - **Readout en Figma:** va en `Measure/Figure` (Chivo Mono), porque Amstelvar no carga en el runtime de la API de plugins; el afinador usa `Voice/Display` en código.
-  - **Pendiente:** su spec en 06.
+  - **Spec:** `06 Specs`, frame `469:2024` (Alan, 2026-10-25); sus textos están en `figma-specs.ts`.
 - **`Chip` · `trailingIcon` (2026-10-25):** marca de estado decorativa después del texto en el chip filtro, como el `Check` de una cuerda afinada. El estado también se dice en texto cerca del chip. En Figma: `showTrailingIcon` (BOOLEAN, por omisión `false`) + `TrailingIcon` (INSTANCE_SWAP, por omisión `Icon/Check`), entre `Label` y `CloseIcon`, como `LeadingIcon`.
 - **`TeamCard` (02e, `83:152`):** tarjeta estática de integrante (avatar `xl`, nombre en `Voice/Card`, rol y descripción), con `layout` horizontal o vertical. El rol nunca va en Cerezo. Su patrón `TeamGrid` (03 Patterns, `84:87`) vive en `src/components/work/TeamGrid.tsx` y se usa desde el MDX.
 - **`Badge` (02b, `30:35`):** `showIcon` es un eje de variante en Figma (`true`/`false`), igual que el prop. Sin ícono, el padding horizontal es `--space-8` (`.badge[data-icon="false"]`); con ícono, `--space-4`. Sin ícono, el texto debe nombrar el estatus: nunca solo el color.
