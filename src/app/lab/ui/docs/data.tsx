@@ -229,6 +229,7 @@ export const data: ComponentDoc[] = [
     name: "Gauge",
     group: "data",
     level: "molécula",
+    figmaNode: "467:127",
     unused: true,
     summary:
       "Medidor semicircular centrado en un objetivo: cuánto se desvía una lectura y hacia qué lado. Solo muestra; no se toca.",
@@ -287,6 +288,7 @@ export const data: ComponentDoc[] = [
       {
         name: "children",
         type: "ReactNode",
+        figma: "Readout",
         description: "Lectura dentro del arco: la cifra o nota a la que apunta la aguja.",
       },
     ],
