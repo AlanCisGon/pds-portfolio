@@ -1,11 +1,23 @@
 "use client";
 
-import { Bell, Check, Microphone, MicrophoneMute, SoundHigh } from "iconoir-react";
+import { Bell, Check, Microphone, MicrophoneMute, Minus, Plus, SoundHigh } from "iconoir-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { Button, Callout, Chip, Gauge } from "@/sds";
+import { Accordion, Button, Callout, Chip, Gauge, IconButton } from "@/sds";
+import {
+  A4_RANGE,
+  DEFAULT_A4,
+  type GuitarString,
+  STRINGS,
+  TUNINGS,
+  centsOf,
+  createDetector,
+  median,
+  nearestString,
+  noteName,
+} from "../_guitar/pitch";
+import { useGuitarSettings } from "../_guitar/settings";
 import styles from "./Tuner.module.css";
-import { STRINGS, centsOf, createDetector, median, nearestString } from "./pitch";
 
 type Tone = "idle" | "low" | "high" | "ok" | "far";
 type Mode = "auto" | "manual";
@@ -39,14 +51,15 @@ function nextString(from: number, tuned: Set<number>) {
   return from;
 }
 
-function idleStatus(running: boolean, mode: Mode, sel: number) {
+function idleStatus(running: boolean, mode: Mode, sel: number, strings: GuitarString[]) {
   if (!running) return "Activa el micrófono y toca una cuerda al aire";
   return mode === "manual"
-    ? `Toca la ${STRINGS[sel].ord} cuerda (${STRINGS[sel].name})`
+    ? `Toca la ${strings[sel].ord} cuerda (${strings[sel].name})`
     : "Toca una cuerda al aire";
 }
 
 export function Tuner() {
+  const { tuning, a4, strings, setTuning, setA4 } = useGuitarSettings();
   const [running, setRunning] = useState(false);
   const [mode, setMode] = useState<Mode>("auto");
   const [sel, setSel] = useState(0);
@@ -59,7 +72,7 @@ export function Tuner() {
   const [chime, setChime] = useState(true);
   const [view, setView] = useState<View>({
     tone: "idle",
-    status: idleStatus(false, "auto", 0),
+    status: idleStatus(false, "auto", 0, STRINGS),
     freq: null,
     cents: null,
   });
@@ -92,7 +105,12 @@ export function Tuner() {
     /** The string just tuned and when the tuner moved on from it: its ringing tail is not a reading. */
     leftover: -1,
     leftoverUntil: 0,
+    strings: STRINGS,
   });
+  // The audio loop reads the current tuning from the ref.
+  useEffect(() => {
+    loop.current.strings = strings;
+  }, [strings]);
 
   const reset = useCallback((isRunning: boolean, m: Mode, s: number) => {
     window.clearTimeout(loop.current.nextTimer);
@@ -104,7 +122,12 @@ export function Tuner() {
       chimed: false,
     });
     setHeld(false);
-    setView({ tone: "idle", status: idleStatus(isRunning, m, s), freq: null, cents: null });
+    setView({
+      tone: "idle",
+      status: idleStatus(isRunning, m, s, loop.current.strings),
+      freq: null,
+      cents: null,
+    });
   }, []);
 
   const ensureCtx = useCallback(() => {
@@ -286,14 +309,14 @@ export function Tuner() {
       s.hist.push(f);
       if (s.hist.length > 5) s.hist.shift();
       const fm = median(s.hist);
-      if (now < s.leftoverUntil && nearestString(fm) === s.leftover) return;
-      const i = s.mode === "manual" ? s.sel : nearestString(fm);
+      if (now < s.leftoverUntil && nearestString(fm, s.strings) === s.leftover) return;
+      const i = s.mode === "manual" ? s.sel : nearestString(fm, s.strings);
       if (i !== s.current) {
         s.inTuneSince = 0;
         s.current = i;
         setCurrent(i);
       }
-      let c = centsOf(fm, STRINGS[i].freq);
+      let c = centsOf(fm, s.strings[i].freq);
       // On a chosen string, an octave harmonic still counts as that string.
       if (s.mode === "manual") {
         if (Math.abs(c - 1200) < 60) c -= 1200;
@@ -304,7 +327,7 @@ export function Tuner() {
       s.lastPitchAt = now;
 
       const abs = Math.abs(c);
-      const str = STRINGS[i];
+      const str = s.strings[i];
       let tone: Tone;
       let status: string;
       if (s.mode === "manual" && abs > 300) {
@@ -365,6 +388,25 @@ export function Tuner() {
     };
   }, [stop]);
 
+  // A new tuning or reference moves every target: what was in tune no longer counts.
+  const restartProgress = () => {
+    window.clearTimeout(loop.current.nextTimer);
+    loop.current.tuned = new Set();
+    setTuned(new Set());
+    reset(running, mode, sel);
+  };
+
+  const changeTuning = (id: string) => {
+    if (id === tuning.id) return;
+    setTuning(id);
+    restartProgress();
+  };
+
+  const changeA4 = (hz: number) => {
+    setA4(hz);
+    restartProgress();
+  };
+
   const changeMode = (m: Mode, s = sel) => {
     window.clearTimeout(loop.current.nextTimer);
     loop.current.mode = m;
@@ -383,12 +425,12 @@ export function Tuner() {
     loop.current.current = i;
     setCurrent(i);
     changeMode("manual", i);
-    if (!running) playRef(STRINGS[i].freq);
+    if (!running) playRef(strings[i].freq);
   };
 
   const shownIndex = mode === "manual" ? sel : current;
-  const shownString = shownIndex === null ? null : STRINGS[shownIndex];
-  const refString = STRINGS[shownIndex ?? 0];
+  const shownString = shownIndex === null ? null : strings[shownIndex];
+  const refString = strings[shownIndex ?? 0];
   const cents = view.cents;
   const centsText =
     cents === null
@@ -398,12 +440,14 @@ export function Tuner() {
         : `${cents > 0 ? "+" : "−"}${Math.round(Math.abs(cents))} cents`;
 
   const peg = (i: number) => {
-    const s = STRINGS[i];
+    const s = strings[i];
+    // Against standard tuning: ↓ a string tuned lower, ↑ higher.
+    const diff = s.midi - TUNINGS[0].midi[i];
     return (
       <Chip
         key={i}
         className={styles.peg}
-        label={`${s.ord} · ${s.name}`}
+        label={`${s.ord} · ${s.name}${diff < 0 ? " ↓" : diff > 0 ? " ↑" : ""}`}
         selected={mode === "manual" && sel === i}
         trailingIcon={tuned.has(i) ? <Check /> : undefined}
         onClick={() => onPeg(i)}
@@ -475,6 +519,56 @@ export function Tuner() {
         >
           {`Escuchar ${refString.name} (${refString.ord})`}
         </Button>
+      </div>
+
+      <div className={styles.settings}>
+        <Accordion title={`Afinación: ${tuning.label}${a4 === DEFAULT_A4 ? "" : ` · La ${a4} Hz`}`}>
+          <fieldset className={styles.group}>
+            <legend className={styles.groupLabel}>Afinación</legend>
+            <div className={styles.chips}>
+              {TUNINGS.map((t) => (
+                <Chip
+                  key={t.id}
+                  size="s"
+                  label={t.label}
+                  selected={t.id === tuning.id}
+                  onClick={() => changeTuning(t.id)}
+                />
+              ))}
+            </div>
+            <p className={styles.groupHint}>
+              {tuning.midi.map((m) => noteName(m, tuning.flats)).join(" · ")}
+            </p>
+          </fieldset>
+          <fieldset className={styles.group}>
+            <legend className={styles.groupLabel}>La de referencia</legend>
+            <div className={styles.stepper}>
+              <IconButton
+                size="s"
+                icon={<Minus />}
+                label="Bajar 1 Hz"
+                disabled={a4 <= A4_RANGE[0]}
+                onClick={() => changeA4(a4 - 1)}
+              />
+              <output className={styles.a4} aria-live="polite">{`${a4} Hz`}</output>
+              <IconButton
+                size="s"
+                icon={<Plus />}
+                label="Subir 1 Hz"
+                disabled={a4 >= A4_RANGE[1]}
+                onClick={() => changeA4(a4 + 1)}
+              />
+              {a4 !== DEFAULT_A4 && (
+                <Button size="s" variant="ghost" onClick={() => changeA4(DEFAULT_A4)}>
+                  Volver a 440
+                </Button>
+              )}
+            </div>
+            <p className={styles.groupHint}>
+              Cámbiala solo para afinar con un piano u otro instrumento que no esté en 440 Hz.
+            </p>
+          </fieldset>
+        </Accordion>
       </div>
 
       <fieldset className={styles.head}>

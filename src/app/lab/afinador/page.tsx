@@ -14,7 +14,7 @@ export default function AfinadorPage() {
       <header className={styles.header}>
         <p className={styles.eyebrow}>Lab · privado</p>
         <h1 className={styles.title}>Afinador</h1>
-        <p className={styles.lead}>Guitarra clásica, afinación estándar.</p>
+        <p className={styles.lead}>Guitarra clásica: estándar u otras afinaciones comunes.</p>
       </header>
       <Tuner />
       <p className={styles.note}>El audio se procesa en tu navegador; no se graba ni se envía.</p>

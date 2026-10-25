@@ -1,23 +1,63 @@
-// Pitch detection for the tuner: YIN on a 2× decimated buffer (enough for 70–440 Hz, a guitar's open strings).
+// Pitch detection for the tuner: YIN on a 2× decimated buffer (enough for 70–440 Hz, a guitar's open
+// strings in every tuning below: the lowest is D2, 73.4 Hz).
 
-export type GuitarString = { ord: string; name: string; sci: string; freq: number };
+export type GuitarString = { ord: string; name: string; sci: string; freq: number; midi: number };
 
-/** Classical guitar, standard tuning, from the 6th string (low E) to the 1st. */
-export const STRINGS: GuitarString[] = [
-  { ord: "6ª", name: "Mi", sci: "E2", freq: 82.4069 },
-  { ord: "5ª", name: "La", sci: "A2", freq: 110 },
-  { ord: "4ª", name: "Re", sci: "D3", freq: 146.8324 },
-  { ord: "3ª", name: "Sol", sci: "G3", freq: 195.9977 },
-  { ord: "2ª", name: "Si", sci: "B3", freq: 246.9417 },
-  { ord: "1ª", name: "Mi", sci: "E4", freq: 329.6276 },
+export type Tuning = {
+  id: string;
+  label: string;
+  /** MIDI notes from the 6th string (lowest) to the 1st. */
+  midi: number[];
+  /** Name the notes with flats (Mi♭) instead of sharps (Re♯). */
+  flats?: boolean;
+};
+
+/** Common guitar tunings. The first is the default. */
+export const TUNINGS: Tuning[] = [
+  { id: "estandar", label: "Estándar", midi: [40, 45, 50, 55, 59, 64] },
+  { id: "drop-d", label: "Drop D", midi: [38, 45, 50, 55, 59, 64] },
+  { id: "medio-tono", label: "Medio tono abajo", midi: [39, 44, 49, 54, 58, 63], flats: true },
+  { id: "un-tono", label: "Un tono abajo", midi: [38, 43, 48, 53, 57, 62] },
+  { id: "dadgad", label: "DADGAD", midi: [38, 45, 50, 55, 57, 62] },
+  { id: "open-g", label: "Abierta de Sol", midi: [38, 43, 50, 55, 59, 62] },
+  { id: "open-d", label: "Abierta de Re", midi: [38, 45, 50, 54, 57, 62] },
+  { id: "open-e", label: "Abierta de Mi", midi: [40, 47, 52, 56, 59, 64] },
 ];
+
+export const DEFAULT_A4 = 440;
+export const A4_RANGE = [430, 450] as const;
+
+const SHARP = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
+const FLAT = ["Do", "Re♭", "Re", "Mi♭", "Mi", "Fa", "Sol♭", "Sol", "La♭", "La", "Si♭", "Si"];
+const SCI_SHARP = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
+const SCI_FLAT = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
+
+export const midiToFreq = (midi: number, a4 = DEFAULT_A4) => a4 * 2 ** ((midi - 69) / 12);
+
+export function noteName(midi: number, flats = false) {
+  return (flats ? FLAT : SHARP)[((midi % 12) + 12) % 12];
+}
+
+/** The six strings of a tuning, from the 6th to the 1st, at a given A4. */
+export function stringsOf(tuning: Tuning, a4 = DEFAULT_A4): GuitarString[] {
+  return tuning.midi.map((midi, i) => ({
+    ord: `${6 - i}ª`,
+    name: noteName(midi, tuning.flats),
+    sci: `${(tuning.flats ? SCI_FLAT : SCI_SHARP)[midi % 12]}${Math.floor(midi / 12) - 1}`,
+    freq: midiToFreq(midi, a4),
+    midi,
+  }));
+}
+
+/** Classical guitar, standard tuning, A4 = 440. */
+export const STRINGS: GuitarString[] = stringsOf(TUNINGS[0]);
 
 export const centsOf = (freq: number, ref: number) => 1200 * Math.log2(freq / ref);
 
-export function nearestString(freq: number) {
+export function nearestString(freq: number, strings: GuitarString[] = STRINGS) {
   let best = 0;
   let bestDist = Number.POSITIVE_INFINITY;
-  STRINGS.forEach((s, i) => {
+  strings.forEach((s, i) => {
     const d = Math.abs(centsOf(freq, s.freq));
     if (d < bestDist) {
       bestDist = d;
