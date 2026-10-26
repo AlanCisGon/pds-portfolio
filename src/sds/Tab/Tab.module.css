@@ -1,4 +1,4 @@
-/* Tab · 02c Data & Media (sin Figma todavía). One chord in tablature; display only. */
+/* Tab · Figma 02c Data & Media (473:90). One chord in tablature; display only. */
 .tab {
   /* The fret masks the line: set this to the surface the tab sits on. */
   --tab-bg: var(--color-bg-page);

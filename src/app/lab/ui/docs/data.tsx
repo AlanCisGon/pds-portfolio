@@ -313,6 +313,7 @@ export const data: ComponentDoc[] = [
     name: "ChordDiagram",
     group: "data",
     level: "molécula",
+    figmaNode: "472:162",
     unused: true,
     summary:
       "Diagrama de un acorde: dónde va cada dedo en el mástil, con cuerdas al aire, apagadas y cejilla. Solo muestra.",
@@ -348,6 +349,7 @@ export const data: ComponentDoc[] = [
       {
         name: "barre",
         type: "{ fret: number; from: number } | null",
+        figma: "Barre",
         description: "Cejilla con el índice en fret, desde la cuerda from hasta la 1ª.",
       },
       {
@@ -379,6 +381,7 @@ export const data: ComponentDoc[] = [
     name: "Tab",
     group: "data",
     level: "átomo",
+    figmaNode: "473:90",
     unused: true,
     summary:
       "Un acorde en tablatura: seis líneas, la 1ª cuerda arriba, con el traste sobre cada línea. Solo muestra.",
