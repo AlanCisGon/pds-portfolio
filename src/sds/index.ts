@@ -25,6 +25,8 @@ export * from "./Accordion";
 export * from "./Media";
 export * from "./Carousel";
 export * from "./Gauge";
+export * from "./ChordDiagram";
+export * from "./Tab";
 // 02d Navigation
 export * from "./TableOfContents";
 export * from "./HeadingLink";

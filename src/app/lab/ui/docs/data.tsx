@@ -1,10 +1,12 @@
 import {
   Accordion,
   Carousel,
+  ChordDiagram,
   CodeBlock,
   Gauge,
   HeadingLink,
   Media,
+  Tab,
   Table,
   TableOfContents,
 } from "@/sds";
@@ -305,6 +307,116 @@ export const data: ComponentDoc[] = [
       "Sin transición propia de la aguja: quien la usa la suaviza, y con movimiento reducido salta.",
     ],
     related: ["stat", "badge"],
+  },
+  {
+    slug: "chord-diagram",
+    name: "ChordDiagram",
+    group: "data",
+    level: "molécula",
+    unused: true,
+    summary:
+      "Diagrama de un acorde: dónde va cada dedo en el mástil, con cuerdas al aire, apagadas y cejilla. Solo muestra.",
+    demo: (
+      <div className={styles.stack}>
+        <ChordDiagram
+          frets={[null, 3, 2, 0, 1, 0]}
+          fingers={[null, 3, 2, null, 1, null]}
+          strings={["Mi", "La", "Re", "Sol", "Si", "Mi"]}
+          label="Do mayor: x 3 2 0 1 0"
+        />
+        <ChordDiagram
+          frets={[1, 3, 3, 2, 1, 1]}
+          fingers={[1, 3, 4, 2, 1, 1]}
+          barre={{ fret: 1, from: 0 }}
+          label="Fa mayor con cejilla: 1 3 3 2 1 1"
+        />
+      </div>
+    ),
+    usage: `<ChordDiagram frets={[null, 3, 2, 0, 1, 0]} fingers={[null, 3, 2, null, 1, null]} strings={["Mi", "La", "Re", "Sol", "Si", "Mi"]} label="Do mayor: x 3 2 0 1 0" />`,
+    props: [
+      {
+        name: "frets",
+        type: "(number | null)[]",
+        required: true,
+        description: "Traste por cuerda, de la 6ª a la 1ª: null apagada, 0 al aire.",
+      },
+      {
+        name: "fingers",
+        type: "(number | null)[]",
+        description: "Dedo por cuerda (1 índice … 4 meñique); null al aire o apagada.",
+      },
+      {
+        name: "barre",
+        type: "{ fret: number; from: number } | null",
+        description: "Cejilla con el índice en fret, desde la cuerda from hasta la 1ª.",
+      },
+      {
+        name: "strings",
+        type: "string[]",
+        description: "Nombre de cada cuerda al aire bajo el diagrama (la afinación).",
+      },
+      {
+        name: "label",
+        type: "string",
+        required: true,
+        description: "Nombre accesible: el acorde y sus trastes en palabras.",
+      },
+    ],
+    use: ["Mostrar cómo se toca un acorde, como en el identificador de acordes del lab."],
+    avoid: [
+      "Para leer una secuencia de notas en el tiempo: hace falta una tablatura de varias columnas.",
+      "Para un acorde que la persona debe tocar en otra afinación: genera las formas con esa afinación.",
+    ],
+    accessibility: [
+      'role="img" con label: el SVG es decorativo y el nombre dice el acorde y sus trastes.',
+      "Sin color: puntos en text/primary, número del dedo en bg/page, marcas en text/secondary.",
+      "Hasta el cuarto traste muestra la cejuela; más arriba, el número del traste inicial.",
+    ],
+    related: ["tab"],
+  },
+  {
+    slug: "tab",
+    name: "Tab",
+    group: "data",
+    level: "átomo",
+    unused: true,
+    summary:
+      "Un acorde en tablatura: seis líneas, la 1ª cuerda arriba, con el traste sobre cada línea. Solo muestra.",
+    demo: (
+      <Tab
+        frets={[null, 3, 2, 0, 1, 0]}
+        strings={["Mi", "La", "Re", "Sol", "Si", "Mi"]}
+        label="Do mayor"
+      />
+    ),
+    usage: `<Tab frets={[null, 3, 2, 0, 1, 0]} strings={["Mi", "La", "Re", "Sol", "Si", "Mi"]} label="Do mayor" />`,
+    props: [
+      {
+        name: "frets",
+        type: "(number | null)[]",
+        required: true,
+        description: "Traste por cuerda, de la 6ª a la 1ª: null apagada (×), 0 al aire.",
+      },
+      {
+        name: "strings",
+        type: "string[]",
+        required: true,
+        description: "Nombre de cada cuerda, de la 6ª a la 1ª; se muestran de arriba (1ª) abajo.",
+      },
+      {
+        name: "label",
+        type: "string",
+        required: true,
+        description: "El acorde; el nombre accesible suma cada cuerda en palabras.",
+      },
+    ],
+    use: ["Junto a un ChordDiagram, para quien lee tablatura en lugar de diagramas."],
+    avoid: ["Para una melodía o un arpegio: esta tablatura es una sola columna (un acorde)."],
+    accessibility: [
+      'role="img": se lee "6ª apagada, 5ª traste 3…", no los números sueltos.',
+      "El traste tapa la línea con --tab-bg: ajústalo si va sobre una superficie que no sea bg/page.",
+    ],
+    related: ["chord-diagram"],
   },
 ];
 

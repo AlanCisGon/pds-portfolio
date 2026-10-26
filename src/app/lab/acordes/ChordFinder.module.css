@@ -1,0 +1,98 @@
+/* Acordes · lab page built on SDS (ChordDiagram, Tab, Button, Chip, Callout, Link). */
+.finder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+  width: 100%;
+}
+
+.tuning {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: calc(var(--space-64) * 3);
+  justify-content: center;
+  padding: var(--space-24) var(--space-16);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-surface);
+  text-align: center;
+  transition: opacity var(--duration-base) var(--ease-settle);
+}
+.finder[data-held] .result {
+  opacity: 0.6;
+}
+
+.state {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+.name {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-title-size);
+  line-height: var(--text-title-line);
+  text-wrap: balance;
+}
+
+.symbol {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-figure-size);
+  line-height: var(--text-figure-line);
+  font-weight: var(--weight-medium);
+}
+
+.notes,
+.empty,
+.hint {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.main {
+  width: 100%;
+}
+
+.shapes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.shape {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-24);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result {
+    transition: none;
+  }
+}

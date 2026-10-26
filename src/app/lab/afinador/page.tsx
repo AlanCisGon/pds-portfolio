@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { Link } from "@/sds";
 import { Tuner } from "./Tuner";
 import styles from "./page.module.css";
 
@@ -17,6 +18,9 @@ export default function AfinadorPage() {
         <p className={styles.lead}>Guitarra clásica: estándar u otras afinaciones comunes.</p>
       </header>
       <Tuner />
+      <Link href="/lab/acordes" kind="standalone">
+        Identificar un acorde
+      </Link>
       <p className={styles.note}>El audio se procesa en tu navegador; no se graba ni se envía.</p>
     </div>
   );
