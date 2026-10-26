@@ -7,6 +7,16 @@
   width: 100%;
 }
 
+/* Held: the string stopped; the last clear reading stays, dimmed, until the next pluck. */
+.reading {
+  width: 100%;
+  transition: opacity var(--duration-base) var(--ease-settle);
+}
+.tuner[data-held] .reading,
+.tuner[data-held] .detail {
+  opacity: 0.6;
+}
+
 .note {
   color: var(--color-text-primary);
   font-family: var(--font-serif);
@@ -55,6 +65,16 @@
   font-variant-numeric: tabular-nums;
 }
 
+.progress {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
 .main {
   width: 100%;
 }
@@ -65,6 +85,61 @@
   justify-content: center;
   gap: var(--space-8);
   width: 100%;
+}
+
+/* Settings: tuning and A4, folded away under an Accordion. */
+.settings {
+  width: 100%;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  min-width: 0;
+  margin: 0 0 var(--space-16);
+  padding: 0;
+  border: 0;
+}
+
+.groupLabel {
+  margin-bottom: var(--space-8);
+  padding: 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  text-transform: uppercase;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.groupHint {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-body-s-size);
+  line-height: var(--text-body-s-line);
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.a4 {
+  min-width: calc(var(--space-64) + var(--space-8));
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-body-m-size);
+  line-height: var(--text-body-m-line);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
 /* Headstock: the pegs sit where they are on the guitar, around a plain plate (no wood texture: brand §6). */
@@ -147,6 +222,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reading,
   .note,
   .status,
   .roller {
