@@ -1,5 +1,5 @@
 // Contenido de la página "06 Specs" de Figma (SDS · Somara Design System, 273:2), extraído con un
-// script de solo lectura el 2026-10-17 (Gauge: 2026-10-25). Figma es la fuente: si cambia la spec, se vuelve a extraer;
+// script de solo lectura el 2026-10-17 (Gauge: 2026-10-25; ChordDiagram y Tab: 2026-11-04). Figma es la fuente: si cambia la spec, se vuelve a extraer;
 // no se edita a mano para "arreglar" una deriva (la deriva se le reporta a Clara).
 //
 // anatomy.parts: [número, x como fracción del ancho del ejemplo (0–1), fila (0 arriba, 1 abajo), parte, descripción]
@@ -816,6 +816,117 @@ export const FIGMA_SPECS: Record<string, FigmaSpec> = {
       "Nunca solo color: la página dice el estado en texto, con aria-live si cambia en vivo.",
       "Aguja sobre page: text/primary 15.96:1, success 12.17:1, danger 7.07:1; sin lectura, text/secondary 6.32:1 (≥ 3:1).",
       "Sin transición propia de la aguja: quien la usa la suaviza, y con movimiento reducido salta.",
+    ],
+  },
+  "chord-diagram": {
+    frame: "480:2128",
+    set: "472:162",
+    crumb: "SDS / Specs / Datos y media",
+    description:
+      "Diagrama de un acorde: dónde va cada dedo en el mástil. Solo muestra; nunca lleva Cerezo.",
+    status: READY,
+    anatomyScale: 1.5,
+    parts: [
+      [
+        "1",
+        0.38,
+        0,
+        "Cejuela",
+        "Primera posición: trazo de 4 en text/primary. Más arriba, el número del traste inicial.",
+      ],
+      ["2", 0.91, 0, "Trastes y cuerdas", "Cuatro trastes; cuerdas de la 6ª (izquierda) a la 1ª."],
+      ["3", 0.61, 0, "Marca", "○ al aire, × apagada, sobre la cejuela (ChordDiagram/Mark)."],
+      [
+        "4",
+        0.76,
+        1,
+        "Punto con dedo",
+        "Dónde pisa cada dedo; 1 índice … 4 meñique (ChordDiagram/Dot).",
+      ],
+      [
+        "5",
+        0.15,
+        1,
+        "Nombres de cuerdas",
+        "Opcional (showStrings): la afinación de cada cuerda al aire.",
+      ],
+    ],
+    measures: [
+      head,
+      ["Alto", "186 (proporción 184 × 178)", "viewBox del SVG"],
+      ["Ancho máximo", "192", "calc(var(--space-64) * 3)"],
+      ["Cuerdas · trastes", "28 · 30 entre sí (unidades del SVG)", "GAP_X · GAP_Y"],
+      ["Punto", "radio 9; cejilla de 18 de alto con radio completo", "—"],
+      ["Trazos", "cejuela 4 · trastes y cuerdas 1 · marcas 1.5", "atributo strokeWidth"],
+    ],
+    tokens: [
+      thead,
+      ["Cejuela", "Nut=true", "--color-text-primary"],
+      ["Trastes y cuerdas", "—", "--color-text-secondary"],
+      ["Marca", "open / muted", "--color-text-secondary"],
+      ["Punto y cejilla", "—", "--color-text-primary"],
+      ["Dedo", "—", "--color-bg-page · Measure/Meta (peso medium)"],
+      [
+        "Traste inicial y nombres",
+        "Nut=false · showStrings",
+        "--color-text-secondary · Measure/Meta",
+      ],
+    ],
+    states: ["primera posición", "cejilla", "traste 5"],
+    responsive: [
+      "Hasta 192 px de ancho; escala en proporción. En 390 px cabe junto a la Tab, en dos columnas; sin cambio en 1280 px.",
+    ],
+    accessibility: [
+      'role="img" con label: el acorde y sus trastes en palabras ("Do mayor: x 3 2 0 1 0"); el SVG es decorativo.',
+      "Sin color: al aire y apagada se distinguen por forma (○ y ×), no por tono.",
+      "Puntos en text/primary sobre page (15.96:1); el dedo en bg/page sobre el punto (15.96:1).",
+      "Va junto a una Tab para quien lee tablatura en lugar de diagramas.",
+    ],
+  },
+  tab: {
+    frame: "486:2297",
+    set: "473:90",
+    crumb: "SDS / Specs / Datos y media",
+    description:
+      "Un acorde en tablatura: seis líneas, la 1ª cuerda arriba, con el traste sobre cada línea. Solo muestra.",
+    status: READY,
+    anatomyScale: 1.5,
+    parts: [
+      [
+        "1",
+        0.08,
+        0,
+        "Nombre de la cuerda",
+        "La afinación de cada cuerda al aire, de la 1ª (arriba) a la 6ª.",
+      ],
+      ["2", 0.29, 0, "Cuerda", "Línea de 1 px en text/secondary."],
+      ["3", 0.6, 0, "Traste", "El número sobre la línea, tapándola con --tab-bg; 0 es al aire."],
+      ["4", 0.72, 1, "Apagada", "× en text/secondary: la cuerda no suena (State=muted)."],
+    ],
+    measures: [
+      head,
+      ["Alto", "120 (6 filas de 20)", "--text-code-line"],
+      ["Ancho máximo", "192", "calc(var(--space-64) * 3)"],
+      ["Nombre", "32 de ancho, alineado a la derecha", "--space-32"],
+      ["Nombre-cuerda", "8", "--space-8"],
+      ["Traste", "mínimo 24 · padding 0 4", "--space-24 · --space-4"],
+    ],
+    tokens: [
+      thead,
+      ["Nombre", "—", "--color-text-secondary · Measure/Code"],
+      ["Cuerda", "—", "--color-text-secondary · 1px"],
+      ["Traste", "fret", "--color-text-primary · Measure/Code"],
+      ["Fondo del traste", "—", "--tab-bg (= --color-bg-page)"],
+      ["Apagada", "muted", "--color-text-secondary"],
+    ],
+    states: ["traste", "apagada"],
+    responsive: [
+      "Hasta 192 px de ancho; la línea se estira y los trastes quedan centrados. En 390 px va junto al ChordDiagram; sin cambio en 1280 px.",
+    ],
+    accessibility: [
+      'role="img": se lee "6ª apagada, 5ª traste 3, 4ª traste 2…", no los números sueltos.',
+      "Nombre y × en text/secondary sobre page (6.32:1); el traste en text/primary (15.96:1).",
+      "El traste tapa la línea con --tab-bg: ajústalo si va sobre una superficie que no sea bg/page.",
     ],
   },
   "table-of-contents": {
