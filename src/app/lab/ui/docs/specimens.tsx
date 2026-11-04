@@ -9,6 +9,7 @@ import {
   Card,
   Carousel,
   Chip,
+  ChordDiagram,
   CodeBlock,
   Divider,
   FactSheet,
@@ -27,6 +28,7 @@ import {
   NavItem,
   ProjectCard,
   Stat,
+  Tab,
   Table,
   Tag,
   TeamCard,
@@ -76,6 +78,8 @@ const facts = [
   { label: "Period", value: "Q4 2024 – Sep 2025" },
   { label: "Industry", value: "E-commerce" },
 ];
+// Standard tuning, 6th to 1st: the string names under ChordDiagram and beside Tab.
+const guitar = ["Mi", "La", "Re", "Sol", "Si", "Mi"];
 const wide = (node: ReactNode) => <div className="wide">{node}</div>;
 const share = { href: "https://www.linkedin.com", label: "Compartir en LinkedIn" };
 
@@ -328,6 +332,56 @@ export const SPECIMENS: Record<string, SpecSpecimens> = {
         <span>{row === "sin lectura" ? "–" : row === "danger" ? "Sol" : "La"}</span>
       </Gauge>
     ),
+  },
+  "chord-diagram": {
+    anatomy: (
+      <div className="w192">
+        <ChordDiagram
+          frets={[null, 3, 2, 0, 1, 0]}
+          fingers={[null, 3, 2, null, 1, null]}
+          strings={guitar}
+          label="Do mayor: x 3 2 0 1 0"
+        />
+      </div>
+    ),
+    specimen: (row) =>
+      row === "cejilla" ? (
+        <ChordDiagram
+          frets={[1, 3, 3, 2, 1, 1]}
+          fingers={[1, 3, 4, 2, 1, 1]}
+          barre={{ fret: 1, from: 0 }}
+          strings={guitar}
+          label="Fa mayor: 1 3 3 2 1 1"
+        />
+      ) : row === "traste 5" ? (
+        <ChordDiagram
+          frets={[5, 7, 7, 6, 5, 5]}
+          fingers={[1, 3, 4, 2, 1, 1]}
+          barre={{ fret: 5, from: 0 }}
+          strings={guitar}
+          label="La mayor en el 5º: 5 7 7 6 5 5"
+        />
+      ) : (
+        <ChordDiagram
+          frets={[null, 3, 2, 0, 1, 0]}
+          fingers={[null, 3, 2, null, 1, null]}
+          strings={guitar}
+          label="Do mayor: x 3 2 0 1 0"
+        />
+      ),
+  },
+  tab: {
+    anatomy: (
+      <div className="w192">
+        <Tab frets={[null, 3, 2, 0, 1, 0]} strings={guitar} label="Do mayor" />
+      </div>
+    ),
+    specimen: (row) =>
+      row === "apagada" ? (
+        <Tab frets={[null]} strings={["Mi"]} label="6ª apagada" />
+      ) : (
+        <Tab frets={[3]} strings={["La"]} label="5ª en el traste 3" />
+      ),
   },
   "table-of-contents": {
     anatomy: (
